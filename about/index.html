@@ -10,7 +10,7 @@
   
   <title>
     
-      Mr.Lee-李健博的博客
+      About | Mr.Lee-李健博的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -56,7 +56,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">主页</a>
+            <a href="/" class="item-link">主页</a>
           
         </li>
       
@@ -89,7 +89,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">主页</a>
+              <a href="/" class="menu-link">主页</a>
             
           </li>
         
@@ -116,33 +116,66 @@
   </div>
 </header>
 
-    <main class="app-body">
+    <div id="about-banner" style="background-image: url(https://pic.cnblogs.com/avatar/1655118/20200903151228.png)"></div>
+<div class="author">
+  <div class="head">
+    <img src="" />
+  </div>
+  <h3>李健博</h3>
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">[置顶]Elasticsearch系列教程</a>
-      </h2>
-      <p class="article-date">2019年3月10日</p>
-      
-        
-  <a href="/tags#汇总" >
-    <span class="tag-code">汇总</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          Elasticsearch系列教程开启愉快的Elasticsearch学习之旅吧！！
-
-        
-      </div>
-      <a class="more" href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">详情...</a>
-    </article>
+    <p class="description">每一次成长都是黑暗中的凌空一跃......</p>
   
+  <section class="share-icons">
+    
+      <a class="icon-weibo" href="http://weibo.com/抖落烟火" target="_blank">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    
+    
+      <a class="icon-twitter" href="https://twitter.com/Mr.Lee" target="_blank">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    
+    
+      <a class="icon-github" href="https://github.com/mr-lee-alex" target="_blank">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    
+    
+    
+      <a class="icon-zhihu" href="https://www.zhihu.com/people/抖落烟火" target="_blank">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-stack-1x fa-inverse">知</i>
+        </span>
+      </a>
+    
+    
+  </section>
+</div>
 
-  
-</main>
-
+<script>
+  (function () {
+    $('.header').removeClass('fixed-header')
+    var windowH = $(window).height();
+    var author = $('.author')
+    var bodyH = author.offset().top + author[0].offsetHeight + 71;
+    if (bodyH < windowH) {
+      author.css({
+        'margin-bottom': windowH - bodyH
+      })
+    }
+  })();
+</script>
 
     <div class="scroll-top">
   <span class="arrow-icon"></span>
