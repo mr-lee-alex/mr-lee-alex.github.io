@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      17-方法 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>17-方法</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="什么是方法？"><a href="#什么是方法？" class="headerlink" title="什么是方法？"></a>什么是方法？</h3><p>方法其实就是一个函数，在 <code>func</code> 这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。</p>
+<p>下面就是创建一个方法的语法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t Type)</span></span> methodName(parameter list) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片段创建了一个接收器类型为 <code>Type</code> 的方法 <code>methodName</code>。</p>
+<h3 id="方法示例"><a href="#方法示例" class="headerlink" title="方法示例"></a>方法示例</h3><p>让我们来编写一个简单的小程序，它会在结构体类型上创建一个方法并调用它。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">    name     <span class="type">string</span></span><br><span class="line">    salary   <span class="type">int</span></span><br><span class="line">    currency <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  displaySalary() 方法将 Employee 做为接收器类型</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e Employee)</span></span> displaySalary() &#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Salary of %s is %s%d&quot;</span>, e.name, e.currency, e.salary)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    emp1 := Employee &#123;</span><br><span class="line">        name:     <span class="string">&quot;Sam Adolf&quot;</span>,</span><br><span class="line">        salary:   <span class="number">5000</span>,</span><br><span class="line">        currency: <span class="string">&quot;$&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    emp1.displaySalary() <span class="comment">// 调用 Employee 类型的 displaySalary() 方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 16 行，我们在 <code>Employee</code> 结构体类型上创建了一个 <code>displaySalary</code> 方法。displaySalary()方法在方法的内部访问了接收器 <code>e Employee</code>。在第 17 行，我们使用接收器 <code>e</code>，并打印 employee 的 name、currency 和 salary 这 3 个字段。</p>
+<p>在第 26 行，我们调用了方法 <code>emp1.displaySalary()</code>。</p>
+<p>程序输出：<code>Salary of Sam Adolf is $5000</code>。</p>
+<h3 id="为什么我们已经有函数了还需要方法呢？"><a href="#为什么我们已经有函数了还需要方法呢？" class="headerlink" title="为什么我们已经有函数了还需要方法呢？"></a>为什么我们已经有函数了还需要方法呢？</h3><p>上面的程序已经被重写为只使用函数，没有方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">    name     <span class="type">string</span></span><br><span class="line">    salary   <span class="type">int</span></span><br><span class="line">    currency <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">displaySalary()方法被转化为一个函数，把 Employee 当做参数传入。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">displaySalary</span><span class="params">(e Employee)</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Salary of %s is %s%d&quot;</span>, e.name, e.currency, e.salary)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    emp1 := Employee&#123;</span><br><span class="line">        name:     <span class="string">&quot;Sam Adolf&quot;</span>,</span><br><span class="line">        salary:   <span class="number">5000</span>,</span><br><span class="line">        currency: <span class="string">&quot;$&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    displaySalary(emp1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，<code>displaySalary</code> 方法被转化为一个函数，<code>Employee</code> 结构体被当做参数传递给它。这个程序也产生完全相同的输出：<code>Salary of Sam Adolf is $5000</code>。</p>
+<p>既然我们可以使用函数写出相同的程序，那么为什么我们需要方法？这有着几个原因，让我们一个个的看看。</p>
+<ul>
+<li><code> Go 不是纯粹的面向对象编程语言</code>，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。</li>
+<li>相同的名字的方法可以定义在不同的类型上，而相同名字的函数是不被允许的。假设我们有一个 <code>Square</code> 和 <code>Circle</code> 结构体。可以在 <code>Square</code> 和 <code>Circle</code> 上分别定义一个 <code>Area</code> 方法。见下面的程序。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Rectangle <span class="keyword">struct</span> &#123;</span><br><span class="line">    length <span class="type">int</span></span><br><span class="line">    width  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Circle <span class="keyword">struct</span> &#123;</span><br><span class="line">    radius <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r Rectangle)</span></span> Area() <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> r.length * r.width</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c Circle)</span></span> Area() <span class="type">float64</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> math.Pi * c.radius * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := Rectangle&#123;</span><br><span class="line">        length: <span class="number">10</span>,</span><br><span class="line">        width:  <span class="number">5</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area of rectangle %d\n&quot;</span>, r.Area())</span><br><span class="line">    c := Circle&#123;</span><br><span class="line">        radius: <span class="number">12</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area of circle %f&quot;</span>, c.Area())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Area of rectangle 50</span><br><span class="line">Area of circle 452.389342</span><br></pre></td></tr></table></figure>
+
+<p>上面方法的属性被使用在接口中。我们将在接下来的教程中讨论这个问题。</p>
+<h3 id="指针接收器与值接收器"><a href="#指针接收器与值接收器" class="headerlink" title="指针接收器与值接收器"></a>指针接收器与值接收器</h3><p>到目前为止，我们只看到了使用值接收器的方法。还可以创建使用指针接收器的方法。值接收器和指针接收器之间的区别在于，在指针接收器的方法内部的改变对于调用者是可见的，然而值接收器的情况不是这样的。让我们用下面的程序来帮助理解这一点。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">    name <span class="type">string</span></span><br><span class="line">    age  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用值接收器的方法。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e Employee)</span></span> changeName(newName <span class="type">string</span>) &#123;</span><br><span class="line">    e.name = newName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用指针接收器的方法。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *Employee)</span></span> changeAge(newAge <span class="type">int</span>) &#123;</span><br><span class="line">    e.age = newAge</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    e := Employee&#123;</span><br><span class="line">        name: <span class="string">&quot;Mark Andrew&quot;</span>,</span><br><span class="line">        age:  <span class="number">50</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Employee name before change: %s&quot;</span>, e.name)</span><br><span class="line">    e.changeName(<span class="string">&quot;Michael Andrew&quot;</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;\nEmployee name after change: %s&quot;</span>, e.name)</span><br><span class="line"></span><br><span class="line">    fmt.Printf(<span class="string">&quot;\n\nEmployee age before change: %d&quot;</span>, e.age)</span><br><span class="line">    (&amp;e).changeAge(<span class="number">51</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;\nEmployee age after change: %d&quot;</span>, e.age)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，<code>changeName</code> 方法有一个值接收器 <code>(e Employee)</code>，而 <code>changeAge</code> 方法有一个指针接收器 <code>(e *Employee)</code>。在 <code>changeName</code> 方法中对 <code>Employee</code> 结构体的字段 <code>name</code> 所做的改变对调用者是不可见的，因此程序在调用 <code>e.changeName(&quot;Michael Andrew&quot;)</code> 这个方法的前后打印出相同的名字。由于 <code>changeAge</code> 方法是使用指针 <code>(e *Employee)</code> 接收器的，所以在调用 <code>(&amp;e).changeAge(51)</code> 方法对 <code>age</code> 字段做出的改变对调用者将是可见的。该程序输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Employee name before change: Mark Andrew</span><br><span class="line">Employee name after change: Mark Andrew</span><br><span class="line"></span><br><span class="line">Employee age before change: 50</span><br><span class="line">Employee age after change: 51</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 36 行，我们使用 <code>(&amp;e).changeAge(51)</code> 来调用 <code>changeAge</code> 方法。由于 <code>changeAge</code> 方法有一个指针接收器，所以我们使用 <code>(&amp;e)</code> 来调用这个方法。其实没有这个必要，Go语言让我们可以直接使用 <code>e.changeAge(51)</code>。<code>e.changeAge(51)</code> 会自动被Go语言解释为 <code>(&amp;e).changeAge(51)</code>。</p>
+<p>下面的程序重写了，使用 <code>e.changeAge(51)</code> 来代替 <code>(&amp;e).changeAge(51)</code>，它输出相同的结果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">    name <span class="type">string</span></span><br><span class="line">    age  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用值接收器的方法。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e Employee)</span></span> changeName(newName <span class="type">string</span>) &#123;</span><br><span class="line">    e.name = newName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用指针接收器的方法。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *Employee)</span></span> changeAge(newAge <span class="type">int</span>) &#123;</span><br><span class="line">    e.age = newAge</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    e := Employee&#123;</span><br><span class="line">        name: <span class="string">&quot;Mark Andrew&quot;</span>,</span><br><span class="line">        age:  <span class="number">50</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Employee name before change: %s&quot;</span>, e.name)</span><br><span class="line">    e.changeName(<span class="string">&quot;Michael Andrew&quot;</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;\nEmployee name after change: %s&quot;</span>, e.name)</span><br><span class="line"></span><br><span class="line">    fmt.Printf(<span class="string">&quot;\n\nEmployee age before change: %d&quot;</span>, e.age)</span><br><span class="line">    e.changeAge(<span class="number">51</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;\nEmployee age after change: %d&quot;</span>, e.age)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="那么什么时候使用指针接收器，什么时候使用值接收器？"><a href="#那么什么时候使用指针接收器，什么时候使用值接收器？" class="headerlink" title="那么什么时候使用指针接收器，什么时候使用值接收器？"></a>那么什么时候使用指针接收器，什么时候使用值接收器？</h3><p>一般来说，指针接收器可以使用在：对方法内部的接收器所做的改变应该对调用者可见时。</p>
+<p>指针接收器也可以被使用在如下场景：当拷贝一个结构体的代价过于昂贵时。考虑下一个结构体有很多的字段。在方法内使用这个结构体做为值接收器需要拷贝整个结构体，这是很昂贵的。在这种情况下使用指针接收器，结构体不会被拷贝，只会传递一个指针到方法内部使用。</p>
+<p>在其他的所有情况，值接收器都可以被使用。</p>
+<h3 id="匿名字段的方法"><a href="#匿名字段的方法" class="headerlink" title="匿名字段的方法"></a>匿名字段的方法</h3><p>属于结构体的匿名字段的方法可以被直接调用，就好像这些方法是属于定义了匿名字段的结构体一样。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> address <span class="keyword">struct</span> &#123;</span><br><span class="line">    city  <span class="type">string</span></span><br><span class="line">    state <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a address)</span></span> fullAddress() &#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Full address: %s, %s&quot;</span>, a.city, a.state)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span> &#123;</span><br><span class="line">    firstName <span class="type">string</span></span><br><span class="line">    lastName  <span class="type">string</span></span><br><span class="line">    address</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := person&#123;</span><br><span class="line">        firstName: <span class="string">&quot;Elon&quot;</span>,</span><br><span class="line">        lastName:  <span class="string">&quot;Musk&quot;</span>,</span><br><span class="line">        address: address &#123;</span><br><span class="line">            city:  <span class="string">&quot;Los Angeles&quot;</span>,</span><br><span class="line">            state: <span class="string">&quot;California&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p.fullAddress() <span class="comment">//访问 address 结构体的 fullAddress 方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 32 行，我们通过使用 <code>p.fullAddress()</code> 来访问 <code>address</code> 结构体的 <code>fullAddress()</code> 方法。明确的调用 <code>p.address.fullAddress()</code> 是没有必要的。该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Full address: Los Angeles, California</span><br></pre></td></tr></table></figure>
+
+<h3 id="在方法中使用值接收器-与-在函数中使用值参数"><a href="#在方法中使用值接收器-与-在函数中使用值参数" class="headerlink" title="在方法中使用值接收器 与 在函数中使用值参数"></a>在方法中使用值接收器 与 在函数中使用值参数</h3><p>这个话题很多Go语言新手都弄不明白。我会尽量讲清楚。</p>
+<p>当一个函数有一个值参数，它只能接受一个值参数。</p>
+<p>当一个方法有一个值接收器，它可以接受值接收器和指针接收器。</p>
+<p>让我们通过一个例子来理解这一点。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> rectangle <span class="keyword">struct</span> &#123;</span><br><span class="line">    length <span class="type">int</span></span><br><span class="line">    width  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">area</span><span class="params">(r rectangle)</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area Function result: %d\n&quot;</span>, (r.length * r.width))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rectangle)</span></span> area() &#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area Method result: %d\n&quot;</span>, (r.length * r.width))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := rectangle&#123;</span><br><span class="line">        length: <span class="number">10</span>,</span><br><span class="line">        width:  <span class="number">5</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    area(r)</span><br><span class="line">    r.area()</span><br><span class="line"></span><br><span class="line">    p := &amp;r</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">       compilation error, cannot use p (type *rectangle) as type rectangle</span></span><br><span class="line"><span class="comment">       in argument to area</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">//area(p)</span></span><br><span class="line"></span><br><span class="line">    p.area()<span class="comment">//通过指针调用值接收器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第 12 行的函数 <code>func area(r rectangle)</code> 接受一个值参数，方法 <code>func (r rectangle) area()</code> 接受一个值接收器。</p>
+<p>在第 25 行，我们通过值参数 <code>area(r)</code> 来调用 area 这个函数，这是合法的。同样，我们使用值接收器来调用 area 方法 <code>r.area()</code>，这也是合法的。</p>
+<p>在第 28 行，我们创建了一个指向 <code>r</code> 的指针 <code>p</code>。如果我们试图把这个指针传递到只能接受一个值参数的函数 area，编译器将会报错。所以我把代码的第 33 行注释了。如果你把这行的代码注释去掉，编译器将会抛出错误 <code>compilation error, cannot use p (type *rectangle) as type rectangle in argument to area.</code>。这将会按预期抛出错误。</p>
+<p>现在到了棘手的部分了，在第35行的代码 <code>p.area()</code> 使用指针接收器 <code>p</code> 调用了只接受一个值接收器的方法 <code>area</code>。这是完全有效的。原因是当 <code>area</code> 有一个值接收器时，为了方便Go语言把 <code>p.area()</code> 解释为 <code>(*p).area()</code>。</p>
+<p>该程序将会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Area Function result: 50</span><br><span class="line">Area Method result: 50</span><br><span class="line">Area Method result: 50</span><br></pre></td></tr></table></figure>
+
+<h3 id="在方法中使用指针接收器-与-在函数中使用指针参数"><a href="#在方法中使用指针接收器-与-在函数中使用指针参数" class="headerlink" title="在方法中使用指针接收器 与 在函数中使用指针参数"></a>在方法中使用指针接收器 与 在函数中使用指针参数</h3><p>和值参数相类似，函数使用指针参数只接受指针，而使用指针接收器的方法可以使用值接收器和指针接收器。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> rectangle <span class="keyword">struct</span> &#123;</span><br><span class="line">    length <span class="type">int</span></span><br><span class="line">    width  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perimeter</span><span class="params">(r *rectangle)</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;perimeter function output:&quot;</span>, <span class="number">2</span>*(r.length+r.width))</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *rectangle)</span></span> perimeter() &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;perimeter method output:&quot;</span>, <span class="number">2</span>*(r.length+r.width))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := rectangle&#123;</span><br><span class="line">        length: <span class="number">10</span>,</span><br><span class="line">        width:  <span class="number">5</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    p := &amp;r <span class="comment">//pointer to r</span></span><br><span class="line">    perimeter(p)</span><br><span class="line">    p.perimeter()</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        cannot use r (type rectangle) as type *rectangle in argument to perimeter</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">//perimeter(r)</span></span><br><span class="line"></span><br><span class="line">    r.perimeter()<span class="comment">//使用值来调用指针接收器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 12 行，定义了一个接受指针参数的函数 <code>perimeter</code>。第 17 行定义了一个有一个指针接收器的方法。</p>
+<p>在第 27 行，我们调用 perimeter 函数时传入了一个指针参数。在第 28 行，我们通过指针接收器调用了 perimeter 方法。所有一切看起来都这么完美。</p>
+<p>在被注释掉的第 33 行，我们尝试通过传入值参数 <code>r</code> 调用函数 <code>perimeter</code>。这是不被允许的，因为函数的指针参数不接受值参数。如果你把这行的代码注释去掉并把程序运行起来，编译器将会抛出错误 <code>main.go:33: cannot use r (type rectangle) as type *rectangle in argument to perimeter.</code>。</p>
+<p>在第 35 行，我们通过值接收器 <code>r</code> 来调用有指针接收器的方法 <code>perimeter</code>。这是被允许的，为了方便Go语言把代码 <code>r.perimeter()</code> 解释为 <code>(&amp;r).perimeter()</code>。该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perimeter function output: 30</span><br><span class="line">perimeter method output: 30</span><br><span class="line">perimeter method output: 30</span><br></pre></td></tr></table></figure>
+
+<h3 id="在非结构体上的方法"><a href="#在非结构体上的方法" class="headerlink" title="在非结构体上的方法"></a>在非结构体上的方法</h3><p>到目前为止，我们只在结构体类型上定义方法。也可以在非结构体类型上定义方法，但是有一个问题。<strong>为了在一个类型上定义一个方法，方法的接收器类型定义和方法的定义应该在同一个包中。到目前为止，我们定义的所有结构体和结构体上的方法都是在同一个 main 包中，因此它们是可以运行的。</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a <span class="type">int</span>)</span></span> add(b <span class="type">int</span>) &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 3 行，我们尝试把一个 <code>add</code> 方法添加到内置的类型 <code>int</code>。这是不允许的，因为 <code>add</code> 方法的定义和 <code>int</code> 类型的定义不在同一个包中。该程序会抛出编译错误 <code>cannot define new methods on non-local type int</code>。</p>
+<p>让该程序工作的方法是为内置类型 int 创建一个类型别名，然后创建一个以该类型别名为接收器的方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> myInt <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a myInt)</span></span> add(b myInt) myInt &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    num1 := myInt(<span class="number">5</span>)</span><br><span class="line">    num2 := myInt(<span class="number">10</span>)</span><br><span class="line">    sum := num1.add(num2)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Sum is&quot;</span>, sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第5行，我们为 <code>int</code> 创建了一个类型别名 <code>myInt</code>。在第7行，我们定义了一个以 <code>myInt</code> 为接收器的的方法 <code>add</code>。</p>
+<p>该程序将会打印出 <code>Sum is 15</code>。</p>
+<p>我已经创建了一个程序，包含了我们迄今为止所讨论的所有概念</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/18-%E6%8E%A5%E5%8F%A3%EF%BC%88%E4%B8%80%EF%BC%89/">
+        <span class="nav-arrow">← </span>
+        
+          18-接口（一）
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/16-%E7%BB%93%E6%9E%84%E4%BD%93/">
+        
+          16-结构体
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-nav-text">什么是方法？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%96%B9%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">方法示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%B7%B2%E7%BB%8F%E6%9C%89%E5%87%BD%E6%95%B0%E4%BA%86%E8%BF%98%E9%9C%80%E8%A6%81%E6%96%B9%E6%B3%95%E5%91%A2%EF%BC%9F"><span class="toc-nav-text">为什么我们已经有函数了还需要方法呢？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E5%99%A8%E4%B8%8E%E5%80%BC%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="toc-nav-text">指针接收器与值接收器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E5%99%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%80%BC%E6%8E%A5%E6%94%B6%E5%99%A8%EF%BC%9F"><span class="toc-nav-text">那么什么时候使用指针接收器，什么时候使用值接收器？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8C%BF%E5%90%8D%E5%AD%97%E6%AE%B5%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-nav-text">匿名字段的方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%80%BC%E6%8E%A5%E6%94%B6%E5%99%A8-%E4%B8%8E-%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%80%BC%E5%8F%82%E6%95%B0"><span class="toc-nav-text">在方法中使用值接收器 与 在函数中使用值参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E5%99%A8-%E4%B8%8E-%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%E5%8F%82%E6%95%B0"><span class="toc-nav-text">在方法中使用指针接收器 与 在函数中使用指针参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8%E9%9D%9E%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8A%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-nav-text">在非结构体上的方法</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/17-方法/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "17-方法",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

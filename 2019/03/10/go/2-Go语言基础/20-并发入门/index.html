@@ -10,7 +10,7 @@
   
   <title>
     
-      04-VSCode配置 | Mr.Lee-李健博的博客
+      20-并发入门 | Mr.Lee-李健博的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,7 +117,7 @@
 </header>
 
     <div id="article-banner">
-  <h2>04-VSCode配置</h2>
+  <h2>20-并发入门</h2>
 
 
 
@@ -133,28 +133,17 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>VS Code是微软开源的一款编辑器，插件系统十分的丰富。下面介绍如何用VS Code搭建go语言开发环境
-##一 下载与安装
-
-<p><code>VS Code</code>官方下载地址：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a></p>
-
-<p>三大主流平台都支持，请根据自己的电脑平台选择对应的安装包。
-<img src="http://www.chenyoude.com/go/1550239338474.png" alt="1550239338474.png"/>
-双击下载好的安装文件，双击安装即可。</p>
-##二 安装中文简体插件
-
-<p>点击左侧菜单栏最后一项<code>管理扩展</code>，在<code>搜索框</code>中输入<code>chinese</code> ，选中结果列表第一项，点击<code>install</code>安装。</p>
-
-<p>安装完毕后右下角会提示<code>重启VS Code</code>，重启之后你的VS Code就显示中文了
-<img src="http://www.chenyoude.com/go/vscode1.gif" alt="vscode1.gif"/>
-<code>VSCode</code>主界面介绍：
-<img src="http://www.chenyoude.com/go/1550240342443.png" alt="1550240342443.png"/></p>
-##三 安装Go开发扩展
-
-<p>现在我们要为我们的VS Code编辑器安装<code>Go</code>扩展插件，让它支持Go语言开发。
-<img src="http://www.chenyoude.com/go/1550241460281.png" alt="1550241460281.png"/></p>
-
-
+    <section class="markdown-content"><p><strong>Go 是并发式语言，而不是并行式语言</strong>。在讨论 Go 如何处理并发之前，我们必须理解何为并发，以及并发与并行的区别。  </p>
+<h2 id="并发是什么？"><a href="#并发是什么？" class="headerlink" title="并发是什么？"></a>并发是什么？</h2><p>并发是指立即处理多个任务的能力。一个例子就能很好地说明这一点。  </p>
+<p>我们可以想象一个人正在跑步。假如在他晨跑时，鞋带突然松了。于是他停下来，系一下鞋带，接下来继续跑。这个例子就是典型的并发。这个人能够一下搞定跑步和系鞋带两件事，即立即处理多个任务。  </p>
+<h2 id="并行是什么？并行和并发有何区别？"><a href="#并行是什么？并行和并发有何区别？" class="headerlink" title="并行是什么？并行和并发有何区别？"></a>并行是什么？并行和并发有何区别？</h2><p>并行是指同时处理多个任务。这听起来和并发差不多，但其实完全不同。  </p>
+<p>我们同样用这个跑步的例子来帮助理解。假如这个人在慢跑时，还在用他的 iPod 听着音乐。在这里，他是在跑步的同时听音乐，也就是同时处理多个任务。这称之为并行。  </p>
+<h2 id="从技术上看并发和并行"><a href="#从技术上看并发和并行" class="headerlink" title="从技术上看并发和并行"></a>从技术上看并发和并行</h2><p>通过现实中的例子，我们已经明白了什么是并发，以及并发与并行的区别。作为一名极客，我们接下来从技术的角度来考察并发和并行。:)  </p>
+<p>假如我们正在编写一个 web 浏览器。这个 web 浏览器有各种组件。其中两个分别是 web  页面的渲染区和从网上下载文件的下载器。假设我们已经构建好了浏览器代码，各个组件也都可以相互独立地运行（通过像 Java  里的线程，或者通过即将介绍的 Go 语言中的 Go 协程来实现）。当浏览器在单核处理器中运行时，处理器会在浏览器的两个组件间进行上下文切换。它可能在一段时间内下载文件，转而又对用户请求的  web 页面进行渲染。这就是并发。并发的进程从不同的时间点开始，分别交替运行。在这里，就是在不同的时间点开始进行下载和渲染，并相互交替运行的。   </p>
+<p>如果该浏览器在一个多核处理器上运行，此时下载文件的组件和渲染 HTML 的组件可能会在不同的核上同时运行。这称之为并行。  </p>
+<p><img src="https://raw.githubusercontent.com/studygolang/gctt-images/master/golang-series/concurrency-parallelism-copy.png" alt="image"></p>
+<p>并行不一定会加快运行速度，因为并行运行的组件之间可能需要相互通信。在我们浏览器的例子里，当文件下载完成后，应当对用户进行提醒，比如弹出一个窗口。于是，在负责下载的组件和负责渲染用户界面的组件之间，就产生了通信。在并发系统上，这种通信开销很小。但在多核的并行系统上，组件间的通信开销就很高了。所以，并行不一定会加快运行速度！</p>
+<h2 id="Go-对并发的支持"><a href="#Go-对并发的支持" class="headerlink" title="Go 对并发的支持"></a>Go 对并发的支持</h2><p>Go 编程语言原生支持并发。Go 使用 Go 协程（Goroutine） 和信道（Channel）来处理并发。在接下来的教程里，我们还会详细介绍它们。  </p>
 </section>
     <!-- Tags START -->
     
@@ -173,17 +162,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/01-HelloWorld/">
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/19-%E6%8E%A5%E5%8F%A3%EF%BC%88%E4%BA%8C%EF%BC%89/">
         <span class="nav-arrow">← </span>
         
-          2-Hello World
+          19-接口（二）
         
       </a>
     
     
-      <a class="nav-right" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/01-Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/">
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/18-%E6%8E%A5%E5%8F%A3%EF%BC%88%E4%B8%80%EF%BC%89/">
         
-          01-Go语言介绍
+          18-接口（一）
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -233,7 +222,7 @@
   <!-- 不蒜子统计 -->
     <strong class="toc-title">目录</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B9%B6%E5%8F%91%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-nav-text">并发是什么？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E5%B9%B6%E8%A1%8C%E5%92%8C%E5%B9%B6%E5%8F%91%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-nav-text">并行是什么？并行和并发有何区别？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BB%8E%E6%8A%80%E6%9C%AF%E4%B8%8A%E7%9C%8B%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-nav-text">从技术上看并发和并行</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Go-%E5%AF%B9%E5%B9%B6%E5%8F%91%E7%9A%84%E6%94%AF%E6%8C%81"><span class="toc-nav-text">Go 对并发的支持</span></a></li></ol>
     
   </div>
 </aside>
@@ -243,7 +232,7 @@
 
 <script>
   (function () {
-    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/1-环境搭建/04-VSCode配置/';
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/20-并发入门/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -305,7 +294,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "04-VSCode配置",
+        id: "20-并发入门",
         owner: "",
         repo: "",
         oauth: {

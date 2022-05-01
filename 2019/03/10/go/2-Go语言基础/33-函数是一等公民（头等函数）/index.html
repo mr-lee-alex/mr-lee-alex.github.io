@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      33-函数是一等公民（头等函数） | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>33-函数是一等公民（头等函数）</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>现在简单概括一下本教程讨论的内容：</p>
+<ul>
+<li>什么是头等函数？</li>
+<li>匿名函数</li>
+<li>用户自定义的函数类型</li>
+<li>高阶函数<ul>
+<li>把函数作为参数，传递给其它函数</li>
+<li>在其它函数中返回函数</li>
+</ul>
+</li>
+<li>闭包</li>
+<li>头等函数的实际用途</li>
+</ul>
+<h2 id="什么是头等函数？"><a href="#什么是头等函数？" class="headerlink" title="什么是头等函数？"></a>什么是头等函数？</h2><p><strong>支持头等函数（First Class Function）的编程语言，可以把函数赋值给变量，也可以把函数作为其它函数的参数或者返回值。Go 语言支持头等函数的机制</strong>。</p>
+<p>本教程我们会讨论头等函数的语法和用例。</p>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>我们来编写一个简单的示例，把函数赋值给一个变量。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;hello world first class function&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    a()</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%T&quot;</span>, a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，我们将一个函数赋值给了变量 <code>a</code>（第 8 行）。这是把函数赋值给变量的语法。你如果观察得仔细的话，会发现赋值给 <code>a</code> 的函数没有名称。<strong>由于没有名称，这类函数称为匿名函数（Anonymous Function）</strong>。</p>
+<p>调用该函数的唯一方法就是使用变量 <code>a</code>。我们在下一行调用了它。<code>a()</code> 调用了这个函数，打印出 <code>hello world first class function</code>。在第 12 行，我们打印出 <code>a</code> 的类型。这会输出 <code>func()</code>。</p>
+<p>运行该程序，会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hello world first class function</span><br><span class="line">func()</span><br></pre></td></tr></table></figure>
+
+<p>要调用一个匿名函数，可以不用赋值给变量。通过下面的例子，我们看看这是怎么做到的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;hello world first class function&quot;</span>)</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，第 8 行定义了一个匿名函数，并在定义之后，我们使用 <code>()</code> 立即调用了该函数（第 10 行）。该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world first class function</span><br></pre></td></tr></table></figure>
+
+<p>就像其它函数一样，还可以向匿名函数传递参数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">func</span><span class="params">(n <span class="type">string</span>)</span></span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Welcome&quot;</span>, n)</span><br><span class="line">    &#125;(<span class="string">&quot;Gophers&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，我们向匿名函数传递了一个字符串参数（第 10 行）。运行该程序后会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome Gophers</span><br></pre></td></tr></table></figure>
+
+<h2 id="用户自定义的函数类型"><a href="#用户自定义的函数类型" class="headerlink" title="用户自定义的函数类型"></a>用户自定义的函数类型</h2><p>正如我们定义自己的结构体类型一样，我们可以定义自己的函数类型。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> add <span class="function"><span class="keyword">func</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span></span><br></pre></td></tr></table></figure>
+
+<p>以上代码片段创建了一个新的函数类型 <code>add</code>，它接收两个整型参数，并返回一个整型。现在我们来定义 <code>add</code> 类型的变量。</p>
+<p>我们来编写一个程序，定义一个 <code>add</code> 类型的变量。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> add <span class="function"><span class="keyword">func</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> a add = <span class="function"><span class="keyword">func</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line">    &#125;</span><br><span class="line">    s := a(<span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Sum&quot;</span>, s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 10 行，我们定义了一个 <code>add</code> 类型的变量 <code>a</code>，并向它赋值了一个符合 <code>add</code> 类型签名的函数。我们在第 13 行调用了该函数，并将结果赋值给 <code>s</code>。该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sum 11</span><br></pre></td></tr></table></figure>
+
+<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><p>高阶函数（Hiher-order Function）定义为：<strong>满足下列条件之一的函数</strong>：</p>
+<ul>
+<li><strong>接收一个或多个函数作为参数</strong></li>
+<li><strong>返回值是一个函数</strong></li>
+</ul>
+<p>针对上述两种情况，我们看看一些简单实例。</p>
+<h3 id="把函数作为参数，传递给其它函数"><a href="#把函数作为参数，传递给其它函数" class="headerlink" title="把函数作为参数，传递给其它函数"></a>把函数作为参数，传递给其它函数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">simple</span><span class="params">(a <span class="keyword">func</span>(a, b <span class="type">int</span>)</span></span> <span class="type">int</span>) &#123;  </span><br><span class="line">    fmt.Println(a(<span class="number">60</span>, <span class="number">7</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    f := <span class="function"><span class="keyword">func</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line">    &#125;</span><br><span class="line">    simple(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的实例中，第 7 行我们定义了一个函数 <code>simple</code>，<code>simple</code> 接收一个函数参数（该函数接收两个 <code>int</code> 参数，返回一个 <code>a</code> 整型）。在 <code>main</code> 函数的第 12 行，我们创建了一个匿名函数 <code>f</code>，其签名符合 <code>simple</code> 函数的参数。我们在下一行调用了 <code>simple</code>，并传递了参数 <code>f</code>。该程序打印输出 67。</p>
+<h3 id="在其它函数中返回函数"><a href="#在其它函数中返回函数" class="headerlink" title="在其它函数中返回函数"></a>在其它函数中返回函数</h3><p>现在我们重写上面的代码，在 <code>simple</code> 函数中返回一个函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">simple</span><span class="params">()</span></span> <span class="function"><span class="keyword">func</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;  </span><br><span class="line">    f := <span class="function"><span class="keyword">func</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    s := simple()</span><br><span class="line">    fmt.Println(s(<span class="number">60</span>, <span class="number">7</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序中，第 7 行的 <code>simple</code> 函数返回了一个函数，并接受两个 <code>int</code> 参数，返回一个 <code>int</code>。</p>
+<p>在第 15 行，我们调用了 <code>simple</code> 函数。我们把 <code>simple</code> 的返回值赋值给了 <code>s</code>。现在 <code>s</code> 包含了 <code>simple</code> 函数返回的函数。我们调用了 <code>s</code>，并向它传递了两个 int 参数（第 16 行）。该程序输出 67。</p>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包（Closure）是匿名函数的一个特例。当一个匿名函数所访问的变量定义在函数体的外部时，就称这样的匿名函数为闭包。</p>
+<p>看看一个示例就明白了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="number">5</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;a =&quot;</span>, a)</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，匿名函数在第 10 行访问了变量 <code>a</code>，而 <code>a</code> 存在于函数体的外部。因此这个匿名函数就是闭包。</p>
+<p>每一个闭包都会绑定一个它自己的外围变量（Surrounding Variable）。我们通过一个简单示例来体会这句话的含义。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">appendStr</span><span class="params">()</span></span> <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>)</span></span> <span class="type">string</span> &#123;  </span><br><span class="line">    t := <span class="string">&quot;Hello&quot;</span></span><br><span class="line">    c := <span class="function"><span class="keyword">func</span><span class="params">(b <span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">        t = t + <span class="string">&quot; &quot;</span> + b</span><br><span class="line">        <span class="keyword">return</span> t</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := appendStr()</span><br><span class="line">    b := appendStr()</span><br><span class="line">    fmt.Println(a(<span class="string">&quot;World&quot;</span>))</span><br><span class="line">    fmt.Println(b(<span class="string">&quot;Everyone&quot;</span>))</span><br><span class="line"></span><br><span class="line">    fmt.Println(a(<span class="string">&quot;Gopher&quot;</span>))</span><br><span class="line">    fmt.Println(b(<span class="string">&quot;!&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序中，函数 <code>appendStr</code> 返回了一个闭包。这个闭包绑定了变量 <code>t</code>。我们来理解这是什么意思。</p>
+<p>在第 17 行和第 18 行声明的变量 <code>a</code> 和 <code>b</code> 都是闭包，它们绑定了各自的 <code>t</code> 值。</p>
+<p>我们首先用参数 <code>World</code> 调用了 <code>a</code>。现在 <code>a</code> 中 <code>t</code> 值变为了 <code>Hello World</code>。</p>
+<p>在第 20 行，我们又用参数 <code>Everyone</code> 调用了 <code>b</code>。由于 <code>b</code> 绑定了自己的变量 <code>t</code>，因此 <code>b</code> 中的 <code>t</code> 还是等于初始值 <code>Hello</code>。于是该函数调用之后，<code>b</code> 中的 <code>t</code> 变为了 <code>Hello Everyone</code>。程序的其他部分很简单，不再解释。</p>
+<p>该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hello World  </span><br><span class="line">Hello Everyone  </span><br><span class="line">Hello World Gopher  </span><br><span class="line">Hello Everyone !</span><br></pre></td></tr></table></figure>
+
+<h2 id="头等函数的实际用途"><a href="#头等函数的实际用途" class="headerlink" title="头等函数的实际用途"></a>头等函数的实际用途</h2><p>迄今为止，我们已经定义了什么是头等函数，也看了一些专门设计的示例，来学习它们如何工作。现在我们来编写一些实际的程序，来展现头等函数的实际用处。</p>
+<p>我们会创建一个程序，基于一些条件，来过滤一个 <code>students</code> 切片。现在我们来逐步实现它。</p>
+<p>首先定义一个 <code>student</code> 类型。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;  </span><br><span class="line">    firstName <span class="type">string</span></span><br><span class="line">    lastName <span class="type">string</span></span><br><span class="line">    grade <span class="type">string</span></span><br><span class="line">    country <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下一步是编写一个 <code>filter</code> 函数。该函数接收一个 <code>students</code> 切片和一个函数作为参数，这个函数会计算一个学生是否满足筛选条件。写出这个函数后，你很快就会明白，我们继续吧。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">filter</span><span class="params">(s []student, f <span class="keyword">func</span>(student)</span></span> <span class="type">bool</span>) []student &#123;  </span><br><span class="line">    <span class="keyword">var</span> r []student</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> s &#123;</span><br><span class="line">        <span class="keyword">if</span> f(v) == <span class="literal">true</span> &#123;</span><br><span class="line">            r = <span class="built_in">append</span>(r, v)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的函数中，<code>filter</code> 的第二个参数是一个函数。这个函数接收 <code>student</code> 参数，返回一个 <code>bool</code> 值。这个函数计算了某一学生是否满足筛选条件。我们在第 3 行遍历了 <code>student</code> 切片，将每个学生作为参数传递给了函数 <code>f</code>。如果该函数返回 <code>true</code>，就表示该学生通过了筛选条件，接着将该学生添加到了结果切片 <code>r</code> 中。你可能会很困惑这个函数的实际用途，等我们完成程序你就知道了。我添加了 <code>main</code> 函数，整个程序如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;  </span><br><span class="line">    firstName <span class="type">string</span></span><br><span class="line">    lastName  <span class="type">string</span></span><br><span class="line">    grade     <span class="type">string</span></span><br><span class="line">    country   <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">filter</span><span class="params">(s []student, f <span class="keyword">func</span>(student)</span></span> <span class="type">bool</span>) []student &#123;  </span><br><span class="line">    <span class="keyword">var</span> r []student</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> s &#123;</span><br><span class="line">        <span class="keyword">if</span> f(v) == <span class="literal">true</span> &#123;</span><br><span class="line">            r = <span class="built_in">append</span>(r, v)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    s1 := student&#123;</span><br><span class="line">        firstName: <span class="string">&quot;Naveen&quot;</span>,</span><br><span class="line">        lastName:  <span class="string">&quot;Ramanathan&quot;</span>,</span><br><span class="line">        grade:     <span class="string">&quot;A&quot;</span>,</span><br><span class="line">        country:   <span class="string">&quot;India&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    s2 := student&#123;</span><br><span class="line">        firstName: <span class="string">&quot;Samuel&quot;</span>,</span><br><span class="line">        lastName:  <span class="string">&quot;Johnson&quot;</span>,</span><br><span class="line">        grade:     <span class="string">&quot;B&quot;</span>,</span><br><span class="line">        country:   <span class="string">&quot;USA&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    s := []student&#123;s1, s2&#125;</span><br><span class="line">    f := filter(s, <span class="function"><span class="keyword">func</span><span class="params">(s student)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> s.grade == <span class="string">&quot;B&quot;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;)</span><br><span class="line">    fmt.Println(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main</code> 函数中，我们首先创建了两个学生 <code>s1</code> 和 <code>s2</code>，并将他们添加到了切片 <code>s</code>。现在假设我们想要查询所有成绩为 <code>B</code> 的学生。为了实现这样的功能，我们传递了一个检查学生成绩是否为 <code>B</code> 的函数，如果是，该函数会返回 <code>true</code>。我们把这个函数作为参数传递给了 <code>filter</code> 函数（第 38 行）。上述程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;Samuel Johnson B USA&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>假设我们想要查找所有来自印度的学生。通过修改传递给 <code>filter</code> 的函数参数，就很容易地实现了。</p>
+<p>实现它的代码如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c := filter(s, <span class="function"><span class="keyword">func</span><span class="params">(s student)</span></span> <span class="type">bool</span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> s.country == <span class="string">&quot;India&quot;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">fmt.Println(c)</span><br></pre></td></tr></table></figure>
+
+<p>请将该函数添加到 <code>main</code> 函数，并检查它的输出。</p>
+<p>我们最后再编写一个程序，来结束这一节的讨论。这个程序会对切片的每个元素执行相同的操作，并返回结果。例如，如果我们希望将切片中的所有整数乘以 5，并返回出结果，那么通过头等函数可以很轻松地实现。我们把这种对集合中的每个元素进行操作的函数称为 <code>map</code> 函数。相关代码如下所示，它们很容易看懂。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">iMap</span><span class="params">(s []<span class="type">int</span>, f <span class="keyword">func</span>(<span class="type">int</span>)</span></span> <span class="type">int</span>) []<span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> r []<span class="type">int</span></span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> s &#123;</span><br><span class="line">        r = <span class="built_in">append</span>(r, f(v))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := []<span class="type">int</span>&#123;<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">    r := iMap(a, <span class="function"><span class="keyword">func</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> n * <span class="number">5</span></span><br><span class="line">    &#125;)</span><br><span class="line">    fmt.Println(r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[25 30 35 40 45]</span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/34-%E5%8F%8D%E5%B0%84/">
+        <span class="nav-arrow">← </span>
+        
+          34-反射
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/32-panic%E5%92%8Crecover/">
+        
+          32-panic和recover
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%B4%E7%AD%89%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="toc-nav-text">什么是头等函数？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="toc-nav-text">匿名函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">用户自定义的函数类型</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-nav-text">高阶函数</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8A%8A%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%EF%BC%8C%E4%BC%A0%E9%80%92%E7%BB%99%E5%85%B6%E5%AE%83%E5%87%BD%E6%95%B0"><span class="toc-nav-text">把函数作为参数，传递给其它函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8%E5%85%B6%E5%AE%83%E5%87%BD%E6%95%B0%E4%B8%AD%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0"><span class="toc-nav-text">在其它函数中返回函数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-nav-text">闭包</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%A4%B4%E7%AD%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E9%99%85%E7%94%A8%E9%80%94"><span class="toc-nav-text">头等函数的实际用途</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/33-函数是一等公民（头等函数）/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "33-函数是一等公民（头等函数）",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

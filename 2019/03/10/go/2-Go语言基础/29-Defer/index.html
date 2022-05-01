@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      29-Defer | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>29-Defer</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="什么是-defer？"><a href="#什么是-defer？" class="headerlink" title="什么是 defer？"></a>什么是 defer？</h2><p><code>defer</code> 语句的用途是：含有 <code>defer</code> 语句的函数，会在该函数将要返回之前，调用另一个函数。这个定义可能看起来很复杂，我们通过一个示例就很容易明白了。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">finished</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Println(<span class="string">&quot;Finished finding largest&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">largest</span><span class="params">(nums []<span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">defer</span> finished()</span><br><span class="line">    fmt.Println(<span class="string">&quot;Started finding largest&quot;</span>)</span><br><span class="line">    max := nums[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        <span class="keyword">if</span> v &gt; max &#123;</span><br><span class="line">            max = v</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Largest number in&quot;</span>, nums, <span class="string">&quot;is&quot;</span>, max)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    nums := []<span class="type">int</span>&#123;<span class="number">78</span>, <span class="number">109</span>, <span class="number">2</span>, <span class="number">563</span>, <span class="number">300</span>&#125;</span><br><span class="line">    largest(nums)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序很简单，就是找出一个给定切片的最大值。<code>largest</code> 函数接收一个 int 类型的<a target="_blank" rel="noopener" href="https://studygolang.com/articles/12121">切片</a>作为参数，然后打印出该切片中的最大值。<code>largest</code> 函数的第一行的语句为 <code>defer finished()</code>。这表示在 <code>finished()</code> 函数将要返回之前，会调用 <code>finished()</code> 函数。运行该程序，你会看到有如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Started finding largest  </span><br><span class="line">Largest number in [78 109 2 563 300] is 563  </span><br><span class="line">Finished finding largest</span><br></pre></td></tr></table></figure>
+
+<p><code>largest</code> 函数开始执行后，会打印上面的两行输出。而就在 <code>largest</code> 将要返回的时候，又调用了我们的延迟函数（Deferred Function），打印出 <code>Finished finding largest</code> 的文本。</p>
+<h2 id="延迟方法"><a href="#延迟方法" class="headerlink" title="延迟方法"></a>延迟方法</h2><p><code>defer</code> 不仅限于[函数]的调用，调用[方法]也是合法的。我们写一个小程序来测试吧。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span> &#123;  </span><br><span class="line">    firstName <span class="type">string</span></span><br><span class="line">    lastName <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span></span> fullName() &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s %s&quot;</span>,p.firstName,p.lastName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    p := person &#123;</span><br><span class="line">        firstName: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">        lastName: <span class="string">&quot;Smith&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> p.fullName()</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Welcome &quot;</span>)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，我们在第 22 行延迟了一个方法调用。而其他的代码很直观，这里不再解释。该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome John Smith</span><br></pre></td></tr></table></figure>
+
+<h2 id="实参取值（Arguments-Evaluation）"><a href="#实参取值（Arguments-Evaluation）" class="headerlink" title="实参取值（Arguments Evaluation）"></a>实参取值（Arguments Evaluation）</h2><p>在 Go 语言中，并非在调用延迟函数的时候才确定实参，而是当执行 <code>defer</code> 语句的时候，就会对延迟函数的实参进行求值。</p>
+<p>通过一个例子就能够理解了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printA</span><span class="params">(a <span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a in deferred function&quot;</span>, a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="number">5</span></span><br><span class="line">    <span class="keyword">defer</span> printA(a)</span><br><span class="line">    a = <span class="number">10</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a before deferred function call&quot;</span>, a)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序里的第 11 行，<code>a</code> 的初始值为 5。在第 12 行执行 <code>defer</code> 语句的时候，由于 <code>a</code> 等于 5，因此延迟函数 <code>printA</code> 的实参也等于 5。接着我们在第 13 行将 <code>a</code> 的值修改为 10。下一行会打印出 <code>a</code> 的值。该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value of a before deferred function call 10  </span><br><span class="line">value of a in deferred function 5</span><br></pre></td></tr></table></figure>
+
+<p>从上面的输出，我们可以看出，在调用了 <code>defer</code> 语句后，虽然我们将 <code>a</code> 修改为 10，但调用延迟函数 <code>printA(a)</code>后，仍然打印的是 5。</p>
+<h2 id="defer-栈"><a href="#defer-栈" class="headerlink" title="defer 栈"></a>defer 栈</h2><p>当一个函数内多次调用 <code>defer</code> 时，Go 会把 <code>defer</code> 调用放入到一个栈中，随后按照后进先出（Last In First Out, LIFO）的顺序执行。</p>
+<p>我们下面编写一个小程序，使用 <code>defer</code> 栈，将一个字符串逆序打印。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    name := <span class="string">&quot;Naveen&quot;</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;Orignal String: %s\n&quot;</span>, <span class="type">string</span>(name))</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Reversed String: &quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> []<span class="type">rune</span>(name) &#123;</span><br><span class="line">        <span class="keyword">defer</span> fmt.Printf(<span class="string">&quot;%c&quot;</span>, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序中的第 11 行，<code>for range</code> 循环会遍历一个字符串，并在第 12 行调用了 <code>defer fmt.Printf(&quot;%c&quot;, v)</code>。这些延迟调用会添加到一个栈中，按照后进先出的顺序执行，因此，该字符串会逆序打印出来。该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Orignal String: Naveen  </span><br><span class="line">Reversed String: neevaN</span><br></pre></td></tr></table></figure>
+
+<h2 id="defer-的实际应用"><a href="#defer-的实际应用" class="headerlink" title="defer 的实际应用"></a>defer 的实际应用</h2><p>目前为止，我们看到的代码示例，都没有体现出 <code>defer</code> 的实际用途。本节我们会看看 <code>defer</code> 的实际应用。</p>
+<p>当一个函数应该在与当前代码流（Code Flow）无关的环境下调用时，可以使用 <code>defer</code>。我们通过一个用到了 [<code>WaitGroup</code>] 代码示例来理解这句话的含义。我们首先会写一个没有使用 <code>defer</code> 的程序，然后我们会用 <code>defer</code> 来修改，看到 <code>defer</code> 带来的好处。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;  </span><br><span class="line">    length <span class="type">int</span></span><br><span class="line">    width  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> area(wg *sync.WaitGroup) &#123;  </span><br><span class="line">    <span class="keyword">if</span> r.length &lt; <span class="number">0</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;rect %v&#x27;s length should be greater than zero\n&quot;</span>, r)</span><br><span class="line">        wg.Done()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r.width &lt; <span class="number">0</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;rect %v&#x27;s width should be greater than zero\n&quot;</span>, r)</span><br><span class="line">        wg.Done()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    area := r.length * r.width</span><br><span class="line">    fmt.Printf(<span class="string">&quot;rect %v&#x27;s area %d\n&quot;</span>, r, area)</span><br><span class="line">    wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    r1 := rect&#123;<span class="number">-67</span>, <span class="number">89</span>&#125;</span><br><span class="line">    r2 := rect&#123;<span class="number">5</span>, <span class="number">-67</span>&#125;</span><br><span class="line">    r3 := rect&#123;<span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">    rects := []rect&#123;r1, r2, r3&#125;</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> rects &#123;</span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> v.area(&amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;All go routines finished executing&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序里，我们在第 8 行创建了 <code>rect</code> 结构体，并在第 13 行创建了 <code>rect</code> 的方法 <code>area</code>，计算出矩形的面积。<code>area</code> 检查了矩形的长宽是否小于零。如果矩形的长宽小于零，它会打印出对应的提示信息，而如果大于零，它会打印出矩形的面积。</p>
+<p><code>main</code> 函数创建了 3 个 <code>rect</code> 类型的变量：<code>r1</code>、<code>r2</code> 和 <code>r3</code>。在第 34 行，我们把这 3 个变量添加到了 <code>rects</code> 切片里。该切片接着使用 <code>for range</code> 循环遍历，把 <code>area</code> 方法作为一个并发的 Go 协程进行调用（第 37 行）。我们用 <code>WaitGroup wg</code> 来确保 <code>main</code> 函数在其他协程执行完毕之后，才会结束执行。<code>WaitGroup</code> 作为参数传递给 <code>area</code> 方法后，在第 16 行、第 21 行和第 26 行通知 <code>main</code> 函数，表示现在协程已经完成所有任务。<strong>如果你仔细观察，会发现 wg.Done() 只在 area 函数返回的时候才会调用。wg.Done() 应该在 area 将要返回之前调用，并且与代码流的路径（Path）无关，因此我们可以只调用一次 defer，来有效地替换掉 wg.Done() 的多次调用</strong>。</p>
+<p>我们来用 <code>defer</code> 来重写上面的代码。</p>
+<p>在下面的代码中，我们移除了原先程序中的 3 个 <code>wg.Done</code> 的调用，而是用一个单独的 <code>defer wg.Done()</code> 来取代它（第 14 行）。这使得我们的代码更加简洁易懂。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;  </span><br><span class="line">    length <span class="type">int</span></span><br><span class="line">    width  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> area(wg *sync.WaitGroup) &#123;  </span><br><span class="line">    <span class="keyword">defer</span> wg.Done()</span><br><span class="line">    <span class="keyword">if</span> r.length &lt; <span class="number">0</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;rect %v&#x27;s length should be greater than zero\n&quot;</span>, r)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r.width &lt; <span class="number">0</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;rect %v&#x27;s width should be greater than zero\n&quot;</span>, r)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    area := r.length * r.width</span><br><span class="line">    fmt.Printf(<span class="string">&quot;rect %v&#x27;s area %d\n&quot;</span>, r, area)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    r1 := rect&#123;<span class="number">-67</span>, <span class="number">89</span>&#125;</span><br><span class="line">    r2 := rect&#123;<span class="number">5</span>, <span class="number">-67</span>&#125;</span><br><span class="line">    r3 := rect&#123;<span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">    rects := []rect&#123;r1, r2, r3&#125;</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> rects &#123;</span><br><span class="line">        wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">go</span> v.area(&amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;All go routines finished executing&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rect &#123;8 9&#125;&#x27;s area 72  </span><br><span class="line">rect &#123;-67 89&#125;&#x27;s length should be greater than zero  </span><br><span class="line">rect &#123;5 -67&#125;&#x27;s width should be greater than zero  </span><br><span class="line">All go routines finished executing</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序中，使用 <code>defer</code> 还有一个好处。假设我们使用 <code>if</code> 条件语句，又给 <code>area</code> 方法添加了一条返回路径（Return Path）。如果没有使用 <code>defer</code> 来调用 <code>wg.Done()</code>，我们就得很小心了，确保在这条新添的返回路径里调用了 <code>wg.Done()</code>。由于现在我们延迟调用了 <code>wg.Done()</code>，因此无需再为这条新的返回路径添加 <code>wg.Done()</code> 了。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/31-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF/">
+        <span class="nav-arrow">← </span>
+        
+          31-自定义错误
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/27-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/">
+        
+          27-组合取代继承
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-defer%EF%BC%9F"><span class="toc-nav-text">什么是 defer？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">示例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%BB%B6%E8%BF%9F%E6%96%B9%E6%B3%95"><span class="toc-nav-text">延迟方法</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%AE%9E%E5%8F%82%E5%8F%96%E5%80%BC%EF%BC%88Arguments-Evaluation%EF%BC%89"><span class="toc-nav-text">实参取值（Arguments Evaluation）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#defer-%E6%A0%88"><span class="toc-nav-text">defer 栈</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#defer-%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-nav-text">defer 的实际应用</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/29-Defer/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "29-Defer",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

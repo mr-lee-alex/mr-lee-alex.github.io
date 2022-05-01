@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      35-读取文件 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>35-读取文件</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>文件读取是所有编程语言中最常见的操作之一。本教程我们会学习如何使用 Go 读取文件。</p>
+<p>本教程分为如下小节。</p>
+<ul>
+<li>将整个文件读取到内存<ul>
+<li>使用绝对文件路径</li>
+<li>使用命令行标记来传递文件路径</li>
+<li>将文件绑定在二进制文件中</li>
+</ul>
+</li>
+<li>分块读取文件</li>
+<li>逐行读取文件</li>
+</ul>
+<h2 id="将整个文件读取到内存"><a href="#将整个文件读取到内存" class="headerlink" title="将整个文件读取到内存"></a>将整个文件读取到内存</h2><p>将整个文件读取到内存是最基本的文件操作之一。这需要使用 <code>ioutil</code>]包中的 <a target="_blank" rel="noopener" href="https://golang.org/pkg/io/ioutil/#ReadFile"><code>ReadFile</code></a> 函数。</p>
+<p>让我们在 Go 程序所在的目录中，读取一个文件。我已经在 GOPATH（译注：原文是 GOROOT，应该是笔误）中创建了文件夹，在该文件夹内部，有一个文本文件 <code>test.txt</code>，我们会使用 Go 程序 <code>filehandling.go</code> 来读取它。<code>test.txt</code> 包含文本 “Hello World. Welcome to file handling in Go”。我的文件夹结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">    filehandling</span><br><span class="line">        filehandling.go</span><br><span class="line">        test.txt</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们来看看代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    data, err := ioutil.ReadFile(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="type">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于无法在 playground 上读取文件，因此请在你的本地环境运行这个程序。</p>
+<p>在上述程序的第 9 行，程序会读取文件，并返回一个字节<a target="_blank" rel="noopener" href="https://studygolang.com/articles/12121">切片</a>，而这个切片保存在 <code>data</code> 中。在第 14 行，我们将 <code>data</code> 转换为 <code>string</code>，显示出文件的内容。</p>
+<p>请在 <strong>test.txt</strong> 所在的位置运行该程序。</p>
+<p>例如，对于 <strong>linux&#x2F;mac</strong>，如果 <strong>test.txt</strong> 位于 <strong>&#x2F;home&#x2F;naveen&#x2F;go&#x2F;src&#x2F;filehandling</strong>，可以使用下列步骤来运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /home/naveen/go/src/filehandling/</span><br><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>对于 <strong>windows</strong>，如果 <strong>test.txt</strong> 位于 <strong>C:\Users\naveen.r\go\src\filehandling</strong>，则使用下列步骤。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">cd</span> C:\Users\naveen.r\go\src\filehandling</span><br><span class="line">&gt; go install filehandling</span><br><span class="line">&gt; workspacepath\bin\filehandling.exe</span><br></pre></td></tr></table></figure>
+
+<p>该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<p>如果在其他位置运行这个程序（比如 <code>/home/userdirectory</code>），会打印下面的错误。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File reading error open test.txt: The system cannot find the file specified.</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 Go 是编译型语言。<code>go install</code> 会根据源代码创建一个二进制文件。二进制文件独立于源代码，可以在任何位置上运行。由于在运行二进制文件的位置上没有找到 <code>test.txt</code>，因此程序会报错，提示无法找到指定的文件。</p>
+<p>有三种方法可以解决这个问题。</p>
+<ol>
+<li>使用绝对文件路径</li>
+<li>使用命令行标记来传递文件路径</li>
+<li>将文件绑定在二进制文件中</li>
+</ol>
+<p>让我们来依次介绍。</p>
+<h3 id="1-使用绝对文件路径"><a href="#1-使用绝对文件路径" class="headerlink" title="1. 使用绝对文件路径"></a>1. 使用绝对文件路径</h3><p>要解决问题，最简单的方法就是传入绝对文件路径。我已经修改了程序，把路径改成了绝对路径。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    data, err := ioutil.ReadFile(<span class="string">&quot;/home/naveen/go/src/filehandling/test.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="type">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在可以在任何位置上运行程序，打印出 <code>test.txt</code> 的内容。</p>
+<p>例如，可以在我的家目录运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="variable">$HOME</span></span><br><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该程序打印出了 <code>test.txt</code> 的内容。</p>
+<p>看似这是一个简单的方法，但它的缺点是：文件必须放在程序指定的路径中，否则就会出错。</p>
+<h3 id="2-使用命令行标记来传递文件路径"><a href="#2-使用命令行标记来传递文件路径" class="headerlink" title="2. 使用命令行标记来传递文件路径"></a>2. 使用命令行标记来传递文件路径</h3><p>另一种解决方案是使用命令行标记来传递文件路径。使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/flag/">flag</a> 包，我们可以从输入的命令行获取到文件路径，接着读取文件内容。</p>
+<p>首先我们来看看 <code>flag</code> 包是如何工作的。<code>flag</code> 包有一个名为 <a target="_blank" rel="noopener" href="https://golang.org/pkg/flag/#String"><code>String</code></a> 的<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11892">函数</a>。该函数接收三个参数。第一个参数是标记名，第二个是默认值，第三个是标记的简短描述。</p>
+<p>让我们来编写程序，从命令行读取文件名。将 <code>filehandling.go</code> 的内容替换如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line">    fmt.Println(<span class="string">&quot;value of fpath is&quot;</span>, *fptr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序中第 8 行，通过 <code>String</code> 函数，创建了一个字符串标记，名称是 <code>fpath</code>，默认值是 <code>test.txt</code>，描述为 <code>file path to read from</code>。这个函数返回存储 flag 值的字符串<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11756">变量</a>的地址。</p>
+<p>在程序访问 flag 之前，必须先调用 <code>flag.Parse()</code>。</p>
+<p>在第 10 行，程序会打印出 flag 值。</p>
+<p>使用下面命令运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>我们传入 <code>/path-of-file/test.txt</code>，赋值给了 <code>fpath</code> 标记。</p>
+<p>该程序输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value of fpath is /path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 <code>fpath</code> 的默认值是 <code>test.txt</code>。</p>
+<p>现在我们知道如何从命令行读取文件路径了，让我们继续完成我们的文件读取程序。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line">    data, err := ioutil.ReadFile(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;File reading error&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, <span class="type">string</span>(data))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序里，命令行传入文件路径，程序读取了该文件的内容。使用下面命令运行该程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>请将 <code>/path-of-file/</code> 替换为 <code>test.txt</code> 的真实路径。该程序将打印：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-将文件绑定在二进制文件中"><a href="#3-将文件绑定在二进制文件中" class="headerlink" title="3. 将文件绑定在二进制文件中"></a>3. 将文件绑定在二进制文件中</h3><p>虽然从命令行获取文件路径的方法很好，但还有一种更好的解决方法。如果我们能够将文本文件捆绑在二进制文件，岂不是很棒？这就是我们下面要做的事情。</p>
+<p>有很多<a target="_blank" rel="noopener" href="https://studygolang.com/articles/11893">包</a>可以帮助我们实现。我们会使用 <a target="_blank" rel="noopener" href="https://github.com/gobuffalo/packr">packr</a>，因为它很简单，并且我在项目中使用它时，没有出现任何问题。</p>
+<p>第一步就是安装 <code>packr</code> 包。</p>
+<p>在命令提示符中输入下面命令，安装 <code>packr</code> 包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/gobuffalo/packr/...</span><br></pre></td></tr></table></figure>
+
+<p><code>packr</code> 会把静态文件（例如 <code>.txt</code> 文件）转换为 <code>.go</code> 文件，接下来，<code>.go</code> 文件会直接嵌入到二进制文件中。<code>packer</code> 非常智能，在开发过程中，可以从磁盘而非二进制文件中获取静态文件。在开发过程中，当仅仅静态文件变化时，可以不必重新编译。</p>
+<p>我们通过程序来更好地理解它。用以下内容来替换 <code>handling.go</code> 文件。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gobuffalo/packr&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    box := packr.NewBox(<span class="string">&quot;../filehandling&quot;</span>)</span><br><span class="line">    data := box.String(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Contents of file:&quot;</span>, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 10 行，我们创建了一个新盒子（New Box）。盒子表示一个文件夹，其内容会嵌入到二进制中。在这里，我指定了 <code>filehandling</code> 文件夹，其内容包含 <code>test.txt</code>。在下一行，我们读取了文件内容，并打印出来。</p>
+<p>在开发阶段时，我们可以使用 <code>go install</code> 命令来运行程序。程序可以正常运行。<code>packr</code> 非常智能，在开发阶段可以从磁盘加载文件。</p>
+<p>使用下面命令来运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go install filehandling</span><br><span class="line">workspacepath/bin/filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该命令可以在其他位置运行。<code>packr</code> 很聪明，可以获取传递给 <code>NewBox</code> 命令的目录的绝对路径。</p>
+<p>该程序会输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contents of file: Hello World. Welcome to file handling in Go.</span><br></pre></td></tr></table></figure>
+
+<p>你可以试着改变 <code>test.txt</code> 的内容，然后再运行 <code>filehandling</code>。可以看到，无需再次编译，程序打印出了 <code>test.txt</code> 的更新内容。完美！</p>
+<p>现在我们来看看如何将 <code>test.txt</code> 打包到我们的二进制文件中。我们使用 <code>packr</code> 命令来实现。</p>
+<p>运行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packr install -v filehandling</span><br></pre></td></tr></table></figure>
+
+<p>它会打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">building box ../filehandling</span><br><span class="line">packing file filehandling.go</span><br><span class="line">packed file filehandling.go</span><br><span class="line">packing file test.txt</span><br><span class="line">packed file test.txt</span><br><span class="line">built box ../filehandling with [<span class="string">&quot;filehandling.go&quot;</span> <span class="string">&quot;test.txt&quot;</span>]</span><br><span class="line">filehandling</span><br></pre></td></tr></table></figure>
+
+<p>该命令将静态文件绑定到了二进制文件中。</p>
+<p>在运行上述命令之后，使用命令 <code>workspacepath/bin/filehandling</code> 来运行程序。程序会打印出 <code>test.txt</code> 的内容。于是从二进制文件中，我们读取了 <code>test.txt</code> 的内容。</p>
+<p>如果你不知道文件到底是由二进制还是磁盘来提供，我建议你删除 <code>test.txt</code>，并在此运行 <code>filehandling</code> 命令。你将看到，程序打印出了 <code>test.txt</code> 的内容。太棒了:D。我们已经成功将静态文件嵌入到了二进制文件中。</p>
+<h2 id="分块读取文件"><a href="#分块读取文件" class="headerlink" title="分块读取文件"></a>分块读取文件</h2><p>在前面的章节，我们学习了如何把整个文件读取到内存。当文件非常大时，尤其在 RAM 存储量不足的情况下，把整个文件都读入内存是没有意义的。更好的方法是分块读取文件。这可以使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/bufio">bufio</a> 包来完成。</p>
+<p>让我们来编写一个程序，以 3 个字节的块为单位读取 <code>test.txt</code> 文件。如下所示，替换 <code>filehandling.go</code> 的内容。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;bufio&quot;</span></span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line"></span><br><span class="line">    f, err := os.Open(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err = f.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Fatal(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    r := bufio.NewReader(f)</span><br><span class="line">    b := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        _, err := r.Read(b)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">&quot;Error reading file:&quot;</span>, err)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println(<span class="type">string</span>(b))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序的第 15 行，我们使用命令行标记传递的路径，打开文件。</p>
+<p>在第 19 行，我们延迟了文件的关闭操作。</p>
+<p>在上面程序的第 24 行，我们新建了一个缓冲读取器（buffered reader）。在下一行，我们创建了长度和容量为 3 的字节切片，程序会把文件的字节读取到切片中。</p>
+<p>第 27 行的 <code>Read</code> <a target="_blank" rel="noopener" href="https://studygolang.com/articles/12264">方法</a>会读取 len(b) 个字节（达到 3 字节），并返回所读取的字节数。当到达文件最后时，它会返回一个 EOF 错误。程序的其他地方比较简单，不做解释。</p>
+<p>如果我们使用下面命令来运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go install filehandling</span><br><span class="line">$ wrkspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>会得到以下输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Hel</span><br><span class="line">lo</span><br><span class="line">Wor</span><br><span class="line">ld.</span><br><span class="line"> We</span><br><span class="line">lco</span><br><span class="line">me</span><br><span class="line">to</span><br><span class="line">fil</span><br><span class="line">e h</span><br><span class="line">and</span><br><span class="line">lin</span><br><span class="line">g i</span><br><span class="line">n G</span><br><span class="line">o.</span><br><span class="line">Error reading file: EOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="逐行读取文件"><a href="#逐行读取文件" class="headerlink" title="逐行读取文件"></a>逐行读取文件</h2><p>本节我们讨论如何使用 Go 逐行读取文件。这可以使用 <a target="_blank" rel="noopener" href="https://golang.org/pkg/bufio/">bufio</a> 来实现。</p>
+<p>请将 <code>test.txt</code> 替换为以下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello World. Welcome to file handling in Go.</span><br><span class="line">This is the second line of the file.</span><br><span class="line">We have reached the end of the file.</span><br></pre></td></tr></table></figure>
+
+<p>逐行读取文件涉及到以下步骤。</p>
+<ol>
+<li>打开文件；</li>
+<li>在文件上新建一个 scanner；</li>
+<li>扫描文件并且逐行读取。</li>
+</ol>
+<p>将 <code>filehandling.go</code> 替换为以下内容。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;bufio&quot;</span></span><br><span class="line">    <span class="string">&quot;flag&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fptr := flag.String(<span class="string">&quot;fpath&quot;</span>, <span class="string">&quot;test.txt&quot;</span>, <span class="string">&quot;file path to read from&quot;</span>)</span><br><span class="line">    flag.Parse()</span><br><span class="line"></span><br><span class="line">    f, err := os.Open(*fptr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err = f.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    s := bufio.NewScanner(f)</span><br><span class="line">    <span class="keyword">for</span> s.Scan() &#123;</span><br><span class="line">        fmt.Println(s.Text())</span><br><span class="line">    &#125;</span><br><span class="line">    err = s.Err()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序的第 15 行，我们用命令行标记传入的路径，打开文件。在第 24 行，我们用文件创建了一个新的 scanner。第 25 行的 <code>Scan()</code> 方法读取文件的下一行，如果可以读取，就可以使用 <code>Text()</code> 方法。</p>
+<p>当 <code>Scan</code> 返回 false 时，除非已经到达文件末尾（此时 <code>Err()</code> 返回 <code>nil</code>），否则 <code>Err()</code> 就会返回扫描过程中出现的错误。</p>
+<p>如果我使用下面命令来运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go install filehandling</span><br><span class="line">$ workspacepath/bin/filehandling -fpath=/path-of-file/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>程序会输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello World. Welcome to file handling in Go.</span><br><span class="line">This is the second line of the file.</span><br><span class="line">We have reached the end of the file.	</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/36-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/">
+        <span class="nav-arrow">← </span>
+        
+          36-写入文件
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/34-%E5%8F%8D%E5%B0%84/">
+        
+          34-反射
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B0%86%E6%95%B4%E4%B8%AA%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%88%B0%E5%86%85%E5%AD%98"><span class="toc-nav-text">将整个文件读取到内存</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="toc-nav-text">1. 使用绝对文件路径</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A0%87%E8%AE%B0%E6%9D%A5%E4%BC%A0%E9%80%92%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="toc-nav-text">2. 使用命令行标记来传递文件路径</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E5%B0%86%E6%96%87%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%9C%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-nav-text">3. 将文件绑定在二进制文件中</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%88%86%E5%9D%97%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-nav-text">分块读取文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%80%90%E8%A1%8C%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-nav-text">逐行读取文件</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/35-读取文件/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "35-读取文件",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      25-Mutex | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>25-Mutex</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h2><p>在学习 Mutex 之前，我们需要理解并发编程中临界区（Critical Section）的概念。当程序并发地运行时，多个 [Go 协程]不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。例如，假设我们有一段代码，将一个变量 <code>x</code> 自增 1。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = x + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>如果只有一个 Go 协程访问上面的代码段，那都没有任何问题。  </p>
+<p>但当有多个协程并发运行时，代码却会出错，让我们看看究竟是为什么吧。简单起见，假设在一行代码的前面，我们已经运行了两个 Go 协程。  </p>
+<p>在上一行代码的内部，系统执行程序时分为如下几个步骤（这里其实还有很多包括寄存器的技术细节，以及加法的工作原理等，但对于我们的系列教程，只需认为只有三个步骤就好了）：  </p>
+<ol>
+<li>获得 x 的当前值</li>
+<li>计算 x + 1</li>
+<li>将步骤 2 计算得到的值赋值给 x</li>
+</ol>
+<p>如果只有一个协程执行上面的三个步骤，不会有问题。  </p>
+<p>我们讨论一下当有两个并发的协程执行该代码时，会发生什么。下图描述了当两个协程并发地访问代码行 <code>x = x + 1</code> 时，可能出现的一种情况。 </p>
+<p><img src="/Users/liuqingzheng/Desktop/go%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/image-20190210180333643.png" alt="image-20190210180333643"></p>
+<p>我们假设 <code>x</code> 的初始值为 0。而协程 1 获取 <code>x</code> 的初始值，并计算 <code>x + 1</code>。而在协程 1 将计算值赋值给 <code>x</code> 之前，系统上下文切换到了协程 2。于是，协程 2 获取了 <code>x</code> 的初始值（依然为 0），并计算 <code>x + 1</code>。接着系统上下文又切换回了协程 1。现在，协程 1 将计算值 1 赋值给 <code>x</code>，因此 <code>x</code> 等于 1。然后，协程 2 继续开始执行，把计算值（依然是 1）复制给了 <code>x</code>，因此在所有协程执行完毕之后，<code>x</code> 都等于 1。  </p>
+<p>现在我们考虑另外一种可能发生的情况。  </p>
+<p><img src="/Users/liuqingzheng/Desktop/go%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/image-20190210180428162.png" alt="image-20190210180428162">  </p>
+<p>在上面的情形里，协程 1 开始执行，完成了三个步骤后结束，因此 <code>x</code> 的值等于 1。接着，开始执行协程 2。目前 <code>x</code> 的值等于 1。而当协程 2 执行完毕时，<code>x</code> 的值等于 2。  </p>
+<p>所以，从这两个例子你可以发现，根据上下文切换的不同情形，<code>x</code> 的最终值是 1 或者 2。这种不太理想的情况称为竞态条件（Race Condition），其程序的输出是由协程的执行顺序决定的。  </p>
+<p><strong>在上例中，如果在任意时刻只允许一个 Go 协程访问临界区，那么就可以避免竞态条件。而使用 Mutex 可以达到这个目的</strong>。  </p>
+<h2 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h2><p>Mutex 用于提供一种加锁机制（Locking Mechanism），可确保在某时刻只有一个协程在临界区运行，以防止出现竞态条件。  </p>
+<p>Mutex 可以在 [sync] 包内找到。[Mutex] 定义了两个方法：[Lock]和 [Unlock](。所有在 <code>Lock</code> 和 <code>Unlock</code> 之间的代码，都只能由一个 Go 协程执行，于是就可以避免竞态条件。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutex.Lock()  </span><br><span class="line">x = x + <span class="number">1</span>  </span><br><span class="line">mutex.Unlock()</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>x = x + 1</code> 只能由一个 Go 协程执行，因此避免了竞态条件。  </p>
+<p>如果有一个 Go 协程已经持有了锁（Lock），当其他协程试图获得该锁时，这些协程会被阻塞，直到 Mutex 解除锁定为止。  </p>
+<h2 id="含有竞态条件的程序"><a href="#含有竞态条件的程序" class="headerlink" title="含有竞态条件的程序"></a>含有竞态条件的程序</h2><p>在本节里，我们会编写一个含有竞态条件的程序，而在接下来一节，我们再修复竞态条件的问题。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">var</span> x  = <span class="number">0</span>  </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">(wg *sync.WaitGroup)</span></span> &#123;  </span><br><span class="line">    x = x + <span class="number">1</span></span><br><span class="line">    wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> w sync.WaitGroup</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">        w.Add(<span class="number">1</span>)        </span><br><span class="line">        <span class="keyword">go</span> increment(&amp;w)</span><br><span class="line">    &#125;</span><br><span class="line">    w.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;final value of x&quot;</span>, x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序里，第 7 行的 <code>increment</code> 函数把 <code>x</code> 的值加 1，并调用 [WaitGroup] 的 <code>Done()</code>，通知该函数已结束。  </p>
+<p>在上述程序的第 15 行，我们生成了 1000 个 <code>increment</code> 协程。每个 Go 协程并发地运行，由于第 8 行试图增加 <code>x</code> 的值，因此多个并发的协程试图访问 <code>x</code> 的值，这时就会发生竞态条件。  </p>
+<p>由于 [playground] 具有确定性，竞态条件不会在 playground 发生，请在你的本地运行该程序。请在你的本地机器上多运行几次，可以发现由于竞态条件，每一次输出都不同。我其中遇到的几次输出有 <code>final value of x 941</code>、<code>final value of x 928</code>、<code>final value of x 922</code> 等。  </p>
+<h2 id="使用-Mutex"><a href="#使用-Mutex" class="headerlink" title="使用 Mutex"></a>使用 Mutex</h2><p>在前面的程序里，我们创建了 1000 个 Go 协程。如果每个协程对 <code>x</code> 加 1，最终 <code>x</code> 期望的值应该是 1000。在本节，我们会在程序里使用 Mutex，修复竞态条件的问题。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">var</span> x  = <span class="number">0</span>  </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">(wg *sync.WaitGroup, m *sync.Mutex)</span></span> &#123;  </span><br><span class="line">    m.Lock()</span><br><span class="line">    x = x + <span class="number">1</span></span><br><span class="line">    m.Unlock()</span><br><span class="line">    wg.Done()   </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> w sync.WaitGroup</span><br><span class="line">    <span class="keyword">var</span> m sync.Mutex</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">        w.Add(<span class="number">1</span>)        </span><br><span class="line">        <span class="keyword">go</span> increment(&amp;w, &amp;m)</span><br><span class="line">    &#125;</span><br><span class="line">    w.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;final value of x&quot;</span>, x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>[Mutex]是一个结构体类型，我们在第 15 行创建了 <code>Mutex</code> 类型的变量 <code>m</code>，其值为零值。在上述程序里，我们修改了 <code>increment</code> 函数，将增加 <code>x</code> 的代码（<code>x = x + 1</code>）放置在 <code>m.Lock()</code> 和 <code>m.Unlock()</code>之间。现在这段代码不存在竞态条件了，因为任何时刻都只允许一个协程执行这段代码。  </p>
+<p>于是如果运行该程序，会输出：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final value of x 1000</span><br></pre></td></tr></table></figure>
+
+<p>在第 18 行，传递 Mutex 的地址很重要。如果传递的是 Mutex 的值，而非地址，那么每个协程都会得到 Mutex 的一份拷贝，竞态条件还是会发生。  </p>
+<h2 id="使用信道处理竞态条件"><a href="#使用信道处理竞态条件" class="headerlink" title="使用信道处理竞态条件"></a>使用信道处理竞态条件</h2><p>我们还能用信道来处理竞态条件。看看是怎么做的。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">var</span> x  = <span class="number">0</span>  </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">(wg *sync.WaitGroup, ch <span class="keyword">chan</span> <span class="type">bool</span>)</span></span> &#123;  </span><br><span class="line">    ch &lt;- <span class="literal">true</span></span><br><span class="line">    x = x + <span class="number">1</span></span><br><span class="line">    &lt;- ch</span><br><span class="line">    wg.Done()   </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> w sync.WaitGroup</span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">bool</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">        w.Add(<span class="number">1</span>)        </span><br><span class="line">        <span class="keyword">go</span> increment(&amp;w, ch)</span><br><span class="line">    &#125;</span><br><span class="line">    w.Wait()</span><br><span class="line">    fmt.Println(<span class="string">&quot;final value of x&quot;</span>, x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序中，我们创建了容量为 1 的[缓冲信道]，并在第 18 行将它传入 <code>increment</code> 协程。该缓冲信道用于保证只有一个协程访问增加 <code>x</code> 的临界区。具体的实现方法是在 <code>x</code> 增加之前（第 8 行），传入 <code>true</code> 给缓冲信道。由于缓冲信道的容量为 1，所以任何其他协程试图写入该信道时，都会发生阻塞，直到 <code>x</code> 增加后，信道的值才会被读取（第 10 行）。实际上这就保证了只允许一个协程访问临界区。  </p>
+<p>该程序也输出：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final value of x 1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="Mutex-vs-信道"><a href="#Mutex-vs-信道" class="headerlink" title="Mutex vs 信道"></a>Mutex vs 信道</h2><p>通过使用 Mutex  和信道，我们已经解决了竞态条件的问题。那么我们该选择使用哪一个？答案取决于你想要解决的问题。如果你想要解决的问题更适用于 Mutex，那么就用  Mutex。如果需要使用 Mutex，无须犹豫。而如果该问题更适用于信道，那就使用信道。:)  </p>
+<p>由于信道是 Go 语言很酷的特性，大多数 Go 新手处理每个并发问题时，使用的都是信道。这是不对的。Go 给了你选择 Mutex 和信道的余地，选择其中之一都可以是正确的。  </p>
+<p>总体说来，当 Go 协程需要与其他协程通信时，可以使用信道。而当只允许一个协程访问临界区时，可以使用 Mutex。  </p>
+<p>就我们上面解决的问题而言，我更倾向于使用 Mutex，因为该问题并不需要协程间的通信。所以 Mutex 是很自然的选择。  </p>
+<p>我的建议是去选择针对问题的工具，而别让问题去将就工具</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/26-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/">
+        <span class="nav-arrow">← </span>
+        
+          26-结构体取代类
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/24-Select/">
+        
+          24-Select
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%B4%E7%95%8C%E5%8C%BA"><span class="toc-nav-text">临界区</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Mutex"><span class="toc-nav-text">Mutex</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%90%AB%E6%9C%89%E7%AB%9E%E6%80%81%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="toc-nav-text">含有竞态条件的程序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8-Mutex"><span class="toc-nav-text">使用 Mutex</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E9%81%93%E5%A4%84%E7%90%86%E7%AB%9E%E6%80%81%E6%9D%A1%E4%BB%B6"><span class="toc-nav-text">使用信道处理竞态条件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Mutex-vs-%E4%BF%A1%E9%81%93"><span class="toc-nav-text">Mutex vs 信道</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/25-Mutex/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "25-Mutex",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

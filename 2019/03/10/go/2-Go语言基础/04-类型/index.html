@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      4-类型 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>4-类型</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>下面是 Go 支持的基本类型：</p>
+<ul>
+<li>bool</li>
+<li>数字类型<ul>
+<li>int8, int16, int32, int64, int</li>
+<li>uint8, uint16, uint32, uint64, uint</li>
+<li>float32, float64</li>
+<li>complex64, complex128</li>
+<li>byte</li>
+<li>rune</li>
+</ul>
+</li>
+<li>string</li>
+</ul>
+<h3 id="bool"><a href="#bool" class="headerlink" title="bool"></a>bool</h3><p>bool 类型表示一个布尔值，值为 true 或者 false。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="literal">true</span></span><br><span class="line">    b := <span class="literal">false</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;a:&quot;</span>, a, <span class="string">&quot;b:&quot;</span>, b)</span><br><span class="line">    c := a &amp;&amp; b</span><br><span class="line">    fmt.Println(<span class="string">&quot;c:&quot;</span>, c)</span><br><span class="line">    d := a || b</span><br><span class="line">    fmt.Println(<span class="string">&quot;d:&quot;</span>, d)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在上面的程序中，a 赋值为 true，b 赋值为 false。</p>
+<p>c 赋值为 a &amp;&amp; b。仅当 a 和 b 都为 true 时，操作符 &amp;&amp; 才返回 true。因此，在这里 c 为 false。</p>
+<p>当 a 或者 b 为 true 时，操作符 || 返回 true。在这里，由于 a 为 true，因此 d 也为 true。我们将得到程序的输出如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a: true b: false  </span><br><span class="line">c: false  </span><br><span class="line">d: true</span><br></pre></td></tr></table></figure>
+
+<h3 id="有符号整型"><a href="#有符号整型" class="headerlink" title="有符号整型"></a>有符号整型</h3><p><strong>int8</strong>：表示 8 位有符号整型<br><strong>大小</strong>：8 位<br><strong>范围</strong>：-128～127</p>
+<p><strong>int16</strong>：表示 16 位有符号整型<br><strong>大小</strong>：16 位<br><strong>范围</strong>：-32768～32767</p>
+<p><strong>int32</strong>：表示 32 位有符号整型<br><strong>大小</strong>：32 位<br><strong>范围</strong>：-2147483648～2147483647</p>
+<p><strong>int64</strong>：表示 64 位有符号整型<br><strong>大小</strong>：64 位<br><strong>范围</strong>：-9223372036854775808～9223372036854775807</p>
+<p><strong>int</strong>：根据不同的底层平台（Underlying Platform），表示 32 或 64 位整型。除非对整型的大小有特定的需求，否则你通常应该使用 <em>int</em> 表示整型。<br><strong>大小</strong>：在 32 位系统下是 32 位，而在 64 位系统下是 64 位。<br><strong>范围</strong>：在 32 位系统下是 -2147483648～2147483647，而在 64 位系统是 -9223372036854775808～9223372036854775807。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> a <span class="type">int</span> = <span class="number">89</span></span><br><span class="line">    b := <span class="number">95</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a is&quot;</span>, a, <span class="string">&quot;and b is&quot;</span>, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面程序会输出 <code>value of a is 89 and b is 95</code>。</p>
+<p>在上述程序中，a 是 int 类型，而 b 的类型通过赋值（95）推断得出。上面我们提到，int 类型的大小在 32 位系统下是 32 位，而在 64 位系统下是 64 位。接下来我们会证实这种说法。</p>
+<p>在 Printf 方法中，使用 <strong>%T</strong> 格式说明符（Format Specifier），可以打印出变量的类型。Go 的 <a target="_blank" rel="noopener" href="https://golang.org/pkg/unsafe/">unsafe</a> 包提供了一个 <a target="_blank" rel="noopener" href="https://golang.org/pkg/unsafe/#Sizeof">Sizeof</a> 函数，该函数接收变量并返回它的字节大小。<em>unsafe</em> 包应该小心使用，因为使用 unsafe 包可能会带来可移植性问题。不过出于本教程的目的，我们是可以使用的。</p>
+<p>下面程序会输出变量 a 和 b 的类型和大小。格式说明符 <code>%T</code> 用于打印类型，而 <code>%d</code> 用于打印字节大小。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;unsafe&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> a <span class="type">int</span> = <span class="number">89</span></span><br><span class="line">    b := <span class="number">95</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a is&quot;</span>, a, <span class="string">&quot;and b is&quot;</span>, b)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;type of a is %T, size of a is %d&quot;</span>, a, unsafe.Sizeof(a)) <span class="comment">// a 的类型和大小</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;\ntype of b is %T, size of b is %d&quot;</span>, b, unsafe.Sizeof(b)) <span class="comment">// b 的类型和大小</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">value of a is 89 and b is 95  </span><br><span class="line">type of a is int, size of a is 4  </span><br><span class="line">type of b is int, size of b is 4</span><br></pre></td></tr></table></figure>
+
+<p>从上面的输出，我们可以推断出 a 和 b 为 <em>int</em> 类型，且大小都是 32 位（4 字节）。如果你在 64 位系统上运行上面的代码，会有不同的输出。在 64 位系统下，a 和 b 会占用 64 位（8 字节）的大小。</p>
+<h3 id="无符号整型"><a href="#无符号整型" class="headerlink" title="无符号整型"></a>无符号整型</h3><p><strong>uint8</strong>：表示 8 位无符号整型<br><strong>大小</strong>：8 位<br><strong>范围</strong>：0～255</p>
+<p><strong>uint16</strong>：表示 16 位无符号整型<br><strong>大小</strong>：16 位<br><strong>范围</strong>：0～65535</p>
+<p><strong>uint32</strong>：表示 32 位无符号整型<br><strong>大小</strong>：32 位<br><strong>范围</strong>：0～4294967295</p>
+<p><strong>uint64</strong>：表示 64 位无符号整型<br><strong>大小</strong>：64 位<br><strong>范围</strong>：0～18446744073709551615</p>
+<p><strong>uint</strong>：根据不同的底层平台，表示 32 或 64 位无符号整型。<br><strong>大小</strong>：在 32 位系统下是 32 位，而在 64 位系统下是 64 位。<br><strong>范围</strong>：在 32 位系统下是 0～4294967295，而在 64 位系统是 0～18446744073709551615。</p>
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><p><strong>float32</strong>：32 位浮点数<br><strong>float64</strong>：64 位浮点数</p>
+<p>下面一个简单程序演示了整型和浮点型的运用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a, b := <span class="number">5.67</span>, <span class="number">8.97</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;type of a %T b %T\n&quot;</span>, a, b)</span><br><span class="line">    sum := a + b</span><br><span class="line">    diff := a - b</span><br><span class="line">    fmt.Println(<span class="string">&quot;sum&quot;</span>, sum, <span class="string">&quot;diff&quot;</span>, diff)</span><br><span class="line"></span><br><span class="line">    no1, no2 := <span class="number">56</span>, <span class="number">89</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;sum&quot;</span>, no1+no2, <span class="string">&quot;diff&quot;</span>, no1-no2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>a 和 b 的类型根据赋值推断得出。在这里，a 和 b 的类型为 float64（float64 是浮点数的默认类型）。我们把 a 和 b  的和赋值给变量 sum，把 b 和 a 的差赋值给 diff，接下来打印 sum 和 diff。no1 和 no2  也进行了相同的计算。上述程序将会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type of a float64 b float64  </span><br><span class="line">sum 14.64 diff -3.3000000000000007  </span><br><span class="line">sum 145 diff -33</span><br></pre></td></tr></table></figure>
+
+<h3 id="复数类型"><a href="#复数类型" class="headerlink" title="复数类型"></a>复数类型</h3><p><strong>complex64</strong>：实部和虚部都是 float32 类型的的复数。<br><strong>complex128</strong>：实部和虚部都是 float64 类型的的复数。</p>
+<p>内建函数 <strong>complex</strong>用于创建一个包含实部和虚部的复数。complex 函数的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func complex(r, i FloatType) ComplexType</span><br></pre></td></tr></table></figure>
+
+<p>该函数的参数分别是实部和虚部，并返回一个复数类型。实部和虚部应该是相同类型，也就是 float32 或  float64。如果实部和虚部都是 float32 类型，则函数会返回一个 complex64 类型的复数。如果实部和虚部都是 float64  类型，则函数会返回一个 complex128 类型的复数。</p>
+<p>还可以使用简短语法来创建复数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c := 6 + 7i</span><br></pre></td></tr></table></figure>
+
+<p>下面我们编写一个简单的程序来理解复数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    c1 := <span class="built_in">complex</span>(<span class="number">5</span>, <span class="number">7</span>)</span><br><span class="line">    c2 := <span class="number">8</span> + <span class="number">27i</span></span><br><span class="line">    cadd := c1 + c2</span><br><span class="line">    fmt.Println(<span class="string">&quot;sum:&quot;</span>, cadd)</span><br><span class="line">    cmul := c1 * c2</span><br><span class="line">    fmt.Println(<span class="string">&quot;product:&quot;</span>, cmul)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序里，c1 和 c2 是两个复数。c1的实部为 5，虚部为 7。c2 的实部为8，虚部为 27。c1 和 c2 的和赋值给 <code>cadd</code> ，而 c1 和 c2 的乘积赋值给 <code>cmul</code>。该程序将输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sum: (13+34i)  </span><br><span class="line">product: (-149+191i)</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他数字类型"><a href="#其他数字类型" class="headerlink" title="其他数字类型"></a>其他数字类型</h3><p><strong>byte</strong> 是 uint8 的别名。<br><strong>rune</strong> 是 int32 的别名。</p>
+<p>在学习字符串的时候，我们会详细讨论 byte 和 rune。</p>
+<h3 id="string-类型"><a href="#string-类型" class="headerlink" title="string 类型"></a>string 类型</h3><p>在 Golang 中，字符串是字节的集合。如果你现在还不理解这个定义，也没有关系。我们可以暂且认为一个字符串就是由很多字符组成的。我们后面会在一个教程中深入学习字符串。 下面编写一个使用字符串的程序。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    first := <span class="string">&quot;Naveen&quot;</span></span><br><span class="line">    last := <span class="string">&quot;Ramanathan&quot;</span></span><br><span class="line">    name := first +<span class="string">&quot; &quot;</span>+ last</span><br><span class="line">    fmt.Println(<span class="string">&quot;My name is&quot;</span>,name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>上面程序中，first 赋值为字符串 “Naveen”，last 赋值为字符串 “Ramanathan”。+ 操作符可以用于拼接字符串。我们拼接了 first、空格和 last，并将其赋值给 name。上述程序将打印输出 <code>My name is Naveen Ramanathan</code>。</p>
+<p>还有许多应用于字符串上面的操作，我们将会在一个单独的教程里看见它们。</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>Go 有着非常严格的强类型特征。Go 没有自动类型提升或类型转换。我们通过一个例子说明这意味着什么。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    i := <span class="number">55</span>      <span class="comment">//int</span></span><br><span class="line">    j := <span class="number">67.8</span>    <span class="comment">//float64</span></span><br><span class="line">    sum := i + j <span class="comment">//不允许 int + float64</span></span><br><span class="line">    fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>上面的代码在 C 语言中是完全合法的，然而在 Go 中，却是行不通的。i 的类型是 int ，而 j 的类型是 float64 ，我们正试图把两个不同类型的数相加，Go 不允许这样的操作。如果运行程序，你会得到 <code>main.go:10: invalid operation: i + j (mismatched types int and float64)</code>。</p>
+<p>要修复这个错误，i 和 j 应该是相同的类型。在这里，我们把 j 转换为 int 类型。把 v 转换为 T 类型的语法是 T(v)。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    i := <span class="number">55</span>      <span class="comment">//int</span></span><br><span class="line">    j := <span class="number">67.8</span>    <span class="comment">//float64</span></span><br><span class="line">    sum := i + <span class="type">int</span>(j) <span class="comment">//j is converted to int</span></span><br><span class="line">    fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，当你运行上面的程序时，会看见输出 <code>122</code>。</p>
+<p>赋值的情况也是如此。把一个变量赋值给另一个不同类型的变量，需要显式的类型转换。下面程序说明了这一点。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    i := <span class="number">10</span></span><br><span class="line">    <span class="keyword">var</span> j <span class="type">float64</span> = <span class="type">float64</span>(i) <span class="comment">// 若没有显式转换，该语句会报错</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;j&quot;</span>, j)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在第 9 行，i 转换为 float64 类型，接下来赋值给 j。如果不进行类型转换，当你试图把 i 赋值给 j 时，编译器会抛出错误。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/03-%E5%8F%98%E9%87%8F/">
+        <span class="nav-arrow">← </span>
+        
+          3-变量
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/05-%E5%B8%B8%E9%87%8F/">
+        
+          05-常量
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bool"><span class="toc-nav-text">bool</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E5%9E%8B"><span class="toc-nav-text">有符号整型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E5%9E%8B"><span class="toc-nav-text">无符号整型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="toc-nav-text">浮点型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%A4%8D%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">复数类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">其他数字类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#string-%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">string 类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-nav-text">类型转换</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/04-类型/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "4-类型",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

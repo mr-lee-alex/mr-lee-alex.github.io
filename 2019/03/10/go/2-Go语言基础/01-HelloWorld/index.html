@@ -10,7 +10,7 @@
   
   <title>
     
-      04-VSCode配置 | Mr.Lee-李健博的博客
+      2-Hello World | Mr.Lee-李健博的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,7 +117,7 @@
 </header>
 
     <div id="article-banner">
-  <h2>04-VSCode配置</h2>
+  <h2>2-Hello World</h2>
 
 
 
@@ -133,27 +133,31 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>VS Code是微软开源的一款编辑器，插件系统十分的丰富。下面介绍如何用VS Code搭建go语言开发环境
-##一 下载与安装
+    <section class="markdown-content"><h2 id="一-建立-Go-工作区"><a href="#一-建立-Go-工作区" class="headerlink" title="一 建立 Go 工作区"></a>一 建立 Go 工作区</h2><p>在编写代码之前，我们首先应该建立 Go 的工作区（Workspace）,环境搭建一节，我们已经讲过了。</p>
+<p>在 <strong>Mac 或 Linux</strong> 操作系统下，Go 工作区应该设置在 <strong>$HOME&#x2F;go</strong>。所以我们要在 <strong>$HOME</strong> 目录下创建 <strong>go</strong> 目录。</p>
+<p>而在 <strong>Windows</strong> 下，工作区应该设置在 <strong>C:\Users\YourName\go</strong>。所以请将 <strong>go</strong> 目录放置在 <strong>C:\Users\YourName</strong>。</p>
+<p>其实也可以通过设置 GOPATH 环境变量，用其他目录来作为工作区。但为了简单起见，我们采用上面提到的放置方法。</p>
+<p>所有 Go 源文件都应该放置在工作区里的 <strong>src</strong> 目录下。请在刚添加的 <strong>go</strong> 目录下面创建目录 <strong>src</strong>。</p>
+<p>所有 Go 项目都应该依次在 src 里面设置自己的子目录。我们在 src 里面创建一个目录 <strong>hello</strong> 来放置整个 hello world 项目。</p>
+<p>创建上述目录之后，其目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go</span><br><span class="line">  src</span><br><span class="line">    hello</span><br></pre></td></tr></table></figure>
 
-<p><code>VS Code</code>官方下载地址：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a></p>
+<p>在我们刚刚创建的 hello 目录下，在 <strong>helloworld.go</strong> 文件里保存下面的程序。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    fmt.Println(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>三大主流平台都支持，请根据自己的电脑平台选择对应的安装包。
-<img src="http://www.chenyoude.com/go/1550239338474.png" alt="1550239338474.png"/>
-双击下载好的安装文件，双击安装即可。</p>
-##二 安装中文简体插件
+<p>创建该程序之后，其目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">go</span><br><span class="line">  src</span><br><span class="line">    hello</span><br><span class="line">      helloworld.go</span><br></pre></td></tr></table></figure>
 
-<p>点击左侧菜单栏最后一项<code>管理扩展</code>，在<code>搜索框</code>中输入<code>chinese</code> ，选中结果列表第一项，点击<code>install</code>安装。</p>
+<h2 id="二-运行-Go-程序"><a href="#二-运行-Go-程序" class="headerlink" title="二 运行 Go 程序"></a>二 运行 Go 程序</h2><p>运行 Go 程序有多种方式，我们下面依次介绍。</p>
+<p>1.使用 <strong>go run</strong> 命令 - 在命令提示符旁，输入 <code>go run workspacepath/src/hello/helloworld.go</code>。</p>
+<p>上述命令中的 <strong>workspacepath</strong> 应该替换为你自己的工作区路径（Windows 下的 <strong>C:&#x2F;Users&#x2F;YourName&#x2F;go</strong>，Linux 或 Mac 下的 <strong>$HOME&#x2F;go</strong>）。</p>
+<p>在控制台上会看见 <code>Hello World</code> 的输出。</p>
+<p>2.使用 <strong>go install</strong> 命令 - 运行 <code>go install hello</code>，接着可以用 <code>workspacepath/bin/hello</code> 来运行该程序。</p>
+<p>上述命令中的 <strong>workspacepath</strong> 应该替换为你自己的工作区路径（Windows 下的 <strong>C:&#x2F;Users&#x2F;YourName&#x2F;go</strong>，Linux 或 Mac 下的 <strong>$HOME&#x2F;go</strong>）。</p>
+<p>当你输入 <strong>go install hello</strong> 时，go 工具会在工作区中搜索 hello 包（hello 称之为包）。接下来它会在工作区的 bin 目录下，创建一个名为 <code>hello</code>（Windows 下名为 <code>hello.exe</code>）的二进制文件。运行 <strong>go install hello</strong> 后，其目录结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">go</span><br><span class="line">  bin</span><br><span class="line">    hello</span><br><span class="line">  src</span><br><span class="line">    hello</span><br><span class="line">      helloworld.go</span><br></pre></td></tr></table></figure>
 
-<p>安装完毕后右下角会提示<code>重启VS Code</code>，重启之后你的VS Code就显示中文了
-<img src="http://www.chenyoude.com/go/vscode1.gif" alt="vscode1.gif"/>
-<code>VSCode</code>主界面介绍：
-<img src="http://www.chenyoude.com/go/1550240342443.png" alt="1550240342443.png"/></p>
-##三 安装Go开发扩展
-
-<p>现在我们要为我们的VS Code编辑器安装<code>Go</code>扩展插件，让它支持Go语言开发。
-<img src="http://www.chenyoude.com/go/1550241460281.png" alt="1550241460281.png"/></p>
-
+<h3 id="2-1-hello-world-程序代码介绍"><a href="#2-1-hello-world-程序代码介绍" class="headerlink" title="2.1 hello world 程序代码介绍"></a>2.1 hello world 程序代码介绍</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main <span class="comment">//程序首行，必须指明是哪个包 这里表示是main包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span> <span class="comment">//示导入fmt包 因为Println函数是在fmt包下</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//***在函数外只能声明变量，常量，类型定义等，不能写逻辑代码</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123; <span class="comment">//定义一个main函数 </span></span><br><span class="line">    fmt.Println(<span class="string">&quot;Hello World&quot;</span>) <span class="comment">//输出 Hello World</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">package main - 每一个 Go 文件都应该在开头进行 package name 的声明。包（Packages）用于代码的封装与重用，这里的包名称是`main`。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">import &quot;fmt&quot; - 我们引入了 fmt 包，用于在 main 函数里面打印文本到标准输出。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">func main() - main 是一个特殊的函数。整个程序就是从 main 函数开始运行的。main 函数必须放置在 main 包中。&#123;和&#125; 分别表示 main 函数的开始和结束部分。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">fmt.Println(&quot;Hello World&quot;) - fmt 包中的 Println 函数用于把文本写入标准输出。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 
 </section>
     <!-- Tags START -->
@@ -173,17 +177,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/01-HelloWorld/">
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/02-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">
         <span class="nav-arrow">← </span>
         
-          2-Hello World
+          02-命名规范
         
       </a>
     
     
-      <a class="nav-right" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/01-Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/">
+      <a class="nav-right" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/04-VSCode%E9%85%8D%E7%BD%AE/">
         
-          01-Go语言介绍
+          04-VSCode配置
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -233,7 +237,7 @@
   <!-- 不蒜子统计 -->
     <strong class="toc-title">目录</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E5%BB%BA%E7%AB%8B-Go-%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="toc-nav-text">一 建立 Go 工作区</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E8%BF%90%E8%A1%8C-Go-%E7%A8%8B%E5%BA%8F"><span class="toc-nav-text">二 运行 Go 程序</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-1-hello-world-%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">2.1 hello world 程序代码介绍</span></a></li></ol></li></ol>
     
   </div>
 </aside>
@@ -243,7 +247,7 @@
 
 <script>
   (function () {
-    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/1-环境搭建/04-VSCode配置/';
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/01-HelloWorld/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -305,7 +309,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "04-VSCode配置",
+        id: "2-Hello World",
         owner: "",
         repo: "",
         oauth: {

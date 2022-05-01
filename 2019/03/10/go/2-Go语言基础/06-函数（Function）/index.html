@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      6-函数（Function | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>6-函数（Function</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="函数是什么？"><a href="#函数是什么？" class="headerlink" title="函数是什么？"></a>函数是什么？</h2><p>函数是一块执行特定任务的代码。一个函数是在输入源基础上，通过执行一系列的算法，生成预期的输出。</p>
+<h2 id="函数的声明"><a href="#函数的声明" class="headerlink" title="函数的声明"></a>函数的声明</h2><p>在 Go 语言中，函数声明通用语法如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionname</span><span class="params">(parametername <span class="keyword">type</span>)</span></span> returntype &#123;  </span><br><span class="line">    <span class="comment">// 函数体（具体实现的功能）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数的声明以关键词 <code>func</code> 开始，后面紧跟自定义的函数名 <code>functionname (函数名)</code>。函数的参数列表定义在 <code>(</code> 和 <code>)</code> 之间，返回值的类型则定义在之后的 <code>returntype (返回值类型)</code>处。声明一个参数的语法采用 <strong>参数名</strong> <strong>参数类型</strong> 的方式，任意多个参数采用类似 <code>(parameter1 type, parameter2 type) 即(参数1 参数1的类型,参数2 参数2的类型)</code>的形式指定。之后包含在 <code>&#123;</code> 和 <code>&#125;</code> 之间的代码，就是函数体。</p>
+<p>函数中的参数列表和返回值并非是必须的，所以下面这个函数的声明也是有效的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionname</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="comment">// 译注: 表示这个函数不需要输入参数，且没有返回值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例函数"><a href="#示例函数" class="headerlink" title="示例函数"></a>示例函数</h2><p>我们以写一个计算商品价格的函数为例，输入参数是单件商品的价格和商品的个数，两者的乘积为商品总价，作为函数的输出值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateBill</span><span class="params">(price <span class="type">int</span>, no <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> totalPrice = price * no <span class="comment">// 商品总价 = 商品单价 * 数量</span></span><br><span class="line">    <span class="keyword">return</span> totalPrice <span class="comment">// 返回总价</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述函数有两个整型的输入 <code>price</code> 和 <code>no</code>，返回值 <code>totalPrice</code> 为 <code>price</code> 和 <code>no</code> 的乘积，也是整数类型。</p>
+<p><strong>如果有连续若干个参数，它们的类型一致，那么我们无须一一罗列，只需在最后一个参数后添加该类型。</strong> 例如，<code>price int, no int</code> 可以简写为 <code>price, no int</code>，所以示例函数也可写成</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateBill</span><span class="params">(price, no <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> totalPrice = price * no</span><br><span class="line">    <span class="keyword">return</span> totalPrice</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们已经定义了一个函数，我们要在代码中尝试着调用它。调用函数的语法为 <code>functionname(parameters)</code>。调用示例函数的方法如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">calculateBill(<span class="number">10</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>完成了示例函数声明和调用后，我们就能写出一个完整的程序，并把商品总价打印在控制台上：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateBill</span><span class="params">(price, no <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> totalPrice = price * no</span><br><span class="line">    <span class="keyword">return</span> totalPrice</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    price, no := <span class="number">90</span>, <span class="number">6</span> <span class="comment">// 定义 price 和 no,默认类型为 int</span></span><br><span class="line">    totalPrice := calculateBill(price, no)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Total price is&quot;</span>, totalPrice) <span class="comment">// 打印到控制台上</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序在控制台上打印的结果为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Total price is 540</span><br></pre></td></tr></table></figure>
+
+<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Go 语言支持一个函数可以有多个返回值。我们来写个以矩形的长和宽为输入参数，计算并返回矩形面积和周长的函数 <code>rectProps</code>。矩形的面积是长度和宽度的乘积, 周长是长度和宽度之和的两倍。即：</p>
+<ul>
+<li><code>面积 = 长 * 宽</code></li>
+<li><code>周长 = 2 * ( 长 + 宽 )</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rectProps</span><span class="params">(length, width <span class="type">float64</span>)</span></span>(<span class="type">float64</span>, <span class="type">float64</span>) &#123;  </span><br><span class="line">    <span class="keyword">var</span> area = length * width</span><br><span class="line">    <span class="keyword">var</span> perimeter = (length + width) * <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> area, perimeter</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    area, perimeter := rectProps(<span class="number">10.8</span>, <span class="number">5.6</span>)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area %f Perimeter %f&quot;</span>, area, perimeter) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个函数有多个返回值，那么这些返回值必须用 <code>(</code> 和 <code>)</code> 括起来。<code>func rectProps(length, width float64)(float64, float64)</code> 示例函数有两个 float64 类型的输入参数 <code>length</code> 和 <code>width</code>，并返回两个 float64 类型的值。该程序在控制台上打印结果为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Area 60.480000 Perimeter 32.800000</span><br></pre></td></tr></table></figure>
+
+<h2 id="命名返回值"><a href="#命名返回值" class="headerlink" title="命名返回值"></a>命名返回值</h2><p>从函数中可以返回一个命名值。一旦命名了返回值，可以认为这些值在函数第一行就被声明为变量了。</p>
+<p>上面的 rectProps 函数也可用这个方式写成：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rectProps</span><span class="params">(length, width <span class="type">float64</span>)</span></span>(area, perimeter <span class="type">float64</span>) &#123;  </span><br><span class="line">    area = length * width</span><br><span class="line">    perimeter = (length + width) * <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="comment">// 不需要明确指定返回值，默认返回 area, perimeter 的值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意, 函数中的 return 语句没有显式返回任何值。由于 <strong>area</strong> 和 <strong>perimeter</strong> 在函数声明中指定为返回值, 因此当遇到 return 语句时, 它们将自动从函数返回。</p>
+<h2 id="空白符"><a href="#空白符" class="headerlink" title="空白符"></a>空白符</h2><p><strong>_</strong> 在 Go 中被用作空白符，可以用作表示任何类型的任何值。</p>
+<p>我们继续以 <code>rectProps</code> 函数为例，该函数计算的是面积和周长。假使我们只需要计算面积，而并不关心周长的计算结果，该怎么调用这个函数呢？这时，空白符 <strong>_</strong> 就上场了。</p>
+<p>下面的程序我们只用到了函数 <code>rectProps</code> 的一个返回值 <code>area</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rectProps</span><span class="params">(length, width <span class="type">float64</span>)</span></span> (<span class="type">float64</span>, <span class="type">float64</span>) &#123;  </span><br><span class="line">    <span class="keyword">var</span> area = length * width</span><br><span class="line">    <span class="keyword">var</span> perimeter = (length + width) * <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> area, perimeter</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    area, _ := rectProps(<span class="number">10.8</span>, <span class="number">5.6</span>) <span class="comment">// 返回值周长被丢弃</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;Area %f &quot;</span>, area)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在程序的 <code>area, _ := rectProps(10.8, 5.6)</code> 这一行，我们看到空白符 <code>_</code> 用来跳过不要的计算结果。</p>
+</blockquote>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/07-%E5%8C%85/">
+        <span class="nav-arrow">← </span>
+        
+          7-包 
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/03-%E5%8F%98%E9%87%8F/">
+        
+          3-变量
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-nav-text">函数是什么？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-nav-text">函数的声明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E7%A4%BA%E4%BE%8B%E5%87%BD%E6%95%B0"><span class="toc-nav-text">示例函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-nav-text">多返回值</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-nav-text">命名返回值</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E7%A9%BA%E7%99%BD%E7%AC%A6"><span class="toc-nav-text">空白符</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/06-函数（Function）/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "6-函数（Function",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

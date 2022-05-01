@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      28-多态 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>28-多态</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>Go 通过[接口]来实现多态。我们已经讨论过，在 Go 语言中，我们是隐式地实现接口。一个类型如果定义了接口所声明的全部[方法]，那它就实现了该接口。现在我们来看看，利用接口，Go 是如何实现多态的。</p>
+<h2 id="使用接口实现多态"><a href="#使用接口实现多态" class="headerlink" title="使用接口实现多态"></a>使用接口实现多态</h2><p>一个类型如果定义了接口的所有方法，那它就隐式地实现了该接口。</p>
+<p><strong>所有实现了接口的类型，都可以把它的值保存在一个接口类型的变量中。在 Go 中，我们使用接口的这种特性来实现多态</strong>。</p>
+<p>通过一个程序我们来理解 Go 语言的多态，它会计算一个组织机构的净收益。为了简单起见，我们假设这个虚构的组织所获得的收入来源于两个项目：<code>fixed billing</code> 和 <code>time and material</code>。该组织的净收益等于这两个项目的收入总和。同样为了简单起见，我们假设货币单位是美元，而无需处理美分。因此货币只需简单地用 <code>int</code> 来表示。</p>
+<p>我们首先定义一个接口 <code>Income</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Income <span class="keyword">interface</span> &#123;  </span><br><span class="line">    calculate() <span class="type">int</span></span><br><span class="line">    source() <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面定义了接口 <code>Interface</code>，它包含了两个方法：<code>calculate()</code> 计算并返回项目的收入，而 <code>source()</code> 返回项目名称。</p>
+<p>下面我们定义一个表示 <code>FixedBilling</code> 项目的结构体类型。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FixedBilling <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName <span class="type">string</span></span><br><span class="line">    biddedAmount <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>项目 <code>FixedBillin</code> 有两个字段：<code>projectName</code> 表示项目名称，而 <code>biddedAmount</code> 表示组织向该项目投标的金额。</p>
+<p><code>TimeAndMaterial</code> 结构体用于表示项目 Time and Material。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TimeAndMaterial <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName <span class="type">string</span></span><br><span class="line">    noOfHours  <span class="type">int</span></span><br><span class="line">    hourlyRate <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结构体 <code>TimeAndMaterial</code> 拥有三个字段名：<code>projectName</code>、<code>noOfHours</code> 和 <code>hourlyRate</code>。</p>
+<p>下一步我们给这些结构体类型定义方法，计算并返回实际收入和项目名称。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.biddedAmount</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.projectName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.noOfHours * tm.hourlyRate</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.projectName</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在项目 <code>FixedBilling</code> 里面，收入就是项目的投标金额。因此我们返回 <code>FixedBilling</code> 类型的 <code>calculate()</code> 方法。</p>
+<p>而在项目 <code>TimeAndMaterial</code> 里面，收入等于 <code>noOfHours</code> 和 <code>hourlyRate</code> 的乘积，作为 <code>TimeAndMaterial</code> 类型的 <code>calculate()</code> 方法的返回值。</p>
+<p>我们还通过 <code>source()</code> 方法返回了表示收入来源的项目名称。</p>
+<p>由于 <code>FixedBilling</code> 和 <code>TimeAndMaterial</code> 两个结构体都定义了 <code>Income</code> 接口的两个方法：<code>calculate()</code> 和 <code>source()</code>，因此这两个结构体都实现了 <code>Income</code> 接口。</p>
+<p>我们来声明一个 <code>calculateNetIncome</code> 函数，用来计算并打印总收入。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateNetIncome</span><span class="params">(ic []Income)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> netincome <span class="type">int</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, income := <span class="keyword">range</span> ic &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Income From %s = $%d\n&quot;</span>, income.source(), income.calculate())</span><br><span class="line">        netincome += income.calculate()</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Net income of organisation = $%d&quot;</span>, netincome)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的[函数]接收一个 <code>Income</code> 接口类型的[切片]作为参数。该函数会遍历这个接口切片，并依个调用 <code>calculate()</code> 方法，计算出总收入。该函数同样也会通过调用 <code>source()</code> 显示收入来源。根据 <code>Income</code> 接口的具体类型，程序会调用不同的 <code>calculate()</code> 和 <code>source()</code> 方法。于是，我们在 <code>calculateNetIncome</code> 函数中就实现了多态。</p>
+<p>如果在该组织以后增加了新的收入来源，<code>calculateNetIncome</code> 无需修改一行代码，就可以正确地计算总收入了。</p>
+<p>最后就剩下这个程序的 <code>main</code> 函数了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    project1 := FixedBilling&#123;projectName: <span class="string">&quot;Project 1&quot;</span>, biddedAmount: <span class="number">5000</span>&#125;</span><br><span class="line">    project2 := FixedBilling&#123;projectName: <span class="string">&quot;Project 2&quot;</span>, biddedAmount: <span class="number">10000</span>&#125;</span><br><span class="line">    project3 := TimeAndMaterial&#123;projectName: <span class="string">&quot;Project 3&quot;</span>, noOfHours: <span class="number">160</span>, hourlyRate: <span class="number">25</span>&#125;</span><br><span class="line">    incomeStreams := []Income&#123;project1, project2, project3&#125;</span><br><span class="line">    calculateNetIncome(incomeStreams)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的 <code>main</code> 函数中，我们创建了三个项目，有两个是 <code>FixedBilling</code> 类型，一个是 <code>TimeAndMaterial</code> 类型。接着我们创建了一个 <code>Income</code> 类型的切片，存放了这三个项目。由于这三个项目都实现了 <code>Interface</code> 接口，因此可以把这三个项目放入 <code>Income</code> 切片。最后我们将该切片作为参数，调用了 <code>calculateNetIncome</code> 函数，显示了项目不同的收益和收入来源。</p>
+<p>以下完整的代码供你参考。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Income <span class="keyword">interface</span> &#123;  </span><br><span class="line">    calculate() <span class="type">int</span></span><br><span class="line">    source() <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> FixedBilling <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName <span class="type">string</span></span><br><span class="line">    biddedAmount <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TimeAndMaterial <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName <span class="type">string</span></span><br><span class="line">    noOfHours  <span class="type">int</span></span><br><span class="line">    hourlyRate <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.biddedAmount</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.projectName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.noOfHours * tm.hourlyRate</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.projectName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateNetIncome</span><span class="params">(ic []Income)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> netincome <span class="type">int</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, income := <span class="keyword">range</span> ic &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Income From %s = $%d\n&quot;</span>, income.source(), income.calculate())</span><br><span class="line">        netincome += income.calculate()</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Net income of organisation = $%d&quot;</span>, netincome)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    project1 := FixedBilling&#123;projectName: <span class="string">&quot;Project 1&quot;</span>, biddedAmount: <span class="number">5000</span>&#125;</span><br><span class="line">    project2 := FixedBilling&#123;projectName: <span class="string">&quot;Project 2&quot;</span>, biddedAmount: <span class="number">10000</span>&#125;</span><br><span class="line">    project3 := TimeAndMaterial&#123;projectName: <span class="string">&quot;Project 3&quot;</span>, noOfHours: <span class="number">160</span>, hourlyRate: <span class="number">25</span>&#125;</span><br><span class="line">    incomeStreams := []Income&#123;project1, project2, project3&#125;</span><br><span class="line">    calculateNetIncome(incomeStreams)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Income From Project 1 = $5000  </span><br><span class="line">Income From Project 2 = $10000  </span><br><span class="line">Income From Project 3 = $4000  </span><br><span class="line">Net income of organisation = $19000</span><br></pre></td></tr></table></figure>
+
+<h2 id="新增收益流"><a href="#新增收益流" class="headerlink" title="新增收益流"></a>新增收益流</h2><p>假设前面的组织通过广告业务，建立了一个新的收益流（Income Stream）。我们可以看到添加它非常简单，并且计算总收益也很容易，我们无需对 <code>calculateNetIncome</code> 函数进行任何修改。这就是多态的好处。</p>
+<p>我们首先定义 <code>Advertisement</code> 类型，并在 <code>Advertisement</code> 类型中定义 <code>calculate()</code> 和 <code>source()</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Advertisement <span class="keyword">struct</span> &#123;  </span><br><span class="line">    adName     <span class="type">string</span></span><br><span class="line">    CPC        <span class="type">int</span></span><br><span class="line">    noOfClicks <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a Advertisement)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> a.CPC * a.noOfClicks</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a Advertisement)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> a.adName</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Advertisement</code> 类型有三个字段，分别是 <code>adName</code>、<code>CPC</code>（每次点击成本）和 <code>noOfClicks</code>（点击次数）。广告的总收益等于 <code>CPC</code> 和 <code>noOfClicks</code> 的乘积。</p>
+<p>现在我们稍微修改一下 <code>main</code> 函数，把新的收益流添加进来。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    project1 := FixedBilling&#123;projectName: <span class="string">&quot;Project 1&quot;</span>, biddedAmount: <span class="number">5000</span>&#125;</span><br><span class="line">    project2 := FixedBilling&#123;projectName: <span class="string">&quot;Project 2&quot;</span>, biddedAmount: <span class="number">10000</span>&#125;</span><br><span class="line">    project3 := TimeAndMaterial&#123;projectName: <span class="string">&quot;Project 3&quot;</span>, noOfHours: <span class="number">160</span>, hourlyRate: <span class="number">25</span>&#125;</span><br><span class="line">    bannerAd := Advertisement&#123;adName: <span class="string">&quot;Banner Ad&quot;</span>, CPC: <span class="number">2</span>, noOfClicks: <span class="number">500</span>&#125;</span><br><span class="line">    popupAd := Advertisement&#123;adName: <span class="string">&quot;Popup Ad&quot;</span>, CPC: <span class="number">5</span>, noOfClicks: <span class="number">750</span>&#125;</span><br><span class="line">    incomeStreams := []Income&#123;project1, project2, project3, bannerAd, popupAd&#125;</span><br><span class="line">    calculateNetIncome(incomeStreams)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们创建了两个广告项目，即 <code>bannerAd</code> 和 <code>popupAd</code>。<code>incomeStream</code> 切片包含了这两个创建的广告项目。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Income <span class="keyword">interface</span> &#123;  </span><br><span class="line">    calculate() <span class="type">int</span></span><br><span class="line">    source() <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> FixedBilling <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName  <span class="type">string</span></span><br><span class="line">    biddedAmount <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TimeAndMaterial <span class="keyword">struct</span> &#123;  </span><br><span class="line">    projectName <span class="type">string</span></span><br><span class="line">    noOfHours   <span class="type">int</span></span><br><span class="line">    hourlyRate  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Advertisement <span class="keyword">struct</span> &#123;  </span><br><span class="line">    adName     <span class="type">string</span></span><br><span class="line">    CPC        <span class="type">int</span></span><br><span class="line">    noOfClicks <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.biddedAmount</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fb FixedBilling)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> fb.projectName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.noOfHours * tm.hourlyRate</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tm TimeAndMaterial)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> tm.projectName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a Advertisement)</span></span> calculate() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> a.CPC * a.noOfClicks</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a Advertisement)</span></span> source() <span class="type">string</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> a.adName</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateNetIncome</span><span class="params">(ic []Income)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> netincome <span class="type">int</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, income := <span class="keyword">range</span> ic &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Income From %s = $%d\n&quot;</span>, income.source(), income.calculate())</span><br><span class="line">        netincome += income.calculate()</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Net income of organisation = $%d&quot;</span>, netincome)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    project1 := FixedBilling&#123;projectName: <span class="string">&quot;Project 1&quot;</span>, biddedAmount: <span class="number">5000</span>&#125;</span><br><span class="line">    project2 := FixedBilling&#123;projectName: <span class="string">&quot;Project 2&quot;</span>, biddedAmount: <span class="number">10000</span>&#125;</span><br><span class="line">    project3 := TimeAndMaterial&#123;projectName: <span class="string">&quot;Project 3&quot;</span>, noOfHours: <span class="number">160</span>, hourlyRate: <span class="number">25</span>&#125;</span><br><span class="line">    bannerAd := Advertisement&#123;adName: <span class="string">&quot;Banner Ad&quot;</span>, CPC: <span class="number">2</span>, noOfClicks: <span class="number">500</span>&#125;</span><br><span class="line">    popupAd := Advertisement&#123;adName: <span class="string">&quot;Popup Ad&quot;</span>, CPC: <span class="number">5</span>, noOfClicks: <span class="number">750</span>&#125;</span><br><span class="line">    incomeStreams := []Income&#123;project1, project2, project3, bannerAd, popupAd&#125;</span><br><span class="line">    calculateNetIncome(incomeStreams)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Income From Project 1 = $5000  </span><br><span class="line">Income From Project 2 = $10000  </span><br><span class="line">Income From Project 3 = $4000  </span><br><span class="line">Income From Banner Ad = $1000  </span><br><span class="line">Income From Popup Ad = $3750  </span><br><span class="line">Net income of organisation = $23750</span><br></pre></td></tr></table></figure>
+
+<p>你会发现，尽管我们新增了收益流，但却完全没有修改 <code>calculateNetIncome</code> 函数。这就是多态带来的好处。由于新的 <code>Advertisement</code> 同样实现了 <code>Income</code> 接口，所以我们能够向 <code>incomeStreams</code> 切片添加 <code>Advertisement</code>。<code>calculateNetIncome</code> 无需修改，因为它能够调用 <code>Advertisement</code> 类型的 <code>calculate()</code> 和 <code>source()</code> 方法。 </p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/27-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/">
+        <span class="nav-arrow">← </span>
+        
+          27-组合取代继承
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/26-%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E4%BB%A3%E7%B1%BB/">
+        
+          26-结构体取代类
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E5%A4%9A%E6%80%81"><span class="toc-nav-text">使用接口实现多态</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%96%B0%E5%A2%9E%E6%94%B6%E7%9B%8A%E6%B5%81"><span class="toc-nav-text">新增收益流</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/28-多态/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "28-多态",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

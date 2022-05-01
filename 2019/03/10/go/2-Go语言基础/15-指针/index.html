@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      15-指针  | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>15-指针 </h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>​					</p>
+<h3 id="什么是指针？"><a href="#什么是指针？" class="headerlink" title="什么是指针？"></a>什么是指针？</h3><p>指针是一种存储变量内存地址（Memory Address）的变量。</p>
+<p><img src="/Users/liuqingzheng/Desktop/go%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/image-20190209154549871.png" alt="image-20190209154549871"></p>
+<p>如上图所示，变量 <code>b</code> 的值为 <code>156</code>，而 <code>b</code> 的内存地址为 <code>0x1040a124</code>。变量 <code>a</code> 存储了 <code>b</code> 的地址。我们就称 <code>a</code> 指向了 <code>b</code>。</p>
+<h3 id="指针的声明"><a href="#指针的声明" class="headerlink" title="指针的声明"></a>指针的声明</h3><p>指针变量的类型为 *<strong>T</strong>，该指针指向一个 <strong>T</strong> 类型的变量。</p>
+<p>接下来我们写点代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    b := <span class="number">255</span></span><br><span class="line">    <span class="keyword">var</span> a *<span class="type">int</span> = &amp;b</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Type of a is %T\n&quot;</span>, a)</span><br><span class="line">    fmt.Println(<span class="string">&quot;address of b is&quot;</span>, a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>&amp;</strong> 操作符用于获取变量的地址。上面程序的第 9 行我们把 <code>b</code> 的地址赋值给 *<strong>int</strong> 类型的 <code>a</code>。我们称 <code>a</code> 指向了 <code>b</code>。当我们打印 <code>a</code> 的值时，会打印出 <code>b</code> 的地址。程序将输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Type of a is *int  </span><br><span class="line">address of b is 0x1040a124</span><br></pre></td></tr></table></figure>
+
+<p>由于 b 可能处于内存的任何位置，你应该会得到一个不同的地址。</p>
+<h3 id="指针的零值（Zero-Value）"><a href="#指针的零值（Zero-Value）" class="headerlink" title="指针的零值（Zero Value）"></a>指针的零值（Zero Value）</h3><p>指针的零值是 <code>nil</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="number">25</span></span><br><span class="line">    <span class="keyword">var</span> b *<span class="type">int</span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;b is&quot;</span>, b)</span><br><span class="line">        b = &amp;a</span><br><span class="line">        fmt.Println(<span class="string">&quot;b after initialization is&quot;</span>, b)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序中，<code>b</code> 初始化为 <code>nil</code>，接着将 <code>a</code> 的地址赋值给 <code>b</code>。程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b is &lt;nil&gt;  </span><br><span class="line">b after initialisation is 0x1040a124</span><br></pre></td></tr></table></figure>
+
+<h3 id="指针的解引用"><a href="#指针的解引用" class="headerlink" title="指针的解引用"></a>指针的解引用</h3><p>指针的解引用可以获取指针所指向的变量的值。将 <code>a</code> 解引用的语法是 <code>*a</code>。</p>
+<p>通过下面的代码，可以看到如何使用解引用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main  </span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    b := <span class="number">255</span></span><br><span class="line">    a := &amp;b</span><br><span class="line">    fmt.Println(<span class="string">&quot;address of b is&quot;</span>, a)</span><br><span class="line">    fmt.Println(<span class="string">&quot;value of b is&quot;</span>, *a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 10 行，我们将 <code>a</code> 解引用，并打印了它的值。不出所料，我们会打印出 <code>b</code> 的值。程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">address of b is 0x1040a124  </span><br><span class="line">value of b is 255</span><br></pre></td></tr></table></figure>
+
+<p>我们再编写一个程序，用指针来修改 b 的值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    b := <span class="number">255</span></span><br><span class="line">    a := &amp;b</span><br><span class="line">    fmt.Println(<span class="string">&quot;address of b is&quot;</span>, a)</span><br><span class="line">    fmt.Println(<span class="string">&quot;value of b is&quot;</span>, *a)</span><br><span class="line">    *a++</span><br><span class="line">    fmt.Println(<span class="string">&quot;new value of b is&quot;</span>, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 12 行中，我们把 <code>a</code> 指向的值加 1，由于 <code>a</code> 指向了 <code>b</code>，因此 <code>b</code> 的值也发生了同样的改变。于是 <code>b</code> 的值变为 256。程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">address of b is 0x1040a124  </span><br><span class="line">value of b is 255  </span><br><span class="line">new value of b is 256</span><br></pre></td></tr></table></figure>
+
+<h3 id="向函数传递指针参数"><a href="#向函数传递指针参数" class="headerlink" title="向函数传递指针参数"></a>向函数传递指针参数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">change</span><span class="params">(val *<span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    *val = <span class="number">55</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := <span class="number">58</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a before function call is&quot;</span>,a)</span><br><span class="line">    b := &amp;a</span><br><span class="line">    change(b)</span><br><span class="line">    fmt.Println(<span class="string">&quot;value of a after function call is&quot;</span>, a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序中的第 14 行，我们向函数 <code>change</code> 传递了指针变量 <code>b</code>，而 <code>b</code> 存储了 <code>a</code> 的地址。程序的第 8 行在 <code>change</code> 函数内使用解引用，修改了 a 的值。该程序会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value of a before function call is 58  </span><br><span class="line">value of a after function call is 55</span><br></pre></td></tr></table></figure>
+
+<h3 id="不要向函数传递数组的指针，而应该使用切片"><a href="#不要向函数传递数组的指针，而应该使用切片" class="headerlink" title="不要向函数传递数组的指针，而应该使用切片"></a>不要向函数传递数组的指针，而应该使用切片</h3><p>假如我们想要在函数内修改一个数组，并希望调用函数的地方也能得到修改后的数组，一种解决方案是把一个指向数组的指针传递给这个函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">modify</span><span class="params">(arr *[3]<span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    (*arr)[<span class="number">0</span>] = <span class="number">90</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>&#125;</span><br><span class="line">    modify(&amp;a)</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 13 行中，我们将数组的地址传递给了 <code>modify</code> 函数。在第 8 行，我们在 <code>modify</code> 函数里把 <code>arr</code> 解引用，并将 <code>90</code> 赋值给这个数组的第一个元素。程序会输出 <code>[90 90 91]</code>。</p>
+<p>**a[x] 是 (*a)[x] 的简写形式，因此上面代码中的 (*arr)[0] 可以替换为 arr[0]**。下面我们用简写形式重写以上代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">modify</span><span class="params">(arr *[3]<span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    arr[<span class="number">0</span>] = <span class="number">90</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>&#125;</span><br><span class="line">    modify(&amp;a)</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该程序也会输出 <code>[90 90 91]</code>。</p>
+<p><strong>这种方式向函数传递一个数组指针参数，并在函数内修改数组。尽管它是有效的，但却不是 Go 语言惯用的实现方式。我们最好使用切片来处理。</strong></p>
+<p>接下来我们用[切片]来重写之前的代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">modify</span><span class="params">(sls []<span class="type">int</span>)</span></span> &#123;  </span><br><span class="line">    sls[<span class="number">0</span>] = <span class="number">90</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    a := [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">89</span>, <span class="number">90</span>, <span class="number">91</span>&#125;</span><br><span class="line">    modify(a[:])</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 13 行，我们将一个切片传递给了 <code>modify</code> 函数。在 <code>modify</code> 函数中，我们把切片的第一个元素修改为 <code>90</code>。程序也会输出 <code>[90 90 91]</code>。<strong>所以别再传递数组指针了，而是使用切片吧</strong>。上面的代码更加简洁，也更符合 Go 语言的习惯。</p>
+<h3 id="Go-不支持指针运算"><a href="#Go-不支持指针运算" class="headerlink" title="Go 不支持指针运算"></a>Go 不支持指针运算</h3><p>Go 并不支持其他语言（例如 C）中的指针运算。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    b := [...]<span class="type">int</span>&#123;<span class="number">109</span>, <span class="number">110</span>, <span class="number">111</span>&#125;</span><br><span class="line">    p := &amp;b</span><br><span class="line">    p++</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序会抛出编译错误：**main.go:6: invalid operation: p++ (non-numeric type *[3]int)**。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/16-%E7%BB%93%E6%9E%84%E4%BD%93/">
+        <span class="nav-arrow">← </span>
+        
+          16-结构体
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/14-%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+        
+          14-字符串
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%87%E9%92%88%EF%BC%9F"><span class="toc-nav-text">什么是指针？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-nav-text">指针的声明</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E9%9B%B6%E5%80%BC%EF%BC%88Zero-Value%EF%BC%89"><span class="toc-nav-text">指针的零值（Zero Value）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E8%A7%A3%E5%BC%95%E7%94%A8"><span class="toc-nav-text">指针的解引用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%90%91%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E6%8C%87%E9%92%88%E5%8F%82%E6%95%B0"><span class="toc-nav-text">向函数传递指针参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%8D%E8%A6%81%E5%90%91%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E7%9A%84%E6%8C%87%E9%92%88%EF%BC%8C%E8%80%8C%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%E5%88%87%E7%89%87"><span class="toc-nav-text">不要向函数传递数组的指针，而应该使用切片</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Go-%E4%B8%8D%E6%94%AF%E6%8C%81%E6%8C%87%E9%92%88%E8%BF%90%E7%AE%97"><span class="toc-nav-text">Go 不支持指针运算</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/15-指针/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "15-指针 ",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      18-接口（一） | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>18-接口（一）</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="什么是接口？"><a href="#什么是接口？" class="headerlink" title="什么是接口？"></a>什么是接口？</h3><p>在面向对象的领域里，接口一般这样定义：<strong>接口定义一个对象的行为</strong>。接口只指定了对象应该做什么，至于如何实现这个行为（即实现细节），则由对象本身去确定。  </p>
+<p>在 Go 语言中，接口就是方法签名（Method Signature）的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。这与面向对象编程（OOP）的说法很类似。<strong>接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法</strong>。  </p>
+<p>例如，<code>WashingMachine</code> 是一个含有 <code>Cleaning()</code> 和 <code>Drying()</code> 两个方法的接口。任何定义了 <code>Cleaning()</code> 和 <code>Drying()</code> 的类型，都称它实现了 <code>WashingMachine</code> 接口。  </p>
+<h3 id="接口的声明与实现"><a href="#接口的声明与实现" class="headerlink" title="接口的声明与实现"></a>接口的声明与实现</h3><p>让我们编写代码，创建一个接口并且实现它。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//interface definition</span></span><br><span class="line"><span class="keyword">type</span> VowelsFinder <span class="keyword">interface</span> &#123;  </span><br><span class="line">    FindVowels() []<span class="type">rune</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> MyString <span class="type">string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//MyString implements VowelsFinder</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ms MyString)</span></span> FindVowels() []<span class="type">rune</span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> vowels []<span class="type">rune</span></span><br><span class="line">    <span class="keyword">for</span> _, <span class="type">rune</span> := <span class="keyword">range</span> ms &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="type">rune</span> == <span class="string">&#x27;a&#x27;</span> || <span class="type">rune</span> == <span class="string">&#x27;e&#x27;</span> || <span class="type">rune</span> == <span class="string">&#x27;i&#x27;</span> || <span class="type">rune</span> == <span class="string">&#x27;o&#x27;</span> || <span class="type">rune</span> == <span class="string">&#x27;u&#x27;</span> &#123;</span><br><span class="line">            vowels = <span class="built_in">append</span>(vowels, <span class="type">rune</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> vowels</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    name := MyString(<span class="string">&quot;Sam Anderson&quot;</span>)</span><br><span class="line">    <span class="keyword">var</span> v VowelsFinder</span><br><span class="line">    v = name <span class="comment">// possible since MyString implements VowelsFinder</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;Vowels are %c&quot;</span>, v.FindVowels())</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序的第 8 行，创建了一个名为 <code>VowelsFinder</code> 的接口，该接口有一个 <code>FindVowels() []rune</code> 的方法。  </p>
+<p>在接下来的一行，我们创建了一个 <code>MyString</code> 类型。  </p>
+<p><strong>在第 15 行，我们给接受者类型（Receiver Type） MyString 添加了方法 FindVowels() []rune。现在，我们称 MyString 实现了 VowelsFinder 接口。这就和其他语言（如 Java）很不同，其他一些语言要求一个类使用 implement 关键字，来显式地声明该类实现了接口。而在 Go 中，并不需要这样。如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了 Go 接口</strong>。  </p>
+<p>在第 28 行，<code>v</code> 的类型为 <code>VowelsFinder</code>，<code>name</code> 的类型为 <code>MyString</code>，我们把 <code>name</code> 赋值给了 <code>v</code>。由于 <code>MyString</code> 实现了 <code>VowelFinder</code>，因此这是合法的。在下一行，<code>v.FindVowels()</code> 调用了 <code>MyString</code> 类型的 <code>FindVowels</code> 方法，打印字符串 <code>Sam Anderson</code> 里所有的元音。该程序输出 <code>Vowels are [a e o]</code>。  </p>
+<p>祝贺！你已经创建并实现了你的第一个接口。  </p>
+<h3 id="接口的实际用途"><a href="#接口的实际用途" class="headerlink" title="接口的实际用途"></a>接口的实际用途</h3><p>前面的例子教我们创建并实现了接口，但还没有告诉我们接口的实际用途。在上面的程序里，如果我们使用 <code>name.FindVowels()</code>，而不是 <code>v.FindVowels()</code>，程序依然能够照常运行，但接口并没有体现出实际价值。  </p>
+<p>因此，我们现在讨论一下接口的实际应用场景。  </p>
+<p>我们编写一个简单程序，根据公司员工的个人薪资，计算公司的总支出。为了简单起见，我们假定支出的单位都是美元。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SalaryCalculator <span class="keyword">interface</span> &#123;  </span><br><span class="line">    CalculateSalary() <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Permanent <span class="keyword">struct</span> &#123;  </span><br><span class="line">    empId    <span class="type">int</span></span><br><span class="line">    basicpay <span class="type">int</span></span><br><span class="line">    pf       <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Contract <span class="keyword">struct</span> &#123;  </span><br><span class="line">    empId  <span class="type">int</span></span><br><span class="line">    basicpay <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//salary of permanent employee is sum of basic pay and pf</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p Permanent)</span></span> CalculateSalary() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> p.basicpay + p.pf</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//salary of contract employee is the basic pay alone</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c Contract)</span></span> CalculateSalary() <span class="type">int</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> c.basicpay</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">total expense is calculated by iterating though the SalaryCalculator slice and summing  </span></span><br><span class="line"><span class="comment">the salaries of the individual employees  </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">totalExpense</span><span class="params">(s []SalaryCalculator)</span></span> &#123;  </span><br><span class="line">    expense := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> s &#123;</span><br><span class="line">        expense = expense + v.CalculateSalary()</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Total Expense Per Month $%d&quot;</span>, expense)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    pemp1 := Permanent&#123;<span class="number">1</span>, <span class="number">5000</span>, <span class="number">20</span>&#125;</span><br><span class="line">    pemp2 := Permanent&#123;<span class="number">2</span>, <span class="number">6000</span>, <span class="number">30</span>&#125;</span><br><span class="line">    cemp1 := Contract&#123;<span class="number">3</span>, <span class="number">3000</span>&#125;</span><br><span class="line">    employees := []SalaryCalculator&#123;pemp1, pemp2, cemp1&#125;</span><br><span class="line">    totalExpense(employees)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面程序的第 7 行声明了一个 <code>SalaryCalculator</code> 接口类型，它只有一个方法 <code>CalculateSalary() int</code>。  </p>
+<p>在公司里，我们有两类员工，即第 11 行和第 17 行定义的结构体：<code>Permanent</code> 和 <code>Contract</code>。长期员工（<code>Permanent</code>）的薪资是 <code>basicpay</code> 与 <code>pf</code> 相加之和，而合同员工（<code>Contract</code>）只有基本工资 <code>basicpay</code>。在第 23 行和第 28 行中，方法 <code>CalculateSalary</code> 分别实现了以上关系。由于 <code>Permanent</code> 和 <code>Contract</code> 都声明了该方法，因此它们都实现了 <code>SalaryCalculator</code> 接口。  </p>
+<p>第 36 行声明的 <code>totalExpense</code> 方法体现出了接口的妙用。该方法接收一个 <code>SalaryCalculator</code> 接口的切片（<code>[]SalaryCalculator</code>）作为参数。在第 49 行，我们向 <code>totalExpense</code> 方法传递了一个包含 <code>Permanent</code> 和 <code>Contact</code> 类型的切片。在第 39 行中，通过调用不同类型对应的 <code>CalculateSalary</code> 方法，<code>totalExpense</code> 可以计算得到支出。  </p>
+<p>这样做最大的优点是：<code>totalExpense</code> 可以扩展新的员工类型，而不需要修改任何代码。假如公司增加了一种新的员工类型 <code>Freelancer</code>，它有着不同的薪资结构。<code>Freelancer</code>只需传递到 <code>totalExpense</code> 的切片参数中，无需 <code>totalExpense</code> 方法本身进行修改。只要 <code>Freelancer</code> 也实现了 <code>SalaryCalculator</code> 接口，<code>totalExpense</code> 就能够实现其功能。  </p>
+<p>该程序输出 <code>Total Expense Per Month $14050</code>。  </p>
+<h3 id="接口的内部表示"><a href="#接口的内部表示" class="headerlink" title="接口的内部表示"></a>接口的内部表示</h3><p>我们可以把接口看作内部的一个元组 <code>(type, value)</code>。 <code>type</code> 是接口底层的具体类型（Concrete Type），而 <code>value</code> 是具体类型的值。  </p>
+<p>我们编写一个程序来更好地理解它。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Test <span class="keyword">interface</span> &#123;  </span><br><span class="line">    Tester()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> MyFloat <span class="type">float64</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m MyFloat)</span></span> Tester() &#123;  </span><br><span class="line">    fmt.Println(m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">describe</span><span class="params">(t Test)</span></span> &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;Interface type %T value %v\n&quot;</span>, t, t)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> t Test</span><br><span class="line">    f := MyFloat(<span class="number">89.7</span>)</span><br><span class="line">    t = f</span><br><span class="line">    describe(t)</span><br><span class="line">    t.Tester()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Test</code> 接口只有一个方法 <code>Tester()</code>，而 <code>MyFloat</code> 类型实现了该接口。在第 24 行，我们把变量 <code>f</code>（<code>MyFloat</code> 类型）赋值给了 <code>t</code>（<code>Test</code> 类型）。现在 <code>t</code> 的具体类型为 <code>MyFloat</code>，而 <code>t</code> 的值为 <code>89.7</code>。第 17 行的 <code>describe</code> 函数打印出了接口的具体类型和值。该程序输出：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Interface type main.MyFloat value 89.7  </span><br><span class="line">89.7</span><br></pre></td></tr></table></figure>
+
+<h3 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h3><p>没有包含方法的接口称为空接口。空接口表示为 <code>interface&#123;&#125;</code>。由于空接口没有方法，因此所有类型都实现了空接口。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">describe</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;Type = %T, value = %v\n&quot;</span>, i, i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    s := <span class="string">&quot;Hello World&quot;</span></span><br><span class="line">    describe(s)</span><br><span class="line">    i := <span class="number">55</span></span><br><span class="line">    describe(i)</span><br><span class="line">    strt := <span class="keyword">struct</span> &#123;</span><br><span class="line">        name <span class="type">string</span></span><br><span class="line">    &#125;&#123;</span><br><span class="line">        name: <span class="string">&quot;Naveen R&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    describe(strt)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程序的第 7 行，<code>describe(i interface&#123;&#125;)</code> 函数接收空接口作为参数，因此，可以给这个函数传递任何类型。  </p>
+<p>在第 13 行、第 15 行和第 21 行，我们分别给 <code>describe</code> 函数传递了 <code>string</code>、<code>int</code> 和 <code>struct</code>。该程序打印：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Type = string, value = Hello World  </span><br><span class="line">Type = int, value = 55  </span><br><span class="line">Type = struct &#123; name string &#125;, value = &#123;Naveen R&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>类型断言用于提取接口的底层值（Underlying Value）。  </p>
+<p>在语法 <code>i.(T)</code> 中，接口 <code>i</code> 的具体类型是 <code>T</code>，该语法用于获得接口的底层值。  </p>
+<p>一段代码胜过千言。下面编写个关于类型断言的程序。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">assert</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    s := i.(<span class="type">int</span>) <span class="comment">//get the underlying int value from i</span></span><br><span class="line">    fmt.Println(s)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> s <span class="keyword">interface</span>&#123;&#125; = <span class="number">56</span></span><br><span class="line">    assert(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在第 12 行，<code>s</code> 的具体类型是 <code>int</code>。在第 8 行，我们使用了语法 <code>i.(int)</code> 来提取 <code>i</code> 的底层 int 值。该程序会打印 <code>56</code>。  </p>
+<p>在上面程序中，如果具体类型不是 int，会发生什么呢？接下来看看。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">assert</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    s := i.(<span class="type">int</span>) </span><br><span class="line">    fmt.Println(s)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> s <span class="keyword">interface</span>&#123;&#125; = <span class="string">&quot;Steven Paul&quot;</span></span><br><span class="line">    assert(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序中，我们把具体类型为 <code>string</code> 的 <code>s</code> 传递给了 <code>assert</code> 函数，试图从它提取出 int 值。该程序会报错：<code>panic: interface conversion: interface &#123;&#125; is string, not int.</code>。  </p>
+<p>要解决该问题，我们可以使用以下语法：  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v, ok := i.(T)</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>i</code> 的具体类型是 <code>T</code>，那么 <code>v</code> 赋值为 <code>i</code> 的底层值，而 <code>ok</code> 赋值为 <code>true</code>。  </p>
+<p>如果 <code>i</code> 的具体类型不是 <code>T</code>，那么 <code>ok</code> 赋值为 <code>false</code>，<code>v</code> 赋值为 <code>T</code> 类型的零值，<strong>此时程序不会报错</strong>。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">assert</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    v, ok := i.(<span class="type">int</span>)</span><br><span class="line">    fmt.Println(v, ok)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    <span class="keyword">var</span> s <span class="keyword">interface</span>&#123;&#125; = <span class="number">56</span></span><br><span class="line">    assert(s)</span><br><span class="line">    <span class="keyword">var</span> i <span class="keyword">interface</span>&#123;&#125; = <span class="string">&quot;Steven Paul&quot;</span></span><br><span class="line">    assert(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当给 <code>assert</code> 函数传递 <code>Steven Paul</code> 时，由于 <code>i</code> 的具体类型不是 <code>int</code>，<code>ok</code> 赋值为 <code>false</code>，而 <code>v</code> 赋值为 0（int 的零值）。该程序打印：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">56 true  </span><br><span class="line">0 false</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型选择（Type-Switch）"><a href="#类型选择（Type-Switch）" class="headerlink" title="类型选择（Type Switch）"></a>类型选择（Type Switch）</h3><p>类型选择用于将接口的具体类型与很多 case 语句所指定的类型进行比较。它与一般的 switch 语句类似。唯一的区别在于类型选择指定的是类型，而一般的 switch 指定的是值。  </p>
+<p>类型选择的语法类似于类型断言。类型断言的语法是 <code>i.(T)</code>，而对于类型选择，类型 <code>T</code> 由关键字 <code>type</code> 代替。下面看看程序是如何工作的。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (  </span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findType</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">switch</span> i.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">string</span>:</span><br><span class="line">        fmt.Printf(<span class="string">&quot;I am a string and my value is %s\n&quot;</span>, i.(<span class="type">string</span>))</span><br><span class="line">    <span class="keyword">case</span> <span class="type">int</span>:</span><br><span class="line">        fmt.Printf(<span class="string">&quot;I am an int and my value is %d\n&quot;</span>, i.(<span class="type">int</span>))</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        fmt.Printf(<span class="string">&quot;Unknown type\n&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    findType(<span class="string">&quot;Naveen&quot;</span>)</span><br><span class="line">    findType(<span class="number">77</span>)</span><br><span class="line">    findType(<span class="number">89.98</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述程序的第 8 行，<code>switch i.(type)</code> 表示一个类型选择。每个 case 语句都把 <code>i</code> 的具体类型和一个指定类型进行了比较。如果 case 匹配成功，会打印出相应的语句。该程序输出：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I am a string and my value is Naveen  </span><br><span class="line">I am an int and my value is 77  </span><br><span class="line">Unknown type</span><br></pre></td></tr></table></figure>
+
+<p>第 20 行中的 <code>89.98</code> 的类型是 <code>float64</code>，没有在 case 上匹配成功，因此最后一行打印了 <code>Unknown type</code>。  </p>
+<p><strong>还可以将一个类型和接口相比较。如果一个类型实现了接口，那么该类型与其实现的接口就可以互相比较</strong>。  </p>
+<p>为了阐明这一点，下面写一个程序。  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Describer <span class="keyword">interface</span> &#123;  </span><br><span class="line">    Describe()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;  </span><br><span class="line">    name <span class="type">string</span></span><br><span class="line">    age  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p Person)</span></span> Describe() &#123;  </span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s is %d years old&quot;</span>, p.name, p.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findType</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;  </span><br><span class="line">    <span class="keyword">switch</span> v := i.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> Describer:</span><br><span class="line">        v.Describe()</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        fmt.Printf(<span class="string">&quot;unknown type\n&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;  </span><br><span class="line">    findType(<span class="string">&quot;Naveen&quot;</span>)</span><br><span class="line">    p := Person&#123;</span><br><span class="line">        name: <span class="string">&quot;Naveen R&quot;</span>,</span><br><span class="line">        age:  <span class="number">25</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    findType(p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面程序中，结构体 <code>Person</code> 实现了 <code>Describer</code> 接口。在第 19 行的 case 语句中，<code>v</code> 与接口类型 <code>Describer</code> 进行了比较。<code>p</code> 实现了 <code>Describer</code>，因此满足了该 case 语句，于是当程序运行到第 32 行的 <code>findType(p)</code> 时，程序调用了 <code>Describe()</code> 方法。  </p>
+<p>该程序输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unknown type  </span><br><span class="line">Naveen R is 25 years old</span><br></pre></td></tr></table></figure>
+
+<p>接口（一）的内容到此结束。在接口（二）中我们还会继续讨论接口</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/20-%E5%B9%B6%E5%8F%91%E5%85%A5%E9%97%A8/">
+        <span class="nav-arrow">← </span>
+        
+          20-并发入门
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/17-%E6%96%B9%E6%B3%95/">
+        
+          17-方法
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-nav-text">什么是接口？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="toc-nav-text">接口的声明与实现</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E9%99%85%E7%94%A8%E9%80%94"><span class="toc-nav-text">接口的实际用途</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%86%85%E9%83%A8%E8%A1%A8%E7%A4%BA"><span class="toc-nav-text">接口的内部表示</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3"><span class="toc-nav-text">空接口</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="toc-nav-text">类型断言</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9%EF%BC%88Type-Switch%EF%BC%89"><span class="toc-nav-text">类型选择（Type Switch）</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/2-Go语言基础/18-接口（一）/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "18-接口（一）",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>
