@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      02-开发环境搭建 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>02-开发环境搭建</h2>
+
+
+
+  <p class="post-date">2019-03-10</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="一-下载地址"><a href="#一-下载地址" class="headerlink" title="一 下载地址"></a>一 下载地址</h2><p>安装包下载地址为：<a target="_blank" rel="noopener" href="https://golang.org/dl/">https://golang.org/dl/</a>。</p>
+<p>如果打不开可以使用这个地址：<a target="_blank" rel="noopener" href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a>。</p>
+<p>各个系统对应的包名：</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>包名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows</td>
+<td>go1.13.3.windows-amd64.msi</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>go1.13.3.linux-amd64.tar.gz</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td>go1.13.3.darwin-amd64.pkg</td>
+</tr>
+<tr>
+<td>FreeBSD</td>
+<td>go1.13.3.freebsd-amd64.tar.gz</td>
+</tr>
+</tbody></table>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g88akvb3mgj31im0dimzn.jpg" alt="image-20191023180544174"></p>
+<h2 id="二-安装"><a href="#二-安装" class="headerlink" title="二 安装"></a>二 安装</h2><h3 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h3><p>1、下载二进制包：go1.13.3.linux-amd64.tar.gz</p>
+<p>2、将下载的二进制包解压至 &#x2F;usr&#x2F;local目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -C /usr/local -xzf go1.13.3.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>3、将 &#x2F;usr&#x2F;local&#x2F;go&#x2F;bin 目录添加至PATH环境变量：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这样在任意 位置敲 go 就可以执行</span></span><br><span class="line">export PATH=$PATH:/usr/local/<span class="keyword">go</span>/bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows安装"><a href="#Windows安装" class="headerlink" title="Windows安装"></a>Windows安装</h3><p>Windows 下可以使用 .msi 后缀(在下载列表中可以找到该文件，如go1.13.3.windows-amd64.msi)的安装包来安装。</p>
+<p>默认情况下 <strong>.msi</strong> 文件会安装在 <strong>c:\Go</strong> 目录下。将 <strong>c:\Go\bin</strong> 目录添加到 <strong>Path</strong> 环境变量中。添加后你需要重启命令窗口才能生效（默认已经添加了，这样在cmd窗口下敲 go 能找到该命令）</p>
+<h3 id="Mac安装"><a href="#Mac安装" class="headerlink" title="Mac安装"></a>Mac安装</h3><p>Mac下直接双击go1.13.3.darwin-amd64.pkg，一路下一步安装即可</p>
+<h2 id="三-配置GOPATH和GOROOT"><a href="#三-配置GOPATH和GOROOT" class="headerlink" title="三 配置GOPATH和GOROOT"></a>三 配置GOPATH和GOROOT</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">GOPATH:</span></span><br><span class="line"><span class="comment">代码存放路径，该目录下有三个文件夹（如果没有，要手动创建）,</span></span><br><span class="line"><span class="comment">windows和mac默认在用户名下的go文件夹（GOPATH=&quot;/Users/liuqingzheng/go&quot;）</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">	-src——源码（包含第三方的和自己项目的）</span></span><br><span class="line"><span class="comment">	-bin——编译生成的可执行程序</span></span><br><span class="line"><span class="comment">	-pkg——编译时生成的对象文件</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">GOROOT:go开发工具包的安装路径，默认：C:\go</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">将GOROOT下的bin路径加入环境变量（默认已处理），这样任意位置敲 go 都能找到该命令</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//windows下修改在系统变量里添加</span></span><br><span class="line">变量名：GOPATH</span><br><span class="line">变量值：C:\&gt;Go_Project</span><br><span class="line"></span><br><span class="line"><span class="comment">//mac和linux下修改</span></span><br><span class="line">GOPATH=<span class="string">&quot;/Users/liuqingzheng/go/&quot;</span>  直接写要修改的路径即可</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四-测试安装"><a href="#四-测试安装" class="headerlink" title="四 测试安装"></a>四 测试安装</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在命令行下输入</span></span><br><span class="line"><span class="keyword">go</span> version </span><br><span class="line"><span class="comment">//可以看到</span></span><br><span class="line"><span class="keyword">go</span> version go1<span class="number">.13</span><span class="number">.5</span> darwin/amd64</span><br><span class="line"></span><br><span class="line"><span class="comment">//输入，可以看到</span></span><br><span class="line"><span class="keyword">go</span> env</span><br><span class="line">...</span><br><span class="line">GOARCH=<span class="string">&quot;amd64&quot;</span></span><br><span class="line">GOHOSTARCH=<span class="string">&quot;amd64&quot;</span></span><br><span class="line">GOHOSTOS=<span class="string">&quot;darwin&quot;</span></span><br><span class="line">GOOS=<span class="string">&quot;darwin&quot;</span></span><br><span class="line">GOPATH=<span class="string">&quot;/Users/liuqingzheng/go&quot;</span></span><br><span class="line">GOROOT=<span class="string">&quot;/usr/local/go&quot;</span></span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五-命令介绍"><a href="#五-命令介绍" class="headerlink" title="五 命令介绍"></a>五 命令介绍</h2><h3 id="5-1-基本介绍"><a href="#5-1-基本介绍" class="headerlink" title="5.1 基本介绍"></a>5.1 基本介绍</h3><p>直接在终端中输入 <code>go help</code> 即可显示所有的 go 命令以及相应命令功能简介，主要有下面这些:</p>
+<ul>
+<li>build: 编译包和依赖</li>
+<li>clean: 移除对象文件（go clean ：删除编译的可执行文件）</li>
+<li>doc: 显示包或者符号的文档</li>
+<li>env: 打印go的环境信息</li>
+<li>bug: 启动错误报告</li>
+<li>fix: 运行go tool fix</li>
+<li>fmt: 运行gofmt进行格式化（go fmt ：自动将代码格式）</li>
+<li>generate: 从processing source生成go文件</li>
+<li>get: 下载并安装包和依赖（go get github.com&#x2F;astaxie&#x2F;beego：下载beego框架）</li>
+<li>install: 编译并安装包和依赖（go install 项目名：会将go编译，并放到bin路径下）</li>
+<li>list: 列出包</li>
+<li>run: 编译并运行go程序</li>
+<li>test: 运行测试</li>
+<li>tool: 运行go提供的工具</li>
+<li>version: 显示go的版本</li>
+<li>vet: 运行go tool vet</li>
+</ul>
+<h3 id="5-2-build-和-run-命令"><a href="#5-2-build-和-run-命令" class="headerlink" title="5.2 build 和 run 命令"></a>5.2 build 和 run 命令</h3><p>就像其他静态类型语言一样，要执行 go 程序,需要先编译，然后在执行产生的可执行文件。<code>go build</code> 命令就是用来编译 go程序生成可执行文件的。但并不是所以的 go 程序都可以编译生成可执行文件的, 要生成可执行文件，go程序需要满足两个条件:</p>
+<ul>
+<li>该go程序需要属于main包</li>
+<li>在main包中必须还得包含main函数</li>
+</ul>
+<p>也就是说go程序的入口就是 <code>main.main</code>, 即main包下的main函数,　例子(test.go):</p>
+<p>编译hello.go,然后运行可执行程序:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go run test.go   # 将会生成可执行文件 test</span><br><span class="line">$ ./test           # 运行可执行文件</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>上面就是 go build 的基本用法，另外如果使用 go build 编译的不是一个可执行程序，而是一个包，那么将不会生成可执行文件。</p>
+<p>而 <code>go run</code> 命令可以将上面两步并为一步执行(不会产生中间文件)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go run test.go</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>上面两个命令都是在开发中非常常用的。</p>
+<p>此外 go clean 命令，可以用于将清除产生的可执行程序:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go clean    # 不加参数，可以删除当前目录下的所有可执行文件</span><br><span class="line">$ go clean hello.go  # 会删除对应的可执行文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-get-命令"><a href="#5-3-get-命令" class="headerlink" title="5.3 get 命令"></a>5.3 get 命令</h3><p>这个命令同样也是很常用的，我们可以使用它来下载并安装第三方包, 使用方式:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get src</span><br></pre></td></tr></table></figure>
+
+<p>从指定源上面下载或者更新指定的代码和依赖，并对他们进行编译和安装，例如我们想使用 beego 来开发web应用，我们首先就需要获取 beego:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/astaxie/beego</span><br></pre></td></tr></table></figure>
+
+<p>这条命令将会自动下载安装 beego 以及它的依赖，然后我们就可以使用下面的方式使用:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/astaxie/beego&quot;</span>   # 这里需要使用 src 下的完整路径</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    beego.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/03-GoLand%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+        <span class="nav-arrow">← </span>
+        
+          03-GoLand环境搭建
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">
+        
+          [置顶]Elasticsearch系列教程
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="toc-nav-text">一 下载地址</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E5%AE%89%E8%A3%85"><span class="toc-nav-text">二 安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Linux%E5%AE%89%E8%A3%85"><span class="toc-nav-text">Linux安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Windows%E5%AE%89%E8%A3%85"><span class="toc-nav-text">Windows安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Mac%E5%AE%89%E8%A3%85"><span class="toc-nav-text">Mac安装</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-%E9%85%8D%E7%BD%AEGOPATH%E5%92%8CGOROOT"><span class="toc-nav-text">三 配置GOPATH和GOROOT</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-%E6%B5%8B%E8%AF%95%E5%AE%89%E8%A3%85"><span class="toc-nav-text">四 测试安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%94-%E5%91%BD%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">五 命令介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-1-%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">5.1 基本介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-2-build-%E5%92%8C-run-%E5%91%BD%E4%BB%A4"><span class="toc-nav-text">5.2 build 和 run 命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-3-get-%E5%91%BD%E4%BB%A4"><span class="toc-nav-text">5.3 get 命令</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/10/go/1-环境搭建/02-开发环境搭建/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "02-开发环境搭建",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>
