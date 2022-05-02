@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [置顶]云计算kvm+docker+k8s介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[置顶]云计算kvm+docker+k8s介绍</h2>
+
+
+
+  <p class="post-date">2022-05-02</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="day-01"><a href="#day-01" class="headerlink" title="day 01"></a>day 01</h1><p>云计算的概念：云计算是一种运营模式，按量计费的模式，它的底层主要就是通过虚拟化的技术去实现的。</p>
+<p>为什么要使用云计算：</p>
+<p>1、小公司：弹性伸缩、扩展，节约成本；</p>
+<p>2、大公司：云计算厂商，都有一个内存压缩机制</p>
+<p>云计算的几种服务模式：</p>
+<p>1、IAAS：基础设施即服务；底层使用的虚拟化技术，大部分云厂商提供的云主机底层基本上使用的都是KVM虚拟化技术，KVM的管理平台openstack(开源平台)；</p>
+<p>2、PAAS：平台即服务，docker容器+K8S容器编排管理技术；</p>
+<p>3、SAAS：软件即服务；需要运维+开发，</p>
+<p><img src="https://blogs.bmc.com/wp-content/uploads/2017/09/iaas-paas-saas-comparison-1024x759.jpg" alt="img"></p>
+<p>虚拟化：通过模拟计算机物理硬件，来实现同一台物理机上运行多个虚拟出的多个不同的操作系统的技术。</p>
+<p>一般物理服务器都会做bond(俗称：端口聚合)</p>
+<p>主流的虚拟化技术：kvm（性能及兼容性居中均衡）、qemu（发展是 最早的、性能最慢的、但可以模拟所有的硬件）、xen（性能最好，但一般的内核使用不了，使用专用定制版的内核，即兼容性差）、vmware ESXI(商业软件)</p>
+<p>KVM: Kernel-based Virtual Machine(基于内核的虚拟机)    开源</p>
+<p>优化阿里云更新源的额地址： </p>
+<p>​		<a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/">https://developer.aliyun.com/mirror/</a></p>
+<p>KVM虚拟化管理软件的安装</p>
+<p>yum install libvirt virt-install qemu-kvm -y</p>
+<p>libvirt作用：虚拟机的管理软件，管理虚拟机的生命周期，它是一款通用的虚拟机管理软件，它还能管理xen、qemu、lxc等</p>
+<p>virt中的virt-install、virt-clone 作用：虚拟机的安装工具和克隆工具</p>
+<p>qemu-kvm qemu-imq(qcow2,raw)作用：管理虚拟机的虚拟磁盘</p>
+<p>systemctl start libvirtd.service 用来开启虚拟机管理软件</p>
+<p>systemctl status libvirtd.service</p>
+<p>创建一台kvm虚拟机的命令：</p>
+<p>virt-install –virt-type kvm –os-type&#x3D;linux –os-variant rhel7 –name centos7 –memory 1024 –vcpus 1 –disk &#x2F;opt&#x2F;centos7.raw,format&#x3D;raw,size&#x3D;10 –cdrom &#x2F;opt&#x2F;CentOS-7-x86_64-Minimal-1708.iso –network network&#x3D;default –graphics vnc,listen&#x3D;0.0.0.0 –noautoconsole</p>
+<p>解释：</p>
+<p>–virt-type:虚拟化类型，默认使用的虚拟化类型是qemu</p>
+<p>–os-type:操作系统的类型</p>
+<p>–os-variant:操作系统版本</p>
+<p>选择虚拟化类型及操作系统版本目的是使创建的虚拟机按照特定的版本进行优化，提升虚拟机的性能</p>
+<p>–name:指定虚拟机的名字，注意：每个虚拟机的名字不能重复</p>
+<p>–graphics:图形图像输出的格式类型</p>
+<p>虚拟机管理软件libvirt主要是通过virsh命令来进行日常管理与配置的</p>
+<p>查看当前虚拟机列表：virsh list只显示当前运行的状态的虚拟机和挂起的虚拟机，如果想显示所有的虚拟机可以加–all参数，即：virsh list –all</p>
+<p>开机：virsh start 虚拟机名</p>
+<p>关机:   virsh shutdown 虚拟机名 （只有进了系统，才能使用）</p>
+<p>拔电源关机： virsh destroy 虚拟机名       （注意：生产环境不到万不得已，千万不要轻易拔电源，容易造成数据的丢失）</p>
+<p>重启： virsh reboot  虚拟机名</p>
+<p>备份KVM虚拟机，要备份两个文件：1、磁盘文件（如：centos7.raw）2、配置文件（如：centos7.xml)，备份配置文件的命令为：virsh dumpxml centos7 &gt;&gt;centos7.xml</p>
+<p>删除虚拟机的命令：virsh undefine 虚拟机名字，推荐虚拟机先destroy，然后再undefine，这个命令只是删除虚拟机的配置文件，磁盘文件还是存在的。</p>
+<p>恢复虚拟机的命令：virsh define 虚拟机配置文件的路径</p>
+<p>一种恶搞故障：当某台虚拟机在运行状态下，我们执行：virsh undefine 虚拟机的名字，然后再关闭此虚拟机，就会发生关一台少一台的故障。每当我们启动一台虚拟机都会在后台有一个进程ps -ef |grep qemu</p>
+<p>KVM默认的配置文件路径在：&#x2F;etc&#x2F;libvirt&#x2F;qemu&#x2F;下</p>
+<p>要修改配置文件的方法：virsh edit  虚拟机名，通过此方法可以进行语法检测 </p>
+<p>给虚拟机改名字：virsh domrename 原来的名字 新的名字  （注意：更改名字的时候需要将该虚拟主机进行关机）</p>
+<p>虚拟机挂起：virsh suspend 虚拟机的名字</p>
+<p>恢复虚拟机：virsh resume 虚拟机的名字</p>
+<p>查看某台虚拟机对应的VNC所对应的端口号：virsh vncdisplay 虚拟机名   （注意：vnc有两种端口号，一种是长端口号，一种是短端口号）</p>
+<p>设置kvm虚拟机开机自起：virsh autostart 虚拟机名字 ，这样虚拟机就会随着宿主机的开机启动自动启动运行，这在宿主机宕机恢复的时候比较有用。</p>
+<p>查看当前宿主机上的所有宿主机哪些是开机自启的：可以查看 &#x2F;etc&#x2F;libvirt&#x2F;qemu&#x2F;autostart&#x2F;下有一个xml文件，这个文件是阮链接文件</p>
+<p>取消kvm虚拟机开机自启的命令：第一种方法，在&#x2F;etc&#x2F;libvirt&#x2F;qemu&#x2F;autostart&#x2F;删除要关闭的虚拟机对应的xml文件即可；第二种方法，通过命令：virsh autostart –disable 虚拟机名字</p>
+<p>设置kvm虚拟机console登录： </p>
+<p>1、首先通过以下命令来修改KVM虚拟机的内核参数：</p>
+<p>​	  grubby –update-kernel&#x3D;ALL –args&#x3D;”console&#x3D;ttyS0,115200n8”</p>
+<p>​	  reboot</p>
+<p>​      当然也可以通过vi来修改内核参数 &#x2F;boot&#x2F;grub2&#x2F;grub.cfg</p>
+<p>2、然后执行virsh console 虚拟机名字</p>
+<p>如果想从登录的consolo虚拟机回到宿主机，可以使用快捷键ctrl+]</p>
+<p>kvm的磁盘格式：</p>
+<p>1、raw：裸格式，占用空间比较大，不支持快照功能，性能较好，不方便传输</p>
+<p>2、qcow和qcow2(qcow2的性能比qcow好很多，所以现在基本上都用qcow2格式)，cow(copy on wirte写时复制)，占用的空间小，支持快照，性能比raw差一点</p>
+<p>虚拟磁盘的管理命令：</p>
+<p>查看虚拟磁盘的信息：qemu-img info 虚拟机的磁盘文件 例如：qemu-img info centos7.qcow2</p>
+<p>创建虚拟磁盘的命令：qemu-img create -f qcow2 &#x2F;opt&#x2F;centos.qcow2 10G</p>
+<p>​                                      -f 是指定创建硬盘的格式</p>
+<p>​                                      不加参数 -f 默认创建的磁盘格式是raw</p>
+<p>调整虚拟磁盘的容量：qemu-img resize &#x2F;opt&#x2F;centos7.qcow2 +10G  此命令是将虚拟磁盘的容量在原有容量的基础上再扩容10G</p>
+<p>​                                       qemu-img resize &#x2F;opt&#x2F;centos7.qcow2 30G   此命令是直接将虚拟磁盘的容量扩容到30G</p>
+<p>转换磁盘格式：qemu-img convert -f  raw -O qcow2 centos7.raw centos7.qcow2</p>
+<p>​                           qemu-img convert -f 源文件的格式 -O 转后的文件格式 源磁盘文件的文件名 转后的目标磁盘文件的文件名</p>
+<p>kvm虚拟机创建快照： virsh snapshot-create centos7       这样创建的快照名是以时间戳的格式命名</p>
+<p>查看某个虚拟机有多少快照：virsh snapshot-list centos7</p>
+<p>删除某个虚拟机的某个快照：virsh snapshot-delete centos7  –snapshotname 1122334455</p>
+<p>创建kvm虚拟机快照并给快照进行自定义命名：virsh snapshot-create-as centos7 –name yuanshi</p>
+<p>给某台虚拟机恢复快照：virsh snapshot-revert centos7 –snapshotname yuanshi</p>
+<p>kvm虚拟机克隆分为两种：1、完整克隆；2、链接克隆</p>
+<p>完整克隆又分为两种：1、自动克隆（通过工具）； 2、手动克隆</p>
+<p>virt-clone这个工具受virt-install工具的依赖，所以这个工具是已经安装的</p>
+<p>完整克隆的命令：virt-clone –auto-clone -o centos7 -n new_centos7       切记，在进行虚拟机克隆的时候，虚拟机的运行状态必须是关机或挂起状态，注意：自动克隆出来的虚拟机是自带压缩，不带快照的</p>
+<p>手动克隆：注意，千万不要克隆带快照的虚拟机，因为克隆后，虚拟机里的快照起不来。</p>
+<p>第一步，拷贝虚拟机磁盘文件：cp new_centos7.qcow2 new1_centos7.qcow2</p>
+<p>第二步，导出源虚拟机的配置文件 virsh dumpxml new_centos7 &gt; new1_centos7.xml</p>
+<p>第三步，编辑导出虚拟机的配置文件，vim new1_centos7.xml，注意：1、修改虚拟机的名字；<name>新虚拟机的名字</name>；2、每一个虚拟机的UUID是唯一的，你只要删除了，它会根据你虚拟机的名字自动生成；3、修改磁盘位置 <source  file='/opt/new1_centos.qcow2' />，4、修改mac地址，删除，它会自动生成</p>
+<p>第四步，导入克隆编辑后的虚拟机配置文件new1_centos7.xml，即：virsh define new1_centos7.xml</p>
+<p>链接克隆：</p>
+<p>注意，官方是没有链接克隆的工具，它只有完整克隆</p>
+<p>第一步，qemu-img create -f qcow2 -b centos7.qcow2 new2_centos7.qcow2</p>
+<p>​                参数-b指的是我要基于那块磁盘文件创建一个引用磁盘</p>
+<p>第二步，导出源虚拟机的配置文件 virsh dumpxml centos7 &gt; new2_centos7.xml</p>
+<p>第三步，编辑导出虚拟机的配置文件，vim new2_centos7.xml，注意：1、修改虚拟机的名字；<name>新虚拟机的名字</name>；2、每一个虚拟机的UUID是唯一的，你只要删除了，它会根据你虚拟机的名字自动生成；3、修改磁盘位置 <source  file='/opt/new1_centos.qcow2' />，4、修改mac地址，删除，它会自动生成</p>
+<p>第四步，导入克隆编辑后的虚拟机配置文件new2_centos7.xml，即：virsh define new2_centos7.xml</p>
+<hr>
+<h1 id="day-02"><a href="#day-02" class="headerlink" title="day 02"></a>day 02</h1><p>默认的虚拟机网络是NAT模式 </p>
+<p>kvm也可以配置端口映射，方法是：1、iptables -t nat -L -n 查看的是NAT表  2、添加规则做端口映射</p>
+<p>kvm虚拟机默认是没有开启桥接模式的，我们需要通过命令开启桥接模式，命令为：<strong>virsh iface-bridge eth0 br0</strong> ，注意kvm开启桥接模式之前，其宿主机一定不能是DHCP模式，开启kvm虚拟机桥接模式，会修改网卡的配置文件</p>
+<p>注意：kvm虚拟机在开启桥接模式的时候，会报错，主要原因是：发现 eth0和br0都有ip</p>
+<p><img src="https://img-blog.csdnimg.cn/20210829195445188.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aWL6L-b55qE5p2l5p2l,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">解决方法：执行以下命令</span><br><span class="line"></span><br><span class="line">systemctl stop NetworkManager.service          # 关闭NetworkManager服务</span><br><span class="line"></span><br><span class="line">systemctl disable NetworkManager.service</span><br><span class="line"></span><br><span class="line">systemctl stop firewalld.service               # 关闭防火墙                                    </span><br><span class="line"></span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>​        开启桥接模式的虚拟机的命令：virt-install –virt-type kvm –os-type&#x3D;linux –os-variant rhel7 –name lijianbo –memory 1024 –    vcpus 1 –disk &#x2F;opt&#x2F;lijianbo.qcow2 –boot hd –network bridge&#x3D;br0 –graphics vnc,listen&#x3D;0.0.0.0 –noautoconsole  </p>
+<p>手动更改已创建的KVM虚拟机的网络模式为桥接模式，可以修改该虚拟机的配置文件，virsh edit 该虚拟机名 ，修改里面的内容，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;interface type=&#x27;bridge&#x27;&gt;</span><br><span class="line">	&lt;source bridge=&#x27;br0&#x27; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意，这个手动修改，必须在宿主机上重启虚拟机才生效</p>
+<p>将已创建的桥接网卡取消掉的命令为：</p>
+<p>virsh iface-unbridge br0</p>
+<h3 id="热添加技术："><a href="#热添加技术：" class="headerlink" title="热添加技术："></a>热添加技术：</h3><p>1、给kvm虚拟机热添加一块虚拟磁盘的操作步骤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">qemu-img create -f qcow2 lijianbo_add.qcow2 50G        # 首先先创建一块虚拟磁盘，格式为qcow2,容量为：50G</span><br><span class="line">virsh attach-disk lijianbo /opt/lijianbo_add.qcow2 vdb --subdriver qcow2 # 将已创建好的虚拟磁盘添加到指定的虚拟机中</span><br><span class="line">然后登陆虚拟机查看是否已经添加成功，可以执行fdisk -l</span><br><span class="line">磁盘添加成功之后，需要对添加的磁盘进行格式化，可以执行：mkfs.xfs /dev/vdb</span><br></pre></td></tr></table></figure>
+
+
+<p>格式化后对磁盘进行挂载：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/vdb /mnt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、如果想在已热添加虚拟磁盘的kvm虚拟机剥离添加的磁盘，可以使用以下的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh detach-disk lijianbo vdb</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>3、如果热添加的磁盘容量不够，为热添加的磁盘进行扩容的步骤：扩容一定要规范操作，注意，扩容的时候并不会丢失原来的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1、umount /mnt   # 先卸载挂载的磁盘，注意此操作是在虚拟机执行的</span><br><span class="line">2、virsh detach-disk lijianbo vdb  # 剥离kvm虚拟机已添加的虚拟磁盘</span><br><span class="line">3、qemu-img resize /opt/lijianbo_add.qcow2 100G # 扩容已创建的虚拟磁盘从50G扩容到100G</span><br><span class="line">4、virsh attach-disk lijianbo /opt/lijianbo_add.qcow2 vdb --subdriver qcow2 #扩容完成后再将磁盘热添加到kvm虚拟机中</span><br><span class="line">5、注意此时千万不能再格式化磁盘了，这样会造成数据丢失</span><br><span class="line">6、此时再将热添加的虚拟磁盘挂载到虚拟机的指定文件夹下 mount /dev/vdb /mnt</span><br><span class="line">7、此时需要更新一下磁盘的分区表信息，要不新扩容的空间识别不出来 xfs_growfs /dev/vdb,可以在虚拟机上通过df -h查看挂载最终扩容的容量信息</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、热添加网卡：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">virsh attach-interface lijianbo bridge br0 --model virtio --config   # kvm虚拟机热添加一块虚拟网卡模式为virtio,并将网卡信息添加到配置文件中</span><br><span class="line"></span><br><span class="line">剥离网卡的操作为：</span><br><span class="line">​```</span><br><span class="line">virsh detach-interface lijianbo bridge --mac 52:54:00:b3:42:a7  # 从kvm虚拟机中拆解指定（按照mac地址标识）的网卡</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>5、热添加内存：</p>
+<p>注意，虚拟机热添加内存是有前提条件的：即在创建虚拟机的时候指定一个参数maxmemory设置它弹性最大能扩展的内存容量是多少，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">virt-install --virt-type kvm --os-type=linux --os-variant rhel7 --name lijianbo1 --memory 512,maxmemory=2048 --vcpus 1 --disk path=/opt/lijianbo1.qcow2 --boot hd --network bridge=br0 --graphics vnc,listen=0.0.0.0 --noautoconsole</span><br><span class="line"></span><br><span class="line">virsh setmem lijianbo1 1024M --config</span><br></pre></td></tr></table></figure>
+
+<p>注意：参数–config，加上是永久生效，不加，就是临时生效。</p>
+<p>6、热添加cpu核数：</p>
+<p>注意，虚拟机热添加CPU核数跟虚拟机热添加内存的情况是相同的，都是有前提条件的：即在创建虚拟机的时候指定一个参数maxvcpus设置它弹性最大能扩展的cpu核数是多少，例如：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">virt-install --virt-type kvm --os-type=linux --os-variant rhel7 --name lijianbo2 --memory 512,maxmemory=2048 --vcpus 1,maxvcpus=10 --disk path=/opt/lijianbo1.qcow2 --boot hd --network bridge=br0 --graphics vnc,listen=0.0.0.0 --noautoconsole</span><br><span class="line"></span><br><span class="line">lscpu | head 5   # 查看当前kvm虚拟机CPU的核数</span><br><span class="line"></span><br><span class="line">virsh setvcpus  lijianbo2  4 --config</span><br></pre></td></tr></table></figure>
+
+<p>注意：参数–config，加上是永久生效，不加，就是临时生效。 </p>
+<p>KVM虚拟机迁移：</p>
+<p>冷迁移KVM虚拟机：配置文件、磁盘文件</p>
+<p>热迁移KVM虚拟机：配置文件、NFS共享</p>
+<table>
+<thead>
+<tr>
+<th>主机</th>
+<th>IP地址</th>
+<th>软件</th>
+<th>配置要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kvm01</td>
+<td>10.0.0.11</td>
+<td>kvm管理软件+nfs客户端</td>
+<td>2G，开启虚拟化</td>
+</tr>
+<tr>
+<td>kvm02</td>
+<td>10.0.0.12</td>
+<td>kvm管理软件+nfs客户端</td>
+<td>2G，开启虚拟化</td>
+</tr>
+<tr>
+<td>nfs01</td>
+<td>10.0.0.31</td>
+<td>nfs服务端</td>
+<td>1G</td>
+</tr>
+</tbody></table>
+<p>热迁移的准备工作：</p>
+<p>1、准备两台kvm宿主机，配置桥接网络，nfs客户端</p>
+<p>2、安装nfs服务端</p>
+<p>3、kvm宿主机挂载nfs服务端，挂载点一定要是同一个目录</p>
+<p>4、启动一台新的虚拟机，该虚拟机磁盘文件存储在共享存储上</p>
+<p>5、演示命令行热迁移</p>
+<p>6、安装图形界面virt-manager</p>
+<p>第一步操作：安装nfs服务端及客户端的命令：yum install nfs-utils -y</p>
+<p>第二步操作：nfs服务端配置启动，配置：vim &#x2F;etc&#x2F;exports修改里面的内容：</p>
+<p>​				&#x2F;opt	          10.0.0.0&#x2F;24(rw,sync,no_root_squash,no_all_squash)</p>
+<p>​				共享目录      允许10网段访问（可以使用的权限，sync,我们这里不做uid映射及gid映射</p>
+<p>​				然后执行：systemctl restart rpcbind</p>
+<p>​				重新执行nfs服务：systemctl restart nfs</p>
+<p>第三步操作：在两台宿主机上执行挂载远端nfs共享目录的命令：</p>
+<p>​				mount -t nfs 10.0.0.31:&#x2F;opt  &#x2F;opt     #  远端nfs的10.0.0.31的&#x2F;opt目录挂载到本地的&#x2F;opt目录</p>
+<p>​				通过df -h可以检查是否挂载上远端的nfs共享目录</p>
+<p>第四步操作：启动一台虚拟机：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virt-install --virt-type kvm --os-type=linux --os-variant rhel7 --name migrate  --memory 1024,maxmemory=2048 --vcpus 1,maxvcpus=10 --disk /opt/centos7.qcow2,format=raw,size=10 --cdrom /opt/CentOS-7-x86_64-Minimal-1708.iso --network network=default --graphics vnc,listen=0.0.0.0 --noautoconsole</span><br></pre></td></tr></table></figure>
+
+<p>第五步操作：进行热迁移：</p>
+<p>注意：在做热迁移的时候两台宿主机的主机名不能相同，同时两台宿主机之间要做host解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh migrate --live --verbose migrate qemu+ssh://10.0.0.12/system --unsafe</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>在kvm上虚拟机上安装图形界面、vnc服务端和virt-manager:</p>
+<p>yum groups install “GNOME Desktop” -y </p>
+<p>yum install tigevnc-server.x86_64 -y</p>
+<p>yum install virt-manager -y</p>
+<p>服务端启动vnc服务的命令：   vncserver : 10</p>
+<p>安装虚拟机管理软件的命令：yum install virt-manager.noarch -y</p>
+<p>带计费功能的kvm管理平台，openstack能实现的功能：</p>
+<p>1、查看每一个宿主机有多少台虚拟机；</p>
+<p>2、查看每一个宿主机还剩多少资源；</p>
+<p>3、查看每一台宿主机，每一个虚拟机的IP地址是什么</p>
+<p>获得信息，宿主机总配置、剩余的总配置、虚拟机的信息，配置信息，IP地址，操作系统等信息</p>
+<p>openstack是由python开发的开源的云平台，由 Rackspace和NASA共同开发。openstack实际就是一个项目，它里面的基础架构：计算，网路，存储，有一个dashboard的由django写的web界面，openstack各个组件都是通过restapi消息队列进行通信，openstack应用很广：IBM,京东，红帽、用友等各大厂商都加入openstack阵营。openstack版本是按照英文字母的顺序来排的。</p>
+<p>1、horizon：提供一个web界面的dashboard用于管理openstack的各种服务，基于web的管理接口，通过图形界面实现创建用户、管理网络、启动实例等操作</p>
+<p>2、glance：镜像管理，提供镜像的注册和存储管理</p>
+<p>3、swift：对象存储，例如新浪的图像服务做的就是对象存储</p>
+<p>4、nova：计算节点，收集各个虚拟机的硬件分配资源等信息。</p>
+<p>5、keystone：是做验证的，做认证管理，各个组件之间通过API进行通信，他们之间的通信是需要做验证的，就需要keystone的功能，soa（服务化治理）就需要各个服务之间的通信就需要进行keystone的验证机制。soa就是对服务进行解耦合，京东用的就是soa dubbo分布式服务框架</p>
+<p>6、neutron：实现虚拟机的网络资源管理</p>
+<p>7、Cinder：快存储，提供存储资源池</p>
+<p>8、ceilometer：提供监控和数据采集、计量服务（公用云用的比较多）</p>
+<p>9、heat：自动化部署组件</p>
+<p>10、trove：提供数据库应用服务，容易出现IO瓶颈</p>
+<p>注意：openstack依赖于主机名，一旦主机名更改，它会把你的主机当做新加入的节点，把上面的虚拟机都给删了。</p>
+<p>本次实验：</p>
+<p>准备两台虚拟机，一台虚拟机做为openstack的控制节点，一台虚拟机作为openstack的计算节点（专门用来安装虚拟机）。</p>
+<p>1、首先需要确定iptables防火墙是关闭的，命令：chkconfig iptables off；</p>
+<p>2、检测selinux是关闭的，操作命令：vim &#x2F;etc&#x2F;sysconfig&#x2F;selinux  将里面的SELINUX&#x3D;enforcing改为disabled；</p>
+<p>3、重启reboot； </p>
+<p>4、内核参数调整：</p>
+<p>​				vim &#x2F;etc&#x2F;sysctl.conf</p>
+<p>​				net.ipv4.ip_forward&#x3D;1  #  开启IP转发</p>
+<p>​				net.ipv4.conf.all.rp_filter&#x3D;0	#	开启反向路径过滤</p>
+<p>​				net.ipv4.conf.default.rp_filter&#x3D;0</p>
+<p>​                执行sysctl -p，让配置生效</p>
+<p>5、为两个节点添加hosts文件解析，并修改主机名</p>
+<p>6、为两个节点添加yum源及更新操作，执行：yum makecache &amp;&amp; yum update -y</p>
+<p>7、时间服务器配置：</p>
+<p>​                  所有节点安装chrony工具，yum install chrony -y</p>
+<p>​                  控制节点修改配置：</p>
+<p>​                                     vim &#x2F;etc&#x2F;chrony.conf</p>
+<p>​                                     server ntp.staging.kycloud.lan iburst</p>
+<p>​                                     allow  管理网络网段（ip&#x2F;24），例如：allow 192.168.33.0&#x2F;24</p>
+<p>​				   其余节点修改配置：</p>
+<p>​                                     vim &#x2F;etc&#x2F;chrony.conf</p>
+<p>​                                     server 控制节点IP iburst，例如：server 192.168.33.128 iburst</p>
+<p>​                   所有节点开启chronyd服务并设置开机启动：</p>
+<p>​                                      systemctl enable chronyd.service</p>
+<p>​                                      systemctl start chronyd.servicev</p>
+<p>​                   时区不是Asia&#x2F;Shanghai需要修改时区：</p>
+<p>​                                       timedatectl set-local-rtc 1 #	将硬件时钟调整为与本地时钟一致，0为设置UTC时间</p>
+<p>​                                       timedatectl set-timezone Asia&#x2F;Shanghai  #  设置系统时区为上海</p>
+<p>​                   如果不考虑各个发行版的差异，修改时间时区比想象的要简单：</p>
+<p>​                                       cp &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</p>
+<p>​                  然后让每台机器同步时间就执行：</p>
+<p>​                                       chronyc sources</p>
+<p>8、安装软件包，防止软件自动更新</p>
+<p>yum install yum-plugin-priorities -y            #  防止自动更新</p>
+<p>9、下载安装openstack软件仓库（queens版本）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install centos-release-openstack-queens -y</span><br></pre></td></tr></table></figure>
+
+<p>​		更新所有节点软件包</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum upgrade</span><br></pre></td></tr></table></figure>
+
+<p>9、安装openstack客户端工具：</p>
+<p>yum install python-openstackclient -y</p>
+<h1 id="day03-docker容器技术"><a href="#day03-docker容器技术" class="headerlink" title="day03 docker容器技术"></a>day03 docker容器技术</h1><p>容器：容器就是在隔离的环境里运行的一个进程，如果进程停止，容器就会销毁。隔离的环境拥有自己的系统文件、ip地址，主机名等</p>
+<p>容器和传统虚拟化的区别：</p>
+<p>1、kvm虚拟化需要硬件的支持，需要模拟硬件，可以运行不同的操作系统，启动时间分钟级（有开机的启动流程），注意：传统linux kvm虚拟机开机流程：先bios开机自检，根据bios的设置的启动项开始启动，读取硬盘分区表信息及内核加载路径—–以前用的GRUB引导使用的是mbr分区（最大识别的硬盘容量为2T），现在使用的是UEFI引导使用的是gpt分区（就没有硬盘容量的限制），每个引导都支持多系统，加载内核，启动第一个进程&#x2F;sbin&#x2F;init systemd，系统初始化完成，开始运行服务；</p>
+<p>2、容器启动流程：公用宿主机内核，第一个进程直接启动服务，轻量级，损耗资源少，启动快（秒级），性能高，但只能运行在linux上面</p>
+<p>容器技术的发展过程：</p>
+<p>1、chroot(change root)：<strong>改变根目录，新建一个子系统（拥有自己完整的系统文件）</strong>比如在centos7的系统里拷入ubuntu的系统文件，通过chroot就可以将根目录切换到ubuntu下，执行ubuntu里的命令，但内核公用的还是centos7的内核，</p>
+<p>在救援模式下，还可通过chroot修改系统的密码， chroot &#x2F;mnt&#x2F;sysimage</p>
+<p>小知识点：linux不解压看一个压缩文件里面有哪些文件的命令，tar tf 压缩文件，例如：tar tf rootfs.tar.xz</p>
+<p>2、lxc：<strong>linux容器（lxc）,linux container(namespaces命名空间 隔离环境及cgroups资源限制)，lxc已经过时了，现在基本上已经废弃了。</strong></p>
+<p>​			容器技术：</p>
+<p>​                            lxc: 它的进程比较多，第一个进程&#x2F;sbin&#x2F;init  然后再启动服务</p>
+<p>​                           docker: 精简，直接启动服务 </p>
+<p>​                           rkt: rancher公司开发的产物</p>
+<p>3、docker：docker继承了lxc的优点，进程虚拟化技术，通过namespace及cgroup(cgroup的作用就是限制进程使用多少内存、cpu、硬盘等资源)来提供容器的资源隔离与资源限制的安全保障等特性。</p>
+<p>​			docker初期使用的是lxc容器引擎，但后期就是用自主开发的libcontainer容器引擎</p>
+<p>docker-ce的安装：</p>
+<p>1、<strong>御载旧版本docker（如果有旧版本）</strong></p>
+<p>在安装新版的docker之前，如果有安装旧版的docker，需要先删除旧版，步骤如下：</p>
+<p>首先搜索已经安装的docker 安装包 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed|grep docker </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2020.cnblogs.com/blog/121965/202005/121965-20200517130156286-439801005.png" alt="img"></p>
+<p> 从说可以看出有三个docker安装包，删除这三个安装包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum –y remove containerd.io.x86_64</span><br><span class="line">yum –y remove docker-ce.x86_64 </span><br><span class="line">yum –y remove docker-ce-cli.x86_64 </span><br></pre></td></tr></table></figure>
+
+<p>2、<strong>设置yum镜像源为阿里镜像源，加快安装速度</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+
+
+<p>docker的主要组成部分：</p>
+<p>docker是传统意义上的CS架构，即分为docker client和docker server            </p>
+<p>docker主要组件有：镜像、容器、仓库、网络、存储</p>
+<p><strong>注意：启动容器必须通过一个镜像，仓库中只存储镜像</strong>，镜像可以理解为是系统文件打包之后的文件</p>
+<p><strong>容器—镜像—仓库</strong>             </p>
+<p>docker使用的宗旨目标是“Build(构建)、Ship(传输)and Run any App，Anywhere(处处运行)”的思路部署服务，基本上是一次构建，处处运行</p>
+<p>配置docker国内镜像源，即给docker镜像加速：</p>
+<p>vi &#x2F;etc&#x2F;docker&#x2F;daemon.json</p>
+<p>{</p>
+<p>​	“registry-mirrors”:[“<a href="https://registry.docker-cn.com&quot;]">https://registry.docker-cn.com&quot;]</a></p>
+<p>}                    </p>
+<p>测试：启动一个docker容器，并运行nignx服务</p>
+<p>docker run -d -p 80:80 nginx</p>
+<p>参数解释：run(创建并运行一个容器)</p>
+<p>​                    -d 创建的容器在后台运行</p>
+<p>​                    -p 端口映射，前面的是宿主机的端口，后面的是容器的端口</p>
+<p>​                    nginx  即docker镜像的名字</p>
+<p>docker镜像管理</p>
+<p>1、搜索镜像的命令：docker search 镜像名</p>
+<p>选镜像的建议：1、优先考虑官方；2、stars星级数量高的</p>
+<p>docker官方镜像仓库地址：hub.docker.com</p>
+<p>2、获取镜像的命令：docker pull(下载)   镜像名：版本号                 docker push(上传) 镜像名</p>
+<p>镜像加速器：阿里云加速器，daocloud加速器，中科大加速器，docker中国官方镜像加速器（<a target="_blank" rel="noopener" href="https://registry.docker-cn.com)/">https://registry.docker-cn.com）</a></p>
+<p>例如：docker pull busybox:1.29 </p>
+<p>官方pull       docker pull centos:7.6          注意：没有指定版本，默认会下载最新版的镜像</p>
+<p>私有仓库pull    docker pull  私有仓库的网站地址&#x2F;用户名&#x2F;镜像名：版本号     例如：docker pull hub.docker.com&#x2F;lijianbo&#x2F;busybox:1.29</p>
+<p>3、查看镜像列表的命令：docker images   或者   docker image ls</p>
+<p>4、删除镜像的命令：docker rmi 镜像名:版本号    例如：docker image rm centos:latest</p>
+<p>5、导出镜像的命令：docker save 镜像名:版本号 导出后的文件名      例如：docker image save centos &gt;（或者-o） docker-centos.tar.gz</p>
+<p>6、导入镜像的命令：docker load 需要导入的镜像文件    例如：docker image load -i docker-centos.tar.gz</p>
+<p>docker的容器管理</p>
+<p>1、docker run -d -p 80:80 nginx:latest</p>
+<p>参数解释：run(创建并运行一个容器)      docker run &#x3D; docker create + docker start</p>
+<p>​                    -d 创建的容器在后台运行</p>
+<p>​                    -p 端口映射，前面的是宿主机的端口，后面的是容器的端口</p>
+<p>​                    nginx  即docker镜像的名字</p>
+<p>​                    -v 源地址（宿主机的目录）：目标地址（容器上的目录） </p>
+<p>小知识点：在linux系统中，我们也可以通过命令：hostname -I来查看主机的IP地址</p>
+<p>2、docker run -it –name centos_new centos:6.9 &#x2F;bin&#x2F;bash</p>
+<p>参数解释：-it 分配交互式的终端 -i是interactive的缩写 -t是tty的缩写</p>
+<p>​                   –name 指定容器的名字</p>
+<p>​                   &#x2F;bin&#x2F;bash 覆盖容器的初始命令</p>
+<p>3、docker container ls -a 或者 docker container ls –all 查看所有容器，不加-a只显示运行状态下的容器</p>
+<p>4、停止容器：docker stop 容器ID或者名字</p>
+<p>​      将停止的容器再启动起来：docker start  容器的ID或者名字</p>
+<p>5、杀死容器：docker kill 容器ID或者 容器名</p>
+<p>6、查看容器列表：docker ps (-a -l -q)          -l 显示最后一个容器，-q 静默输出，只显示容器的ID</p>
+<p>7、 进入正在运行的容器：docker exec(会分配一个新的终端tty,目的是调试、排错)</p>
+<pre><code>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 容器ID或容器名字 /bin/bash  -----------------推荐使用</span><br><span class="line">docker attach(使用同一个终端) 容器的ID或名字,即多个用户进入同一个容器使用的是同一个终端，即一个用户操作，输出的结果会发布到所有进入容器的终端上面，attach进入容器后退出的操作是：先按ctrl + p,松开后再按ctrl + q ---------------多人演示可以使用它</span><br><span class="line">nsenter (安装yum install -y util-linux) -------------------已弃用</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>8、删除容器：docker rm 容器的ID或者容器名</p>
+<pre><code> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">它支持批量删除：docker rm 容器1的ID 容器2的ID ......</span><br><span class="line">     </span><br><span class="line">当然也可以通过查看容器ID批量删除：docker rm `docker ps -a -q`</span><br><span class="line">     </span><br><span class="line">强制删除容器的命令：docker rm -f 容器的ID或者容器名</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p> docker容器的网络访问</p>
+<p>查看ping这个命令的包属于谁啊，可以通过命令：yum provides ping来进行查询</p>
+<p>注意：每次我们启动docker服务的时候，它都会自动把内核转发参数设置为1，可以通过命令：systemctl -a|grep ipv4|grep forward</p>
+<p>如果手动调整为0，即sysctl net.ipv4.ip_forward&#x3D;0，即停止转发</p>
+<p>我们也可以通过iptables -t nat -L -n规则来进行分析</p>
+<p>查看容器的网关的命令：route -n</p>
+<p>docker端口映射：指定映射（docker会自动添加一条iptables规则来实现端口映射）</p>
+<p>端口映射的几种书写格式：</p>
+<p>-p 宿主机指定的端口：容器指定的端口</p>
+<p>-p 宿主机网卡某个IP地址：指定的端口：容器指定的端口           例如：多个容器都想使用80端口</p>
+<p>-p 宿主机指定的IP地址：：容器指定的端口           即：将容器指定的端口映射到宿主机指定IP下的随机端口</p>
+<p>-p 宿主机指定的端口：容器指定的端口&#x2F;udp        默认端口映射使用的都是tcp协议，这里我们指定映射的端口使用的协议为udp协议</p>
+<p>-p 81:80 -p 443:443 可以指定映射的多个端口</p>
+<p>随机端口映射：docker run -P (使用的随机端口)</p>
+<p>端口映射的原理就是通过iptables来实现的</p>
+<p>docker数据卷管理</p>
+<p>例如：docker run -d -p 80:80 -v &#x2F;opt&#x2F;lijianbo:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html nginx:latest</p>
+<p>1、目录挂载</p>
+<p>-v 是将容器内指定的目录挂载到本地指定的目录</p>
+<p>2、数据卷挂载</p>
+<p>docker volume ls 用来查看有哪些卷</p>
+<p>docker run -d -p 80:80 -v lijianbo:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html nginx:latest     注意卷不存在会自动创建，如果卷是空的，它会把容器内的文件复制出来到卷中,如果卷里有东西了，就会把卷里的文件反挂回容器</p>
+<p>注意：docker volume inspect lijianbo      用来看卷lijianbo的详细情况</p>
+<p>练习：</p>
+<p>基于nginx启动一个容器，监听80和81端口，访问80，出现nginx默认欢迎首页，访问81，出现指定页面。</p>
+<p>提示：1、nginx默认的配置文件位置为：&#x2F;etc&#x2F;nginx&#x2F;nginx.conf发现他包含：include &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;*.conf</p>
+<p>​           2、cat &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;default.conf ，去掉注释和空行的命令：grep -Ev ‘^$|#’ &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;default.conf得到server的配   置文件，如：</p>
+<p>​                   server {</p>
+<p>​                       listen  80;</p>
+<p>​                       server_name localhost;</p>
+<p>​                       location &#x2F; {</p>
+<p>​                             root &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;</p>
+<p>​                             index index.html index.htm;</p>
+<p>​                             }</p>
+<p>​                       }</p>
+<p>手动将容器保存为镜像：</p>
+<p>制作自己的docker镜像的步骤：</p>
+<p>1、启动一个基础容器；  </p>
+<p>​     例如：docker run -it centos:6.9 </p>
+<p>​                 </p>
+<p>​                curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>​                yum install nginx</p>
+<p>2、把容器提交为镜像；</p>
+<p>​      例如：docker container commit 容器ID或者容器名 （例如：7839718e89ee） 准备生成的镜像名：镜像的版本号（例如：lijianbo : v1）</p>
+<p>​      docker container commit 7839718e89ee lijianbo:v1</p>
+<p>3、测试镜像的功能是否正常 ；</p>
+<p>​      docker run -d -it -p 80:80 lijianbo:v1 nginx -g ‘daemon off;’           注：nginx -g ‘daemon off;’ 是nginx的启动命令 </p>
+<p>2、制作一个多服务的镜像：</p>
+<p>​      1、启动一个基础容器 </p>
+<p>​            docker run -it lijianbo:v1 &#x2F;bin&#x2F;bash</p>
+<p>​            mkdir &#x2F;code</p>
+<p>​            yum install php-fpm -y </p>
+<p>​            vim &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;kod.conf</p>
+<p>​                                  server {</p>
+<p>​                                      listen  80;</p>
+<p>​                                      server_name localhost;</p>
+<p>​                                 location &#x2F; {</p>
+<p>​                                      root &#x2F;code;</p>
+<p>​                                      index index.php    index.html    index.htm;</p>
+<p>​                                              }</p>
+<pre><code>              location ~ \.php$ &#123;
+                  root           /code;
+                  fastcgi_pass   127.0.0.1:9000;
+                  fastcgi_index  index.php;
+                  fastcgi_param  SCRIPT_FILENAME  /code$fastcgi_script_name;
+                  include        fastcgi_params;
+                    &#125;
+</code></pre>
+<p>​                                      }</p>
+<p>​               nginx -t     检查语法错误</p>
+<p>​               service nginx start</p>
+<p>​               service php-fpm start </p>
+<h1 id="day04-dockerfile-自动构建docker镜像"><a href="#day04-dockerfile-自动构建docker镜像" class="headerlink" title="day04 dockerfile 自动构建docker镜像"></a>day04 dockerfile 自动构建docker镜像</h1><p>dockerfile 类似于一个剧本文件，dockerfile还支持容器的定制化，以及支持自定义容器的初始命令</p>
+<p>dockerfile的主要组成部分：</p>
+<p>1、基础镜像信息：例如：FROM centos:6.9    注意：指定基础镜像使用的是FROM命令</p>
+<p>2、制作镜像操作指令：例如：RUN yum install openssh-server -y  注意：后面每一个编排命令都可以使用RUN来表示</p>
+<p>3、容器启动时执行的初始命令：例如：CMD[“&#x2F;bin&#x2F;bash”]    注意：CMD是指定容器启动时执行的初始命令</p>
+<p>注意：每一个项目只能有一个dockerfile文件，例如：创建nginx镜像文件，就只能有一个dockerfile文件，并且文件名只能叫dockerfile,</p>
+<p>使用dcokerfile构建镜像步骤：</p>
+<p>1、手动制作一次镜像； </p>
+<p>2、根据历史命令编写dockerfile文件</p>
+<p>创建nginx的docker镜像的dockerfile文件格式为：</p>
+<p>基础镜像信息：FROM centos:6.9</p>
+<p>制作进行操作指令：RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>​                                   RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>​                                   RUN yum install nginx unzip -y</p>
+<p> 容器启动时执行的命令：CMD [“nginx”,”-g”,”daemon off; “]</p>
+<p>3、使用dockerfile构建镜像</p>
+<p>然后基于上面的dockerfile文件制作镜像：docker image build -t（创建镜像的名字） centos_nginx:v1 &#x2F;opt&#x2F;dockerfile&#x2F;nginx(dockerfile所在的目录)</p>
+<p>docker build –network&#x3D;host -t centos_nginx.:v1                               –network&#x3D;host 参数使用宿主机网络</p>
+<p>4、测试镜像</p>
+<h3 id="–WORKDIR"><a href="#–WORKDIR" class="headerlink" title="–WORKDIR"></a>–WORKDIR</h3><p>制作一个带服务的dockerfile文件：</p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>RUN yum install nginx unzip -y</p>
+<p>WORKDIR &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                  WORKDIR 用于创建的临时容器切换当前工作目录，类似于: cd &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html</p>
+<p>RUN curl -o lijianbo.zip <a target="_blank" rel="noopener" href="http://10.0.0.2/file/lijianbo.zip">http://10.0.0.2/file/lijianbo.zip</a></p>
+<p>RUN unzip lijianbo.zip</p>
+<p>CMD [“nginx”,”-g”,”daemon off;”]</p>
+<h3 id="–ADD"><a href="#–ADD" class="headerlink" title="–ADD"></a>–ADD</h3><p>在制作dockerfile文件时通过ADD将宿主机上指定的目录文件添加到临时容器指定的目录</p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>RUN yum install nginx unzip -y</p>
+<p>WORKDIR &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                  WORKDIR 用于创建的临时容器切换当前工作目录，类似于: cd &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html</p>
+<p>ADD lijianbo .                                                    ADD 将宿主机指定的目录放到临时容器的当前工作目录（如果给的是tar包会自动解压）</p>
+<p>CMD [“nginx”,”-g”,”daemon off;”]</p>
+<h3 id="–MAINTAINER-告诉别人，谁负责维护他-（指定维护者信息，是个可选项，可有可无）"><a href="#–MAINTAINER-告诉别人，谁负责维护他-（指定维护者信息，是个可选项，可有可无）" class="headerlink" title="–MAINTAINER       告诉别人，谁负责维护他 （指定维护者信息，是个可选项，可有可无）"></a>–MAINTAINER       告诉别人，谁负责维护他 （指定维护者信息，是个可选项，可有可无）</h3><h3 id="–LABLE-给制作的镜像添加描述信息，标签（是个可选项，可有可无）"><a href="#–LABLE-给制作的镜像添加描述信息，标签（是个可选项，可有可无）" class="headerlink" title="–LABLE                    给制作的镜像添加描述信息，标签（是个可选项，可有可无）"></a>–LABLE                    给制作的镜像添加描述信息，标签（是个可选项，可有可无）</h3><h3 id="–VOLUME（数据卷持久化）"><a href="#–VOLUME（数据卷持久化）" class="headerlink" title="–VOLUME（数据卷持久化）"></a>–VOLUME（数据卷持久化）</h3><p>在制作dockerfile文件时通过volume将指定的目录进行持久化 </p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>RUN yum install nginx unzip -y</p>
+<p>ADD lijianbo &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                                    ADD 将宿主机指定的目录放到临时容器的当前工作目录</p>
+<p>VOLUME &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                                          VOLUME将指定的目录进行持久化</p>
+<p>CMD [“nginx”,”-g”,”daemon off;”]   </p>
+<p>只有使用dockerfile生成的镜像运行的容器，数据卷才可以生效，查询某个容器挂载的数据卷的详细信息可以通过如下命令：docker container inspect 容器名或者容器ID|grep -i volume </p>
+<p>docker run -d -p 88:80 –volumes-from nginx_lijianbo(指定的容器)  lijianbo:v3           –volumes-from指的是新建的容器与指定的容器挂载相同的数据卷</p>
+<h3 id="–EXPOSE-指定对外开放的端口与随机端口的映射关系-，使用docker-run-P，如果在dockerfile文件中没有指定EXPOSE对外开放的端口，那么通过docker-run-P就不会生成随机端口与指定端口的映射关系"><a href="#–EXPOSE-指定对外开放的端口与随机端口的映射关系-，使用docker-run-P，如果在dockerfile文件中没有指定EXPOSE对外开放的端口，那么通过docker-run-P就不会生成随机端口与指定端口的映射关系" class="headerlink" title="–EXPOSE(指定对外开放的端口与随机端口的映射关系)，使用docker run -P，如果在dockerfile文件中没有指定EXPOSE对外开放的端口，那么通过docker run -P就不会生成随机端口与指定端口的映射关系"></a>–EXPOSE(指定对外开放的端口与随机端口的映射关系)，使用docker run -P，如果在dockerfile文件中没有指定EXPOSE对外开放的端口，那么通过docker run -P就不会生成随机端口与指定端口的映射关系</h3><p>具体dockerfile格式如下：</p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>RUN yum install nginx unzip -y</p>
+<p>ADD lijianbo &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                        ADD 将宿主机指定的目录放到临时容器的当前工作目录</p>
+<p>VOLUME &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                              VOLUME将指定的目录进行持久化</p>
+<p>EXPOSE 80 22                                                                              如果是多个端口需要随机映射，那么在定义多个端口的时候使用空格隔开</p>
+<p>CMD [“nginx”,”-g”,”daemon off;”]   </p>
+<h3 id="–COPY-将宿主机指定的目录拷贝到临时容器的当前工作目录（如果给的是tar包不会自动解压，ADD会自动解压）"><a href="#–COPY-将宿主机指定的目录拷贝到临时容器的当前工作目录（如果给的是tar包不会自动解压，ADD会自动解压）" class="headerlink" title="–COPY 将宿主机指定的目录拷贝到临时容器的当前工作目录（如果给的是tar包不会自动解压，ADD会自动解压）"></a>–COPY 将宿主机指定的目录拷贝到临时容器的当前工作目录（如果给的是tar包不会自动解压，ADD会自动解压）</h3><h3 id="–ENTRYPOINT-指定容器启动时运行的命令，注意与CMD命令的区别，ENTRYPOINT命令是一旦命令指定，后续启动容器时，命令是不能被替换的（启动容器的时候指定的命令，会被当成参数）"><a href="#–ENTRYPOINT-指定容器启动时运行的命令，注意与CMD命令的区别，ENTRYPOINT命令是一旦命令指定，后续启动容器时，命令是不能被替换的（启动容器的时候指定的命令，会被当成参数）" class="headerlink" title="–ENTRYPOINT 指定容器启动时运行的命令，注意与CMD命令的区别，ENTRYPOINT命令是一旦命令指定，后续启动容器时，命令是不能被替换的（启动容器的时候指定的命令，会被当成参数）"></a>–ENTRYPOINT 指定容器启动时运行的命令，注意与CMD命令的区别，ENTRYPOINT命令是一旦命令指定，后续启动容器时，命令是不能被替换的（启动容器的时候指定的命令，会被当成参数）</h3><p>具体dockerfile格式如下：</p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;epel.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/epel-6.repo">http://mirrors.aliyun.com/repo/epel-6.repo</a></p>
+<p>RUN yum install nginx unzip -y</p>
+<p>ADD lijianbo &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                        ADD 将宿主机指定的目录放到临时容器的当前工作目录</p>
+<p>VOLUME &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html                                              VOLUME将指定的目录进行持久化</p>
+<p>EXPOSE 80 22                                                                              如果是多个端口需要随机映射，那么在定义多个端口的时候使用空格隔开</p>
+<p>ENTRYPOINT   [“nginx”,”-g”,”daemon off;”]  </p>
+<h3 id="–ENV-代表设置环境变量"><a href="#–ENV-代表设置环境变量" class="headerlink" title="–ENV 代表设置环境变量"></a>–ENV 代表设置环境变量</h3><p>dockerfile部署mysql数据库格式如下：</p>
+<p>FROM centos：6.9</p>
+<p>RUN curl -o &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+<p>RUN yum install mysql-server -y</p>
+<p>RUN service mysqld start</p>
+<p>ADD init.sh &#x2F;init.sh</p>
+<p>ENV MYSQL_ROOT&#x3D;123456          # 在dockerfile里也指定一个环境变量，如果在生成的容器中传了环境变量参数，就以传的环境变量为主，如果没传，就以dockerfile中此时指定的环境变量参数为主</p>
+<p>CMD [“&#x2F;bin&#x2F;bash”,”&#x2F;init.sh”]</p>
+<p>其中dockerfile文件中的init.sh脚本的格式为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> #</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">service mysqld start </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysqladmin -uroot password <span class="string">&quot;123456&quot;</span>      <span class="comment">#将mysql连接的密码固定为123456</span></span></span><br><span class="line">mysqladmin -uroot password &quot;$MYSQL_ROOT&quot;</span><br><span class="line">service mysqld stop</span><br><span class="line">/bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --pid-file=/var/run/mysqld/mysqld.pid --basedir=/usr --user=mysql</span><br></pre></td></tr></table></figure>
+
+<p>注意：需要测试时，需要安装mysql客户端，命令：yum install mariadb -y</p>
+<p>然后生成docker镜像，如：docker build –network&#x3D;host -t mysql:v1 .</p>
+<p>此时，通过该mysql:v1镜像生成容器时，需要加一个参数：–env(这里–env可以简写成-e) “MYSQL_ROOT&#x3D;56789”，例如：</p>
+<p>docker run -d -p 3306:3306 –env “MYSQL_ROOT&#x3D;56789” mysql:v1</p>
+<h3 id="docker镜像的分层"><a href="#docker镜像的分层" class="headerlink" title="docker镜像的分层"></a>docker镜像的分层</h3><p>dockerfile构建失败也会产生镜像，无名字<none>,即生成的是dangling镜像（构建失败的镜像），可以使用如下命令：docker image prune删除此类镜像。</p>
+<p>镜像分层的好处：复用，节省磁盘空间，同时相同的内容只需加载一份到内存。</p>
+<p>dockerfile优化：</p>
+<p>1、尽可能选择体积小linux,alpine</p>
+<p>2、尽可能合并RUN指令，清理无用的文件（yum缓存，源码包）</p>
+<p>3、修改dockerfile，把变化的内容尽可能放在dockerfile结尾</p>
+<p>4、使用.dockerignore(当docker客户端将dockerfile发送到docker server时，会把dockerfile所在的目录的所有文件发送到docker服务端，这样势必会加大通过dockerfile生成的镜像的时间，所以可以编辑.dockerignore文件，将不需要发送给docker server的文件名写在该文件中),减少不必要的文件添加 .&#x2F;html</p>
+<h3 id="容器间的互联（–link是单方向的！！！）"><a href="#容器间的互联（–link是单方向的！！！）" class="headerlink" title="容器间的互联（–link是单方向的！！！）"></a>容器间的互联（–link是单方向的！！！）</h3><p>例如：docker run -d -p 80:80 nginx</p>
+<p>​            docker run -it –link quirky_brown:web01(链接的容器名：容器的别名) qstack&#x2F;centos &#x2F;bin&#x2F;bash</p>
+<p>​            ping web01</p>
+<p>​            容器跟容器之间互联，docker就会自动帮你做一个host解析，注意这个–link是单方向的，只有先把需要链接的容器起起来以后，再使用–link链接容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">循环导入容器镜像的命令：for n in `ls *.tar.gz`;do docker load -i $n;done</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">docker容器之间互联部署zabbix服务，具体部署如下：</span><br><span class="line"></span><br><span class="line">docker run --name mysql-server -t \</span><br><span class="line">	-e DB_SERVER_HOST=&quot;mysql-server&quot; \</span><br><span class="line">	-e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">	-e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">	-d mysql:5.7 \</span><br><span class="line">	--character-set-server=utf8 --collation-server=utf8_bin</span><br><span class="line">	</span><br><span class="line">docker run --name zabbix-java-gateway -t \</span><br><span class="line">	-d zabbix/zabbix-java-gateway:latest</span><br><span class="line"></span><br><span class="line">docker run --name zibbix-server-mysql -t \</span><br><span class="line">	-e DB_SERVER_HOST=&quot;mysql-server&quot; \</span><br><span class="line">	-e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">	-e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">	-e ZBX_JAVAGATEWAY=&quot;zabbix-java-gateway&quot; \</span><br><span class="line">	--link mysql-server:mysql \</span><br><span class="line">	--link zabbix-java-gateway:zabbix-java-gateway \</span><br><span class="line">	-p 10051:10051 \</span><br><span class="line">	-d zabbix/zabbix-server-mysql:latest</span><br><span class="line">	</span><br><span class="line">docker run --name zabbix-web-nginx-mysql -t \</span><br><span class="line">	-e DB_SERVER_HOST=&quot;mysql-server&quot; \</span><br><span class="line">	-e MYSQL_DATABASE=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_USER=&quot;zabbix&quot; \</span><br><span class="line">	-e MYSQL_PASSWORD=&quot;zabbix_pwd&quot; \</span><br><span class="line">	-e MYSQL_ROOT_PASSWORD=&quot;root_pwd&quot; \</span><br><span class="line">	--link mysql-server:mysql \</span><br><span class="line">	--link zabbix-server-mysql:zabbix-server \</span><br><span class="line">	-p 80:80 \</span><br><span class="line">	-d zabbix/zabbix-web-nginx-mysql:latest</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="docker-registry-docker私有仓库"><a href="#docker-registry-docker私有仓库" class="headerlink" title="docker registry (docker私有仓库)"></a>docker registry (docker私有仓库)</h3><p>docker私有仓库的优点：节省带宽，速度快，用户体验好，大规模部署docker的时候应该有一个私有仓库</p>
+<p>docker私有仓库是个服务，docker已经为我们提供了部署docker私有仓库的镜像，我们只需启动运行容器就OK 了</p>
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 --restart=always --name registry -v /opt/myreqistry:/var/lib/registry registry:latest</span><br><span class="line"></span><br><span class="line">--restart=always 当docker服务起来的时候，自动的把这个容器也拉起来</span><br></pre></td></tr></table></figure>
+
+<p>上传镜像到私有仓库：</p>
+<p>a:给镜像打标签</p>
+<p>docker tag centos6-sshd:v3 10.0.0.20:5000&#x2F;centos6-sshd:v3</p>
+<p>b:上传镜像</p>
+<p>docker push 10.0.0.20:5000&#x2F;centos6-sshd:v3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注意：如果遇到如下报错：</span><br><span class="line">The push refers to repository[10.0.0.20:5000/centos6.9_ssh]</span><br><span class="line">Get https://10.0.0.20:5000/v2/: http:server gave HTTP reponse to HTTPS client</span><br><span class="line"></span><br><span class="line">解决方法：</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">	&quot;insecure-registries&quot;:[&quot;10.0.0.20:5000&quot;]       # insecure-reqistries不安全的私有仓库</span><br><span class="line">&#125;</span><br><span class="line">然后重启docker服务，systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>此时，上面的私有仓库是不加验证机制的私有仓库，谁都可以往上面上传镜像。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看镜像列表：http://10.0.0.20:5000/v2/_catalog</span><br><span class="line">查看某个镜像的版本：http://10.0.0.20:5000/v2/查询的镜像名/tags/list</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>如果，想往docker官方仓库（docker.io）传镜像，需要先进行登录：使用docker login命令</p>
+<h3 id="带basic认证的私有仓库registry"><a href="#带basic认证的私有仓库registry" class="headerlink" title="带basic认证的私有仓库registry"></a>带basic认证的私有仓库registry</h3><p>basic需要一个basic的账号密码文件，需要借助一个工具httpd-tools，</p>
+<p>所以先安装这个工具：yum install httpd-tools -y</p>
+<p>​                                      mkdir &#x2F;opt&#x2F;registry-var&#x2F;auth&#x2F; -p     #   -p是递归创建目录</p>
+<p>​                                      htpasswd -Bbn lijianbo 123456 &gt;&gt; &#x2F;opt&#x2F;registry-var&#x2F;auth&#x2F;htpasswd</p>
+<p>然后生成带basic认证的私有仓库容器：</p>
+<p>docker run -d -p 5000:5000 –restart&#x3D;always -v &#x2F;opt&#x2F;registry-var&#x2F;auth&#x2F;:&#x2F;auth&#x2F; -v &#x2F;opt&#x2F;myregistry:&#x2F;var&#x2F;lib&#x2F;registry -e </p>
+<p>“REGISTRY_AUTH&#x3D;htpasswd” -e “REGISTRY_AUTH_HTPASSWD_REALM&#x3D;Registry Realm” -e </p>
+<p>“REGISTRY_AUTH_HTPASSWD_PATH&#x3D;&#x2F;auth&#x2F;htpasswd” registry</p>
+<p>如果需要上传镜像，需要先进行登录私有仓库：docker login 10.0.0.20:5000(私有仓库的地址)</p>
+<p>注意：带basic认证的私有仓库有个不好的地方，就是上传镜像push和下载镜像pull都需要进行登录验证，所以在企业中推荐使用企业级的私有仓库harbor(它可以做到上传需要登录，下载不需要进行登录)</p>
+<p>私有仓库删除镜像比较麻烦，没有命令进行删除，                                     </p>
+<p>1）进入docker registry的容器中</p>
+<p>docker exec -it registry &#x2F;bin&#x2F;sh</p>
+<p>\2) 删除repo</p>
+<p>rm -fr &#x2F;var&#x2F;lib&#x2F;registry&#x2F;docker&#x2F;registry&#x2F;v2&#x2F;repositories&#x2F;nginx</p>
+<p>\3) 清除掉blob</p>
+<p>registry garbage-collect(垃圾回收) &#x2F;etc&#x2F;docker&#x2F;registry&#x2F;config.yml</p>
+<h3 id="docker-compose-单机版的容器编排工具"><a href="#docker-compose-单机版的容器编排工具" class="headerlink" title="docker-compose(单机版的容器编排工具)"></a>docker-compose(单机版的容器编排工具)</h3><p>通过docker-compose编排工具一次性可以启动多个容器，它需要编写yml文件</p>
+<p>该工具的安装命令：yum install docker-compose -y (需要epel源)</p>
+<p>下面是通过docker-compose编排工具通过管理多个容器部署wordpress服务：</p>
+<p>mkdir my_wordpress</p>
+<p>cd my_wordpress</p>
+<p>vim docker-compose.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span>       <span class="comment">#声明了docker-compose的版本，docker-compose有好多版本，其中每种版本的语法都不一样</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span>          <span class="comment">#你想启动几个容器，就定义几个services</span></span><br><span class="line">	<span class="attr">db:</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">mysql:5.7</span> <span class="comment">#定义db这个容器使用的镜像及版本号</span></span><br><span class="line">		<span class="attr">volumes:</span>         <span class="comment">#做数据持久化</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">db_data:/var/lib/mysql</span></span><br><span class="line">		<span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">		<span class="attr">environment:</span></span><br><span class="line">			<span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">somewordpress</span></span><br><span class="line">			<span class="attr">MYSQL_DATABASE:</span> <span class="string">wordpress</span></span><br><span class="line">			<span class="attr">MYSQL_USER:</span> <span class="string">wordpress</span></span><br><span class="line">			<span class="attr">MYSQL_PASSWORD:</span> <span class="string">wordpress</span></span><br><span class="line">			</span><br><span class="line">	<span class="attr">wordpress:</span></span><br><span class="line">		<span class="attr">depends_on:</span> <span class="comment">#用来定影该容器依赖什么容器</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">wordpress:latest</span></span><br><span class="line">		<span class="attr">volumes:</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">web_data:/var/www/html</span>           <span class="comment">#wordepress的架构是lamp</span></span><br><span class="line">		<span class="attr">ports:</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">&quot;80&quot;</span>  <span class="comment"># 进行端口映射，如果只写80端口是暴露随机端口，如果写成“80:80”，就是暴露固定端口80，将宿主机的80端口映射</span></span><br><span class="line">			          <span class="string">到容器的80端口</span></span><br><span class="line">		<span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">		<span class="attr">environment:</span></span><br><span class="line">			<span class="attr">WORDPRESS_DB_HOST:</span> <span class="string">db:3306</span></span><br><span class="line">			<span class="attr">WORDPRESS_DB_USER:</span> <span class="string">wordpress</span></span><br><span class="line">			<span class="attr">WORDPRESS_DB_PASSWORD:</span> <span class="string">wordpress</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">	<span class="attr">db_data:</span></span><br><span class="line">	<span class="attr">web_data:</span></span><br><span class="line">		</span><br><span class="line">		</span><br></pre></td></tr></table></figure>
+
+<p>在建好的docker-compose.yml文件中启动的命令为：docker-compose -f docker-compose.yml -d ,参数-d是后台启动，不加，就在前台启动。</p>
+<p>注意：由于某种原因使得通过docker-compose启动的某个容器死掉了，你想再启动它，可以通过：docker-compose start  你要启动的容器名</p>
+<h3 id="重启docker服务，容器全部退出的解决方法"><a href="#重启docker服务，容器全部退出的解决方法" class="headerlink" title="重启docker服务，容器全部退出的解决方法"></a>重启docker服务，容器全部退出的解决方法</h3><p>方法一：docker run –restart&#x3D;always                               #  推荐使用</p>
+<p>方法二：“live-restore”:true                                                #   不推荐使用</p>
+<p>修改docker服务的配置文件&#x2F;etc&#x2F;docker&#x2F;daemon.json</p>
+<p>{</p>
+<p>“live-restore”:true</p>
+<p>}</p>
+<h3 id="docker网络类型"><a href="#docker网络类型" class="headerlink" title="docker网络类型"></a>docker网络类型</h3><p>docker网络类型主要有四种：None、Container、Host、Bridge</p>
+<p>None：不为容器配置任何网络功能，–network&#x3D;none</p>
+<p>Container：与另一个运行中的容器共享Network Namespace，–net&#x3D;container:containerID（K8S）</p>
+<p>Host: 与宿主机共享Network Namespace，–network&#x3D;host 性能最高，容器跟宿主机端口，先到先得</p>
+<p>Bridge: Docker设计的NAT网络模型， 天天用的基本都是Bridge类型</p>
+<h3 id="docker跨宿主机容器之间的通信macvlan"><a href="#docker跨宿主机容器之间的通信macvlan" class="headerlink" title="docker跨宿主机容器之间的通信macvlan"></a>docker跨宿主机容器之间的通信macvlan</h3><p>macvlan：在默认情况下，一块物理网卡，只有一个物理mac地址，如果我给你虚拟出来多个mac地址，那是不是就可以理解为有多块儿物理网卡，macvlan性能很高的。</p>
+<p>macvlan非常类似kvm里面的桥接网络，跟宿主机处于同一网段</p>
+<p>创建macvlan网络的命令：</p>
+<p>docker network create –driver macvlan –subnet 10.0.0.0&#x2F;24 –gateway 10.0.0.254 -o parent&#x3D;eth0 macvlan_1</p>
+<p> –driver macvlan ：用于指定创建什么类型的网络，此处创建macvlan的网络</p>
+<p>–subnet：创建的网络范围，10.0.0.0&#x2F;24网段</p>
+<p>–gateway：指定创建网络的网关地址</p>
+<p>-o parent&#x3D;eth0 ：基于那块儿网卡做桥接，此处基于eth0网卡做桥接</p>
+<p>macvlan_1：创建的网络名字叫什么，此处叫macvlan_1</p>
+<p>在两台宿主机上创建macvlan网络后，如果在其中一台启动宿主机上启动容器，记得不要自动分配IP，自己指定IP最好，例如：</p>
+<p>docker run -it –network macvlan_1 –ip 10.0.0.7 –hostname web01 lijianbo:latest &#x2F;bin&#x2F;bash</p>
+<p>注意：centos创建macvlan网络，网卡不需要设置混杂模式</p>
+<p>​            ubuntu创建macvlan网络，网卡需要设置混杂模式，不然docker之间跨宿主机通信不了。</p>
+<h2 id="设置eth0的网卡为混杂模式的命令为：ip-link-set-eth0-promisc-on"><a href="#设置eth0的网卡为混杂模式的命令为：ip-link-set-eth0-promisc-on" class="headerlink" title="设置eth0的网卡为混杂模式的命令为：ip link set eth0 promisc on"></a>设置eth0的网卡为混杂模式的命令为：ip link set eth0 promisc on</h2><h1 id="day05-k8s集群安装"><a href="#day05-k8s集群安装" class="headerlink" title="day05 k8s集群安装"></a>day05 k8s集群安装</h1><h3 id="k8s介绍："><a href="#k8s介绍：" class="headerlink" title="k8s介绍："></a>k8s介绍：</h3><p><img src="https://pic1.zhimg.com/80/v2-fe3aee4fc6368eb7d9f507a1a6170160_720w.jpg" alt="img"></p>
+<p>k8s架构：k8s里面分为两种角色，一种是Kubernetes Master（管理节点）,一种是Kubernetes Node(随从节点，也称为奴隶节点)，这些奴隶节点都受Master控制，每个奴隶节点都要安装Kubelet服务，这样它才能被控制。</p>
+<p>Kubernetes Master节点上主要有四个服务：</p>
+<p>1、etcd：数据库，它是NoSQL数据库，etcd是key:value类型的存储，它就是k8s的数据库</p>
+<p>2、Scheduler：调度器，比如k8s下面有很多节点，如果要起一个容器，具体在哪个节点上创建容器就是由调度器来进行控制，看这些node节点的使用情况，谁的活最少，谁的剩余资源最多，那么就把这个容器安排给谁进行创建。</p>
+<p>3、Controller Manager：k8s的巡检机制，它会扫描所有node节点上容器的运行状态，状态不对了，或者死了，立马再给它起一个，如果在一个节点上起不来，那就给它迁移到其他节点给它起起来，始终保证节点上容器的额高可用。</p>
+<p>4、API Server：k8s的核心组件,比如通过API Server创建个资源，那么API Server就会把它写到数据库里etcd,这样你下次重启数据还在</p>
+<p>我们操作k8s的时候，并不能命令kubelet干啥干啥，我们只能通过命令来控制k8s核心组件API Server</p>
+<p>Kubernetes Node节点上主要有两个角色：</p>
+<p>1、Kubelet：Kubelet的作用就是接受API Server的调用，来帮助我们创建容器，Kubelet自己创建不了容器，通过调用docker来创建容器，kubelet是通过调用docker来实现对容器生命周期的管理。新版的Kubelet已经集成了cAdvisor,cAdvisor的作用是做容器的监控，最终所有的容器都是运行在node节点上，网站用户访问的并不是Master节点，而是node节点，通过端口映射的方式访问容器内的服务</p>
+<p>现在是大规模的使用容器，会涉及跨宿主机的容器之间的通信，所以会涉及一些网络插件Plugin Network(例如：Flannel,Weavenet等)，我们安装的时候会使用Flannel</p>
+<p>K8S除了一些核心组件外，还有一些附加组件：</p>
+<p>1、kube-dns：负责为整个集群提供DNS服务</p>
+<p>2、Ingress Controller：为服务提供外网入口，7层负载均衡</p>
+<p>3、Heapster：提供资源监控，它使用cAdvisor来实现监控，监控主要是为后面的弹性伸缩做准备的</p>
+<p>4、Dashboard：提供GUI友好的web界面</p>
+<p>5、Federation：提供跨可用区的集群，把多个k8s集群变成一个，合起来使用</p>
+<p>6、Fluentd-elasticsearch：提供集群日志采集、存储于查询，日志收集方案，EFK。</p>
+<p>ELK(elasticsearch logstach kibana)：</p>
+<p>EFK(elasticsearch Fluentd kibana)：</p>
+<p>收集日志的方式不同，存储都是存储在elasticsearch，展示都用kibana</p>
+<h3 id="k8s安装环境搭建："><a href="#k8s安装环境搭建：" class="headerlink" title="k8s安装环境搭建："></a>k8s安装环境搭建：</h3><p>10.0.0.11 k8s-master</p>
+<p>10.0.0.12 k8s-node-1 </p>
+<p>10.0.0.13 k8s-node-2</p>
+<p>三台宿主机都需要进行hosts解析</p>
+<h4 id="1、master节点的安装etcd"><a href="#1、master节点的安装etcd" class="headerlink" title="1、master节点的安装etcd"></a>1、master节点的安装etcd</h4><p>1、yum install etcd -y</p>
+<p>2、vim &#x2F;etc&#x2F;etcd&#x2F;etcd.conf	，修改成下面内容</p>
+<p>6行：ETCD_LISTEN_CLIENT_URLS&#x3D;”<a href="http://0.0.0.0:2379&quot;">http://0.0.0.0:2379&quot;</a></p>
+<p>21行：ETCD_ADVERTISE_CLIENT_URLS&#x3D;”<a href="http://10.0.0.11:2379&quot;">http://10.0.0.11:2379&quot;</a></p>
+<p>3、systemctl enable etcd.service</p>
+<p>​      systemctl start etcd.service</p>
+<p>4、etcd是key:value类型的数据库，我们测试一下设置数据，再获取数据，看看etcd的运行是否正常，有人就把etcd作为消息队列来使用</p>
+<p>​       etcdctl  set  testdir&#x2F;testkey0 0</p>
+<p>​       etcdctl  get  testdir&#x2F;testkey0</p>
+<p>5、etcdctl -C <a target="_blank" rel="noopener" href="http://10.0.0.11:2379/">http://10.0.0.11:2379</a> cluster-health    # 检测集群健康状态的命令</p>
+<p>注意，etcd原生支持做集群 </p>
+<h4 id="2、master节点安装kubernetes"><a href="#2、master节点安装kubernetes" class="headerlink" title="2、master节点安装kubernetes"></a>2、master节点安装kubernetes</h4><p>1、yum install kubernetes-master.x86_64 -y</p>
+<p>2、vim &#x2F;etc&#x2F;kubernetes&#x2F;apiserver</p>
+<p>​      8行：KUBE_API_ADDRESS&#x3D;”–insecure-bind-address&#x3D;0.0.0.0”</p>
+<p>​	  11行：KUBE_API_PORT&#x3D;”–port &#x3D;8080”</p>
+<p>​      13行：将Port minions(随从监听端口打开) listen on 的KUBELET_PORT&#x3D;”–kubelet-port&#x3D;10250”注释去掉</p>
+<p>​      17行：KUBE_ETCD_SERVERS&#x3D;”–etcd-servers&#x3D;<a href="http://10.0.0.11:2379&quot;">http://10.0.0.11:2379&quot;</a></p>
+<p>​      23行：KUBE_ADMISSION_CONTROL&#x3D;”–admission-control&#x3D;NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota” 管理员的控制组件中删除ServiceAccount</p>
+<p>3、k8s管理节点上剩下的两个服务（Scheduler、Controller Manager）共用一个配置文件，修改如下：</p>
+<p>vim &#x2F;etc&#x2F;kubernetes&#x2F;config</p>
+<p>22行：KUBE_MASTER&#x3D;”–master&#x3D;<a href="http://10.0.0.11:8080&quot;">http://10.0.0.11:8080&quot;</a></p>
+<p>4、启动服务</p>
+<p>systemctl enable kube-apiserver.service</p>
+<p>systemctl restart kube-apiserver.service</p>
+<p>systemctl enable kube-controller-manager.service</p>
+<p>systemctl restart kube-controller-manager.service</p>
+<p>systemctl enable kube-scheduler.service</p>
+<p>systemctl restart kube-scheduler.service</p>
+<p>注意，k8s启动的时候一定要先启动kube-apiserver服务</p>
+<p>检测k8smaster节点服务起起来的状态的命令是：kubectl get comporentstatus ，如果你看到的全部是健康状态，说明服务正常启动了。</p>
+<h4 id="3、node节点安装kubernetes"><a href="#3、node节点安装kubernetes" class="headerlink" title="3、node节点安装kubernetes"></a>3、node节点安装kubernetes</h4><p>1、yum install kubernetes-node.x86_64 -y</p>
+<p>2、用来在node节点上配置kube-proxy组件</p>
+<p>vim &#x2F;etc&#x2F;kubernetes&#x2F;config</p>
+<p>22行：KUBE_MASTER&#x3D;”–master&#x3D;<a href="http://10.0.0.11:8080&quot;">http://10.0.0.11:8080&quot;</a></p>
+<p>3、vim &#x2F;etc&#x2F;kubernetes&#x2F;kubelet</p>
+<p>5行：KUBELET_ADDRESS&#x3D;”–address&#x3D;0.0.0.0”</p>
+<p>8行：KUBELET_PORT&#x3D;”–port&#x3D;10250”</p>
+<p>11行：KUBELET_HOSTNAME&#x3D;”–hostname-override&#x3D;10.0.0.12”</p>
+<p>14行：KUBELET_API_SERVER&#x3D;”–api-servers&#x3D;<a href="http://10.0.0.11:8080&quot;">http://10.0.0.11:8080&quot;</a></p>
+<p>4、启动node节点服务</p>
+<p>systemctl enable kubelet.service</p>
+<p>systemctl start kubelet.service</p>
+<p>systemctl enable kube-proxy.service</p>
+<p>systemctl start kube-proxy.service </p>
+<p>注意，当我们启动node节点的kubelet服务的时候，会自动拉起docker服务的启动，因为它随时要接受master节点的调用</p>
+<p>可以在master检测一下，看看node节点服务能否正常链接，使用的检测命令：kubectl get nodes </p>
+<h4 id="4、跨宿主机容器间的通信，即所有节点都配置flannel网络"><a href="#4、跨宿主机容器间的通信，即所有节点都配置flannel网络" class="headerlink" title="4、跨宿主机容器间的通信，即所有节点都配置flannel网络"></a>4、跨宿主机容器间的通信，即所有节点都配置flannel网络</h4><p>flannel跟k8s配合的好处就是，flannel也需要etcd，我们已经安装etcd了，所以他们可以共用一个etcd</p>
+<p>注意，flannel是所有节点都需要安装的</p>
+<p>1、yum install flannel -y</p>
+<p>2、修改flannel的配置文件</p>
+<p>vim &#x2F;etc&#x2F;sysconfig&#x2F;flanneld</p>
+<p>FLANNEL_ETCD_ENDPOINTS&#x3D;”<a href="http://10.0.0.11:2379&quot;">http://10.0.0.11:2379&quot;</a>             #  配置flannel连接etcd的一个地址</p>
+<p>FLANNEL_ETCD_PREFIX&#x3D;”&#x2F;atomic.io&#x2F;network”                          #  在etcd里面创建一个key,那么会在这个key的目录下面产生很多网段文件，每产生一个网段就会在这个目录下面产生一个key，这是一个目录，以&#x2F;atomic.io&#x2F;network为前缀</p>
+<p>其实上面的操作可以通过一条命令在所有节点上执行，命令为：</p>
+<p>sed -i ‘s#<a target="_blank" rel="noopener" href="http://127.0.0.1:2379/#http://10.0.0.11:2379#g&#39;">http://127.0.0.1:2379#http://10.0.0.11:2379#g&#39;</a> &#x2F;etc&#x2F;sysconfig&#x2F;flanneld</p>
+<p>3、在etcd上面创建一个key</p>
+<p>在master节点上执行下面命令：</p>
+<p>etcdctl mk &#x2F;atomic.io&#x2F;network&#x2F;config ‘{“network”:”172.18.0.0&#x2F;16”}’          #注意后面设置的网段不能跟docker网段进行冲突，一旦冲突就不能正常使用了，定义了flannel网段的范围</p>
+<p>yum install docker -y                  #  安装docker目的是为了后期进行部署k8s的私有仓库 </p>
+<p>systemctl enable flanneld.service</p>
+<p>systemctl restart flanneld.service</p>
+<p>service docker restart </p>
+<p>systemctl restart kube-apiserver.service</p>
+<p>systemctl restart kube-controller-manager.service</p>
+<p>systemctl restart kube-scheduler.service</p>
+<p>在node节点执行下面命令：</p>
+<p>systemctl enable flanneld.service</p>
+<p>systemctl restart flanneld.service</p>
+<p>service docker restart</p>
+<p>systemctl restart kubelet.service</p>
+<p>systemctl restart kube-proxy.service</p>
+<p>当所有节点都起动后，会在每个节点（master及node)新起一个网段172.18.0.0的IP地址，还有flannel起来以后会影响我们的docker网络，例如：master节点docker网络会由原来的172.17.0.1改为172.18.32.1，所以每个网段可以起254个容器</p>
+<p>注意，在各个节点上起容器，直接ping是ping不通的，都丢包了，这是因为docker1.13版调整了我们的iptables的规则，是不允许进行转发的，查看的命令：iptables -L -n ，里面查看Chain FORWARD (policy DROP)，默认drop是拒绝的，所以需要我们修改默认的策略，修改的命令为：iptables -P FORWARD ACCEPT，记住所有的节点都要改。注意，这个iptables规则是临时生效的，系统一重启又恢复默认值，所以有一种更为简便的方法，修改docker的systemd的配置，vim &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;docker.service，在这里面新加一条</p>
+<p>ExecStartPost&#x3D;&#x2F;usr&#x2F;sbin&#x2F;iptables -P FORWARD ACCEPT</p>
+<h3 id="在master主节点上配置镜像私有仓库"><a href="#在master主节点上配置镜像私有仓库" class="headerlink" title="在master主节点上配置镜像私有仓库"></a>在master主节点上配置镜像私有仓库</h3><p>由于我们的docker版本使用的是docker1.13版，所以他的启用的docker镜像加速以及信任的私有仓库的方法跟以前不一样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">所有节点修改</span></span><br><span class="line">vim /etc/sysconfig/docker</span><br><span class="line">OPTIONS=&#x27;--selinux-enabled --log-driver=journald --signature-verification=false --registry-mirror=https://registry.docker-cn.com --insecure-registry=10.0.0.11:5000&#x27;</span><br><span class="line"></span><br><span class="line">systemctl restart docker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">master节点</span></span><br><span class="line">docker run -d -p 5000:5000 --restart=always --name registry -v /opt/myregistry:/var/lib/registry registry:latest</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="什么是k8s-k8s有什么功能？"><a href="#什么是k8s-k8s有什么功能？" class="headerlink" title="什么是k8s,k8s有什么功能？"></a>什么是k8s,k8s有什么功能？</h3><p>k8s是一个docker集群管理工具</p>
+<p>k8s的核心功能</p>
+<p>自愈：重新启动失败的容器，在节点不可用时，替换和重新调度节点上的容器，对用户丁一的健康检查不响应的容器会被中止，并且在容器准备好服务之前不会把其向客户端广播。</p>
+<p>弹性伸缩：通过监控容器的CPU的负载值，如果这个平均高于80%，增加容器的数量，如果这个平均低于10%，减少容器的数量</p>
+<p>阿里云上面也有弹性伸缩服务是ECS服务,在阿里云的弹性伸缩之前有个负载均衡服务叫做SLB</p>
+<p>服务的自动发现和负载均衡：不需要修改您的应用程序来使用不熟悉的服务发现机制，Kubernetes为容器提供了自己的IP地址和一组容器的单个DNS名称，并可以在他们之间进行负载均衡。</p>
+<p>滚动升级和一键回滚：Kubernetes逐渐部署对应用程序或其配置的更改，同时监视应用程序运行状况，以确保它不会同时终止所有实 例。如果出现问题，kubernetes会为您恢复更改，利用日益增长的部署解决方案的生态系统。</p>
+<h3 id="k8s的发展史"><a href="#k8s的发展史" class="headerlink" title="k8s的发展史"></a>k8s的发展史</h3><p>2014年docker容器编排项目立项</p>
+<p>2015年7月 发布kubernetes 1.0,加入cncf(cloud native compute foundation云原生计算基金会)基金会</p>
+<p>2016年，kubernetes干掉两个对手，docker swarm, mesos</p>
+<p>2017年</p>
+<p>2018年 k8s从cncf基金会首个毕业的项目</p>
+<p>2019年：发布1.13，1.14, 1.15</p>
+<p>谷歌有15年容器使用经验，最早使用borg容器管理平台，谷歌曾用golang重构了borg，最终转向kubernetes。 </p>
+<h3 id="k8s的安装"><a href="#k8s的安装" class="headerlink" title="k8s的安装"></a>k8s的安装</h3><p>yum安装   1.5版 最容易安装成功，同时是最适合学习的</p>
+<p>源码编译安装—难度最大  可以安装最新版</p>
+<p>二进制安装—步骤繁琐  可以安装最新版   shell,ansible,saltstack</p>
+<p>kubeadm 由谷歌推出，安装最容易，但是基于谷歌，网络层级跨越不过去，可以安装最新版</p>
+<p>minikube 用于开发k8s开发环境，适合开发人员体验</p>
+<h3 id="k8s的应用场景"><a href="#k8s的应用场景" class="headerlink" title="k8s的应用场景"></a>k8s的应用场景</h3><p>K8S最适合跑微服务项目！</p>
+<p>微服务：是一种软件设计架构（开发的架构），在微服务出现之前，开发使用的都是MVC架构（一个功能一个目录），而微服务可以理解为拆业务，一个功能就是一个集群</p>
+<p>微服务的优点：</p>
+<p>1、能承受更大的访问压力；</p>
+<p>2、服务的健壮性更好；</p>
+<p>3、降低代码的复杂度，代码的编译时间也会减少；</p>
+<h1 id="day06-k8s资源"><a href="#day06-k8s资源" class="headerlink" title="day06 k8s资源"></a>day06 k8s资源</h1><p>1、pod是K8S最小的资源单位。k8s的所有资源都可以用yaml文件来创建，yaml的文件是强调缩进的语法，用缩进来显示它的层级关系</p>
+<p>k8s yaml的主要组成（4大块）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiversion:</span> <span class="string">v1</span>                 <span class="string">api版本</span></span><br><span class="line"></span><br><span class="line"><span class="string">kind：pod</span>                      <span class="string">资源类型</span></span><br><span class="line"></span><br><span class="line"><span class="attr">metadata:</span>                      <span class="string">属性</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span>                          <span class="string">详细</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>例如：k8s_pod.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">		<span class="attr">app:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">	<span class="attr">containers:</span></span><br><span class="line">		<span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">		  <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/nginx:1.13</span></span><br><span class="line">		  <span class="attr">ports:</span></span><br><span class="line">		  	<span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>pod资源：至少要由两个容器组成，pod基础容器和业务容器组成</p>
+<p>通过yaml创建资源的命令为：kubectl create -f k8s_pod.yaml</p>
+<p>查看已经创建的k8s的pod资源的命令为：kubectl get pod </p>
+<p>查看已经创建的k8s的pod资源调度到哪个节点的命令：kubectl get pod -o wide</p>
+<p>查看已经创建的k8s的pod资源的具体描述命令：kubectl describe pod nginx(你当时创建pod资源的名字，此处是上面创建pod资源的名字nginx)</p>
+<p><strong>注意：但是此时创建的pod资源的状态一直是：ContainerCreating，通过kubectl describe pod nginx查看描述信息，发现出现报：image pull failed for registry.access.redhat.com&#x2F;rhel7&#x2F;pod-infrastructure:latest错误，造成这个是缺少红帽的证书：&#x2F;etc&#x2F;docker&#x2F;certs.d&#x2F;registry.access.redhat.com&#x2F;redhat-ca.crt，这个文件存在，但是个软链接，最终等效于不存在，到网上查找解决方法，</strong></p>
+<p>方法一. yum安装</p>
+<p>   yum install <em>rhsm</em></p>
+<p>方法二 （我是用这方法解决的）</p>
+<p>   执行命令：</p>
+<p>​    ①  wget <a target="_blank" rel="noopener" href="http://mirror.centos.org/centos/7/os/x86_64/Packages/python-rhsm-certificates-1.19.10-1.el7_4.x86_64.rpm">http://mirror.centos.org/centos/7/os/x86_64/Packages/python-rhsm-certificates-1.19.10-1.el7_4.x86_64.rpm</a></p>
+<p>​       </p>
+<p>   ②  rpm2cpio python-rhsm-certificates-1.19.10-1.el7_4.x86_64.rpm | cpio -iv –to-stdout .&#x2F;etc&#x2F;rhsm&#x2F;ca&#x2F;redhat-uep.pem | tee &#x2F;etc&#x2F;rhsm&#x2F;ca&#x2F;redhat-uep.pem   </p>
+<p>​    前两个命令会生成&#x2F;etc&#x2F;rhsm&#x2F;ca&#x2F;redhat-uep.pem文件.   </p>
+<p>​    ③  docker pull registry.access.redhat.com&#x2F;rhel7&#x2F;pod-infrastructure:latest</p>
+<p><strong>都是解决了下载image pull failed for registry.access.redhat.com&#x2F;rhel7&#x2F;pod-infrastructure:latest镜像的问题，但都不太好用，我们把它改成从私有仓库下载，此时我们编辑node节点kubelet的配置文件，vim &#x2F;etc&#x2F;kubernetes&#x2F;kubelet</strong>，修改里面的基础容器的镜像地址为我们私有仓库的地址，修改为：KUBELET_POD_INFRA_CONTAINER&#x3D;”–pod-infra-container-image&#x3D;192.168.1.101:5000&#x2F;pod-infrastructure:latest”，重启kubectl：systemctl restart kubelet</p>
+<h3 id="k8s资源到底是什么？"><a href="#k8s资源到底是什么？" class="headerlink" title="k8s资源到底是什么？"></a>k8s资源到底是什么？</h3><p>1、k8s的pod资源为什么至少要启动两个容器呢？</p>
+<p>一个底层基础容器pod用于提供k8s各项高级功能，一个业务容器来提供基本的业务部署，这样，可以保证容器的镜像比较轻量化，同时提供负载分担的比较合理。业务容器可以有多个，反正目前我见过的就是（1个pod容器+4个业务容器）</p>
+<p><strong>pod是k8s最小的资源单位</strong></p>
+<p>pod资源可以保证创建的容器业务运行的高可用</p>
+<h3 id="k8s另一个资源-ReplicationController，简称rc-副本控制器资源"><a href="#k8s另一个资源-ReplicationController，简称rc-副本控制器资源" class="headerlink" title="k8s另一个资源(ReplicationController，简称rc)副本控制器资源"></a>k8s另一个资源(ReplicationController，简称rc)副本控制器资源</h3><p>rc：保证指定数量的pod始终存活，rc通过标签选择器来关联pod</p>
+<p>如果跑着pod资源的某个节点node挂了（比如：node节点死了，物理机坏了），那么对于k8s上这个pod，并不会给它换个节点，如果节点死了，跑在这个节点的pod也就死了，那么rc就解决了这样的问题。</p>
+<p>k8s资源的常见操作：</p>
+<p>kubectl create -f xxx.yaml</p>
+<p>kubectl get pod | rc</p>
+<p>kubectl describe pod nginx</p>
+<p>kubectl delete pod nginx 或者 kubectl delete -f xxx.yaml</p>
+<p>kubectl edit pod nginx</p>
+<p>例如：k8s_rc.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">	<span class="attr">replicas:</span> <span class="number">5</span>    <span class="comment"># 副本，指定副本的数量</span></span><br><span class="line">	<span class="attr">selector:</span>      <span class="comment"># 选择器</span></span><br><span class="line">	  <span class="attr">app:</span> <span class="string">myweb</span>   <span class="comment"># 这个标签的作用是来确定哪些pod归这个rc管，注意不同rc这个标签必须唯一</span></span><br><span class="line">	<span class="attr">template:</span>      <span class="comment"># 指定生成pod的模板</span></span><br><span class="line">	  <span class="attr">metadata:</span></span><br><span class="line">	    <span class="attr">labels:</span></span><br><span class="line">	      <span class="attr">app:</span> <span class="string">myweb</span></span><br><span class="line">	  <span class="attr">spec:</span></span><br><span class="line">	    <span class="attr">containers:</span></span><br><span class="line">	    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line">	      <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/nginx:1.13</span></span><br><span class="line">	      <span class="attr">ports:</span></span><br><span class="line">	      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">	  </span><br></pre></td></tr></table></figure>
+
+<p>创建rc资源使用的命令还是：kubectl create -f k8s_rc.yaml     会提示replicationcontroller “nginx”  created</p>
+<h3 id="rc就具有k8s核心功能自愈及滚动升级和一键回滚的功能。"><a href="#rc就具有k8s核心功能自愈及滚动升级和一键回滚的功能。" class="headerlink" title="rc就具有k8s核心功能自愈及滚动升级和一键回滚的功能。"></a>rc就具有k8s核心功能自愈及滚动升级和一键回滚的功能。</h3><p>滚动升级的操作：</p>
+<p>再新建一个k8s_rc2.yaml，修改里面的内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="attr">name:</span> <span class="string">nginx2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">	<span class="attr">replicas:</span> <span class="number">5</span>    <span class="comment"># 副本，指定副本的数量</span></span><br><span class="line">	<span class="attr">selector:</span>      <span class="comment"># 选择器</span></span><br><span class="line">	  <span class="attr">app:</span> <span class="string">myweb2</span>   <span class="comment"># 这个标签的作用是来确定哪些pod归这个rc管，注意不同rc这个标签必须唯一</span></span><br><span class="line">	<span class="attr">template:</span>      <span class="comment"># 指定生成pod的模板</span></span><br><span class="line">	  <span class="attr">metadata:</span></span><br><span class="line">	    <span class="attr">labels:</span></span><br><span class="line">	      <span class="attr">app:</span> <span class="string">myweb2</span></span><br><span class="line">	  <span class="attr">spec:</span></span><br><span class="line">	    <span class="attr">containers:</span></span><br><span class="line">	    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line">	      <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/nginx:1.15</span></span><br><span class="line">	      <span class="attr">ports:</span></span><br><span class="line">	      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用命令来查看k8s_rc.yaml和k8s_rc2.yaml的区别，命令为：vimdiff k8s_rc.yaml k8s_rc2.yaml</p>
+<p>此时，滚动升级的命令为：kubectl rolling-update nginx(rc的名字) -f k8s_rc2.yaml(指定另一个配置文件) –update-period(指定升级的时间间隔，不加该参数，默认值为1分钟)&#x3D;2s(此处我们指定的滚动升级的时间间隔为2秒)</p>
+<h3 id="rc一键回滚"><a href="#rc一键回滚" class="headerlink" title="rc一键回滚"></a>rc一键回滚</h3><p>rc回滚的操作是上面的逆向操作，反过来就可以了，具体命令为：</p>
+<p>kubectl rolling-update nginx2 -f k8s_rc.yaml –update-period&#x3D;10s</p>
+<h3 id="rc滚动升级和一键回滚总结"><a href="#rc滚动升级和一键回滚总结" class="headerlink" title="rc滚动升级和一键回滚总结"></a>rc滚动升级和一键回滚总结</h3><p>升级：</p>
+<p>kubectl rolling-update nginx -f nginx-rc1.15.yaml –update-period&#x3D;10s</p>
+<p>回滚：</p>
+<p>kubectl rolling –update nginx2 -f nginx-r.yaml –update-period&#x3D;1s</p>
+<h3 id="k8s另一个资源service资源（简称svc）"><a href="#k8s另一个资源service资源（简称svc）" class="headerlink" title="k8s另一个资源service资源（简称svc）"></a>k8s另一个资源service资源（简称svc）</h3><p>service帮助pod暴露端口</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20211126112305457.png" alt="image-20211126112305457"></p>
+<p>我们的service资源就帮你做vip、clustIP、负载均衡，并且帮你做端口映射</p>
+<p>下面是一个service的例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span>    <span class="comment"># api版本</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span>     <span class="comment"># 资源类型</span></span><br><span class="line"><span class="attr">metadata:</span>         <span class="comment"># 属性</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line"><span class="attr">spec:</span>             <span class="comment"># 详细 </span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span>  <span class="comment"># 端口映射的类型NodePort,使用的是ClusterIP</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span>    <span class="comment"># 使用的是vip的地址，指的是vip的80端口</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="comment"># 指的是宿主机的30000端口</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span> <span class="comment">#指的是pod资源的80端口，其实指的也是容器的80端口</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myweb2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们等会儿会访问宿主机的30000端口映射到vip的80，vip的80端口再负载均衡到容器的80端口</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20211126144735327.png" alt="image-20211126144735327"></p>
+<p> 创建svc资源的命令为：kubectl create -f k8s_svc.yaml </p>
+<h3 id="svc资源扩展"><a href="#svc资源扩展" class="headerlink" title="svc资源扩展"></a>svc资源扩展</h3><p>我们在调整rc里面的副本数目有两种方法：</p>
+<p>方法1：kubectl edit rc nginx(创建的rc资源的名字)，修改里面replicas的值</p>
+<p>方法2：kubectl scale(它用来负责调度副本的数量) rc nginx –replicas&#x3D;5</p>
+<p>进到pod容器里去的命令：kubectl exec -it nginx-jfn63 &#x2F;bin&#x2F;bash</p>
+<p><strong>注意1：我们在做svc资源的端口映射，宿主机启用的端口（默认）范围只能是30000–32767，其实这个范围是可以改的，改的话需要改我们的配置文件，在master节点改，vim &#x2F;etc&#x2F;kubernetes&#x2F;apiserver，修改里面的参数值KUBE_API_ARGS&#x3D;”–service-node-port-range&#x3D;3000-50000”,然后systemctl restart kube-apiserver.service</strong></p>
+<p><strong>注意2：我们在做srv里面vip的地址范围，默认是10.254.0.0&#x2F;16，注意，这个地址跟范围也是可以改的，修改的地方也是在master节点改，vim &#x2F;etc&#x2F;kubernetes&#x2F;apiserver，修改里面的参数值KUBE_SERVICE_ADDRESSES&#x3D;”–service-cluster-ip-range&#x3D;10.254.0.0&#x2F;16”</strong></p>
+<p>service默认使用iptables来实现负载均衡，k8s 1.8新版本中推荐使用lvs(四层负载均衡)</p>
+<h3 id="k8s的另一个资源deployment资源"><a href="#k8s的另一个资源deployment资源" class="headerlink" title="k8s的另一个资源deployment资源"></a>k8s的另一个资源deployment资源</h3><p>注意，rc在滚动升级之后，会造成服务访问中断，于是k8s引入了deployment资源，它也是保证pod容器的高可用。</p>
+<p>创建deployment的yaml文件，例如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/nginx:1.13</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">100m</span>   <span class="comment"># 限制CPU的比重、权重，限制cpu的时间片的值</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">100m</span>   <span class="comment"># 我们需要的资源</span></span><br></pre></td></tr></table></figure>
+
+<p>rs是rc的升级版，rs不会自动创建，它会随着deploy资源的创建自动生成</p>
+<p>注意，deploy升级比我们的rc升级要简单的多，使用命令：kubectl edit deployment nginx-deployment 修改里面的镜像版本就可以了</p>
+<h3 id="k8s的deployment资源的回滚"><a href="#k8s的deployment资源的回滚" class="headerlink" title="k8s的deployment资源的回滚"></a>k8s的deployment资源的回滚</h3><p>方法1：第一种回滚方法跟deployment升级相似，也是使用命令：kubectl edit deployment nginx-deployment 修改里面的镜像版本就可以了，但不推荐这样使用，它有专门的命令支持资源回滚。</p>
+<p>方法2：kubectl rollout history deployment nginx-deployment(资源类型) ，通过这个命令可以查看deployment的历史记录版本有几个，回滚的方法是：kubectl rollout undo deployment nginx-deployment 不加参数是回滚到上一个版本，如果想回滚到指定的版本可以加参数：–to-revision ，例如：kubectl rollout undo deployment nginx-deployment –to-revision&#x3D;1 回滚到指定的第一个版本</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20211203150637137.png" alt="注意"></p>
+<p>我们发现，在查看deployment的历史记录版本有几个的时候，里面的CHANGE-CAUSE为none，如果想让里面记录内容，就需要引入一种新的方式来创建资源了，使用命令行来创建deployment资源：</p>
+<p>kubectl run nginx –image&#x3D;192.168.1.101:5000&#x2F;nginx:1.13 –replicas&#x3D;3 –record</p>
+<p>通过命令行来对刚才创建的deployment资源进行升级，可以使用命令：</p>
+<p>kubectl set image deploy(资源类型) nginx(资源的名字)  nginx(容器的名字)&#x3D;192.168.1.101:5000&#x2F;nginx:1.15</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">总结：</span><br><span class="line"></span><br><span class="line">deployment升级和回滚</span><br><span class="line">命令行创建deployment</span><br><span class="line">kubectl run nginx --image=192.168.1.101:5000/nginx:1.13 --replicas=3 --record</span><br><span class="line"></span><br><span class="line">命令行升级版本</span><br><span class="line">kubectl set image deploy nginx nginx=192.168.1.101:5000/nginx:1.15</span><br><span class="line"></span><br><span class="line">查看deployment所有历史版本</span><br><span class="line">kubectl rollout history deployment nginx</span><br><span class="line"></span><br><span class="line">depployment回滚到上一个版本</span><br><span class="line">kubectl rollout undo deployment nginx</span><br><span class="line"></span><br><span class="line">deployment回滚到指定版本</span><br><span class="line">kubectl rollout undo deployment nginx --to-revision=1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="tomcat-mysql练习"><a href="#tomcat-mysql练习" class="headerlink" title="tomcat+mysql练习"></a>tomcat+mysql练习</h3><p>在k8s中容器之间相互访问，通过vip地址</p>
+<p>我们所创建的所有资源都保存在etcd里，如果把etcd的数据清空，就是对k8s进行资源还原，初始化，我们可以通过etcd的配置文件&#x2F;etc&#x2F;etcd&#x2F;etcd.conf里了解到etcd的数据存放目录为：&#x2F;var&#x2F;lib&#x2F;etcd&#x2F;default.etcd</p>
+<p>那么清空资源的操作为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">master节点的操作：</span><br><span class="line"></span><br><span class="line">rm -rf /var/lib/etcd/default.etcd/*</span><br><span class="line"></span><br><span class="line">然后再重启所有服务：</span><br><span class="line"></span><br><span class="line">systemctl restart etcd.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-apiserver.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-controller-manager.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-scheduler.service</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node节点的操作：</span><br><span class="line">systemctl restart kubelet.service kube-proxy.service</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意，查看vim &#x2F;etc&#x2F;sysconfig&#x2F;flanneld网络，它也用到了etcd，所以当我们重启flanneld服务发现连不上，注意联想flannel网络的安装，注意要在主节点上设置key来确定我们flannel网段的范围</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20211203171323987.png" alt="image-20211203171323987"></p>
+<p>所以，最终master节点和node节点执行的命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">master节点的操作：</span><br><span class="line"></span><br><span class="line">rm -rf /var/lib/etcd/default.etcd/*</span><br><span class="line"></span><br><span class="line">然后再重启所有服务：</span><br><span class="line"></span><br><span class="line">systemctl restart etcd.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-apiserver.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-controller-manager.service</span><br><span class="line"></span><br><span class="line">systemctl restart kube-scheduler.service</span><br><span class="line"></span><br><span class="line">etcdctl mk /atomic.io/network/config &#x27;&#123;&quot;Network&quot;: &quot;172.18.0.0/16&quot;&#125;&#x27;</span><br><span class="line"></span><br><span class="line">systemctl restart flanneld</span><br><span class="line"></span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line">node节点的操作：</span><br><span class="line">systemctl restart kubelet.service kube-proxy.service</span><br><span class="line"></span><br><span class="line">systemctl restart flanneld</span><br><span class="line"></span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>注意：这两个服务先起动数据库，然后再启动tomcat的web服务 </p>
+<p>下面是mysql_rc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span>   <span class="comment"># 注意这个副本数不要写2，写两个是能起来，tomcat第一次连数据库会创库、倒表，负载均衡切到另一个数据库，就会查不                   到数据，mysql启动1个副本就可以了，k8s已经为数据库做了高可用，如果数据库容器一死，立马起新的，至于数据可以挂                   载出来，做持久化   </span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">latels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">          <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/mysql:5.7</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">3306</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_ROOT_PASSWORD</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">          </span><br></pre></td></tr></table></figure>
+
+<p>下面是mysql_svc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span>                                <span class="comment"># 注意这里没有指定type属性的值，那么它默认使用的就是clusterIP</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">3306</span>                     <span class="comment"># 这里不需要nodePort，因为数据库不需要外界访问，</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">3306</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下面是tomcat_rc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myweb</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">myweb</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line">          <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/tomcat-app:v2</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_HOST</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;10.254.125.84&#x27;</span>          <span class="comment"># 这里面的值应该使用mysql资源的clusterIP来链接mysql</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_SERVICE_PORT</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;3306&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下面是tomcat_svc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">myweb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30008</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myweb</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="k8s练习：实现在k8s中使用rc运行wordpress-mysql"><a href="#k8s练习：实现在k8s中使用rc运行wordpress-mysql" class="headerlink" title="k8s练习：实现在k8s中使用rc运行wordpress+mysql."></a>k8s练习：实现在k8s中使用rc运行wordpress+mysql.</h3><p>下面是mysql_rc.yaml的配置文件：</p>
+<p>注意，这里面的前提是mysql:5.7镜像已经上传到node节点（192.168.1.102），且该镜像也通过docker tag 更改了标签名 ：192.168.1.101:5000&#x2F;mysql:5.7</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wp-mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span>   <span class="comment"># 注意这个副本数不要写2，写两个是能起来，tomcat第一次连数据库会创库、倒表，负载均衡切到另一个数据库，就会查不                   到数据，mysql启动1个副本就可以了，k8s已经为数据库做了高可用，如果数据库容器一死，立马起新的，至于数据可以挂                   载出来，做持久化   </span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">wp-mysql</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">latels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">wp-mysql</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">nodeName:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span>   <span class="comment"># 指定创建pod资源的具体位置，即创建pod资源时指定具体的node节点，那么它就不受调度控制</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">wp-mysql</span></span><br><span class="line">          <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/mysql:5.7</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span>   <span class="comment"># 此选项是镜像下载策略，我们没填，k8s系统会自动帮我们添加上，总共有三个选                                                 项:Always(总是更新)、Never(从来不更新)、IfNotPresent(如果不存在更新，存                                             在就不更新，推荐使用这个)</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">3306</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_ROOT_PASSWORD</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;somewordpress&#x27;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_DATABASE</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;wordpress&#x27;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_USER</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;wordpress&#x27;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_PASSWORD</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;wordpress&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是mysql_svc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wp-mysql</span></span><br><span class="line"><span class="attr">spec:</span>                                <span class="comment"># 注意这里没有指定type属性的值，那么它默认使用的就是clusterIP</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">3306</span>                     <span class="comment"># 这里不需要nodePort，因为数据库不需要外界访问，</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">3306</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">wp-mysql</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意，我们在写yaml文件的时候是有资料可查的，可以查看yaml的具体语法，这个查询的具体命令是kubect explain(解释) pod.spec ，这个是查询pod资源下的spec属性有哪些选项的具体用法</strong></p>
+<p>下面是wordpress_rc.yaml的配置文件：</p>
+<p>注意，这里面的前提是mysql:5.7镜像已经上传到node节点（192.168.1.102），且该镜像也通过docker tag 更改了标签名 ：ge: 192.168.1.101:5000&#x2F;wordpress:latest</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wordpress</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">wordpress</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">wordpress</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">nodeName:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span>   <span class="comment"># 指定创建pod资源的具体位置，即创建pod资源时指定具体的node节点，那么它就不受调度控制</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">wordpress</span></span><br><span class="line">          <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/wordpress:latest</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span>   <span class="comment"># 此选项是镜像下载策略，我们没填，k8s系统会自动帮我们添加上，总共有三个选                                                 项:Always(总是更新)、Never(从来不更新)、IfNotPresent(如果不存在更新，存                                             在就不更新，推荐使用这个)</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">WORDPRESS_DB_HOST</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;10.254.3.127&#x27;</span>          <span class="comment"># 这里面的值应该使用mysql资源的clusterIP来链接mysql</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">WORDPRESS_DB_USER</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;wordpress&#x27;</span></span><br><span class="line">           <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">WORDPRESS_DB_PASSWORD</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&#x27;wordpress&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是wordpress_svc.yaml的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wordpress</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30009</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">wordpress</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="day07-k8s的扩展服务、核心功能及其持久化"><a href="#day07-k8s的扩展服务、核心功能及其持久化" class="headerlink" title="day07 k8s的扩展服务、核心功能及其持久化"></a>day07 k8s的扩展服务、核心功能及其持久化</h1><p>我们之前使用的容器之间互访使用的是VIP(即clusterIP)，那么它其实也可用主机名（其实是svc的名字），如果要使用svc进行通信，那么它就需要依赖一个附加组件服务，这个附加组件的服务叫做dns服务</p>
+<p>K8S除了一些核心组件外，还有一些附加组件：</p>
+<p>1、kube-dns：负责为整个集群提供DNS服务，它的作用是把我们的svc名字解析成相应的vip地址</p>
+<p>2、Ingress Controller：为服务提供外网入口，7层负载均衡</p>
+<p>3、Heapster：提供资源监控，它使用cAdvisor来实现监控，监控主要是为后面的弹性伸缩做准备的</p>
+<p>4、Dashboard：提供GUI友好的web界面</p>
+<p>5、Federation：提供跨可用区的集群，把多个k8s集群变成一个，合起来使用</p>
+<p>6、Fluentd-elasticsearch：提供集群日志采集、存储于查询，日志收集方案，EFK。</p>
+<p><strong>如果想一批一批的删除资源，可以使用命令：kubectl delete -f .</strong></p>
+<p><strong>如果想快速创建资源，可以使用命令：kubectl create -f .</strong></p>
+<p><strong>注意，执行这两个命令的前提是，必须在当前目录.下有yaml文件的存在。</strong></p>
+<p>通过上面的两条命令一折腾，svc的vip地址就会发生变化，从而导致，我们创建的业务链接失败，比如：wp-mysql的svc地址发生了改变，从而导致wordpress连接wp-mysql数据库失败。</p>
+<p>至此，我们引入DNS服务，从而把svc的名字解析成vip的地址，dns服务也不需要安装，k8s除了基础架构是使用二进制，其他的都使用容器</p>
+<h3 id="k8s的dashboard管理平台部署"><a href="#k8s的dashboard管理平台部署" class="headerlink" title="k8s的dashboard管理平台部署"></a>k8s的dashboard管理平台部署</h3><p>1、下载dashboard镜像，并修改它的标签：</p>
+<p>docker pull registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kubernetes-dashboard-amd64:v1.10.0</p>
+<p>docker tag registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers&#x2F;kubernetes-dashboard-amd64:v1.10.0 192.168.1.101:5000&#x2F;kubernetes-dashboard-amd64:v1.10.0</p>
+<p>2、编辑dashboard_rc.yaml和dashboard_svc.yaml配置文件</p>
+<p>下面是dashboard_rc.yaml的配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span>                       <span class="comment"># 资源类型的确定</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="comment"># Keep the name in sync with image version and</span></span><br><span class="line"><span class="comment"># gce/coreos/kube-mainfests/addons/dashboard counterparts</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">kubernetes-dashboard-latest</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span>               <span class="comment"># 命名空间kube-system，是属于系统的服务</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span>                          <span class="comment"># 指定副本数为1</span></span><br><span class="line">  <span class="attr">template:</span>                            <span class="comment"># 指定POD的模板</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">        <span class="attr">version:</span> <span class="string">latest</span></span><br><span class="line">        <span class="attr">kubernetes.io/cluster-service:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">nodeSelector:</span>                    <span class="comment"># 选定的节点</span></span><br><span class="line">        <span class="attr">kubernetes.io/hostname:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">        <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span><span class="string">:5000/kubernetes-dashboard-amd64:v1.10.0</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="comment"># keep request = limit to keep this container in guaranteed class</span></span><br><span class="line">          <span class="attr">limits:</span>                      <span class="comment"># 做的资源限制</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">100m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">50Mi</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">100m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">50Mi</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9090</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">         <span class="bullet">-</span>  <span class="string">--apiserver-host=http://192.168.1.101:8080</span>  <span class="comment"># 指定apiserver的地址，我们操纵k8s集群就是通过apiserver操                                                           纵的</span></span><br><span class="line">        <span class="attr">livenessProbe:</span>                                  <span class="comment"># 健康检查</span></span><br><span class="line">          <span class="attr">httpGet:</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">port:</span> <span class="number">9090</span></span><br><span class="line">            <span class="attr">initialDelaySeconds:</span> <span class="number">30</span></span><br><span class="line">            <span class="attr">timeoutSeconds:</span> <span class="number">30</span></span><br><span class="line">          </span><br></pre></td></tr></table></figure>
+
+<p>下面是dashboard_svc.yaml的配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-system</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">    <span class="attr">kubernetes.io/cluster-service:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span>                 <span class="comment"># vip端口80</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">9090</span>         <span class="comment"># 容器的端口9090</span></span><br><span class="line">    </span><br><span class="line"><span class="string">这里没有使用NodePort类型，到时就是通过内部反向代理来进行访问</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#云计算" >
+    <span class="tag-code">云计算</span>
+  </a>
+
+  <a href="/tags#KVM" >
+    <span class="tag-code">KVM</span>
+  </a>
+
+  <a href="/tags#Docker" >
+    <span class="tag-code">Docker</span>
+  </a>
+
+  <a href="/tags#Kubernetes(K8S)" >
+    <span class="tag-code">Kubernetes(K8S)</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/01/security/mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%AD%A5%E9%AA%A4/">
+        <span class="nav-arrow">← </span>
+        
+          [置顶]mysql手工注入步骤
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day-01"><span class="toc-nav-text">day 01</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day-02"><span class="toc-nav-text">day 02</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%83%AD%E6%B7%BB%E5%8A%A0%E6%8A%80%E6%9C%AF%EF%BC%9A"><span class="toc-nav-text">热添加技术：</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day03-docker%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="toc-nav-text">day03 docker容器技术</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day04-dockerfile-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BAdocker%E9%95%9C%E5%83%8F"><span class="toc-nav-text">day04 dockerfile 自动构建docker镜像</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93WORKDIR"><span class="toc-nav-text">–WORKDIR</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93ADD"><span class="toc-nav-text">–ADD</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93MAINTAINER-%E5%91%8A%E8%AF%89%E5%88%AB%E4%BA%BA%EF%BC%8C%E8%B0%81%E8%B4%9F%E8%B4%A3%E7%BB%B4%E6%8A%A4%E4%BB%96-%EF%BC%88%E6%8C%87%E5%AE%9A%E7%BB%B4%E6%8A%A4%E8%80%85%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%98%AF%E4%B8%AA%E5%8F%AF%E9%80%89%E9%A1%B9%EF%BC%8C%E5%8F%AF%E6%9C%89%E5%8F%AF%E6%97%A0%EF%BC%89"><span class="toc-nav-text">–MAINTAINER       告诉别人，谁负责维护他 （指定维护者信息，是个可选项，可有可无）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93LABLE-%E7%BB%99%E5%88%B6%E4%BD%9C%E7%9A%84%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E6%8F%8F%E8%BF%B0%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%A0%87%E7%AD%BE%EF%BC%88%E6%98%AF%E4%B8%AA%E5%8F%AF%E9%80%89%E9%A1%B9%EF%BC%8C%E5%8F%AF%E6%9C%89%E5%8F%AF%E6%97%A0%EF%BC%89"><span class="toc-nav-text">–LABLE                    给制作的镜像添加描述信息，标签（是个可选项，可有可无）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93VOLUME%EF%BC%88%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%89"><span class="toc-nav-text">–VOLUME（数据卷持久化）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93EXPOSE-%E6%8C%87%E5%AE%9A%E5%AF%B9%E5%A4%96%E5%BC%80%E6%94%BE%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%9A%8F%E6%9C%BA%E7%AB%AF%E5%8F%A3%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB-%EF%BC%8C%E4%BD%BF%E7%94%A8docker-run-P%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%9C%A8dockerfile%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B2%A1%E6%9C%89%E6%8C%87%E5%AE%9AEXPOSE%E5%AF%B9%E5%A4%96%E5%BC%80%E6%94%BE%E7%9A%84%E7%AB%AF%E5%8F%A3%EF%BC%8C%E9%82%A3%E4%B9%88%E9%80%9A%E8%BF%87docker-run-P%E5%B0%B1%E4%B8%8D%E4%BC%9A%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E7%AB%AF%E5%8F%A3%E4%B8%8E%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB"><span class="toc-nav-text">–EXPOSE(指定对外开放的端口与随机端口的映射关系)，使用docker run -P，如果在dockerfile文件中没有指定EXPOSE对外开放的端口，那么通过docker run -P就不会生成随机端口与指定端口的映射关系</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93COPY-%E5%B0%86%E5%AE%BF%E4%B8%BB%E6%9C%BA%E6%8C%87%E5%AE%9A%E7%9A%84%E7%9B%AE%E5%BD%95%E6%8B%B7%E8%B4%9D%E5%88%B0%E4%B8%B4%E6%97%B6%E5%AE%B9%E5%99%A8%E7%9A%84%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%EF%BC%88%E5%A6%82%E6%9E%9C%E7%BB%99%E7%9A%84%E6%98%AFtar%E5%8C%85%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%A7%A3%E5%8E%8B%EF%BC%8CADD%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%A7%A3%E5%8E%8B%EF%BC%89"><span class="toc-nav-text">–COPY 将宿主机指定的目录拷贝到临时容器的当前工作目录（如果给的是tar包不会自动解压，ADD会自动解压）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93ENTRYPOINT-%E6%8C%87%E5%AE%9A%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E6%97%B6%E8%BF%90%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%B8%8ECMD%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8CENTRYPOINT%E5%91%BD%E4%BB%A4%E6%98%AF%E4%B8%80%E6%97%A6%E5%91%BD%E4%BB%A4%E6%8C%87%E5%AE%9A%EF%BC%8C%E5%90%8E%E7%BB%AD%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E6%97%B6%EF%BC%8C%E5%91%BD%E4%BB%A4%E6%98%AF%E4%B8%8D%E8%83%BD%E8%A2%AB%E6%9B%BF%E6%8D%A2%E7%9A%84%EF%BC%88%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E6%97%B6%E5%80%99%E6%8C%87%E5%AE%9A%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%8C%E4%BC%9A%E8%A2%AB%E5%BD%93%E6%88%90%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-nav-text">–ENTRYPOINT 指定容器启动时运行的命令，注意与CMD命令的区别，ENTRYPOINT命令是一旦命令指定，后续启动容器时，命令是不能被替换的（启动容器的时候指定的命令，会被当成参数）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E2%80%93ENV-%E4%BB%A3%E8%A1%A8%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-nav-text">–ENV 代表设置环境变量</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker%E9%95%9C%E5%83%8F%E7%9A%84%E5%88%86%E5%B1%82"><span class="toc-nav-text">docker镜像的分层</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%B9%E5%99%A8%E9%97%B4%E7%9A%84%E4%BA%92%E8%81%94%EF%BC%88%E2%80%93link%E6%98%AF%E5%8D%95%E6%96%B9%E5%90%91%E7%9A%84%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%89"><span class="toc-nav-text">容器间的互联（–link是单方向的！！！）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-registry-docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93"><span class="toc-nav-text">docker registry (docker私有仓库)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B8%A6basic%E8%AE%A4%E8%AF%81%E7%9A%84%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93registry"><span class="toc-nav-text">带basic认证的私有仓库registry</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-compose-%E5%8D%95%E6%9C%BA%E7%89%88%E7%9A%84%E5%AE%B9%E5%99%A8%E7%BC%96%E6%8E%92%E5%B7%A5%E5%85%B7"><span class="toc-nav-text">docker-compose(单机版的容器编排工具)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%87%8D%E5%90%AFdocker%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%85%A8%E9%83%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-nav-text">重启docker服务，容器全部退出的解决方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker%E7%BD%91%E7%BB%9C%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">docker网络类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker%E8%B7%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1macvlan"><span class="toc-nav-text">docker跨宿主机容器之间的通信macvlan</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%AE%BE%E7%BD%AEeth0%E7%9A%84%E7%BD%91%E5%8D%A1%E4%B8%BA%E6%B7%B7%E6%9D%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%BA%EF%BC%9Aip-link-set-eth0-promisc-on"><span class="toc-nav-text">设置eth0的网卡为混杂模式的命令为：ip link set eth0 promisc on</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day05-k8s%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85"><span class="toc-nav-text">day05 k8s集群安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="toc-nav-text">k8s介绍：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%EF%BC%9A"><span class="toc-nav-text">k8s安装环境搭建：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1%E3%80%81master%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%89%E8%A3%85etcd"><span class="toc-nav-text">1、master节点的安装etcd</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2%E3%80%81master%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85kubernetes"><span class="toc-nav-text">2、master节点安装kubernetes</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3%E3%80%81node%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85kubernetes"><span class="toc-nav-text">3、node节点安装kubernetes</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#4%E3%80%81%E8%B7%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%EF%BC%8C%E5%8D%B3%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E9%83%BD%E9%85%8D%E7%BD%AEflannel%E7%BD%91%E7%BB%9C"><span class="toc-nav-text">4、跨宿主机容器间的通信，即所有节点都配置flannel网络</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8master%E4%B8%BB%E8%8A%82%E7%82%B9%E4%B8%8A%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93"><span class="toc-nav-text">在master主节点上配置镜像私有仓库</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFk8s-k8s%E6%9C%89%E4%BB%80%E4%B9%88%E5%8A%9F%E8%83%BD%EF%BC%9F"><span class="toc-nav-text">什么是k8s,k8s有什么功能？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="toc-nav-text">k8s的发展史</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-nav-text">k8s的安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-nav-text">k8s的应用场景</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day06-k8s%E8%B5%84%E6%BA%90"><span class="toc-nav-text">day06 k8s资源</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E8%B5%84%E6%BA%90%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-nav-text">k8s资源到底是什么？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90-ReplicationController%EF%BC%8C%E7%AE%80%E7%A7%B0rc-%E5%89%AF%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8%E8%B5%84%E6%BA%90"><span class="toc-nav-text">k8s另一个资源(ReplicationController，简称rc)副本控制器资源</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#rc%E5%B0%B1%E5%85%B7%E6%9C%89k8s%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E8%87%AA%E6%84%88%E5%8F%8A%E6%BB%9A%E5%8A%A8%E5%8D%87%E7%BA%A7%E5%92%8C%E4%B8%80%E9%94%AE%E5%9B%9E%E6%BB%9A%E7%9A%84%E5%8A%9F%E8%83%BD%E3%80%82"><span class="toc-nav-text">rc就具有k8s核心功能自愈及滚动升级和一键回滚的功能。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#rc%E4%B8%80%E9%94%AE%E5%9B%9E%E6%BB%9A"><span class="toc-nav-text">rc一键回滚</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#rc%E6%BB%9A%E5%8A%A8%E5%8D%87%E7%BA%A7%E5%92%8C%E4%B8%80%E9%94%AE%E5%9B%9E%E6%BB%9A%E6%80%BB%E7%BB%93"><span class="toc-nav-text">rc滚动升级和一键回滚总结</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90service%E8%B5%84%E6%BA%90%EF%BC%88%E7%AE%80%E7%A7%B0svc%EF%BC%89"><span class="toc-nav-text">k8s另一个资源service资源（简称svc）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#svc%E8%B5%84%E6%BA%90%E6%89%A9%E5%B1%95"><span class="toc-nav-text">svc资源扩展</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90deployment%E8%B5%84%E6%BA%90"><span class="toc-nav-text">k8s的另一个资源deployment资源</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84deployment%E8%B5%84%E6%BA%90%E7%9A%84%E5%9B%9E%E6%BB%9A"><span class="toc-nav-text">k8s的deployment资源的回滚</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tomcat-mysql%E7%BB%83%E4%B9%A0"><span class="toc-nav-text">tomcat+mysql练习</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%BB%83%E4%B9%A0%EF%BC%9A%E5%AE%9E%E7%8E%B0%E5%9C%A8k8s%E4%B8%AD%E4%BD%BF%E7%94%A8rc%E8%BF%90%E8%A1%8Cwordpress-mysql"><span class="toc-nav-text">k8s练习：实现在k8s中使用rc运行wordpress+mysql.</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#day07-k8s%E7%9A%84%E6%89%A9%E5%B1%95%E6%9C%8D%E5%8A%A1%E3%80%81%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%8F%8A%E5%85%B6%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-nav-text">day07 k8s的扩展服务、核心功能及其持久化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#k8s%E7%9A%84dashboard%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2"><span class="toc-nav-text">k8s的dashboard管理平台部署</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/02/云计算/云计算kvm-docker-k8s介绍/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[置顶]云计算kvm+docker+k8s介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

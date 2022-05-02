@@ -120,6 +120,29 @@
   
     <article class="article-card">
       <h2 class="article-head">
+        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/22-%E4%BF%A1%E9%81%93%EF%BC%88channel%EF%BC%89/">22-信道（channel）</a>
+      </h2>
+      <p class="article-date">2019年3月10日</p>
+      
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          什么是信道？信道可以想像成 Go 协程之间通信的管道。如同管道中的水会从一端流到另一端，通过使用信道，数据也可以从一端发送，在另一端接收。  
+信道的声明所有信道都关联了一个类型。信道只能运输这种类型的数据，而运输其他类型的数据都是非法的。  
+chan T 表示 T 类型的信道。  
+信道 ...
+        
+      </div>
+      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/22-%E4%BF%A1%E9%81%93%EF%BC%88channel%EF%BC%89/">详情...</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
         <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/23-%E7%BC%93%E5%86%B2%E4%BF%A1%E9%81%93%E5%92%8C%E5%B7%A5%E4%BD%9C%E6%B1%A0/">23. 缓冲信道和工作池（Buffered Channels and Worker Pools）</a>
       </h2>
       <p class="article-date">2019年3月10日</p>
@@ -309,27 +332,6 @@
         
       </div>
       <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/30-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">详情...</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/32-panic%E5%92%8Crecover/">32-panic和recover</a>
-      </h2>
-      <p class="article-date">2019年3月10日</p>
-      
-        
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          什么是 panic？在 Go 语言中，程序中一般是使用[错误]来处理异常情况。对于程序中出现的大部分异常情况，错误就已经够用了。
-但在有些情况，当程序发生异常时，无法继续运行。在这种情况下，我们会使用 panic 来终止程序。当[函数]发生 panic 时，它会终止运行，在执行完所有的[延迟 ...
-        
-      </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/32-panic%E5%92%8Crecover/">详情...</a>
     </article>
   
 
