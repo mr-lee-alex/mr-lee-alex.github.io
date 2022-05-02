@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      13-linux的软件管理介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>13-linux的软件管理介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-RPM基本概述"><a href="#1-RPM基本概述" class="headerlink" title="1.RPM基本概述"></a>1.RPM基本概述</h2><h3 id="1-什么是rpm"><a href="#1-什么是rpm" class="headerlink" title="1.什么是rpm?"></a>1.什么是rpm?</h3><p>RPM全称 RedHat Package Manager 缩写，由红帽开发用于软件包的安装升级卸载与查询</p>
+<h3 id="2-rpm包名组成部分"><a href="#2-rpm包名组成部分" class="headerlink" title="2.rpm包名组成部分?"></a>2.rpm包名组成部分?</h3><p>RPM包命名以-将软件分成了若干部分<code>bash-4.2.46-28.el7.x86_64.rpm</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash:软件名</span><br><span class="line"><span class="number">4.2</span><span class="number">.46</span>-<span class="number">28.</span>el7：<span class="number">4</span>是大版本，<span class="number">2</span>是小版本，<span class="number">46</span>是修订次数，<span class="number">28</span>是发布次数，el7是：enterprise linux <span class="number">7</span>，使用linux7系统</span><br><span class="line">x86_64：<span class="number">64</span>位架构</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu71lrwt0j30qy07cq50.jpg" alt="img"></p>
+<h3 id="3-如何获取rpm包"><a href="#3-如何获取rpm包" class="headerlink" title="3.如何获取rpm包"></a>3.如何获取rpm包</h3><p>在我们刚开始学习rpm包，建议先使用本地CentOS7的镜像，但实际生产环境中都是通过联网的方式获取rpm包。（先学会，你懂的？）<br>我们先通过虚拟机加载镜像，然后在linux中执行 <code>mount /dev/cdrom /mnt</code>，此时你会在<code>/mnt/Packages</code>目录下看到很多rpm的包文件。那么就可以开始rpm包管理之旅。</p>
+<h3 id="4-扩展-Linux中除了rpm安装软件，是否还有安装软件方式"><a href="#4-扩展-Linux中除了rpm安装软件，是否还有安装软件方式" class="headerlink" title="4.扩展: Linux中除了rpm安装软件，是否还有安装软件方式?"></a>4.扩展: Linux中除了rpm安装软件，是否还有安装软件方式?</h3><table>
+<thead>
+<tr>
+<th align="left">分类</th>
+<th align="left">安装</th>
+<th align="left">版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rpm包</td>
+<td align="left">预先编译打包,安装简单</td>
+<td align="left">软件版本偏低</td>
+</tr>
+<tr>
+<td align="left">源码包</td>
+<td align="left">手动编译打包,安装繁琐</td>
+<td align="left">软件版本随意</td>
+</tr>
+<tr>
+<td align="left">二进制包(绿色包)</td>
+<td align="left">解压即可使用, 安装简单</td>
+<td align="left">不能修改源码</td>
+</tr>
+</tbody></table>
+<h2 id="2-RPM使用示例"><a href="#2-RPM使用示例" class="headerlink" title="2.RPM使用示例"></a>2.RPM使用示例</h2><h3 id="1-rpm包如何安装"><a href="#1-rpm包如何安装" class="headerlink" title="1.rpm包如何安装"></a>1.rpm包如何安装</h3><p>以下列出了rpm命令进行安装软件的常用参数</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-i</td>
+<td align="left">安装rpm</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示安装详细信息</td>
+</tr>
+<tr>
+<td align="left">-h</td>
+<td align="left">显示安装rpm进度</td>
+</tr>
+<tr>
+<td align="left">–force</td>
+<td align="left">强制重新安装</td>
+</tr>
+<tr>
+<td align="left">–nodeps</td>
+<td align="left">忽略依赖关系</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装软件包, 需要指定软件包绝对路径</span></span><br><span class="line"><span class="comment"># mount /dev/cdrom /mnt</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -ivh /mnt/Packages/tree-1.6.0-10.el7.x86_64.rpm</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -ivh /mnt/Packages/vsftpd-3.0.2-22.el7.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#在软件包所在目录下可以不指定绝对路径</span></span><br><span class="line">[root@lqz ~]<span class="comment"># cd /mnt/Packages/</span></span><br><span class="line">[root@lqz Packages]<span class="comment"># rpm -ivh zsh-5.0.2-28.el7.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果软件包存在, 强制再次安装</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -ivh --force /mnt/Packages/tree-1.5.3-3.el6.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装samba服务需要依赖其他组件, 使用--nodeps可重新强制安装</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -ivh --nodeps  /mnt/Packages/tree-1.6.0-10.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># yum 安装会自动处理依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他用法，直接使用连接地址</span></span><br><span class="line"><span class="comment"># https://developer.aliyun.com/mirror/</span></span><br><span class="line"><span class="comment"># https://developer.aliyun.com/mirror/zabbix?spm=a2c6h.13651102.0.0.3e221b113DCKcf</span></span><br><span class="line"><span class="comment"># https://mirrors.aliyun.com/zabbix/zabbix/</span></span><br><span class="line"><span class="comment"># 先装3，再装4测试升级</span></span><br><span class="line"><span class="comment"># zabbix-agent-3.0.9-1.el7.x86_64.rpm </span></span><br><span class="line">[root@lqz ~]<span class="comment">#  rpm -ivh https://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/7/x86_64/zabbix-agent-3.0.9-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># 升级要用U</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -Uvh https://mirrors.aliyun.com/zabbix/zabbix/4.2/rhel/7/x86_64/zabbix-agent-4.2.8-1.el7.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载（带依赖的卸不了）</span></span><br><span class="line">rpm -e zabbix-agent</span><br><span class="line">rpm -q zabbix-agent</span><br><span class="line"></span><br><span class="line">yum remove samba</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-如何查询已安装好的rpm包"><a href="#2-如何查询已安装好的rpm包" class="headerlink" title="2.如何查询已安装好的rpm包"></a>2.如何查询已安装好的rpm包</h3><table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rpm -q</td>
+<td align="left">查看指定软件包是否安装（重点）</td>
+</tr>
+<tr>
+<td align="left">rpm -qa</td>
+<td align="left">查看系统中已安装的所有RPM软件包列表</td>
+</tr>
+<tr>
+<td align="left">rpm -qi</td>
+<td align="left">查看指定软件的详细信息</td>
+</tr>
+<tr>
+<td align="left">rpm -ql</td>
+<td align="left">查询指定软件包所安装的目录、文件列表(重点)</td>
+</tr>
+<tr>
+<td align="left">rpm -qc</td>
+<td align="left">查询指定软件包的配置文件(只有配置文件，etc下的)</td>
+</tr>
+<tr>
+<td align="left">rpm -qf</td>
+<td align="left">查询文件或目录属于哪个RPM软件</td>
+</tr>
+<tr>
+<td align="left">rpm -qip</td>
+<td align="left">查询未安装的rpm包详细信息</td>
+</tr>
+<tr>
+<td align="left">rpm -qlp</td>
+<td align="left">查询未安装的软件包会产生哪些文件</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询vsftpd这个rpm包是否安装</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -q vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#模糊查找系统已安装的rpm包</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qa |grep ftp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询vsftpd软件包的相关信息</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qi vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询rpm包所安装的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -ql vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询rpm包相关的配置文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qc vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询配置文件或命令来自于哪个rpm包(只能查已经安装过的)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qf /etc/vsftpd/vsftpd.conf # 查看这个配置文件是</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qf /usr/sbin/vsftpd</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qf /usr/sbin/ifconfig </span></span><br><span class="line"><span class="comment"># 想看未安装的</span></span><br><span class="line">yum provides vim</span><br><span class="line"></span><br><span class="line"><span class="comment">#查询未安装的软件包会产生哪些文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qlp /mnt/Packages/samba-3.6.23-41.el6.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询未安装的软件包会产生哪些文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># rpm -qip /mnt/Packages/samba-3.6.23-41.el6.x86_64.rpm</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-RPM包升级"><a href="#3-RPM包升级" class="headerlink" title="3.RPM包升级"></a>3.RPM包升级</h3><table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rpm -U</td>
+<td align="left">如果老版本不存在则全新安装，如果存在有新版即升级</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget  https://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/7/x86_64/zabbix-agent-3.0.9-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="comment"># wget  https://mirrors.aliyun.com/zabbix/zabbix/4.2/rhel/7/x86_64/zabbix-agent-4.2.0-1.el7.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.先安装低版本</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -ivh zabbix-agent-3.0.9-1.el7.x86_64.rpm</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#2.尝试安装高版本(会出现错误)</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -ivh zabbix-agent-4.2.0-1.el7.x86_64.rpm</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#3.使用升级的方式,完美解决替换</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -Uvh zabbix-agent-4.2.0-1.el7.x86_64.rpm</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-RPM包卸载"><a href="#4-RPM包卸载" class="headerlink" title="4.RPM包卸载"></a>4.RPM包卸载</h3><p>卸载包时需要先把依赖的包卸载掉，如果依赖的包是系统所必须的，那就不能卸载这个包，否则会造成系统崩溃。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#先查询, 然后卸载 </span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -qa |grep sh</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -e zsh</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-RPM包校验-扩展了解"><a href="#5-RPM包校验-扩展了解" class="headerlink" title="5.RPM包校验(扩展了解)"></a>5.RPM包校验(扩展了解)</h3><p>软件相关的数据库存放于<code>/var/lib/rpm</code>目录</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">S</td>
+<td align="left">文件的容量大小是否被改变</td>
+</tr>
+<tr>
+<td align="left">M</td>
+<td align="left">文件的类型或者文件的属性是否被修改</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">MD5 这一种指纹加密的内容已经不同</td>
+</tr>
+<tr>
+<td align="left">L</td>
+<td align="left">路径已经被改变</td>
+</tr>
+<tr>
+<td align="left">U</td>
+<td align="left">文件的所属主已被修改</td>
+</tr>
+<tr>
+<td align="left">G</td>
+<td align="left">文件的所属组已被修改</td>
+</tr>
+<tr>
+<td align="left">T</td>
+<td align="left">文件的创建时间已被改变</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -V vsftpd</span></span><br><span class="line">S.5....T.  c /etc/pam.d/vsftpd</span><br><span class="line">.......T.  c /etc/vsftpd/ftpusers</span><br><span class="line">S.5....T.  c /etc/vsftpd/vsftpd.conf</span><br><span class="line">.M.......    /var/ftp/pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-RPM包小结"><a href="#6-RPM包小结" class="headerlink" title="6.RPM包小结"></a>6.RPM包小结</h3><p>如何查询 util-linux 软件包安装了哪些文件？<br>如何查询 mkdir 命令是由哪个 RPM 软件包安装的？<br>安装 .rpm 软件包时，-i、-U、选项有何区别？</p>
+<h2 id="3-YUM基本介绍"><a href="#3-YUM基本介绍" class="headerlink" title="3.YUM基本介绍"></a>3.YUM基本介绍</h2><h3 id="1-什么是YUM"><a href="#1-什么是YUM" class="headerlink" title="1.什么是YUM"></a>1.什么是YUM</h3><p>Yum是RedHat以及CentOS中的软件包管理器。能够通过互联网下载 .rpm 包并且安装，并可以自动处理依赖性关系，无须繁琐地一次次下载、安装。(PS: YUM是生产最佳实践)</p>
+<h3 id="2-YUM源是什么"><a href="#2-YUM源是什么" class="headerlink" title="2.YUM源是什么"></a>2.YUM源是什么</h3><p>1要成功的使用 YUM 工具安装更新软件或系统，就需要有一个包含各种 rpm 软件包的repository（软件仓库），这个软件仓库我们习惯称为 yum 源。(可以是本地源、网络源)</p>
+<h3 id="3-YUM源配置实例"><a href="#3-YUM源配置实例" class="headerlink" title="3.YUM源配置实例"></a>3.YUM源配置实例</h3><h4 id="1-阿里yum源"><a href="#1-阿里yum源" class="headerlink" title="1.阿里yum源"></a>1.阿里yum源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum repolist # 查看现在有多少源，nginx没有，可以配置nginx仓库，就有了</span></span><br><span class="line"><span class="comment"># 扩展epel源：</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#默认系统是国外源，需要替换为国内的源</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># wget -O /etc/yum.repos.d/CentOS-Base.repo </span></span><br><span class="line">http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment">#扩展源，有很多软件在基本源中没有</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># wget -O /etc/yum.repos.d/epel.repo </span></span><br><span class="line">http://mirrors.aliyun.com/repo/epel-7.repo</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Nginx官方源，比如在学习Nginx时需要使用官方的yum源来安装"><a href="#2-Nginx官方源，比如在学习Nginx时需要使用官方的yum源来安装" class="headerlink" title="2.Nginx官方源，比如在学习Nginx时需要使用官方的yum源来安装"></a>2.Nginx官方源，比如在学习Nginx时需要使用官方的yum源来安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]<span class="comment"># vim /etc/yum.repos.d/nginx.repo</span></span><br><span class="line">[nginx]</span><br><span class="line">name=nginx repo </span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/<span class="variable">$basearch</span>/ </span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
+
+<p>PS:源超找方式基本一致,zabbix，Docker、Nginx、saltstack、openstack</p>
+<h2 id="4-YUM实践案例"><a href="#4-YUM实践案例" class="headerlink" title="4.YUM实践案例"></a>4.YUM实践案例</h2><h3 id="1-使用yum查询软件包的方式"><a href="#1-使用yum查询软件包的方式" class="headerlink" title="1.使用yum查询软件包的方式"></a>1.使用yum查询软件包的方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]<span class="comment"># yum list</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum list|grep ftp</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum info ftp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用yum安装软件包的方式"><a href="#2-使用yum安装软件包的方式" class="headerlink" title="2.使用yum安装软件包的方式"></a>2.使用yum安装软件包的方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]<span class="comment"># yum install tree</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum install tree -y    #非交互</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装本地的rpm包, 如果有依赖关系, 会自动从软件仓库中下载所需依赖</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum localinstall /mnt/Packages/bind-9.9.4-50.el7.x86_64.rpm</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#直接安装网络上的rpm包</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum install http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-2.el7.noarch.rpm</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用yum重新安装软件包的方式"><a href="#3-使用yum重新安装软件包的方式" class="headerlink" title="3.使用yum重新安装软件包的方式"></a>3.使用yum重新安装软件包的方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.如果不小心删除vsftpd配置文件</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rm -f /etc/vsftpd/vsftpd.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.可以对软件进行重新安装</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum reinstall vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.检查软件的配置文件</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># rpm -qc vsftpd</span></span><br><span class="line">/etc/logrotate.d/vsftpd</span><br><span class="line">/etc/pam.d/vsftpd</span><br><span class="line">/etc/vsftpd/ftpusers</span><br><span class="line">/etc/vsftpd/user_list</span><br><span class="line">/etc/vsftpd/vsftpd.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="4使用yum更新软件包"><a href="#4使用yum更新软件包" class="headerlink" title="4使用yum更新软件包"></a>4使用yum更新软件包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#对比Linux已安装的软件和yum仓库中的软件, 有哪些需要升级</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum check-update</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#更新acl软件</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment">#  yum update acl -y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如下的执行很危险，这代表更新整个系统所有的软件，包括内核</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment">#  yum update -y</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-使用yum删除软件包"><a href="#5-使用yum删除软件包" class="headerlink" title="5.使用yum删除软件包"></a>5.使用yum删除软件包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]# yum install samba -y</span><br><span class="line">[root@www.lqz.com ~]# yum erase samba -y</span><br><span class="line">[root@www.lqz.com ~]# yum remove samba -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-与yum仓库相关指令-扩展了解"><a href="#6-与yum仓库相关指令-扩展了解" class="headerlink" title="6.与yum仓库相关指令(扩展了解)"></a>6.与yum仓库相关指令(扩展了解)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#列出yum源可用的软件仓库</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum repolist</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#列出全部yum源可用和禁用的仓库</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum repolist all</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查找某个命令或文件属于那个软件包(生产常用)</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum provides /etc/my.cnf</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum provides cd</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-与yum缓存相关指令-扩展了解"><a href="#7-与yum缓存相关指令-扩展了解" class="headerlink" title="7.与yum缓存相关指令(扩展了解)"></a>7.与yum缓存相关指令(扩展了解)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.缓存rpm包方式一、修改yum全局配置文件</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># vim /etc/yum.conf</span></span><br><span class="line">[main]</span><br><span class="line">cachedir=/var/cache/yum/<span class="variable">$basearch</span>/<span class="variable">$releasever</span></span><br><span class="line">keepcache=1     <span class="comment">#启动缓存</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.缓存rpm包方式二，只下载不安装</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum install -y yum-plugin-downloadonly #插件</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum install httpd -y --downloadonly --downloaddir=/tmp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.清除所有yum缓存的软件包以及元数据</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum clean all</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.只清除缓存的软件包</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum clean packages</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-组包相关指令，-扩展了解"><a href="#8-组包相关指令，-扩展了解" class="headerlink" title="8.组包相关指令，(扩展了解)"></a>8.组包相关指令，(扩展了解)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www.lqz.com ~]<span class="comment"># yum groups list</span></span><br><span class="line"><span class="comment">#安装一整个组的软件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum groups install Development tools </span></span><br><span class="line">Compatibility libraries </span><br><span class="line">Base Debugging Tools</span><br><span class="line"></span><br><span class="line"><span class="comment">#yum删除包组</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum groups remove  -y Base</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="9-历史记录指令-扩展了解"><a href="#9-历史记录指令-扩展了解" class="headerlink" title="9.历史记录指令,(扩展了解)"></a>9.历史记录指令,(扩展了解)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.查看历史执行yum命令</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum history</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.查询历史执行yum命令ID详细信息</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum history info N</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.撤销历史执行过的yum命令</span></span><br><span class="line">[root@www.lqz.com ~]<span class="comment"># yum history undo N</span></span><br></pre></td></tr></table></figure>
+
+<p>PS: YUM还有配置文件与签名验证需要我们额外扩展了解的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lqz/p/10757861.html">请点击传送门</a></p>
+<h2 id="5-搭建本地仓库"><a href="#5-搭建本地仓库" class="headerlink" title="5.搭建本地仓库"></a>5.搭建本地仓库</h2><h3 id="1-有的时候你的linux系统不能联网，当然就不能很便捷的使用联网的yum源了，这时候就需要你自己会利用linux系统光盘制作一个yum源。具体步骤如下："><a href="#1-有的时候你的linux系统不能联网，当然就不能很便捷的使用联网的yum源了，这时候就需要你自己会利用linux系统光盘制作一个yum源。具体步骤如下：" class="headerlink" title="1.有的时候你的linux系统不能联网，当然就不能很便捷的使用联网的yum源了，这时候就需要你自己会利用linux系统光盘制作一个yum源。具体步骤如下："></a>1.有的时候你的linux系统不能联网，当然就不能很便捷的使用联网的yum源了，这时候就需要你自己会利用linux系统光盘制作一个yum源。具体步骤如下：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.挂载镜像</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount /dev/cdrom /mnt   </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.备份原有仓库</span></span><br><span class="line">[root@lqz ~]<span class="comment"># gzip /etc/yum.repos.d/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.使用yum-config-manager命令添加本地仓库</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum-config-manager --add-repo=&quot;file:///mnt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.或者使用手动添加repo文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># vim /etc/yum.repos.d/cdrom.repo  </span></span><br><span class="line">[cdrom]      </span><br><span class="line">name=This is <span class="built_in">local</span> cdrom</span><br><span class="line">baseurl=file:///mnt</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line">[]          <span class="comment">#仓库名称</span></span><br><span class="line">name        3仓库描述信息</span><br><span class="line">baseurl     <span class="comment">#YUM源url地址 ,可以是file:// ftp:// http://</span></span><br><span class="line">enabled     <span class="comment">#是否使用该YUM源(0代表禁用, 1代表激活)</span></span><br><span class="line">gpgcheck    <span class="comment">#是否验证软件签名(0代表禁用, 1代表激活)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.生成缓存</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum makecache</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-很多时候不仅仅是一台机器无法上网，而是很多机器都无法上网，但都有联网下载软件的需求，这个时候难道每台机器都挂在光盘吗-当然可以，但如果软件出现了更新怎么办"><a href="#2-很多时候不仅仅是一台机器无法上网，而是很多机器都无法上网，但都有联网下载软件的需求，这个时候难道每台机器都挂在光盘吗-当然可以，但如果软件出现了更新怎么办" class="headerlink" title="2.很多时候不仅仅是一台机器无法上网，而是很多机器都无法上网，但都有联网下载软件的需求，这个时候难道每台机器都挂在光盘吗? 当然可以，但如果软件出现了更新怎么办?"></a>2.很多时候不仅仅是一台机器无法上网，而是很多机器都无法上网，但都有联网下载软件的需求，这个时候难道每台机器都挂在光盘吗? 当然可以，但如果软件出现了更新怎么办?</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu7323kkrj30fm06d3z2.jpg" alt="仓库构建"></p>
+<p>本地光盘提供基础软件包: Base<br>yum缓存提供常用软件包: nginx, zabbix, docker</p>
+<h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h4><table>
+<thead>
+<tr>
+<th align="left">系统</th>
+<th align="left">IP</th>
+<th align="left">角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">centos7</td>
+<td align="left">10.0.0.99</td>
+<td align="left">yum仓库服务端</td>
+</tr>
+<tr>
+<td align="left">centos7</td>
+<td align="left">10.0.0.98</td>
+<td align="left">yum仓库客户端</td>
+</tr>
+</tbody></table>
+<h4 id="2-服务端进行yum仓库的搭建准备工作"><a href="#2-服务端进行yum仓库的搭建准备工作" class="headerlink" title="2.服务端进行yum仓库的搭建准备工作"></a>2.服务端进行yum仓库的搭建准备工作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.关闭防火墙、与selinux</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># systemctl stop firewalld</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># setenforce 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.安装ftp服务,启动并加入开机启动</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># yum -y install vsftpd </span></span><br><span class="line">[root@yum_server ~]<span class="comment"># systemctl start vsftpd </span></span><br><span class="line">[root@yum_server ~]<span class="comment"># systemctl enable vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.开启yum缓存功能</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># vim /etc/yum.conf</span></span><br><span class="line">[main] cachedir=/var/cache/yum/<span class="variable">$basearch</span>/<span class="variable">$releasever</span> </span><br><span class="line">keepcache=1</span><br><span class="line">[root@yum_server ~]<span class="comment"># yum clean all</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.提供基础base软件包</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># mkdir /var/ftp/centos7</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># mount /dev/cdrom /mnt</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># cp -rp  /mnt/Packages/.rpm /var/ftp/centos7/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.提供第三方源</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># mkdir /var/ftp/ops</span></span><br><span class="line">[root@yum_server ~]<span class="comment"># yum -y install nginx docker</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#6.复制已缓存的 Nginx docker 及依赖包 到自定义 YUM 仓库目录中</span></span><br><span class="line">[root@yum_server_69_112 ~]<span class="comment"># find /var/cache/yum/x86_64/7/ </span></span><br><span class="line">-iname <span class="string">&quot;.rpm&quot;</span> -<span class="built_in">exec</span> <span class="built_in">cp</span> -rf &#123;&#125; /var/ftp/ops ;</span><br><span class="line"></span><br><span class="line"><span class="comment">#7.安装createrepo并创建 reopdata仓库</span></span><br><span class="line">[root@yum_server_ ~]<span class="comment"># yum -y install createrepo</span></span><br><span class="line">[root@yum_server_ ~]<span class="comment"># createrepo /var/ftp/ops</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#PS: 如果此仓库每次新增软件则需要重新生成一次</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-客户端配置yum源指向服务端"><a href="#3-客户端配置yum源指向服务端" class="headerlink" title="3.客户端配置yum源指向服务端"></a>3.客户端配置yum源指向服务端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.客户端配置并使用 base 基础源</span></span><br><span class="line">[root@yum_client ~]<span class="comment"># gzip /etc/yum.repos.d/</span></span><br><span class="line">[root@yum_client ~]<span class="comment"># vim /etc/yum.repos.d/centos7.repo </span></span><br><span class="line">[centos7]</span><br><span class="line">name=centos7_base</span><br><span class="line">baseurl=ftp://10.0.0.99/centos7</span><br><span class="line">gpgcheck=0</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.客户端配置并使用 ops 源</span></span><br><span class="line">[root@yum_client ~]<span class="comment"># vim /etc/yum.repos.d/ops.repo </span></span><br><span class="line">[ops]</span><br><span class="line">name=<span class="built_in">local</span> ftpserver</span><br><span class="line">baseurl=ftp://10.0.0.99/ops</span><br><span class="line">gpgcheck=0</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-源码包管理实践"><a href="#6-源码包管理实践" class="headerlink" title="6.源码包管理实践"></a>6.源码包管理实践</h2><h3 id="1-源码包是什么"><a href="#1-源码包是什么" class="headerlink" title="1.源码包是什么"></a>1.源码包是什么</h3><p>源码包指的是开发编写好的程序源代码，但并没有将其编译为一个能正常使用的工具。</p>
+<h3 id="2-为什么要学习源码包"><a href="#2-为什么要学习源码包" class="headerlink" title="2.为什么要学习源码包"></a>2.为什么要学习源码包</h3><p>1、部分软件官网仅提供源码包，需要自行编译并安装。<br>2、部分软件在新版本有一些特性还没来得及制作成rpm包时，可以自行编译软件使用其新特性。</p>
+<h3 id="3-源码包的优缺点"><a href="#3-源码包的优缺点" class="headerlink" title="3.源码包的优缺点"></a>3.源码包的优缺点</h3><p>1.可以自行修改源代码<br>2.可以定制需要的相关功能<br>3.新版软件优先更新源码<br>4.缺点是: 1) 相对yum安装软件会复杂很多。2) 标准化实施困难，自动化就无法落地。</p>
+<h3 id="4-源码包如何获取"><a href="#4-源码包如何获取" class="headerlink" title="4.源码包如何获取"></a>4.源码包如何获取</h3><p>常见的软件包都可以在官网获取源码包，比如 apache、nginx、mysql等等</p>
+<h3 id="5将源码包编译为二进制可执行文件步骤如下，简称安装三步曲"><a href="#5将源码包编译为二进制可执行文件步骤如下，简称安装三步曲" class="headerlink" title="5将源码包编译为二进制可执行文件步骤如下，简称安装三步曲"></a>5将源码包编译为二进制可执行文件步骤如下，简称安装三步曲</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu73ba42sj30mi0mgtei.jpg" alt="img"><br>PS: 此方法不是百分百通用于所有源码包，建议拿到源码包解压后，进入到目录找相关的README帮助文档</p>
+<h3 id="6-源码编译示例"><a href="#6-源码编译示例" class="headerlink" title="6.源码编译示例"></a>6.源码编译示例</h3><p>下面通过编译Nginx来深入了解下源码包编译的过程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.基础环境准备</span></span><br><span class="line">[root@node1 ~]<span class="comment"># yum install -y gcc make wget </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.下载源码包</span></span><br><span class="line">[root@node1 ~]<span class="comment"># wget http://nginx.org/download/nginx-1.15.12.tar.gz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.解压源码包, 并进入相应目录</span></span><br><span class="line">[root@node1 ~]<span class="comment"># tar xf nginx-1.15.12.tar.gz</span></span><br><span class="line">[root@node1 ~]<span class="comment"># cd nginx-1.15.12</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.配置相关的选项，并生成Makefile</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># ./configure --help</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># ./configure --prefix=/usr/local/nginx</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># echo $? # 检查上一个命令是否执行成功</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.将Makefile文件编译可执行二进制程序，此时,/usr/local/nginx可执行文件还不在，需要执行make install 才能copy过去</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># make</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#6.将二进制文件拷贝至对应的目录中</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># make install</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#7 建立软连接（以后方便升级）</span></span><br><span class="line">[root@node1 nginx-1.15.12]<span class="comment"># ln -s nginx-1.18.0 nginx</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#8 目录介绍</span></span><br><span class="line">conf:配置文件</span><br><span class="line">html：网站文件存放</span><br><span class="line">logs：日志</span><br><span class="line">sbin:可执行文件</span><br><span class="line"></span><br><span class="line"><span class="comment"># 9 命令</span></span><br><span class="line">nginx  <span class="comment"># 启动</span></span><br><span class="line">nginx -s reload <span class="comment"># 重新加载</span></span><br><span class="line">nginx -s stop  <span class="comment"># 重启</span></span><br><span class="line">nginx -s stop <span class="comment"># 停止</span></span><br></pre></td></tr></table></figure>
+
+<p>源码编译报错信息处理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">checking <span class="keyword">for</span> C compiler ... not found ./configure: error: C compiler cc is not found </span><br><span class="line"><span class="comment"># yum -y install gcc gcc-c++ make</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">./configure: error: the HTTP rewrite module requires the PCRE library.</span><br><span class="line">You can either <span class="built_in">disable</span> the module by using --without-http_rewrite_module</span><br><span class="line">option, or install the PCRE library into the system, or build the PCRE library</span><br><span class="line">statically from the <span class="built_in">source</span> with nginx by using --with-pcre=&lt;path&gt; option.</span><br><span class="line"><span class="comment"># yum install -y pcre-devel</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">./configure: error: the HTTP gzip module requires the zlib library.</span><br><span class="line">You can either <span class="built_in">disable</span> the module by using --without-</span><br><span class="line">http_gzip_module option, or install the zlib library into the</span><br><span class="line">system, or build the zlib library statically from the <span class="built_in">source</span> with</span><br><span class="line">nginx by using --with-zlib=&lt;path&gt; option. </span><br><span class="line"><span class="comment"># yum -y install zlib-devel</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">./configure: error: SSL modules require the OpenSSL library.</span><br><span class="line">You can either <span class="keyword">do</span> not <span class="built_in">enable</span> the modules, or install the OpenSSL </span><br><span class="line">library into the system, or build the OpenSSL library statically</span><br><span class="line">from the <span class="built_in">source</span> with nginx by using --with-openssl=&lt;path&gt; option.</span><br><span class="line"><span class="comment"># yum -y install openssl-devel</span></span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/14-Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+        <span class="nav-arrow">← </span>
+        
+          14-linux的磁盘管理介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/12-Linux%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85/">
+        
+          12-linux的压缩打包介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-RPM%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">1.RPM基本概述</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFrpm"><span class="toc-nav-text">1.什么是rpm?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-rpm%E5%8C%85%E5%90%8D%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-nav-text">2.rpm包名组成部分?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96rpm%E5%8C%85"><span class="toc-nav-text">3.如何获取rpm包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E6%89%A9%E5%B1%95-Linux%E4%B8%AD%E9%99%A4%E4%BA%86rpm%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%8C%E6%98%AF%E5%90%A6%E8%BF%98%E6%9C%89%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="toc-nav-text">4.扩展: Linux中除了rpm安装软件，是否还有安装软件方式?</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-RPM%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">2.RPM使用示例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-rpm%E5%8C%85%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85"><span class="toc-nav-text">1.rpm包如何安装</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2%E5%B7%B2%E5%AE%89%E8%A3%85%E5%A5%BD%E7%9A%84rpm%E5%8C%85"><span class="toc-nav-text">2.如何查询已安装好的rpm包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-RPM%E5%8C%85%E5%8D%87%E7%BA%A7"><span class="toc-nav-text">3.RPM包升级</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-RPM%E5%8C%85%E5%8D%B8%E8%BD%BD"><span class="toc-nav-text">4.RPM包卸载</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-RPM%E5%8C%85%E6%A0%A1%E9%AA%8C-%E6%89%A9%E5%B1%95%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">5.RPM包校验(扩展了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-RPM%E5%8C%85%E5%B0%8F%E7%BB%93"><span class="toc-nav-text">6.RPM包小结</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-YUM%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">3.YUM基本介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFYUM"><span class="toc-nav-text">1.什么是YUM</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-YUM%E6%BA%90%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-nav-text">2.YUM源是什么</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-YUM%E6%BA%90%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B"><span class="toc-nav-text">3.YUM源配置实例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-%E9%98%BF%E9%87%8Cyum%E6%BA%90"><span class="toc-nav-text">1.阿里yum源</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-Nginx%E5%AE%98%E6%96%B9%E6%BA%90%EF%BC%8C%E6%AF%94%E5%A6%82%E5%9C%A8%E5%AD%A6%E4%B9%A0Nginx%E6%97%B6%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E7%9A%84yum%E6%BA%90%E6%9D%A5%E5%AE%89%E8%A3%85"><span class="toc-nav-text">2.Nginx官方源，比如在学习Nginx时需要使用官方的yum源来安装</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-YUM%E5%AE%9E%E8%B7%B5%E6%A1%88%E4%BE%8B"><span class="toc-nav-text">4.YUM实践案例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BD%BF%E7%94%A8yum%E6%9F%A5%E8%AF%A2%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-nav-text">1.使用yum查询软件包的方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%BD%BF%E7%94%A8yum%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-nav-text">2.使用yum安装软件包的方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E4%BD%BF%E7%94%A8yum%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-nav-text">3.使用yum重新安装软件包的方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4%E4%BD%BF%E7%94%A8yum%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-nav-text">4使用yum更新软件包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-%E4%BD%BF%E7%94%A8yum%E5%88%A0%E9%99%A4%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-nav-text">5.使用yum删除软件包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-%E4%B8%8Eyum%E4%BB%93%E5%BA%93%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4-%E6%89%A9%E5%B1%95%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">6.与yum仓库相关指令(扩展了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-%E4%B8%8Eyum%E7%BC%93%E5%AD%98%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4-%E6%89%A9%E5%B1%95%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">7.与yum缓存相关指令(扩展了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-%E7%BB%84%E5%8C%85%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4%EF%BC%8C-%E6%89%A9%E5%B1%95%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">8.组包相关指令，(扩展了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#9-%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E6%8C%87%E4%BB%A4-%E6%89%A9%E5%B1%95%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">9.历史记录指令,(扩展了解)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="toc-nav-text">5.搭建本地仓库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E6%9C%89%E7%9A%84%E6%97%B6%E5%80%99%E4%BD%A0%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E4%B8%8D%E8%83%BD%E8%81%94%E7%BD%91%EF%BC%8C%E5%BD%93%E7%84%B6%E5%B0%B1%E4%B8%8D%E8%83%BD%E5%BE%88%E4%BE%BF%E6%8D%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E8%81%94%E7%BD%91%E7%9A%84yum%E6%BA%90%E4%BA%86%EF%BC%8C%E8%BF%99%E6%97%B6%E5%80%99%E5%B0%B1%E9%9C%80%E8%A6%81%E4%BD%A0%E8%87%AA%E5%B7%B1%E4%BC%9A%E5%88%A9%E7%94%A8linux%E7%B3%BB%E7%BB%9F%E5%85%89%E7%9B%98%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAyum%E6%BA%90%E3%80%82%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-nav-text">1.有的时候你的linux系统不能联网，当然就不能很便捷的使用联网的yum源了，这时候就需要你自己会利用linux系统光盘制作一个yum源。具体步骤如下：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E5%BE%88%E5%A4%9A%E6%97%B6%E5%80%99%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%EF%BC%8C%E8%80%8C%E6%98%AF%E5%BE%88%E5%A4%9A%E6%9C%BA%E5%99%A8%E9%83%BD%E6%97%A0%E6%B3%95%E4%B8%8A%E7%BD%91%EF%BC%8C%E4%BD%86%E9%83%BD%E6%9C%89%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E9%9A%BE%E9%81%93%E6%AF%8F%E5%8F%B0%E6%9C%BA%E5%99%A8%E9%83%BD%E6%8C%82%E5%9C%A8%E5%85%89%E7%9B%98%E5%90%97-%E5%BD%93%E7%84%B6%E5%8F%AF%E4%BB%A5%EF%BC%8C%E4%BD%86%E5%A6%82%E6%9E%9C%E8%BD%AF%E4%BB%B6%E5%87%BA%E7%8E%B0%E4%BA%86%E6%9B%B4%E6%96%B0%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-nav-text">2.很多时候不仅仅是一台机器无法上网，而是很多机器都无法上网，但都有联网下载软件的需求，这个时候难道每台机器都挂在光盘吗? 当然可以，但如果软件出现了更新怎么办?</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-nav-text">1.环境准备</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%BF%9B%E8%A1%8Cyum%E4%BB%93%E5%BA%93%E7%9A%84%E6%90%AD%E5%BB%BA%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-nav-text">2.服务端进行yum仓库的搭建准备工作</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AEyum%E6%BA%90%E6%8C%87%E5%90%91%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-nav-text">3.客户端配置yum源指向服务端</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-%E6%BA%90%E7%A0%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5"><span class="toc-nav-text">6.源码包管理实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E6%BA%90%E7%A0%81%E5%8C%85%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-nav-text">1.源码包是什么</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0%E6%BA%90%E7%A0%81%E5%8C%85"><span class="toc-nav-text">2.为什么要学习源码包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E6%BA%90%E7%A0%81%E5%8C%85%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-nav-text">3.源码包的优缺点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E6%BA%90%E7%A0%81%E5%8C%85%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96"><span class="toc-nav-text">4.源码包如何获取</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5%E5%B0%86%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%8C%E7%AE%80%E7%A7%B0%E5%AE%89%E8%A3%85%E4%B8%89%E6%AD%A5%E6%9B%B2"><span class="toc-nav-text">5将源码包编译为二进制可执行文件步骤如下，简称安装三步曲</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">6.源码编译示例</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/13-Linux软件管理/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "13-linux的软件管理介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

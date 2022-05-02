@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2></h2>
+
+
+
+  <p class="post-date">2022-05-02</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="docker-run参数"><a href="#docker-run参数" class="headerlink" title="docker run参数"></a>docker run参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">常用选项说明</span><br><span class="line"></span><br><span class="line">    -d, --detach=false， 指定容器运行于前台还是后台，默认为false</span><br><span class="line">    -i, --interactive=false， 打开STDIN，用于控制台交互</span><br><span class="line">    -t, --tty=false， 分配tty设备，该可以支持终端登录，默认为false</span><br><span class="line">    -u, --user=<span class="string">&quot;&quot;</span>， 指定容器的用户</span><br><span class="line">    -a, --attach=[]， 登录容器（必须是以docker run -d启动的容器）</span><br><span class="line">    -w, --workdir=<span class="string">&quot;&quot;</span>， 指定容器的工作目录</span><br><span class="line">    -c, --cpu-shares=<span class="number">0</span>， 设置容器CPU权重，在CPU共享场景使用</span><br><span class="line">    -e, --env=[]， 指定环境变量，容器中可以使用该环境变量</span><br><span class="line">    -m, --memory=<span class="string">&quot;&quot;</span>， 指定容器的内存上限</span><br><span class="line">    -P, --publish-<span class="built_in">all</span>=false， 指定容器暴露的端口</span><br><span class="line">    -p, --publish=[]， 指定容器暴露的端口</span><br><span class="line">    -h, --hostname=<span class="string">&quot;&quot;</span>， 指定容器的主机名</span><br><span class="line">    -v, --volume=[]， 给容器挂载存储卷，挂载到容器的某个目录</span><br><span class="line">    --volumes-<span class="keyword">from</span>=[]， 给容器挂载其他容器上的卷，挂载到容器的某个目录</span><br><span class="line">    --cap-add=[]， 添加权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cap-drop=[]， 删除权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cidfile=<span class="string">&quot;&quot;</span>， 运行容器后，在指定文件中写入容器PID值，一种典型的监控系统用法</span><br><span class="line">    --cpuset=<span class="string">&quot;&quot;</span>， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU</span><br><span class="line">    --device=[]， 添加主机设备给容器，相当于设备直通</span><br><span class="line">    --dns=[]， 指定容器的dns服务器</span><br><span class="line">    --dns-search=[]， 指定容器的dns搜索域名，写入到容器的/etc/resolv.conf文件</span><br><span class="line">    --entrypoint=<span class="string">&quot;&quot;</span>， 覆盖image的入口点</span><br><span class="line">    --env-file=[]， 指定环境变量文件，文件格式为每行一个环境变量</span><br><span class="line">    --expose=[]， 指定容器暴露的端口，即修改镜像的暴露端口</span><br><span class="line">    --link=[]， 指定容器间的关联，使用其他容器的IP、env等信息</span><br><span class="line">    --lxc-conf=[]， 指定容器的配置文件，只有在指定--<span class="built_in">exec</span>-driver=lxc时使用</span><br><span class="line">    --name=<span class="string">&quot;&quot;</span>， 指定容器名字，后续可以通过名字进行容器管理，links特性需要使用名字</span><br><span class="line">    --net=<span class="string">&quot;bridge&quot;</span>， 容器网络设置:</span><br><span class="line">        bridge 使用docker daemon指定的网桥</span><br><span class="line">        host //容器使用主机的网络</span><br><span class="line">        container:NAME_or_ID &gt;//使用其他容器的网路，共享IP和PORT等网络资源</span><br><span class="line">        none 容器使用自己的网络（类似--net=bridge），但是不进行配置</span><br><span class="line">    --privileged=false， 指定容器是否为特权容器，特权容器拥有所有的capabilities</span><br><span class="line">    --restart=<span class="string">&quot;no&quot;</span>， 指定容器停止后的重启策略:</span><br><span class="line">        no：容器退出时不重启</span><br><span class="line">        on-failure：容器故障退出（返回值非零）时重启</span><br><span class="line">        always：容器退出时总是重启</span><br><span class="line">    --rm=false， 指定容器停止后自动删除容器(不支持以docker run -d启动的容器)</span><br><span class="line">    --sig-proxy=true， 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="docker-网络"><a href="#docker-网络" class="headerlink" title="docker 网络"></a>docker 网络</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建网络名称空间</span></span><br><span class="line">ip netns <span class="built_in">list</span>  查看</span><br><span class="line">ip netns delete test1 删除</span><br><span class="line">ip netns add test1   新增</span><br><span class="line">ip netns add test2   新增</span><br><span class="line">ip netns <span class="built_in">exec</span> text1 ip a  查看网络名称空间test1的ip</span><br><span class="line"></span><br><span class="line">ip link  查看linux网卡的二层信息</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> text1 ip link 查看名称空间text1网卡的二层信息</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> test1 ip link <span class="built_in">set</span> dev lo up  （ip link <span class="built_in">set</span> dev lo up）把lo网卡启动</span><br><span class="line"></span><br><span class="line">ip link add veth-test1 <span class="built_in">type</span> veth peer	name veth-test2  添加两个veth，分别是veth-test1和veth-test2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ip link <span class="built_in">set</span> veth-test1 netns test1 把veth-test1添加到test1的名称空间中</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> text1 ip link 可以看到已经被添加到test1中了</span><br><span class="line"></span><br><span class="line">ip link <span class="built_in">set</span> veth-test2 netns test2</span><br><span class="line">ip netns <span class="built_in">exec</span> text2 ip link</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> test1 ip addr add <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>/<span class="number">24</span> dev veth-test1  给设备新增ip地址veth-test1</span><br><span class="line">ip netns <span class="built_in">exec</span> test2 ip addr add <span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>/<span class="number">24</span> dev veth-test2  给设备新增ip地址veth-test2</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> test1 ip link <span class="built_in">set</span> dev veth-test1 up 启动veth-test1</span><br><span class="line">ip netns <span class="built_in">exec</span> test2 ip link <span class="built_in">set</span> dev veth-test3 up 启动veth-</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> test1 ip a 可以看到ip地址有了</span><br><span class="line"></span><br><span class="line">ip netns <span class="built_in">exec</span> test1 ping <span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>  发现能ping 通</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bridge网络</span><br><span class="line">docker network ls</span><br><span class="line">docker network inspect 网络<span class="built_in">id</span>号</span><br><span class="line">ip a 本地有docker0和veth</span><br><span class="line">docker0是docker的</span><br><span class="line">veth是某个容器的，他们两个名称空间相连接</span><br><span class="line">docker <span class="built_in">exec</span> 容器<span class="built_in">id</span> ip a  </span><br><span class="line">查看容器网卡可以看到有个eth..，它跟veth是一对parr，连到了主机的docker0上</span><br><span class="line"></span><br><span class="line">brctl命令</span><br><span class="line">yum install bridge-utils</span><br><span class="line">brctl show  可以看到docker0 有个interface--》 veth，就是通过ip a看到的那个veth</span><br><span class="line"></span><br><span class="line">再创建一个容器</span><br><span class="line">docker network inspect 网络<span class="built_in">id</span>号   containers又多了个veth</span><br><span class="line">ip a 又多个一个veth</span><br><span class="line">bractl show  发现docker0上有两个veth了 </span><br><span class="line"></span><br><span class="line">容器访问外网通过nat地址转换</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg7swrtglaj31fl0u0wmw.jpg" alt="image-20200628103705929"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#容器直接link</span></span><br><span class="line"><span class="comment"># 后台访问数据库，两个容器，需要知道ip地址去连接</span></span><br><span class="line">创建test1和test2两个容器</span><br><span class="line">创建test2的时候，加上link</span><br><span class="line">docker run -d --name test2 --link test1 busybox </span><br><span class="line">进入到test2中</span><br><span class="line">ping test1名字也可以ping通（不需要直接知道test1的ip地址）</span><br><span class="line">进入到test1容器中ping  test2无法ping 通，是有方向的</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建bridge</span></span><br><span class="line">docker network create -d bridge 名字</span><br><span class="line">docker network ls</span><br><span class="line">brctl show     可以看到多了一个bridge：br-<span class="built_in">id</span>号，通商贸docker network ls的<span class="built_in">id</span>号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器，指定使用的网络</span></span><br><span class="line">docker run -d --name test3 --network my-bridge busybox </span><br><span class="line">brctl show    可以看到br-<span class="built_in">id</span>号有接口了</span><br><span class="line"></span><br><span class="line"><span class="comment"># 两个网络连接到一起</span></span><br><span class="line">docker network connect my-bridge test2   两个参数，一个是网络，一个是容器</span><br><span class="line">docker network inspect bridge</span><br><span class="line">docker network inspect my-bridge  发现test2 即连接到了bridge又连接到了my-bridge上</span><br><span class="line"></span><br><span class="line">现在test3内直接 ping test2可以ping通：因为如果两个容器连接到了用户创建的网络上，默认就link好了，相互通过名字ping通</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口映射</span></span><br><span class="line">-p指定映射</span><br><span class="line">-P随机映射</span><br><span class="line"></span><br><span class="line"><span class="comment"># host和none网络</span></span><br><span class="line">docker run -d --name test3 --network none busybox </span><br><span class="line">docker network inspect none 发现test3在none中</span><br><span class="line">进入到容器</span><br><span class="line">ip a  发现该容器只有一个lo回环地址</span><br><span class="line">孤立的，除了<span class="built_in">exec</span>进去，其他都不能访问它，只需要本地使用，产生数据的服务器</span><br><span class="line"></span><br><span class="line">docker run -d --name test3 --network host busybox </span><br><span class="line">docker network inspect host 发现test3在none中，没有ip地址</span><br><span class="line">进入到容器</span><br><span class="line">ip a  发现该容器跟主机共享一套namespace，没有自己的一套</span><br><span class="line">这样如果宿主机<span class="number">80</span>端口被占用，容器就不能再起在<span class="number">80</span>端口了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多容器部署</span></span><br><span class="line"><span class="comment"># 一个flask项目，一个redis</span></span><br><span class="line"><span class="comment"># app.py</span></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">redis_env=os.environ.get(<span class="string">&#x27;redis&#x27;</span>)</span><br><span class="line">cache = redis.Redis(host=redis_env, port=<span class="number">6379</span>)</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    count=cache.incr(<span class="string">&#x27;hits&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;你好，被访问了&#123;&#125; 次.\n&#x27;</span>.<span class="built_in">format</span>(count)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5000</span>,host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line">FROM python:<span class="number">3.6</span></span><br><span class="line">WORKDIR /home</span><br><span class="line">RUN pip install flask</span><br><span class="line">RUN pip install redis</span><br><span class="line">COPY ./app.py .</span><br><span class="line">EXPOSE <span class="number">5000</span></span><br><span class="line">CMD [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;app.py&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t liuqingzheng/flask_redis:v1 . </span><br><span class="line"><span class="comment"># 启动redis(不需要映射6379端口了)</span></span><br><span class="line">docker run -d --name redis redis</span><br><span class="line"><span class="comment"># 启动一个flask-redis容器(设置一个环境变量)</span></span><br><span class="line">docker run -d --link redis --name flask-redsi -e REDIS_HOST=redis liuqingzheng/flask_redis:v1</span><br><span class="line">进入到容器</span><br><span class="line">env一下可以看到设置的环境变量</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 多机通信（不通机器的redis和flask如何通信）</span></span><br><span class="line">docker用的是VXLAN（一层一层包起来）</span><br><span class="line"><span class="comment"># overlay方式通过etcd来实现，多主机通信</span></span><br><span class="line"><span class="comment"># 保证不通机器上的容器ip地址不冲突</span></span><br><span class="line"><span class="comment"># 每台机器上分别启动etcd的进程</span></span><br><span class="line"><span class="comment"># 下载etcd</span></span><br><span class="line">wget https://github.com/coreos/etcd/releases/download/v3<span class="number">.0</span><span class="number">.12</span>/etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 解压etcd</span></span><br><span class="line">tar zxvf etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64.tar.gz</span><br><span class="line">cd etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64</span><br><span class="line">nohup ./etcd --name docker-node1 --initial-advertise-peer-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2380</span> \</span><br><span class="line">--listen-peer-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2380</span> \</span><br><span class="line">--listen-client-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2379</span>,http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">2379</span> \</span><br><span class="line">--advertise-client-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2379</span> \</span><br><span class="line">--initial-cluster-token etcd-cluster \</span><br><span class="line">--initial-cluster docker-node1=http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2380</span>,docker-node2=http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2380</span> \</span><br><span class="line">--initial-cluster-state new&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另一台机器</span></span><br><span class="line">wget https://github.com/coreos/etcd/releases/download/v3<span class="number">.0</span><span class="number">.12</span>/etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64.tar.gz</span><br><span class="line">tar zxvf etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64.tar.gz</span><br><span class="line">cd etcd-v3<span class="number">.0</span><span class="number">.12</span>-linux-amd64/</span><br><span class="line"> nohup ./etcd --name docker-node2 --initial-advertise-peer-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2380</span> \</span><br><span class="line">--listen-peer-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2380</span> \</span><br><span class="line">--listen-client-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2379</span>,http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">2379</span> \</span><br><span class="line">--advertise-client-urls http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2379</span> \</span><br><span class="line">--initial-cluster-token etcd-cluster \</span><br><span class="line">--initial-cluster docker-node1=http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2380</span>,docker-node2=http://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2380</span> \</span><br><span class="line">--initial-cluster-state new&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查cluster状态</span></span><br><span class="line">./etcdctl cluster-health</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">member 21eca106efe4caee is healthy: got healthy result from http://192.168.205.10:2379</span></span><br><span class="line"><span class="string">member 8614974c83d1cc6d is healthy: got healthy result from http://192.168.205.11:2379</span></span><br><span class="line"><span class="string">cluster is healthy</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启docker</span></span><br><span class="line">/usr/<span class="built_in">bin</span>/dockerd -H tcp://<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">2375</span> -H unix:///var/run/docker.sock --cluster-store=etcd://<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2379</span> --cluster-advertise=<span class="number">192.168</span><span class="number">.205</span><span class="number">.10</span>:<span class="number">2375</span>&amp;</span><br><span class="line"><span class="comment"># 另一台</span></span><br><span class="line">sudo /usr/<span class="built_in">bin</span>/dockerd -H tcp://<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">2375</span> -H unix:///var/run/docker.sock --cluster-store=etcd://<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2379</span> --cluster-advertise=<span class="number">192.168</span><span class="number">.205</span><span class="number">.11</span>:<span class="number">2375</span>&amp;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#  创建overlay网络</span></span><br><span class="line">docker network create -d overlay demo</span><br><span class="line">docker network ls</span><br><span class="line">docker network inspect demo</span><br><span class="line"><span class="comment"># 没有在nod2上做，但是被etcd同步过去了</span></span><br><span class="line"><span class="comment">#通过查看etcd的key-value, 我们获取到，这个demo的network是通过etcd从node1同步到node2的</span></span><br><span class="line"><span class="comment"># 创建容器，连接到demo上，在node2上创建</span></span><br><span class="line">docker run -d --name test1 --net demo busybox sh -c <span class="string">&quot;while true; do sleep 3600; done&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在node2上创建，就会提示test1已经被用过了</span></span><br><span class="line">docker run -d --name test2 --net demo busybox sh -c <span class="string">&quot;while true; do sleep 3600; done&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 两个地址不一样</span></span><br><span class="line">docker network inspect demo 有两台机器上的两个地址</span><br><span class="line"><span class="comment"># 两个容器可以ping通</span></span><br><span class="line">docker <span class="built_in">exec</span> test1 ping <span class="number">10.0</span><span class="number">.0</span><span class="number">.3</span></span><br><span class="line">docker <span class="built_in">exec</span> test1 ping test2  也可以</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg7tvw1pvhj31lk0q6163.jpg" alt="image-20200628111052466"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg7ucvh32hj30ha0n0dju.jpg" alt="image-20200628112711692"></p>
+<h2 id="2-持久化存储和数据共享"><a href="#2-持久化存储和数据共享" class="headerlink" title="2 持久化存储和数据共享"></a>2 持久化存储和数据共享</h2><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg7ue754rxj31660r4k1w.jpg" alt="image-20200628112827557" style="zoom:50%;" />
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg7uew5j9pj31h80m6dnl.jpg" alt="image-20200628112907879"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于本地的Volume：在容器创建或者run的时候，通过 -v指定</span></span><br><span class="line"><span class="comment"># 基于plugin的Volume：插件方式，第三方方案，如NAS，aws</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ## volume的类型</span></span><br><span class="line"><span class="comment">#1 受管理的data Volume，由docker后台自动创建（Data volume）</span></span><br><span class="line"><span class="comment">#2 绑定挂载的Volume，具体挂载可以由用户指定 （Bind Mouting）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#################Data volume</span></span><br><span class="line"><span class="comment">## 启动一个mysql的容器</span></span><br><span class="line">docker run -d --name mysql1 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql</span><br><span class="line"></span><br><span class="line">docker volume ls 可以看到刚刚创建容器的voluem</span><br><span class="line">docker volume <span class="built_in">id</span>号 删除</span><br><span class="line">docker inspect <span class="built_in">id</span>号  可以看到mount到的本地某个位置</span><br><span class="line"><span class="comment"># 再创建，也会创建一个volume</span></span><br><span class="line"><span class="comment"># 删除容器，volume是不会被删除的(数据不会丢)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 两个容器可以共用一个volume</span></span><br><span class="line">docker run -d -v mysql:/var/lib/mysql --name mysql1 -e  MYSQL_ALLOW_EMPTY_PASSWORD=true mysql</span><br><span class="line">docker run -d --name=mysql -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> -p <span class="number">3306</span>:<span class="number">3306</span> mysql:<span class="number">5.7</span></span><br><span class="line">docker run -di --name=mysql -p <span class="number">3306</span>:<span class="number">3306</span> -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> -v mysql:/var/lib/mysql mysql:<span class="number">5.7</span></span><br><span class="line"><span class="comment"># 进入到容器，创建一个数据库</span></span><br><span class="line"><span class="comment"># 停掉容器，删除容器</span></span><br><span class="line">sudo docker volume ls    文件还在</span><br><span class="line"><span class="comment"># 重新一个容器，使用该volume</span></span><br><span class="line">docker run -d -v mysql:/var/lib/mysql --name mysql2 -e  MYSQL_ALLOW_EMPTY_PASSWORD=true mysql</span><br><span class="line"><span class="comment"># 进入到容器，看到数据库还在</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###############Bind Mouting</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># index.html</span></span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">  &lt;title&gt;hello&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;h1&gt;Hello Docker! &lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line"></span><br><span class="line">FROM nginx:latest</span><br><span class="line">WORKDIR /usr/share/nginx/html</span><br><span class="line">COPY index.html index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建</span></span><br><span class="line">docker build -t liuqingzheng/nginx_demo:v1 . </span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">docker run -d -p <span class="number">80</span>:<span class="number">80</span> --name web iuqingzheng/nginx_demo:v1</span><br><span class="line"><span class="comment"># 把当前路径映射到容器目录</span></span><br><span class="line">docker run -d -v $(pwd):/usr/share/nginx/html -p <span class="number">80</span>:<span class="number">80</span> --name web iuqingzheng/nginx_demo:v1</span><br><span class="line"><span class="comment"># 进入到容器，操作容器目录，宿主机跟着改动</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#####实战演练</span></span><br><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line">FROM python:<span class="number">2.7</span></span><br><span class="line">COPY . /skeleton</span><br><span class="line">WORKDIR /skeleton</span><br><span class="line">RUN pip install -r requirements.txt</span><br><span class="line">EXPOSE <span class="number">5000</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;scripts/dev.sh&quot;</span>]</span><br><span class="line"><span class="comment"># 构建</span></span><br><span class="line">docker build -t liuqingzheng/flask_demo:v1 .</span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">docker run -d -p <span class="number">80</span>:<span class="number">5000</span> --name flask liuqingzheng/flask_demo:v1</span><br><span class="line"><span class="comment"># 删除容器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新操作</span></span><br><span class="line">docker run -d -v $(pwd):/skeleton -p <span class="number">80</span>:<span class="number">5000</span> --name flask liuqingzheng/flask_demo:v1</span><br><span class="line"><span class="comment"># 这样修改了代码，直接访问，页面也改变了</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-docker-compose"><a href="#3-docker-compose" class="headerlink" title="3 docker-compose"></a>3 docker-compose</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose是一个工具</span></span><br><span class="line"><span class="comment"># 通过yml文件定义多个容器</span></span><br><span class="line"><span class="comment"># 通过一条命令根据yml去创建，管理这些容器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认名字 docker-compose.yml</span></span><br><span class="line"><span class="comment"># 三个概念，Service  Networks ，Volumes</span></span><br><span class="line"></span><br><span class="line">version：有<span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span>版本，目前都用<span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="comment"># 一个service代表一个container，这个container可以从dockerhub的image来创建，或者从本地dockerfilebuild的image来创建</span></span><br><span class="line"><span class="comment"># service的启动类似docker run，可以指定network和volume，所有可以给servier指定network和volume</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">####例如1 ：：</span></span><br><span class="line">services:</span><br><span class="line">  db:</span><br><span class="line">    image: mysql:<span class="number">5.7</span></span><br><span class="line">    volumes:</span><br><span class="line">      - <span class="string">&quot;db-data:/var/lib/mysql&quot;</span></span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="comment"># docker run -d --network my-bridge -v db-data&quot;/var/lib/mysql mysql:5.7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### 例如2：</span></span><br><span class="line">services:</span><br><span class="line">  worker:</span><br><span class="line">    build: ./worker</span><br><span class="line">    links:</span><br><span class="line">      - db</span><br><span class="line">      - redis</span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">Volumes</span><br><span class="line"></span><br><span class="line"><span class="comment">#### 例如：</span></span><br><span class="line">services:</span><br><span class="line">  db:</span><br><span class="line">    image: mysql:<span class="number">5.7</span></span><br><span class="line">    volumes:</span><br><span class="line">      - <span class="string">&quot;db-data:/var/lib/mysql&quot;</span></span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line"><span class="comment"># db-data&quot;/var/lib/mysql  等同于docker volume create db-data</span></span><br><span class="line"></span><br><span class="line">Networks</span><br><span class="line"><span class="comment">### 例如</span></span><br><span class="line">services:</span><br><span class="line">  worker:</span><br><span class="line">    build: ./worker</span><br><span class="line">    links:</span><br><span class="line">      - db</span><br><span class="line">      - redis</span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line"><span class="comment"># my-bridge  等同于docker network create -d bridge my-bridge</span></span><br><span class="line">networks:</span><br><span class="line">   - my-bridge:</span><br><span class="line">      driver:bridge</span><br><span class="line">   -my-bridge2:</span><br><span class="line">    	driver:bridge</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"> <span class="comment">### 使用docker-compose部署一个wordpress</span></span><br><span class="line">version: <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">  wordpress:</span><br><span class="line">    image: wordpress</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">8080</span>:<span class="number">80</span></span><br><span class="line">    depends_on:</span><br><span class="line">      - mysql</span><br><span class="line">    environment:</span><br><span class="line">      WORDPRESS_DB_HOST: mysql</span><br><span class="line">      WORDPRESS_DB_PASSWORD: root</span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line"></span><br><span class="line">  mysql:</span><br><span class="line">    image: mysql:<span class="number">5.7</span></span><br><span class="line">    environment:</span><br><span class="line">      MYSQL_ROOT_PASSWORD: root</span><br><span class="line">      MYSQL_DATABASE: wordpress</span><br><span class="line">    volumes:</span><br><span class="line">      - mysql-data:/var/lib/mysql</span><br><span class="line">    networks:</span><br><span class="line">      - my-bridge</span><br><span class="line"></span><br><span class="line">volumes:</span><br><span class="line">  mysql-data:</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  my-bridge:</span><br><span class="line">    driver: bridge</span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mac和window安装上docker，docker-compose自带了</span></span><br><span class="line"><span class="comment"># linux需要单独安装</span></span><br><span class="line">curl -L https://get.daocloud.io/docker/compose/releases/download/<span class="number">1.25</span><span class="number">.4</span>/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/<span class="built_in">bin</span>/docker-compose</span><br><span class="line">chmod +x /usr/local/<span class="built_in">bin</span>/docker-compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动管理容器</span></span><br><span class="line">docker-compose up  <span class="comment"># 会自动搜索当前路径下的 docker-compose.yml文件</span></span><br><span class="line">docker-compose -f 指定文件 up</span><br><span class="line">docker-compose up -d  <span class="comment"># 后台执行，一般我们看日志输出，不用这个</span></span><br><span class="line"></span><br><span class="line">docker-compose stop  <span class="comment"># 停止，不会删除容器和镜像</span></span><br><span class="line">docker-compose down <span class="comment"># 停止，并删除关联的容器</span></span><br><span class="line">docker-compose start  <span class="comment"># 启动yml文件管理的容器</span></span><br><span class="line">docker-compose ps    <span class="comment"># 正在运行的容器</span></span><br><span class="line">docker-compose images <span class="comment"># docker-compose管理的容器</span></span><br><span class="line"></span><br><span class="line">docker-compose <span class="built_in">exec</span> yml文件中写的service /<span class="built_in">bin</span>/bash  <span class="comment"># 进入到容器内</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例：docker-compose部署flask-redis"><a href="#示例：docker-compose部署flask-redis" class="headerlink" title="示例：docker-compose部署flask-redis"></a>示例：docker-compose部署flask-redis</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line">FROM python:<span class="number">3.6</span></span><br><span class="line">COPY . /app</span><br><span class="line">WORKDIR /app</span><br><span class="line">RUN pip install flask redis</span><br><span class="line">EXPOSE <span class="number">5000</span></span><br><span class="line">CMD [ <span class="string">&quot;python&quot;</span>, <span class="string">&quot;app.py&quot;</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line">version: <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">  redis:</span><br><span class="line">    image: redis</span><br><span class="line"></span><br><span class="line">  web:</span><br><span class="line">    build:</span><br><span class="line">      context: .</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">8080</span>:<span class="number">5000</span></span><br><span class="line">    environment:</span><br><span class="line">      REDIS_HOST: redis</span><br><span class="line"> <span class="comment"># app.py</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> Redis</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">redis = Redis(host=os.environ.get(<span class="string">&#x27;REDIS_HOST&#x27;</span>, <span class="string">&#x27;127.0.0.1&#x27;</span>), port=<span class="number">6379</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    redis.incr(<span class="string">&#x27;hits&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;你好! 查看 %s 次， hostname 是 %s.\n&#x27;</span> % (redis.get(<span class="string">&#x27;hits&#x27;</span>),socket.gethostname())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">5000</span>, debug=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-compose水平扩展"><a href="#docker-compose水平扩展" class="headerlink" title="docker-compose水平扩展"></a>docker-compose水平扩展</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把flask_redis项目扩展成三个</span></span><br><span class="line">docker-compose up --<span class="built_in">help</span></span><br><span class="line"><span class="comment"># scale SERVICE=NUM设置成三个</span></span><br><span class="line">docker-compose up --scale web=<span class="number">3</span>   <span class="comment"># 执行有问题，因为8080端口已经被映射了</span></span><br><span class="line"><span class="comment"># 删除docker-compose.yml中的port</span></span><br><span class="line"><span class="comment"># 在启动</span></span><br><span class="line">docker-compose up --scale web=<span class="number">3</span></span><br><span class="line">docker-compose start</span><br><span class="line">docker-compose ps  <span class="comment"># 可以看到三个web启动了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 前面加一个负载均衡器HAProxy</span></span><br><span class="line"><span class="comment"># HAProxy和Nginx的区别？万能的百度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># app.py 改成监听的端口为80</span></span><br><span class="line"><span class="comment"># Dockerfile不需要改</span></span><br><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line">version: <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">  redis:</span><br><span class="line">    image: redis</span><br><span class="line"></span><br><span class="line">  web:</span><br><span class="line">    build:</span><br><span class="line">      context: .</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    environment:</span><br><span class="line">      REDIS_HOST: redis</span><br><span class="line"></span><br><span class="line">  lb:</span><br><span class="line">    image: dockercloud/haproxy</span><br><span class="line">    links:</span><br><span class="line">      - web</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">8080</span>:<span class="number">80</span></span><br><span class="line">    volumes:</span><br><span class="line">      - /var/run/docker.sock:/var/run/docker.sock </span><br><span class="line"><span class="comment">#启动，从浏览器查看</span></span><br><span class="line">docker-compose up</span><br><span class="line"><span class="comment"># 把web扩展为3个从浏览器查看</span></span><br><span class="line">docker-compose up --scale web=<span class="number">3</span> -d</span><br><span class="line"><span class="comment"># 减掉为1个</span></span><br><span class="line">docker-compose up --scale web=<span class="number">1</span> -d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-compose部署一个复杂的应用"><a href="#docker-compose部署一个复杂的应用" class="headerlink" title="docker-compose部署一个复杂的应用"></a>docker-compose部署一个复杂的应用</h3><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gg81n0s2c6j31m90u0k8i.jpg" alt="image-20200628153906975" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 部署</span></span><br><span class="line">docker-compose up  <span class="comment"># 时间很久</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 补充：</span></span><br><span class="line">docker-compose build <span class="comment"># 如果yml文件中有需要先build的image，会先构建，然后再up，节约时间（并不会节约）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="docker-swarm"><a href="#docker-swarm" class="headerlink" title="docker-swarm"></a>docker-swarm</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="mysql配置文件位置"><a href="#mysql配置文件位置" class="headerlink" title="mysql配置文件位置"></a>mysql配置文件位置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 容器内部mysql配置文件位置</span></span><br><span class="line">mysql --<span class="built_in">help</span> | grep my.cnf</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">/etc/my.cnf /etc/mysql/my.cnf ~/.my.cnf </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">ls /etc/mysql</span><br><span class="line"><span class="comment"># conf.d	my.cnf	my.cnf.fallback  mysql.cnf  mysql.conf.d</span></span><br><span class="line"><span class="comment"># my.cnf文件最后一行</span></span><br><span class="line">!includedir /etc/mysql/conf.d/</span><br><span class="line">!includedir /etc/mysql/mysql.conf.d/</span><br><span class="line"><span class="comment"># 除加载 my.cnf 配置文件外，还会到/etc/mysql/conf.d/目录下加载其他配置文件。</span></span><br><span class="line"><span class="comment">#当然可以配置多个!includedir这样做的好处是可以把不同目的或功能的配置放在不同的多个文件下，然后由 my.cnf 去统一加载这些配置。避免所有配置在一个文件中</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 演示</span></span><br><span class="line"><span class="comment"># 在当前目录下创建文件夹conf.d，内部vim my.cnf</span></span><br><span class="line"><span class="comment"># 加入：设置id号</span></span><br><span class="line">[mysqld]</span><br><span class="line">server-<span class="built_in">id</span>=<span class="number">109</span></span><br><span class="line"><span class="comment"># 创建并启动容器</span></span><br><span class="line">docker run -d -v ./conf.d/:/etc/mysql/conf.d -v mysql:/var/lib/mysql --name mysql2 -e  MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:<span class="number">5.7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line"><span class="comment"># 进入mysql</span></span><br><span class="line"><span class="comment">#执行：可以看到id为109   </span></span><br><span class="line">show variables like <span class="string">&#x27;server_id&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/02/linux/Docker/12-pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Docker%E5%BC%80%E5%8F%91/">
+        <span class="nav-arrow">← </span>
+        
+          (untitled)
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/02/linux/%E5%85%B6%E4%BB%96/03-DevOps%E5%AE%9E%E6%88%98/">
+        
+          (untitled)
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-run%E5%8F%82%E6%95%B0"><span class="toc-nav-text">docker run参数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-%E7%BD%91%E7%BB%9C"><span class="toc-nav-text">docker 网络</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8%E5%92%8C%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB"><span class="toc-nav-text">2 持久化存储和数据共享</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-docker-compose"><span class="toc-nav-text">3 docker-compose</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-compose"><span class="toc-nav-text">docker-compose</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9Adocker-compose%E9%83%A8%E7%BD%B2flask-redis"><span class="toc-nav-text">示例：docker-compose部署flask-redis</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-compose%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95"><span class="toc-nav-text">docker-compose水平扩展</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-compose%E9%83%A8%E7%BD%B2%E4%B8%80%E4%B8%AA%E5%A4%8D%E6%9D%82%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-nav-text">docker-compose部署一个复杂的应用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-swarm"><span class="toc-nav-text">docker-swarm</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-nav-text">其他</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#mysql%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE"><span class="toc-nav-text">mysql配置文件位置</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/02/linux/Docker/11-docker网络扩展/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

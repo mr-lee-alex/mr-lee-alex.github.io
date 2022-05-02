@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      14-linux的磁盘管理介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>14-linux的磁盘管理介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-磁盘的基本概念"><a href="#1-磁盘的基本概念" class="headerlink" title="1.磁盘的基本概念"></a>1.磁盘的基本概念</h2><h3 id="1-什么是磁盘"><a href="#1-什么是磁盘" class="headerlink" title="1.什么是磁盘"></a>1.什么是磁盘</h3><p>绝大多数人对硬盘都不陌生，<br>一块小小的硬盘里，就可以存储海量的照片音乐和电影，尤其是我们喜爱的各类动作片。<br>但如此小的空间，是如何储存那么多信息的呢？</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu74p7kx2g30b205o1h5.gif" alt="img"></p>
+<p>每个硬盘中心都是一摞高速运转的圆盘，在圆盘上附着的一圈金属颗粒，每个金属颗粒都有自己的磁化程度，用于储存0和1。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu74u1ba3g30b205o1kx.gif" alt="img"></p>
+<p>当记录数据时，硬盘的磁头开始通电，形成强磁场，数据在磁场的作用下转变成电流，使颗粒磁化，从而将信息记录在圆盘上。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu750jjpqg30b205o1kx.gif" alt="img"></p>
+<p>由海量颗粒组成的信息，就是我们存在硬盘里的数据。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu755p4cnj30gk09amyw.jpg" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/518945599.html">什么是磁盘、软盘、硬盘？</a></p>
+<h2 id="2-磁盘的基本结构"><a href="#2-磁盘的基本结构" class="headerlink" title="2.磁盘的基本结构"></a>2.磁盘的基本结构</h2><p>1.什么是盘片: 硬盘一般有一个或多个盘片，每个盘片可以有两面，即第一个盘片的正面为0面，反面为1面然后依次类推。<br>2.什么是磁道:每个盘片的盘面在出厂的时候被划分出了多个同心圆环，数据就存储在这样的同心圆环上面，我们将这样的圆环称为磁道(Track)，每个盘面可以划分多个磁道。但肉业不可见。<br>3.什么是扇区: 在硬盘出厂时会对磁盘进行一次低格，其实就是再每个磁道划分为若干个弧段，每个弧段就是一个扇区 (Sector)。扇区是硬盘上存储的物理单位，现在每个扇区可存储512字节数据已经成了业界的约定。<br>4.什么是柱面:柱面实际上就是我们抽象出来的一个逻辑概念，简单来说就是处于同一个垂直区域的磁道称为 柱面 ，即各盘面上面相同位置磁道的集合。这样数据如果存储到相同半径磁道上的同一扇区，这样可以实现并行读取，主要是减少磁头寻道时间。<br>5.什么是磁头: 读取磁盘磁道上面金属块，主要负责读或写入数据。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu759jzvoj30hb0buq4x.jpg" alt="img"><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu75ffahij30vk0u0aii.jpg" alt="img"></p>
+<h2 id="3-磁盘的预备知识"><a href="#3-磁盘的预备知识" class="headerlink" title="3.磁盘的预备知识"></a>3.磁盘的预备知识</h2><p>我们需要简单了解下磁盘的接口类型、磁盘涉及的相关术语、磁盘在Linux下的命名方式。</p>
+<h3 id="1-磁盘的接口类型"><a href="#1-磁盘的接口类型" class="headerlink" title="1.磁盘的接口类型"></a>1.磁盘的接口类型</h3><p>IDE，Scsi（已经被淘汰）<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu75jg4uej30c009o0tx.jpg" alt="img"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu7680mk6j30c0086gn1.jpg" alt="img"></p>
+<p>SATA III 与SAS(企业使用较多)<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu76c42gbj30ra0d8jt8.jpg" alt="img"></p>
+<p>ssd的Msata接口为超极本设计，但是被m.2接口的SSD替代，而m.2接口(支持SATA、PCI-E双通道协议)</p>
+<p>1、M.2接口是为超极本量身定做的新一代接口标准，以取代原来的mSATA接口。拥有更小巧的规格尺寸，还是更高的传输性能，M.2都远胜于mSATA。 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/m.2%E6%8E%A5%E5%8F%A3/18010680?fr=aladdin">m2接口百度百科</a> <a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/754765227221408324.html">固态硬盘SATA和mSATA有什么区别</a><br>2、M.2几个名词需要各位读者知道了解，<a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1581244478575233647&wfr=spider&for=pc">SATA和PCI-E AHCI和NVMe</a><br>3、最后呢，可以扩展了解 <a target="_blank" rel="noopener" href="http://baijiahao.baidu.com/s?id=1604321789851430125&wfr=spider&for=pc">M.2固态硬盘使用过程中常见问题？</a></p>
+<h3 id="2-磁盘的基本术语"><a href="#2-磁盘的基本术语" class="headerlink" title="2.磁盘的基本术语"></a>2.磁盘的基本术语</h3><p>尺寸: 2.5英寸 3.5英寸<br>容量：KB MB GB TB PB EB<br>转速：7500 15000<br>IOPS：每秒能够发生IO的次数</p>
+<h3 id="3-磁盘在系统上的命名方式"><a href="#3-磁盘在系统上的命名方式" class="headerlink" title="3.磁盘在系统上的命名方式"></a>3.磁盘在系统上的命名方式</h3><table>
+<thead>
+<tr>
+<th align="left">设备名称</th>
+<th align="left">分区信息</th>
+<th align="left">设备类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&#x2F;dev&#x2F;sda</td>
+<td align="left">&#x2F;dev&#x2F;sda1</td>
+<td align="left">第一块物理磁盘第一分区</td>
+</tr>
+<tr>
+<td align="left">&#x2F;dev&#x2F;sdb</td>
+<td align="left">&#x2F;dev&#x2F;sdb2</td>
+<td align="left">第二块物理磁盘第二个分区</td>
+</tr>
+<tr>
+<td align="left">&#x2F;dev&#x2F;vdd</td>
+<td align="left">&#x2F;dev&#x2F;vdd4</td>
+<td align="left">第四块虚拟磁盘的第四个分区</td>
+</tr>
+</tbody></table>
+<p>PS1：系统中分区由数字编号表示，1~4留给主分区使用和扩展分区，逻辑分区从5开始，为什么分区还有限制？不应该是随意分配？因为MBR分区表只能分配4个主分区？why？<br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%BB%E5%BC%95%E5%AF%BC%E8%AE%B0%E5%BD%95/7612638">MBR为什么只能划分4个主分区</a></p>
+<p>PS2: 前面我们已经提到过MBR分区表只能分配4个主分区，但现在还有一种新型的分区表GPT，GPT支持分配128个主分区。注意MBR与GPT之间不能互转，会导致数据丢失。<br><a target="_blank" rel="noopener" href="http://www.udaxia.com/wtjd/6117.html">MBR与GPT之间又有什么区别</a></p>
+<h2 id="4-磁盘基本分区Fdisk"><a href="#4-磁盘基本分区Fdisk" class="headerlink" title="4.磁盘基本分区Fdisk"></a>4.磁盘基本分区Fdisk</h2><p>1.添加一块小于2TB的磁盘进行使用，步骤如下:<br>1.给虚拟机添加一块新的硬盘<br>2.使用fdisk进行分区<br>3.使用mkfs进行格式化<br>4.使用mount进行挂载<br>PS: 生产分区建议，如无特殊需求直接使用整个磁盘即可，无需分区。<br>PS: 学习分区建议: 1P+1E(3L) 2P+1E(2L) 3P+1E(1L) (仅适用于练习)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># fdisk -l</span></span><br><span class="line">[root@lqz ~]<span class="comment"># fdisk  /dev/sdb</span></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): m         <span class="comment">#输入m列出常用的命令</span></span><br><span class="line">Command action</span><br><span class="line">   a   toggle a bootable flag               <span class="comment">#切换分区启动标记</span></span><br><span class="line">   b   edit bsd disklabel                   <span class="comment">#编辑sdb磁盘标签</span></span><br><span class="line">   c   toggle the dos compatibility flag    <span class="comment">#切换dos兼容模式</span></span><br><span class="line">   d   delete a partition                   <span class="comment">#删除分区</span></span><br><span class="line">   l   list known partition types           <span class="comment">#显示分区类型</span></span><br><span class="line">   m   <span class="built_in">print</span> this menu                       <span class="comment">#显示帮助菜单</span></span><br><span class="line">   n   add a new partition                  <span class="comment">#新建分区</span></span><br><span class="line">   o   create a new empty DOS partition table   <span class="comment">#创建新的空白分区表</span></span><br><span class="line">   p   <span class="built_in">print</span> the partition table            <span class="comment">#显示分区表的信息</span></span><br><span class="line">   q   quit without saving changes          <span class="comment">#不保存退出</span></span><br><span class="line">   s   create a new empty Sun disklabel     <span class="comment">#创建新的Sun磁盘标签</span></span><br><span class="line">   t   change a partitions system <span class="built_in">id</span>       <span class="comment">#修改分区ID,可以通过l查看id</span></span><br><span class="line">   u   change display/entry units           <span class="comment">#修改容量单位,磁柱或扇区</span></span><br><span class="line">   v   verify the partition table           <span class="comment">#检验分区表</span></span><br><span class="line">   w   write table to disk and <span class="built_in">exit</span>         <span class="comment">#保存退出</span></span><br><span class="line">   x   extra functionality (experts only)   <span class="comment">#拓展功能</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-fdisk创建主分区"><a href="#1-fdisk创建主分区" class="headerlink" title="1.fdisk创建主分区"></a>1.fdisk创建主分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n</span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)  <span class="comment">#主分区</span></span><br><span class="line">   e   extended  <span class="comment">#扩展分区</span></span><br><span class="line">Select (default p): p   <span class="comment">#选择创建主分区</span></span><br><span class="line">Partition number (1-4, default 1):  <span class="comment">#默认创建第一个主分区</span></span><br><span class="line">First sector (2048-2097151, default 2048): <span class="comment">#默认扇区回车</span></span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-2097151, default 2097151): +50M <span class="comment">#分配50MB</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-fdisk创建扩展分区"><a href="#2-fdisk创建扩展分区" class="headerlink" title="2.fdisk创建扩展分区"></a>2.fdisk创建扩展分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n  <span class="comment">#新建分区</span></span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (1 primary, 0 extended, 3 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): e   <span class="comment">#创建扩展分区</span></span><br><span class="line">Partition number (2-4, default 2):</span><br><span class="line">First sector (104448-2097151, default 104448):</span><br><span class="line">Using default value 104448</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (104448-2097151, default 2097151): <span class="comment">#空间都给到扩展分区</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-fdisk创建逻辑分区"><a href="#3-fdisk创建逻辑分区" class="headerlink" title="3.fdisk创建逻辑分区"></a>3.fdisk创建逻辑分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n  <span class="comment">#新建分区</span></span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (1 primary, 1 extended, 2 free)</span><br><span class="line">   l   logical (numbered from 5)</span><br><span class="line">Select (default p): l   <span class="comment">#创建逻辑分区</span></span><br><span class="line">Adding logical partition 5</span><br><span class="line">First sector (106496-2097151, default 106496):</span><br><span class="line">Using default value 106496</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (106496-2097151, default 2097151): +100M  <span class="comment">#分配100MB空间</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-fdisk查看分区情况，并保存"><a href="#4-fdisk查看分区情况，并保存" class="headerlink" title="4.fdisk查看分区情况，并保存"></a>4.fdisk查看分区情况，并保存</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): p <span class="comment">#查看分区创建</span></span><br><span class="line">Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb1            2048      104447       51200   83  Linux</span><br><span class="line">/dev/sdb2          104448     2097151      996352    5  Extended</span><br><span class="line">/dev/sdb5          106496      311295      102400   83  Linux</span><br><span class="line"></span><br><span class="line"><span class="comment">#保存分区</span></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br><span class="line"></span><br><span class="line"><span class="comment">#检查磁盘是否是MBR分区方式</span></span><br><span class="line">[root@lqz ~]<span class="comment"># fdisk /dev/sdb -l|grep type</span></span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装parted, 刷新内核立即生效,无需重启</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum -y install parted</span></span><br><span class="line">[root@lqz ~]<span class="comment"># partprobe /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-格式化磁盘"><a href="#5-格式化磁盘" class="headerlink" title="5.格式化磁盘"></a>5.格式化磁盘</h3><p>mkfs格式化磁盘，实质创建文件系统，文件系统类似于将房子装修成3室一厅，还是2室一厅。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项: </span></span><br><span class="line"><span class="comment"># -b  设定数据区块占用空间大小，目前支持1024、2048、4096 bytes每个块。</span></span><br><span class="line"><span class="comment"># -t  用来指定什么类型的文件系统，可以是ext4, xfs</span></span><br><span class="line"><span class="comment"># -i  设定inode的大小</span></span><br><span class="line"><span class="comment"># -N  设定inode数量，防止Inode数量不够导致磁盘不足</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.格式化整个磁盘</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkfs.ext4  /dev/sdb </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.格式化磁盘的某个分区</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkfs.xfs  /dev/sdb1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-使用mount挂载并使用"><a href="#6-使用mount挂载并使用" class="headerlink" title="6.使用mount挂载并使用"></a>6.使用mount挂载并使用</h3><p>如果需要使用该磁盘的空间，需要准备一个空的目录作为挂载点，与该设备进行关联。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># mkdir /data</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount /dev/sdb1 /data</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-磁盘的基本分区Gdisk"><a href="#5-磁盘的基本分区Gdisk" class="headerlink" title="5.磁盘的基本分区Gdisk"></a>5.磁盘的基本分区Gdisk</h2><p>前面我们已经了解到fdisk分区，但fdisk不支持给高于2TB的磁盘进行分区。如果有单块盘高于2TB，建议使用Gdisk进行分区。</p>
+<h3 id="1-使用gdisk进行磁盘分区"><a href="#1-使用gdisk进行磁盘分区" class="headerlink" title="1.使用gdisk进行磁盘分区"></a>1.使用gdisk进行磁盘分区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.安装gdisk分区工具</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum install gdisk -y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.创建一个新分区，500MB大小</span></span><br><span class="line">[root@lqz ~]<span class="comment"># gdisk /dev/sdb</span></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): n     <span class="comment">#创建新分区</span></span><br><span class="line">Partition number (1-128, default 1):</span><br><span class="line">First sector (34-2097118, default = 2048) or &#123;+-&#125;size&#123;KMGTP&#125;:</span><br><span class="line">Last sector (2048-2097118, default = 2097118) or &#123;+-&#125;size&#123;KMGTP&#125;: +500M <span class="comment">#分配500M大小</span></span><br><span class="line"></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): p <span class="comment">#打印查看</span></span><br><span class="line">Number  Start (sector)    End (sector)  Size       Code  Name</span><br><span class="line">   1            2048         1026047   500.0 MiB   8300  Linux filesystem</span><br><span class="line"></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): w <span class="comment">#保存分区</span></span><br><span class="line">Do you want to proceed? (Y/N): y    <span class="comment">#确认</span></span><br><span class="line">OK; writing new GUID partition table (GPT) to /dev/sdb.</span><br><span class="line">The operation has completed successfully.</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.创建完成后，可以尝试检查磁盘是否为gpt格式</span></span><br><span class="line">[root@lqz-node1 /]<span class="comment"># fdisk /dev/sdb -l|grep type</span></span><br><span class="line">Disk label <span class="built_in">type</span>: gpt</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.安装parted, 刷新内核立即生效,无需重启</span></span><br><span class="line">[root@lqz ~]<span class="comment"># yum -y install parted</span></span><br><span class="line">[root@lqz ~]<span class="comment"># partprobe /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用mkfs进行格式化磁盘。前面已经介绍过，此处不反复介绍。"><a href="#2-使用mkfs进行格式化磁盘。前面已经介绍过，此处不反复介绍。" class="headerlink" title="2.使用mkfs进行格式化磁盘。前面已经介绍过，此处不反复介绍。"></a>2.使用mkfs进行格式化磁盘。前面已经介绍过，此处不反复介绍。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># mkfs.xfs  /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用mount命令将某个目录挂载该分区，进行使用。"><a href="#3-使用mount命令将某个目录挂载该分区，进行使用。" class="headerlink" title="3.使用mount命令将某个目录挂载该分区，进行使用。"></a>3.使用mount命令将某个目录挂载该分区，进行使用。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># mkdir /data_gdisk</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount /dev/sdb /data_gdisk</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-磁盘挂载方式Mount"><a href="#6-磁盘挂载方式Mount" class="headerlink" title="6.磁盘挂载方式Mount"></a>6.磁盘挂载方式Mount</h2><p>前面我们已经提到过，如果需要使用磁盘的空间，需要准备一个空的目录作为挂载点，与该设备进行关联。mount主要是为文件系统指定一个访问入口。<br>PS: 类似我的商场没有门，那么就无法进入购买商品，此时通过mount命令可以创建一个入口。给超市安装一个门。如图:</p>
+<h3 id="1-通过mount进行挂载，但重启将会失效。我们称为临时生效。"><a href="#1-通过mount进行挂载，但重启将会失效。我们称为临时生效。" class="headerlink" title="1.通过mount进行挂载，但重启将会失效。我们称为临时生效。"></a>1.通过mount进行挂载，但重启将会失效。我们称为临时生效。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 选项：-t指定文件系统挂载分区 -a 挂载/etc/fstab中的配置文件 -o 指定挂载参数</span></span><br><span class="line"><span class="comment"># 挂载/dev/sdb1至db1目录</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkdir /db1</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount -t xfs /dev/sdb1  /db1/ </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-挂载的磁盘，如果不想使用可以使用umount进行卸载。"><a href="#2-挂载的磁盘，如果不想使用可以使用umount进行卸载。" class="headerlink" title="2.挂载的磁盘，如果不想使用可以使用umount进行卸载。"></a>2.挂载的磁盘，如果不想使用可以使用umount进行卸载。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项： -l 强制卸载</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.卸载目录方式</span></span><br><span class="line">[root@lqz ~]<span class="comment"># umount /db1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.卸载设备方式</span></span><br><span class="line">[root@lqz ~]<span class="comment"># umount /dev/sdb1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.umount不能卸载的情况</span></span><br><span class="line">[root@lqz db1]<span class="comment"># umount /db1  </span></span><br><span class="line">umount: /db1: device is busy.</span><br><span class="line">        (In some cases useful info about processes that use</span><br><span class="line">         the device is found by lsof(8) or fuser(1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#PS: 如上情况解决办法有两种, 1.切换至其他目录 2.使用&#x27;-l&#x27;选项强制卸载    </span></span><br><span class="line">[root@student db1]<span class="comment"># umount -l /db1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如果需要实现永久挂载则需要将挂载信息写入-x2F-etc-x2F-fstab配置文件中实现。"><a href="#3-如果需要实现永久挂载则需要将挂载信息写入-x2F-etc-x2F-fstab配置文件中实现。" class="headerlink" title="3.如果需要实现永久挂载则需要将挂载信息写入&#x2F;etc&#x2F;fstab配置文件中实现。"></a>3.如果需要实现永久挂载则需要将挂载信息写入&#x2F;etc&#x2F;fstab配置文件中实现。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用blkid命令获取各设备的UUID</span></span><br><span class="line">[root@lqz ~]<span class="comment"># blkid |grep &quot;sdb1&quot;</span></span><br><span class="line">/dev/sdb1: UUID=<span class="string">&quot;e271b5b2-b1ba-4b18-bde5-66e394fb02d9&quot;</span> TYPE=<span class="string">&quot;xfs&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.使用UUID挂载磁盘sdb1分区至于db1， 测试挂载</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount UUID=&quot;e271b5b2-b1ba-4b18-bde5-66e394fb02d9&quot; /db1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.写入/etc/fstab中，实现开机自动挂载</span></span><br><span class="line">[root@lqz ~]<span class="comment"># tail -1 /etc/fstab    </span></span><br><span class="line">UUID=e271b5b2-b1ba-4b18-bde5-66e394fb02d9 /db1 xfs  defaults 0  0</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.加载fstab配置文件, 同时检测语法是否有错误</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mount –a</span></span><br></pre></td></tr></table></figure>
+
+<p>3.&#x2F;etc&#x2F;fstab配置文件编写格式</p>
+<table>
+<thead>
+<tr>
+<th align="left">要挂载的设备</th>
+<th align="left">挂载点(入口)</th>
+<th align="left">文件系统类型</th>
+<th align="left">挂载参数</th>
+<th align="left">是否备份</th>
+<th align="left">是否检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&#x2F;dev&#x2F;sdb1</td>
+<td align="left">&#x2F;db1</td>
+<td align="left">xfs</td>
+<td align="left">defaults</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+</tbody></table>
+<p>第四列：挂载参数。挂载参数有很多，在这块我们了解即可，不必深究。</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">async&#x2F;sync</td>
+<td align="left">是否为同步方式运行。默认async</td>
+</tr>
+<tr>
+<td align="left">user&#x2F;nouser</td>
+<td align="left">是否允许普通用户使用mount命令挂载。默认nouser</td>
+</tr>
+<tr>
+<td align="left">exec&#x2F;noexe</td>
+<td align="left">是否允许可执行文件执行。默认exec</td>
+</tr>
+<tr>
+<td align="left">suid&#x2F;nosuid</td>
+<td align="left">是否允许存在suid属性的文件。默认suid</td>
+</tr>
+<tr>
+<td align="left">auto&#x2F;noauto</td>
+<td align="left">执行mount -a 命令时，此文件系统是否被主动挂载。默认auto</td>
+</tr>
+<tr>
+<td align="left">rw&#x2F;ro</td>
+<td align="left">是否以只读或者读写模式进行挂载。默认rw</td>
+</tr>
+<tr>
+<td align="left">default</td>
+<td align="left">具有rw,suid,dev,exec,auto,nouser,async等默认参数的设定</td>
+</tr>
+</tbody></table>
+<p>第五列：是否进行备份。通常这个参数的值为0或者1</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">代表不做备份</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">代表要每天进行备份操作</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">代表不定日期的进行备份操作</td>
+</tr>
+</tbody></table>
+<p>第六列：是否检验扇区：开机的过程中，系统默认会以fsck检验我们系统是否为完整</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">不要检验磁盘是否有坏道</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">检验</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">校验 (当1级别检验完成之后进行2级别检验)</td>
+</tr>
+</tbody></table>
+<h2 id="7-虚拟磁盘介绍SWAP"><a href="#7-虚拟磁盘介绍SWAP" class="headerlink" title="7.虚拟磁盘介绍SWAP"></a>7.虚拟磁盘介绍SWAP</h2><p>Swap分区在系统的物理内存不够时，将硬盘空间中的一部分空间释放出来，以供当前运行的程序使用。<br>PS: 当物理内存不够时会随机kill占用内存的进程，从而产生oom，临时使用swap可以解决。</p>
+<h3 id="1-创建分区，并格式化为swap分区。"><a href="#1-创建分区，并格式化为swap分区。" class="headerlink" title="1.创建分区，并格式化为swap分区。"></a>1.创建分区，并格式化为swap分区。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># fdisk  /dev/sdb       #分1个G大小</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkswap /dev/sdb1      #格式化为swap</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-查看当前swap分区大小，然后进行扩展和缩小"><a href="#2-查看当前swap分区大小，然后进行扩展和缩小" class="headerlink" title="2.查看当前swap分区大小，然后进行扩展和缩小"></a>2.查看当前swap分区大小，然后进行扩展和缩小</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># free -m</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1980        1475          80          10         424         242</span><br><span class="line">Swap:          2047           4        2043</span><br><span class="line"></span><br><span class="line"><span class="comment">#1.扩展swap分区大小</span></span><br><span class="line">[root@lqz ~]<span class="comment"># swapon /dev/sdb2</span></span><br><span class="line">[root@lqz ~]<span class="comment"># free -m</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1980        1475          80          10         424         242</span><br><span class="line">Swap:          3047           4        2043</span><br><span class="line">[root@lqz ~]<span class="comment"># swapon -a #代表激活所有的swap</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.缩小swap分区大小</span></span><br><span class="line">[root@lqz ~]<span class="comment"># swapoff /dev/sdb1</span></span><br><span class="line">[root@lqz ~]<span class="comment"># free -m</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1980        1475          80          10         424         242</span><br><span class="line">Swap:          2047           4        2043</span><br><span class="line">[root@lqz ~]<span class="comment"># swapoff -a #代表关闭所有的swap</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-检查当前swap分区有哪些设备"><a href="#3-检查当前swap分区有哪些设备" class="headerlink" title="3.检查当前swap分区有哪些设备"></a>3.检查当前swap分区有哪些设备</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># swapon -s</span></span><br><span class="line">文件名             类型      大小   已用  权限</span><br><span class="line">/dev/dm-1   partition   2097148   4616    -2</span><br><span class="line">/dev/sdb1   partition   1048572   0       -2</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如果磁盘没有过多的分区可用，也可以通过文件增加SWAP空间，本质上还是磁盘"><a href="#4-如果磁盘没有过多的分区可用，也可以通过文件增加SWAP空间，本质上还是磁盘" class="headerlink" title="4.如果磁盘没有过多的分区可用，也可以通过文件增加SWAP空间，本质上还是磁盘"></a>4.如果磁盘没有过多的分区可用，也可以通过文件增加SWAP空间，本质上还是磁盘</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]# dd if=/dev/zero of=/opt/swap_file bs=1M count=500</span><br><span class="line">[root@lqz ~]# chmod 0600 /opt/swap_file</span><br><span class="line">[root@lqz ~]# mkswap -f /opt/swap_file </span><br><span class="line">[root@lqz ~]# swapon /opt/swap_file</span><br><span class="line">[root@lqz ~]# free -m</span><br></pre></td></tr></table></figure>
+
+<p>PS: 如果希望swap开机自动挂载，将swap信息追加至&#x2F;etc&#x2F;fstab即可。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/15-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+        <span class="nav-arrow">← </span>
+        
+          15-linux的进程管理介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/13-Linux%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+        
+          13-linux的软件管理介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E7%A3%81%E7%9B%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-nav-text">1.磁盘的基本概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%A3%81%E7%9B%98"><span class="toc-nav-text">1.什么是磁盘</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E7%A3%81%E7%9B%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-nav-text">2.磁盘的基本结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-%E7%A3%81%E7%9B%98%E7%9A%84%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="toc-nav-text">3.磁盘的预备知识</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E7%A3%81%E7%9B%98%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-nav-text">1.磁盘的接口类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E7%A3%81%E7%9B%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="toc-nav-text">2.磁盘的基本术语</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E7%A3%81%E7%9B%98%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E5%91%BD%E5%90%8D%E6%96%B9%E5%BC%8F"><span class="toc-nav-text">3.磁盘在系统上的命名方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-%E7%A3%81%E7%9B%98%E5%9F%BA%E6%9C%AC%E5%88%86%E5%8C%BAFdisk"><span class="toc-nav-text">4.磁盘基本分区Fdisk</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-fdisk%E5%88%9B%E5%BB%BA%E4%B8%BB%E5%88%86%E5%8C%BA"><span class="toc-nav-text">1.fdisk创建主分区</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-fdisk%E5%88%9B%E5%BB%BA%E6%89%A9%E5%B1%95%E5%88%86%E5%8C%BA"><span class="toc-nav-text">2.fdisk创建扩展分区</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-fdisk%E5%88%9B%E5%BB%BA%E9%80%BB%E8%BE%91%E5%88%86%E5%8C%BA"><span class="toc-nav-text">3.fdisk创建逻辑分区</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-fdisk%E6%9F%A5%E7%9C%8B%E5%88%86%E5%8C%BA%E6%83%85%E5%86%B5%EF%BC%8C%E5%B9%B6%E4%BF%9D%E5%AD%98"><span class="toc-nav-text">4.fdisk查看分区情况，并保存</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%A3%81%E7%9B%98"><span class="toc-nav-text">5.格式化磁盘</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-%E4%BD%BF%E7%94%A8mount%E6%8C%82%E8%BD%BD%E5%B9%B6%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">6.使用mount挂载并使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-%E7%A3%81%E7%9B%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%88%86%E5%8C%BAGdisk"><span class="toc-nav-text">5.磁盘的基本分区Gdisk</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BD%BF%E7%94%A8gdisk%E8%BF%9B%E8%A1%8C%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA"><span class="toc-nav-text">1.使用gdisk进行磁盘分区</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%BD%BF%E7%94%A8mkfs%E8%BF%9B%E8%A1%8C%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%A3%81%E7%9B%98%E3%80%82%E5%89%8D%E9%9D%A2%E5%B7%B2%E7%BB%8F%E4%BB%8B%E7%BB%8D%E8%BF%87%EF%BC%8C%E6%AD%A4%E5%A4%84%E4%B8%8D%E5%8F%8D%E5%A4%8D%E4%BB%8B%E7%BB%8D%E3%80%82"><span class="toc-nav-text">2.使用mkfs进行格式化磁盘。前面已经介绍过，此处不反复介绍。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E4%BD%BF%E7%94%A8mount%E5%91%BD%E4%BB%A4%E5%B0%86%E6%9F%90%E4%B8%AA%E7%9B%AE%E5%BD%95%E6%8C%82%E8%BD%BD%E8%AF%A5%E5%88%86%E5%8C%BA%EF%BC%8C%E8%BF%9B%E8%A1%8C%E4%BD%BF%E7%94%A8%E3%80%82"><span class="toc-nav-text">3.使用mount命令将某个目录挂载该分区，进行使用。</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD%E6%96%B9%E5%BC%8FMount"><span class="toc-nav-text">6.磁盘挂载方式Mount</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E9%80%9A%E8%BF%87mount%E8%BF%9B%E8%A1%8C%E6%8C%82%E8%BD%BD%EF%BC%8C%E4%BD%86%E9%87%8D%E5%90%AF%E5%B0%86%E4%BC%9A%E5%A4%B1%E6%95%88%E3%80%82%E6%88%91%E4%BB%AC%E7%A7%B0%E4%B8%BA%E4%B8%B4%E6%97%B6%E7%94%9F%E6%95%88%E3%80%82"><span class="toc-nav-text">1.通过mount进行挂载，但重启将会失效。我们称为临时生效。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E6%8C%82%E8%BD%BD%E7%9A%84%E7%A3%81%E7%9B%98%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BD%BF%E7%94%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8umount%E8%BF%9B%E8%A1%8C%E5%8D%B8%E8%BD%BD%E3%80%82"><span class="toc-nav-text">2.挂载的磁盘，如果不想使用可以使用umount进行卸载。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E6%B0%B8%E4%B9%85%E6%8C%82%E8%BD%BD%E5%88%99%E9%9C%80%E8%A6%81%E5%B0%86%E6%8C%82%E8%BD%BD%E4%BF%A1%E6%81%AF%E5%86%99%E5%85%A5-x2F-etc-x2F-fstab%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AE%9E%E7%8E%B0%E3%80%82"><span class="toc-nav-text">3.如果需要实现永久挂载则需要将挂载信息写入&#x2F;etc&#x2F;fstab配置文件中实现。</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#7-%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98%E4%BB%8B%E7%BB%8DSWAP"><span class="toc-nav-text">7.虚拟磁盘介绍SWAP</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E5%88%9B%E5%BB%BA%E5%88%86%E5%8C%BA%EF%BC%8C%E5%B9%B6%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%BAswap%E5%88%86%E5%8C%BA%E3%80%82"><span class="toc-nav-text">1.创建分区，并格式化为swap分区。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8Dswap%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F%EF%BC%8C%E7%84%B6%E5%90%8E%E8%BF%9B%E8%A1%8C%E6%89%A9%E5%B1%95%E5%92%8C%E7%BC%A9%E5%B0%8F"><span class="toc-nav-text">2.查看当前swap分区大小，然后进行扩展和缩小</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E6%A3%80%E6%9F%A5%E5%BD%93%E5%89%8Dswap%E5%88%86%E5%8C%BA%E6%9C%89%E5%93%AA%E4%BA%9B%E8%AE%BE%E5%A4%87"><span class="toc-nav-text">3.检查当前swap分区有哪些设备</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E5%A6%82%E6%9E%9C%E7%A3%81%E7%9B%98%E6%B2%A1%E6%9C%89%E8%BF%87%E5%A4%9A%E7%9A%84%E5%88%86%E5%8C%BA%E5%8F%AF%E7%94%A8%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%96%87%E4%BB%B6%E5%A2%9E%E5%8A%A0SWAP%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%9C%AC%E8%B4%A8%E4%B8%8A%E8%BF%98%E6%98%AF%E7%A3%81%E7%9B%98"><span class="toc-nav-text">4.如果磁盘没有过多的分区可用，也可以通过文件增加SWAP空间，本质上还是磁盘</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/14-Linux磁盘管理/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "14-linux的磁盘管理介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

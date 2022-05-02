@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      4-Docker之容器 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>4-Docker之容器</h2>
+
+
+
+  <p class="post-date">2019-03-28</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="一-容器简介"><a href="#一-容器简介" class="headerlink" title="一 容器简介"></a>一 容器简介</h2><blockquote>
+<p>容器（Container）：容器是一种轻量级、可移植、并将应用程序进行的打包的技术，使应用程序可以在几乎任何地方以相同的方式运行</p>
+<p>•Docker将镜像文件运行起来后，产生的对象就是容器。容器相当于是镜像运行起来的一个实例。</p>
+<p>•容器具备一定的生命周期。</p>
+<p>•另外，可以借助docker ps命令查看运行的容器，如同在linux上利用ps命令查看运行着的进程那样。</p>
+</blockquote>
+<h2 id="二-容器与虚拟机"><a href="#二-容器与虚拟机" class="headerlink" title="二 容器与虚拟机"></a>二 容器与虚拟机</h2><blockquote>
+<p>•容器和虚拟机一样，都会对物理硬件资源进行共享使用。</p>
+<p>•容器和虚拟机的生命周期比较相似（创建、运行、暂停、关闭等等）。</p>
+<p>•容器中或虚拟机中都可以安装各种应用，如redis、mysql、nginx等。也就是说，在容器中的操作，如同在一个虚拟机(操作系统)中操作一样。</p>
+<p>•同虚拟机一样，容器创建后，会存储在宿主机上：linux上位于&#x2F;var&#x2F;lib&#x2F;docker&#x2F;containers下</p>
+</blockquote>
+<blockquote>
+<p>注意：容器并不是虚拟机，但它们有很多相似的地方</p>
+<p>•虚拟机的创建、启动和关闭都是基于一个完整的操作系统。一个虚拟机就是一个完整的操作系统。而容器直接运行在宿主机的内核上，其本质上以一系列进程的结合。</p>
+<p>•容器是轻量级的，虚拟机是重量级的。首先容器不需要额外的资源来管理(不需要Hypervisor、Guest OS)，虚拟机额外更多的性能消耗；其次创建、启动或关闭容器，如同创建、启动或者关闭进程那么轻松，而创建、启动、关闭一个操作系统就没那么方便了。</p>
+<p>•也因此，意味着在给定的硬件上能运行更多数量的容器，甚至可以直接把Docker运行在虚拟机上。</p>
+</blockquote>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9zo61k2oj30zi0bw0ya.jpg" alt="image-20200328220110993"></p>
+<h2 id="三-容器生命周期"><a href="#三-容器生命周期" class="headerlink" title="三 容器生命周期"></a>三 容器生命周期</h2><h3 id="3-1-虚拟机的生命周期"><a href="#3-1-虚拟机的生命周期" class="headerlink" title="3.1 虚拟机的生命周期"></a>3.1 虚拟机的生命周期</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9zp4k6dqj30to0fugoj.jpg" alt="image-20200328220206803"></p>
+<h3 id="3-2-容器的生命周期"><a href="#3-2-容器的生命周期" class="headerlink" title="3.2 容器的生命周期"></a>3.2 容器的生命周期</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9zpb35x7j30s20fwad4.jpg" alt="image-20200328220217504"></p>
+<h2 id="四-容器生命周期管理"><a href="#四-容器生命周期管理" class="headerlink" title="四 容器生命周期管理"></a>四 容器生命周期管理</h2><h3 id="4-1-容器创建-–-docker-create"><a href="#4-1-容器创建-–-docker-create" class="headerlink" title="4.1 容器创建 – docker create"></a>4.1 容器创建 – docker create</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	利用镜像创建出一个Created 状态的待启动容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker create [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：查看更多</span></span><br><span class="line">	-t, --tty           		分配一个伪TTY，也就是分配虚拟终端</span><br><span class="line">  -i, --interactive    	即使没有连接，也要保持STDIN打开</span><br><span class="line">  --name          		为容器起名，如果没有指定将会随机产生一个名称</span><br><span class="line"><span class="comment"># 命令参数（COMMAND\ARG）:</span></span><br><span class="line">	COMMAND 表示容器启动后，需要在容器中执行的命令，如ps、ls 等命令</span><br><span class="line">	ARG 表示执行 COMMAND 时需要提供的一些参数，如ps 命令的 aux、ls命令的-a等等</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker create --name test-container centos ps -A</span><br><span class="line">docker create -ti --name test-container2 centos /<span class="built_in">bin</span>/bash</span><br><span class="line"></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-容器启动-–-docker-start"><a href="#4-2-容器启动-–-docker-start" class="headerlink" title="4.2 容器启动 – docker start"></a>4.2 容器启动 – docker start</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	将一个或多个处于创建状态或关闭状态的容器启动起来</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker start [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	-a, --attach		将当前shell的 STDOUT/STDERR 连接到容器上</span><br><span class="line">	-i, --interactive		将当前shell的 STDIN连接到容器上	</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker ps -a</span><br><span class="line">docker start -a 65ebc</span><br><span class="line">docker start test-container2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-容器创建并启动-–-docker-run"><a href="#4-3-容器创建并启动-–-docker-run" class="headerlink" title="4.3 容器创建并启动 – docker run"></a>4.3 容器创建并启动 – docker run</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	利用镜像创建并启动一个容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：查看更多</span></span><br><span class="line">	-t, --tty           		分配一个伪TTY，也就是分配虚拟终端</span><br><span class="line">      	-i, --interactive    	即使没有连接，也要保持STDIN打开</span><br><span class="line">          	     --name          		为容器起名，如果没有指定将会随机产生一个名称</span><br><span class="line">	-d, --detach		在后台运行容器并打印出容器ID</span><br><span class="line">	--rm			当容器退出运行后，自动删除容器</span><br><span class="line"><span class="comment"># 命令参数（COMMAND\ARG）:</span></span><br><span class="line">	COMMAND 表示容器启动后，需要在容器中执行的命令，如ps、ls 等命令</span><br><span class="line">	ARG 表示执行 COMMAND 时需要提供的一些参数，如ps 命令的 aux、ls命令的-a等等</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker run centos ps -A</span><br><span class="line">docker run -d centos ps -A</span><br><span class="line">docker run --rm -d centos ps -A</span><br><span class="line">docker run -d centos ps -A</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-docker-run-与-docker-create-docker-start"><a href="#4-4-docker-run-与-docker-create-docker-start" class="headerlink" title="4.4 docker run 与 docker create + docker start"></a>4.4 docker run 与 docker create + docker start</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run 相当于 docker create + docker start –a       前台模式</span><br><span class="line">docker run -d 相当于 docker create + docker start       后台模式</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-容器暂停-–-docker-pause"><a href="#4-5-容器暂停-–-docker-pause" class="headerlink" title="4.5 容器暂停 – docker pause"></a>4.5 容器暂停 – docker pause</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	暂停一个或多个处于运行状态的容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker pause CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	无</span><br><span class="line"><span class="comment"># 命令演示</span></span><br><span class="line">docker ps -a</span><br><span class="line">docker pause test-container2</span><br><span class="line">docker ps -a <span class="comment"># 容器是Pause状态</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-6-容器取消暂停-–-docker-unpause"><a href="#4-6-容器取消暂停-–-docker-unpause" class="headerlink" title="4.6 容器取消暂停 – docker unpause"></a>4.6 容器取消暂停 – docker unpause</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	取消一个或多个处于暂停状态的容器，恢复运行</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker unpause CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	无	</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker unpause test-container2</span><br><span class="line">docker ps -a <span class="comment"># 处于运行状态</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-7-容器关闭-–-docker-stop"><a href="#4-7-容器关闭-–-docker-stop" class="headerlink" title="4.7 容器关闭 – docker stop"></a>4.7 容器关闭 – docker stop</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	关闭一个或多个处于暂停状态或者运行状态的容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker stop [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	-t, --time <span class="built_in">int</span>   		关闭前，等待的时间，单位秒(默认 10s)	</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker stop -t <span class="number">1</span> 容器<span class="built_in">id</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-8-容器终止-–-docker-kill"><a href="#4-8-容器终止-–-docker-kill" class="headerlink" title="4.8 容器终止 – docker kill"></a>4.8 容器终止 – docker kill</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	强制并立即关闭一个或多个处于暂停状态或者运行状态的容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker kill [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	-s, --signal string   	指定发送给容器的关闭信号 (默认“KILL”信号)	</span><br><span class="line"><span class="comment"># 命令演示：</span></span><br><span class="line">docker kill test-container2</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-9-docker-stop和docker-kill的区别"><a href="#4-9-docker-stop和docker-kill的区别" class="headerlink" title="4.9 docker stop和docker kill的区别"></a>4.9 docker stop和docker kill的区别</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一 前提知识点：</span></span><br><span class="line">    <span class="number">1</span> Linux其中两种终止进程的信号是：SIGTERM和SIGKILL</span><br><span class="line">    <span class="number">2</span> SIGKILL信号：无条件终止进程信号。</span><br><span class="line">    进程接收到该信号会立即终止，不进行清理和暂存工作。</span><br><span class="line">    该信号不能被忽略、处理和阻塞，它向系统管理员提供了可以杀死任何进程的方法。</span><br><span class="line">    <span class="number">3</span>  SIGTERM信号：程序终结信号，可以由kill命令产生。</span><br><span class="line">    与SIGKILL不同的是，SIGTERM信号可以被阻塞和终止，以便程序在退出前可以保存工作或清理临时文件等。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二 docker stop 会先发出SIGTERM信号给进程，告诉进程即将会被关闭。在-t指定的等待时间过了之后，将会立即发出SIGKILL信号，直接关闭容器。</span></span><br><span class="line"><span class="comment"># 三 docker kill 直接发出SIGKILL信号关闭容器。但也可以通过-s参数修改发出的信号。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 四 因此会发现在docker stop的等过过程中，如果终止docker stop的执行，容器最终没有被关闭。而docker kill几乎是立刻发生，无法撤销。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 五 此外还有些异常原因也会导致容器被关闭，比如docker daemon重启、容器内部进程运行发生错误等等“异常原因”。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-10-容器重启-–-docker-restart"><a href="#4-10-容器重启-–-docker-restart" class="headerlink" title="4.10 容器重启 – docker restart"></a>4.10 容器重启 – docker restart</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	重启一个或多个处于运行状态、暂停状态、关闭状态或者新建状态的容器</span><br><span class="line">	该命令相当于stop和start命令的结合</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker restart [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	 -t, --time <span class="built_in">int</span>   		重启前，等待的时间，单位秒(默认 10s) </span><br><span class="line">				实则是关闭前等待的时间	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-11-容器删除-–-docker-container-rm"><a href="#4-11-容器删除-–-docker-container-rm" class="headerlink" title="4.11 容器删除 – docker container rm"></a>4.11 容器删除 – docker container rm</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	删除一个或多个容器</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker container rm [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line">      或者 docker rm [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：</span></span><br><span class="line">	 -f, --force     		强行删除容器(会使用 SIGKILL信号) </span><br><span class="line">	 -v, --volumes   		同时删除绑定在容器上的数据卷	</span><br><span class="line"><span class="comment"># 命令演示</span></span><br><span class="line">docker rm -f 容器<span class="built_in">id</span> 容器名</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五-容器信息查看"><a href="#五-容器信息查看" class="headerlink" title="五 容器信息查看"></a>五 容器信息查看</h2><h3 id="5-1-容器详细信息-–-docker-container-inspect"><a href="#5-1-容器详细信息-–-docker-container-inspect" class="headerlink" title="5.1 容器详细信息 – docker container inspect"></a>5.1 容器详细信息 – docker container inspect</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	查看本地一个或多个容器的详细信息</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker container inspect [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line">      或者 docker inspect [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：	</span></span><br><span class="line">	-f, --<span class="built_in">format</span> string	利用特定Go语言的<span class="built_in">format</span>格式输出结果</span><br><span class="line">	-s, --size		显示总大小</span><br><span class="line"><span class="comment"># 命令演示</span></span><br><span class="line">docker container inspect -f <span class="string">&quot;&#123;&#123;json .State.Status&#125;&#125;&quot;</span> 容器<span class="built_in">id</span></span><br><span class="line">docker container inspect 容器<span class="built_in">id</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-容器日志信息-–-docker-logs"><a href="#5-2-容器日志信息-–-docker-logs" class="headerlink" title="5.2 容器日志信息 – docker logs"></a>5.2 容器日志信息 – docker logs</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	查看容器的日志信息</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker logs [OPTIONS] CONTAINER</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：	</span></span><br><span class="line">	    --details		显示日志的额外信息</span><br><span class="line">	-f, --follow         		动态跟踪显示日志信息</span><br><span class="line">	    --since string  	只显示某事时间节点之后的	</span><br><span class="line"> 	    --tail string    		显示倒数的行数(默认全部)</span><br><span class="line">	-t, --timestamps     	显示timestamps时间</span><br><span class="line">	    --until string   	只显示某事时间节点之前的</span><br><span class="line"><span class="comment"># 注意：</span></span><br><span class="line">	容器日志中记录的是容器主进程的输出STDOUT\STDERR</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-容器重命名-–-docker-rename"><a href="#5-3-容器重命名-–-docker-rename" class="headerlink" title="5.3 容器重命名 – docker rename"></a>5.3 容器重命名 – docker rename</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	修改容器的名称</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker rename CONTAINER NEW_NAME</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：	</span></span><br><span class="line">	无</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="六-容器运行时操作"><a href="#六-容器运行时操作" class="headerlink" title="六 容器运行时操作"></a>六 容器运行时操作</h2><h3 id="6-1-容器连接-–-docker-attach"><a href="#6-1-容器连接-–-docker-attach" class="headerlink" title="6.1 容器连接 – docker attach"></a>6.1 容器连接 – docker attach</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	将当前终端的STDIN、STDOUT、STDERR绑定到正在运行的容器的主进程上实现连接</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker attach [OPTIONS] CONTAINER</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：	</span></span><br><span class="line">	--no-stdin             	不绑定STDIN</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-容器中执行新命令-–-docker-exec"><a href="#6-2-容器中执行新命令-–-docker-exec" class="headerlink" title="6.2 容器中执行新命令 – docker exec"></a>6.2 容器中执行新命令 – docker exec</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	在容器中运行一个命令</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker <span class="built_in">exec</span> [OPTIONS] CONTAINER COMMAND [ARG...]</span><br><span class="line"><span class="comment"># 命令参数(OPTIONS)：	</span></span><br><span class="line">	-d, --detach               	后台运行命令</span><br><span class="line">	-i, --interactive		即使没连接容器，也将当前的STDIN绑定上</span><br><span class="line">	-t, --tty                  	分配一个虚拟终端</span><br><span class="line">	-w, --workdir string       	指定在容器中的工作目录</span><br><span class="line">	-e, --env <span class="built_in">list</span>             	设置容器中运行时的环境变量</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="七-总结"><a href="#七-总结" class="headerlink" title="七 总结"></a>七 总结</h2><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gda0a76ow0j30ua0jaq70.jpg" alt="image-20200328222221723"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/28/linux/Docker/3-Docker%E4%B9%8B%E9%95%9C%E5%83%8F/">
+        <span class="nav-arrow">← </span>
+        
+          3-Docker之镜像
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/28/linux/Docker/2-Docker%E4%B9%8B%E5%AE%89%E8%A3%85/">
+        
+          2-Docker之安装
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E5%AE%B9%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="toc-nav-text">一 容器简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E5%AE%B9%E5%99%A8%E4%B8%8E%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-nav-text">二 容器与虚拟机</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-%E5%AE%B9%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-nav-text">三 容器生命周期</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-1-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-nav-text">3.1 虚拟机的生命周期</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-2-%E5%AE%B9%E5%99%A8%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-nav-text">3.2 容器的生命周期</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-%E5%AE%B9%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86"><span class="toc-nav-text">四 容器生命周期管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-1-%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA-%E2%80%93-docker-create"><span class="toc-nav-text">4.1 容器创建 – docker create</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-2-%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8-%E2%80%93-docker-start"><span class="toc-nav-text">4.2 容器启动 – docker start</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-3-%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8-%E2%80%93-docker-run"><span class="toc-nav-text">4.3 容器创建并启动 – docker run</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-4-docker-run-%E4%B8%8E-docker-create-docker-start"><span class="toc-nav-text">4.4 docker run 与 docker create + docker start</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-5-%E5%AE%B9%E5%99%A8%E6%9A%82%E5%81%9C-%E2%80%93-docker-pause"><span class="toc-nav-text">4.5 容器暂停 – docker pause</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-6-%E5%AE%B9%E5%99%A8%E5%8F%96%E6%B6%88%E6%9A%82%E5%81%9C-%E2%80%93-docker-unpause"><span class="toc-nav-text">4.6 容器取消暂停 – docker unpause</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-7-%E5%AE%B9%E5%99%A8%E5%85%B3%E9%97%AD-%E2%80%93-docker-stop"><span class="toc-nav-text">4.7 容器关闭 – docker stop</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-8-%E5%AE%B9%E5%99%A8%E7%BB%88%E6%AD%A2-%E2%80%93-docker-kill"><span class="toc-nav-text">4.8 容器终止 – docker kill</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-9-docker-stop%E5%92%8Cdocker-kill%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-nav-text">4.9 docker stop和docker kill的区别</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-10-%E5%AE%B9%E5%99%A8%E9%87%8D%E5%90%AF-%E2%80%93-docker-restart"><span class="toc-nav-text">4.10 容器重启 – docker restart</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-11-%E5%AE%B9%E5%99%A8%E5%88%A0%E9%99%A4-%E2%80%93-docker-container-rm"><span class="toc-nav-text">4.11 容器删除 – docker container rm</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%94-%E5%AE%B9%E5%99%A8%E4%BF%A1%E6%81%AF%E6%9F%A5%E7%9C%8B"><span class="toc-nav-text">五 容器信息查看</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-1-%E5%AE%B9%E5%99%A8%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF-%E2%80%93-docker-container-inspect"><span class="toc-nav-text">5.1 容器详细信息 – docker container inspect</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-2-%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF-%E2%80%93-docker-logs"><span class="toc-nav-text">5.2 容器日志信息 – docker logs</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-3-%E5%AE%B9%E5%99%A8%E9%87%8D%E5%91%BD%E5%90%8D-%E2%80%93-docker-rename"><span class="toc-nav-text">5.3 容器重命名 – docker rename</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%AD-%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6%E6%93%8D%E4%BD%9C"><span class="toc-nav-text">六 容器运行时操作</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-1-%E5%AE%B9%E5%99%A8%E8%BF%9E%E6%8E%A5-%E2%80%93-docker-attach"><span class="toc-nav-text">6.1 容器连接 – docker attach</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-2-%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%96%B0%E5%91%BD%E4%BB%A4-%E2%80%93-docker-exec"><span class="toc-nav-text">6.2 容器中执行新命令 – docker exec</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%83-%E6%80%BB%E7%BB%93"><span class="toc-nav-text">七 总结</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/28/linux/Docker/4-Docker之容器/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "4-Docker之容器",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      2-Docker之安装 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>2-Docker之安装</h2>
+
+
+
+  <p class="post-date">2019-03-28</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="一-Docker-CE-和-Docker-EE介绍版本介绍"><a href="#一-Docker-CE-和-Docker-EE介绍版本介绍" class="headerlink" title="一 Docker-CE 和 Docker-EE介绍版本介绍"></a>一 Docker-CE 和 Docker-EE介绍版本介绍</h2><blockquote>
+<p>•Docker-CE指Docker社区版，由社区维护和提供技术支持，为免费版本，适合个人开发人员和小团队使用。</p>
+<p>•Docker-EE指Docker企业版，为收费版本，由售后团队和技术团队提供技术支持，专为企业开发和IT团队而设计。</p>
+<p>•相比Docker-EE，增加一些额外功能，更重要的是提供了更安全的保障。</p>
+<p>•此外，Docker的发布版本分为Stable（稳定）版和Edge（测试）版，区别在于前者是按季度发布的稳定版(发布慢)，后者是按月发布的边缘版(发布快)。</p>
+<p>•通常情况下，Docker-CE足以满足我们的需求。主要针对Docker-CE进行学习。</p>
+</blockquote>
+<h3 id="1-1-版本情况"><a href="#1-1-版本情况" class="headerlink" title="1.1 版本情况"></a>1.1 版本情况</h3><p>注意：自从区分docker-ce和docker-ee之后，docker最初始的版本是17.03，也就是17年发布的，所有17是老版本和新版本的分水岭</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9q42ndsoj30sg0agq62.jpg" alt="image-20200328163029517" style="zoom:70%;" />
+
+<h3 id="1-2-系统支持情况"><a href="#1-2-系统支持情况" class="headerlink" title="1.2 系统支持情况"></a>1.2 系统支持情况</h3><img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9q4q9cyoj30ts0i876w.jpg" alt="image-20200328163106682" style="zoom:67%;" />
+
+
+
+<h2 id="二-Centos-上安装-Docker-CE"><a href="#二-Centos-上安装-Docker-CE" class="headerlink" title="二 Centos 上安装 Docker-CE"></a>二 Centos 上安装 Docker-CE</h2><ul>
+<li>系统要求：CentOS7</li>
+<li>查看<a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/centos/">官方源安装教程</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0 卸载老版本（新机器不用操作）</span></span><br><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br><span class="line"><span class="comment"># yum list installed | grep docker</span></span><br><span class="line"><span class="comment"># yum remove docker-ce.x86_64 docker-ce-cli.x86_64</span></span><br><span class="line"><span class="comment"># rm -rf /var/lib/docker</span></span><br><span class="line"><span class="comment"># sudo yum update</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1 安装必要的系统工具</span></span><br><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"><span class="comment"># 2 添加源信息</span></span><br><span class="line">	-官方：地址在国外，很慢</span><br><span class="line">  sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">  -阿里云：（推荐）</span><br><span class="line">  sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"><span class="comment"># 3 检查一下/etc/yum.repos.d/docker-ce.repo 中的url地址是不是都是阿里云</span></span><br><span class="line">cat /etc/yum.repos.d/docker-ce.repo </span><br><span class="line"><span class="comment"># 4 安装</span></span><br><span class="line">sudo yum -y install docker-ce</span><br><span class="line"><span class="comment"># 5 开启docker服务</span></span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6 docker info 查看docker信息</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>安装成功后，使用 docker version 命令查看</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9px8x7fuj30xv0u07mr.jpg" alt="image-20200328162355621" style="zoom:50%;" /></li>
+</ul>
+<h2 id="三-Ubuntu-上安装-Docker-CE"><a href="#三-Ubuntu-上安装-Docker-CE" class="headerlink" title="三 Ubuntu 上安装 Docker-CE"></a>三 Ubuntu 上安装 Docker-CE</h2><ul>
+<li>系统要求：Ubuntu 14.04及其以上版本</li>
+<li>查看<a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">官方源安装教程</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0 卸载</span></span><br><span class="line">sudo apt-get remove docker docker-engine docker.io containerd runc</span><br><span class="line"><span class="comment"># 1 安装必要工具</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    gnupg-agent \</span><br><span class="line">    software-properties-common</span><br><span class="line"><span class="comment"># 2 安装GPG证书</span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"><span class="comment">#换成阿里云</span></span><br><span class="line">curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"><span class="comment"># 2 写入软件源信息</span></span><br><span class="line"><span class="comment">#官方</span></span><br><span class="line">sudo add-apt-repository <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span></span><br><span class="line"><span class="comment">#换成阿里云</span></span><br><span class="line">sudo add-apt-repository <span class="string">&quot;deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 更新并安装docker-ce</span></span><br><span class="line">sudo apt-get -y install docker-ce</span><br><span class="line"><span class="comment"># 4 开启docker服务</span></span><br><span class="line">systemctl status docker</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>安装成功后，使用 docker version查看</p>
+<blockquote>
+<p>如果出现权限禁止，需要切换到root用户执行</p>
+<p>su </p>
+<p>输入密码</p>
+<p>docker version</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="四-Windows-x2F-MacOS-上安装-Docker-CE"><a href="#四-Windows-x2F-MacOS-上安装-Docker-CE" class="headerlink" title="四 Windows &#x2F;MacOS 上安装 Docker-CE"></a>四 Windows &#x2F;MacOS 上安装 Docker-CE</h2><ul>
+<li><p>系统要求：</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9q1tqmkrj30xy09gdk0.jpg" alt="image-20200328162819312"></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://get.daocloud.io/">安装软件下载地址</a></p>
+</li>
+</ul>
+<h2 id="五-加速配置"><a href="#五-加速配置" class="headerlink" title="五 加速配置"></a>五 加速配置</h2><ul>
+<li>为什么使用加速器：</li>
+</ul>
+<blockquote>
+<p>配置Docker加速器，将会提升在国内获取Docker官方镜像的速度，否则后面下载镜像（docker pull）的过程会很慢，甚至有可能无法下载镜像</p>
+</blockquote>
+<ul>
+<li>配置阿里云&#x2F;清华源加速器（docker 17以上版本）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式1（仅对当次有效）</span></span><br><span class="line">docker run centos:<span class="number">7</span> --registry-mirror=https://docker.mirrors.ustc.edu.cn</span><br><span class="line"><span class="comment">#修改 /etc/default/docker，加入 DOCKER_OPTS=”镜像地址”，可以有多个 </span></span><br><span class="line">DOCKER_OPTS=<span class="string">&quot;--registry-mirror=https://docker.mirrors.ustc.edu.cn&quot;</span></span><br><span class="line"><span class="comment"># 方式2（json 配置文件的方式）（严格的json格式，不符合格式会报错）</span></span><br><span class="line">vi /etc/docker/daemon.json  </span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">几个速度比较快的镜像地址</span></span><br><span class="line"><span class="string">Docker 官方中国区: https://registry.docker-cn.com</span></span><br><span class="line"><span class="string">网易: http://hub-mirror.c.163.com</span></span><br><span class="line"><span class="string">中科大: https://docker.mirrors.ustc.edu.cn</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 方式3（阿里云方式，同方式2，只是阿里云分配的私有地址，自己用自己的）</span></span><br><span class="line">参考教程：https://<span class="built_in">help</span>.aliyun.com/document_detail/<span class="number">60750.</span>html?spm=a2c4g<span class="number">.11186623</span><span class="number">.6</span><span class="number">.545</span>.OY7haW</span><br><span class="line">vi /etc/docker/daemon.json  </span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://x1566319.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gd9rt8ro56j312b0u0tey.jpg" alt="image-20200328172916452" style="zoom:50%;" />
+
+
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/28/linux/Docker/4-Docker%E4%B9%8B%E5%AE%B9%E5%99%A8/">
+        <span class="nav-arrow">← </span>
+        
+          4-Docker之容器
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/28/linux/Docker/10-Docker%E4%B9%8BDocker-Compose/">
+        
+          10-Docker之Docker-Compose
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-Docker-CE-%E5%92%8C-Docker-EE%E4%BB%8B%E7%BB%8D%E7%89%88%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">一 Docker-CE 和 Docker-EE介绍版本介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-1-%E7%89%88%E6%9C%AC%E6%83%85%E5%86%B5"><span class="toc-nav-text">1.1 版本情况</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-2-%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="toc-nav-text">1.2 系统支持情况</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-Centos-%E4%B8%8A%E5%AE%89%E8%A3%85-Docker-CE"><span class="toc-nav-text">二 Centos 上安装 Docker-CE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-Ubuntu-%E4%B8%8A%E5%AE%89%E8%A3%85-Docker-CE"><span class="toc-nav-text">三 Ubuntu 上安装 Docker-CE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-Windows-x2F-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%85-Docker-CE"><span class="toc-nav-text">四 Windows &#x2F;MacOS 上安装 Docker-CE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%94-%E5%8A%A0%E9%80%9F%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">五 加速配置</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/28/linux/Docker/2-Docker之安装/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "2-Docker之安装",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

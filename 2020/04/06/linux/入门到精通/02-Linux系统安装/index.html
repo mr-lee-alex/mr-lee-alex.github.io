@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      02-Linux系统安装 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>02-Linux系统安装</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="Linux虚拟机安装"><a href="#Linux虚拟机安装" class="headerlink" title="Linux虚拟机安装"></a>Linux虚拟机安装</h1><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0kjcscfj313l0hz75w.jpg" alt="image-20200706180515288"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0kn1d5uj30e50c93zj.jpg" alt="image-20200706180620305"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0kqx52sj30e90c7mxq.jpg" alt="image-20200706180636534"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0ku5atpj30e90c73z0.jpg" alt="image-20200706180705406"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0kxbnd8j30dy0iuq44.jpg" alt="image-20200706180844083"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0l24ekaj30eb0c5t97.jpg" alt="image-20200706181122589"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0l5vol0j30ec0c5gm2.jpg" alt="image-20200706181228315"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0la1n3ej30e80c5dgf.jpg" alt="image-20200706181309566"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0led16gj30e40btt98.jpg" alt="image-20200706181359597"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0lln34zj30e90c774u.jpg" alt="image-20200706181428094"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0lpxk0zj30e90c7aai.jpg" alt="image-20200706181445845"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0lxqj38j30e90c7wf2.jpg" alt="image-20200706181507629"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0m21hmyj30e90c7wfc.jpg" alt="image-20200706181734844"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0m7br96j30e50c40t9.jpg" alt="image-20200706181806633"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mb393ej30a00blweg.jpg" alt="image-20200706181850916"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mfbmbwj30kp0kzgmu.jpg" alt="image-20200706182011752"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mjhfqxj30du05ndg0.jpg" alt="image-20200706182051862"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mn4iz3j30hw0dzdft.jpg" alt="image-20200706182157046"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mqzpo7j30mc0hzdiy.jpg" alt="image-20200706182338962"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mvpychj30mm0h5n01.jpg" alt="image-20200706182500498"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0mzbr27j30mk0ezdkd.jpg" alt="image-20200706182539640"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0n5vjz6j30m50f2jvw.jpg" alt="image-20200706182703116"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0na52myj30m50hfq5w.jpg" alt="image-20200706182736843"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0ndsqkbj30hb0evjsl.jpg" alt="image-20200706183018473"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0nhqgc8j30sd0klade.jpg" alt="image-20200706183102009"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0nlxdwsj30rz0jyn09.jpg" alt="image-20200706183136306"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0np20m2j30rp0k00vc.jpg" alt="image-20200706183236938"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0nst9ooj30h70en0tx.jpg" alt="image-20200706183335241"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0nx5vcaj30dm0epaaw.jpg" alt="image-20200706183359567"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0o1ytxfj30l10fx0tm.jpg" alt="image-20200706183654129"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0o6x7enj30m00guab3.jpg" alt="image-20200706183728701"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0ohrbrkj30sg0kd77q.jpg" alt="image-20200706183903803"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0omvl20j30s30jzq73.jpg" alt="image-20200706184025688"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0or2rckj30mb0ibdj2.jpg" alt="image-20200706184057613"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0ov9fdcj30lz0hgdj2.jpg" alt="image-20200706184200854"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0oyy43oj30s40k278u.jpg" alt="image-20200706184250933"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0pci8szj30ro0jt0w0.jpg" alt="image-20200706184506682"></p>
+<p>inux 分区结构为树结构， windows 为森bai林结构，所以有duC盘D盘之类的， 而zhilinux &#x2F;分区就是根分区， swap可以理dao解为虚拟内存， &#x2F;boot 这是个目录， 可以分成一个分区，然后挂载到&#x2F;boot目录， 也可以只用一个&#x2F;分区， 里面会有boot目录的，保存的是引导文件，内核等等的东东</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0pgvowcj30mb0i20uo.jpg" alt="image-20200706184628155"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0pkmp2pj30mk0i1mz4.jpg" alt="image-20200706184730932"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0posv8bj30m10ei75r.jpg" alt="image-20200706184832822"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0puczzsj30s00kdwhs.jpg" alt="image-20200706184857470"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0py6mfuj30se0k1dj9.jpg" alt="image-20200706184941177"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0q31oryj30ly0hvtbw.jpg" alt="image-20200706185007814"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0q77wdsj30pn0iadi8.jpg" alt="image-20200706185031186"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0qarjyxj30ly0hl41o.jpg" alt="image-20200706185108310"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0qek1wvj30m60fv75n.jpg" alt="image-20200706185132868"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0qiesffj30rz0jrjvr.jpg" alt="image-20200706185152492"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0qlyp08j30qt0jpwgp.jpg" alt="image-20200706185304486"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0qxgrm1j30iv0iumyq.jpg" alt="image-20200706191512968"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0r0xwn4j30my0e20tr.jpg" alt="image-20200706191546500"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0r5n9a1j30fs0geabg.jpg" alt="image-20200706191632393"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0r99x6uj30ns0gr3zr.jpg" alt="image-20200706191751018"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0rcr5tej30il0j8tap.jpg" alt="image-20200706191820625"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0rg08z9j30n809l0tm.jpg" alt="image-20200706192117426"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0rkpq0sj30ap06vq38.jpg" alt="image-20200706192143006"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0roeq1xj30l40acdg8.jpg" alt="image-20200706192227586"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ght0rs8qj9j30kv0fcq47.jpg" alt="image-20200706192251770"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/03-Linux-Shell/">
+        <span class="nav-arrow">← </span>
+        
+          03-shell介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/01-Linux%E5%8F%91%E5%B1%95%E4%BB%8B%E7%BB%8D/">
+        
+          01-Linux发展介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="toc-nav-text">Linux虚拟机安装</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/02-Linux系统安装/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "02-Linux系统安装",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

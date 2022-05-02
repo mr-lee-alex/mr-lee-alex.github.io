@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      06-linux用户管理介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>06-linux用户管理介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-用户基本概述"><a href="#1-用户基本概述" class="headerlink" title="1.用户基本概述"></a>1.用户基本概述</h2><h3 id="1-什么是用户"><a href="#1-什么是用户" class="headerlink" title="1.什么是用户?"></a>1.什么是用户?</h3><p>用户指的是能够正常登录Linux或Windows系统(可以理解为你租了房子，能够正常入驻)<br>F:那Linux与Windows系统的用户有什么区别? Q:本质都是登陆系统，只不过Linux支持多个用户同时登陆。<br>F:难道Windows就不算多用户操作系统吗? Q:其实不是，在Windows系统中可以创建多个用户，但不允许同一时刻多个用户登陆系统，但Linux系统则允许同一时刻多个用户同时登陆，登陆后相互之间操作并不影响。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6wgkghqj30ks0amwga.jpg" alt="img"></p>
+<h3 id="2-Linux下的用户有什么用"><a href="#2-Linux下的用户有什么用" class="headerlink" title="2.Linux下的用户有什么用"></a>2.Linux下的用户有什么用</h3><p>或者说我们为什么要创建用户？</p>
+<p>1.系统上的每一个进程(运行的程序)，都需要一个特定的用户运行<br>2.通常在公司是使用普通用户管理服务器，因为root权限过大，容易造成故障。</p>
+<h3 id="3-查看用户"><a href="#3-查看用户" class="headerlink" title="3.查看用户"></a>3.查看用户</h3><p>如何查看系统中所存在的用户</p>
+<h4 id="1-查看当前登录的用户信息"><a href="#1-查看当前登录的用户信息" class="headerlink" title="1.查看当前登录的用户信息"></a>1.查看当前登录的用户信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># id    #查看当前所登陆的用户信息</span></span><br><span class="line"><span class="comment"># uid:用户id，系统只能识别uid，不能识别名字，人看名字</span></span><br><span class="line"><span class="comment"># gid：组id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root)</span><br><span class="line">[root@bgx ~]<span class="comment"># id oldboy #查看其它用户的信息</span></span><br><span class="line">uid=1000(oldboy) gid=1000(oldboy) <span class="built_in">groups</span>=1000(oldboy)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-每一个进程都会由一个用户身份运行"><a href="#2-每一个进程都会由一个用户身份运行" class="headerlink" title="2.每一个进程都会由一个用户身份运行"></a>2.每一个进程都会由一个用户身份运行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># ps aux|less #简单使用一下，不用理解</span></span><br><span class="line">root      33782  0.0  0.0      0     0 ?        R    02:46   0:00 [kworker/u256:0]</span><br><span class="line">root      35637  0.0  0.0      0     0 ?        R    05:11   0:03 [kworker/0:2]</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-用户存存放位置"><a href="#4-用户存存放位置" class="headerlink" title="4.用户存存放位置"></a>4.用户存存放位置</h3><p>Linux系统会将用户的信息存放在&#x2F;etc&#x2F;passwd，记录了用户的信息，但没有密码信息，密码被存放在&#x2F;etc&#x2F;shadow中。也就是说这两个文件非常的重要，不要轻易删除与修改。</p>
+<p>1.&#x2F;etc&#x2F;passwd 配置文件解释如下图，或者man 5 passwd<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6wlblblj310e08e41c.jpg" alt="img"><br>2.&#x2F;etc&#x2F;shadow 配置文件解释如下图，或者man 5 shadow<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xuliangwei/p/10679004.html">PS: 使用change修改密码过期时间示例</a><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6wqmkm2j310k0ggwm9.jpg" alt="img"></p>
+<p>4.最后我们需要了解下系统对用户的一个约定？(约定娶你，就真的会娶吗？)</p>
+<table>
+<thead>
+<tr>
+<th align="left">用户UID</th>
+<th align="left">系统中约定的含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">超级管理员，最高权限，有着极强的破坏能力</td>
+</tr>
+<tr>
+<td align="left">1~200</td>
+<td align="left">系统用户，用来运行系统自带的进程，默认已创建</td>
+</tr>
+<tr>
+<td align="left">201~999</td>
+<td align="left">系统用户，用来运行用户安装的程序，所以此类用户无需登录系统</td>
+</tr>
+<tr>
+<td align="left">1000+</td>
+<td align="left">普通用户，正常可以登陆系统的用户，权限比较小，能执行的任务有限</td>
+</tr>
+</tbody></table>
+<p>PS:在CentOS7系统之前, UID1-499用于系统用户, 而UID 500+则用于普通用户</p>
+<h2 id="2-用户相关命令"><a href="#2-用户相关命令" class="headerlink" title="2.用户相关命令"></a>2.用户相关命令</h2><p>下面我们就围绕着用户的创建、变更、删除等来讲讲涉及到的命令: useradd、usermod、userdel</p>
+<h3 id="1-新增用户"><a href="#1-新增用户" class="headerlink" title="1.新增用户"></a>1.新增用户</h3><p>使用useradd命令，注意: adduser命令软链接指向useradd命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项</span></span><br><span class="line"><span class="comment"># -u 指定要创建用户的UID,不允许冲突</span></span><br><span class="line"><span class="comment"># -g 指定要创建用户默认组</span></span><br><span class="line"><span class="comment"># -G 指定要创建用户附加组,逗号隔开可添加多个附加组</span></span><br><span class="line"><span class="comment"># -d 指定要创建用户家目录</span></span><br><span class="line"><span class="comment"># -s 指定要创建用户的bash shell  /bin/bash   /sbin/nologin</span></span><br><span class="line"><span class="comment"># -c 指定要创建用户注释信息</span></span><br><span class="line"><span class="comment"># -M 给创建的用户不创建家目录</span></span><br><span class="line"><span class="comment"># -r 创建系统账户，默认无家目录</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.创建bgx用户，UID5001,基本组students，附加组sa 注释信息:2019 new student,登陆shell:/bin/bash</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd sa</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd students</span></span><br><span class="line">[root@bgx ~]<span class="comment"># useradd -u 5001 -g students -G sa -c &quot;2019 new student&quot; -s /bin/bash bgx</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.创建mysql系统用户，-M不建立用户家目录 -s指定nologin使其用户无法登陆系统</span></span><br><span class="line">[root@bgx ~]<span class="comment"># useradd mysql -M -s /sbin/nologin</span></span><br><span class="line">[root@bgx ~]<span class="comment"># useradd -r dba -s /sbin/nologin</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 </span></span><br><span class="line">useradd <span class="built_in">od</span> -u 7777 -G sa -d /tmp/od -s /sbin/nologin</span><br><span class="line">grep <span class="string">&quot;7777&quot;</span> /etc/passwd</span><br><span class="line"><span class="comment"># 4 SELinux</span></span><br><span class="line">getenforce <span class="comment"># 查看</span></span><br><span class="line">setenforce 0 <span class="comment"># 临时关闭</span></span><br><span class="line"><span class="built_in">cat</span> /etc/selinux/config</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-修改用户信息"><a href="#2-修改用户信息" class="headerlink" title="2.修改用户信息"></a>2.修改用户信息</h3><p>使用usermod命令修改用户信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项</span></span><br><span class="line"><span class="comment"># -u 指定要修改用户的UID</span></span><br><span class="line"><span class="comment"># -g 指定要修改用户基本组</span></span><br><span class="line"><span class="comment"># -G 指定要修改用户附加组，使用逗号隔开多个附加组, 覆盖原有的附加组，-aG追加</span></span><br><span class="line"><span class="comment"># -d 指定要修改用户家目录 -md 旧家搬新家</span></span><br><span class="line"><span class="comment"># -s 指定要修改用户的bash shell</span></span><br><span class="line"><span class="comment"># -c 指定要修改用户注释信息</span></span><br><span class="line"><span class="comment"># -l 指定要修改用户的登陆名</span></span><br><span class="line"><span class="comment"># -L 指定要锁定的用户</span></span><br><span class="line"><span class="comment"># -U 指定要解锁的用户</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.检查此前创建的用户信息</span></span><br><span class="line">[root@bgx ~]<span class="comment"># grep &quot;bgx&quot; /etc/passwd</span></span><br><span class="line">bgx:x:5001:503:2019 new student:/home/bgx:/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.修改bgx用户uid、gid，附加组  -a表示追加</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd -g 5008 network_sa</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd -g 5009 devops</span></span><br><span class="line">[root@bgx ~]<span class="comment"># usermod -u 6001 -g5008 -a -G 5009 bgx</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.修改bgx用户的注释信息, 用户家目录, 登录shell, 登录名 -l：改名字，-md，把环境也带过去</span></span><br><span class="line">[root@bgx ~]<span class="comment"># usermod -c &quot;2019 new student&quot; -md /bgx -s /bin/sh -l change_bgx bgx</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#检查是否修改成功</span></span><br><span class="line">[root@bgx ~]<span class="comment"># grep &quot;bgx&quot; /etc/passwd</span></span><br><span class="line">bgx_lqz:x:6001:5008:2019 new student:/bgx:/bin/sh</span><br><span class="line">[root@bgx ~]<span class="comment"># id change_bgx</span></span><br><span class="line">uid=6001(change_bgx) gid=5008(network_sa) <span class="built_in">groups</span>=5008(network_sa),503(sa),5009(devops)</span><br><span class="line">[root@bgx ~]<span class="comment"># ll -d /bgx</span></span><br><span class="line">drwx------. 2 bgx_lqz network_sa 4096 2014-09-23 00:13 /bgx</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.锁定用户[扩展]</span></span><br><span class="line">[root@bgx ~]<span class="comment"># echo &quot;123&quot; |passwd --stdin change_bgx</span></span><br><span class="line">[root@bgx ~]<span class="comment"># usermod -L change_bgx  #锁定后会无法登陆系统</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.解锁用户[扩展]</span></span><br><span class="line">[root@bgx ~]<span class="comment"># usermod -U change_bgx</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-删除账户"><a href="#3-删除账户" class="headerlink" title="3.删除账户"></a>3.删除账户</h3><p>使用userdel命令删除账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项 -r 删除用户同时删除它的家目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.删除user1用户，但不删除用户家目录和 mail spool</span></span><br><span class="line">[root@bgx ~]<span class="comment"># userdel user1</span></span><br><span class="line">[root@bgx ~]<span class="comment"># ls /var/spool/mail/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.-r参数可以连同用户家目录一起删除(慎用)</span></span><br><span class="line">[root@bgx ~]<span class="comment"># userdel -r user1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-其他"><a href="#4-其他" class="headerlink" title="4.其他"></a>4.其他</h3><ol>
+<li>使用finger命名查询用户信息以及登录信息(yum install finger)，示例: finger UserName</li>
+<li>使用chfn命令修改用户信息(其实是修改注释)，示例: chfn UserName</li>
+<li>使用chsh命令修改用户登录Bash Shell，示例: chsh UserName</li>
+<li>使用who(当前有哪些用户登录了)、whoami、w检查用户登陆情况</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv7rax6iij31ra0fm4kg.jpg" alt="image-20200818195909155"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="3-用户扩展知识"><a href="#3-用户扩展知识" class="headerlink" title="3.用户扩展知识"></a>3.用户扩展知识</h2><h3 id="1-创建流程"><a href="#1-创建流程" class="headerlink" title="1.创建流程"></a>1.创建流程</h3><p>前面我们学习如何创建、修改、删除用户，接下来了解下用户的？</p>
+<p>1.useradd创建用户时，系统会以&#x2F;etc&#x2F;login.defs、&#x2F;etc&#x2F;defaults&#x2F;useradd两个配置文件作为参照物，如果在创建用户时指定了参数则会覆盖&#x2F;etc&#x2F;login.defs、&#x2F;etc&#x2F;defaults&#x2F;useradd文件默认配置，如未指定则使用默认。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># grep -Ev &quot;^#|^$&quot; /etc/login.defs</span></span><br><span class="line">[root@bgx ~]<span class="comment"># cat /etc/login.defs</span></span><br><span class="line">MAIL_DIR    /var/spool/mail  <span class="comment"># 定义了邮件路径放在哪</span></span><br><span class="line">PASS_MAX_DAYS   99999        <span class="comment"># 密码过期时间</span></span><br><span class="line">PASS_MIN_DAYS   0            <span class="comment"># 密码最少0天</span></span><br><span class="line">PASS_MIN_LEN    5            <span class="comment"># 密码长度</span></span><br><span class="line">PASS_WARN_AGE   7            <span class="comment"># 7天提醒</span></span><br><span class="line">UID_MIN                  1000</span><br><span class="line">UID_MAX                 60000</span><br><span class="line">SYS_UID_MIN               201</span><br><span class="line">SYS_UID_MAX               999</span><br><span class="line">GID_MIN                  1000</span><br><span class="line">GID_MAX                 60000</span><br><span class="line">SYS_GID_MIN               201</span><br><span class="line">SYS_GID_MAX               999</span><br><span class="line">CREATE_HOME <span class="built_in">yes</span>             <span class="comment"># 是否创建home</span></span><br><span class="line">UMASK           077</span><br><span class="line">USERGROUPS_ENAB <span class="built_in">yes</span>         <span class="comment"># 用户不指定组，默认创建一个同名组</span></span><br><span class="line">ENCRYPT_METHOD SHA512       <span class="comment"># 密码加密算法</span></span><br><span class="line"></span><br><span class="line">[root@bgx ~]<span class="comment"># cat /etc/default/useradd</span></span><br><span class="line">GROUP=100</span><br><span class="line">HOME=/home      <span class="comment">#把用户的家目录建在/home中。</span></span><br><span class="line">INACTIVE=-1     <span class="comment">#是否启用账号过期停权,-1表示不启用。</span></span><br><span class="line">EXPIRE=         <span class="comment">#账号终止日期,不设置表示不启用。</span></span><br><span class="line">SHELL=/bin/bash <span class="comment">#新用户默认所有的shell类型。</span></span><br><span class="line">SKEL=/etc/skel  <span class="comment">#配置新用户家目录的默认文件存放路径。</span></span><br><span class="line">CREATE_MAIL_SPOOL=<span class="built_in">yes</span>   <span class="comment">#创建mail文件。</span></span><br></pre></td></tr></table></figure>
+
+<p>2.当使用useradd创建用户时，创建的用户家目录下会存在 .bash_ 环境变量相关的文件，这些环境变量文件默认从&#x2F;etc&#x2F;skel目录中拷贝。这个默认拷贝环境变量位置是由&#x2F;etc&#x2F;defaults&#x2F;useradd配置文件中定义的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#故障案例，在当前用户家目录执行了rm -rf .，下次登录系统时出现-bash-4.1$，如何解决！</span></span><br><span class="line">-bash-4.1$ <span class="built_in">cp</span> -a /etc/skel/.bash ./</span><br><span class="line">-bash-4.1$ <span class="built_in">exit</span></span><br><span class="line">[root@bgx ~]<span class="comment">#   #重新连接即可恢复</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-设置、修改密码"><a href="#2-设置、修改密码" class="headerlink" title="2.设置、修改密码"></a>2.设置、修改密码</h3><p>创建用户后，如需要使用该用户登陆系统则需要为用户设定密码，设定密码使用passwd命令。建议密码复杂度高一些、长度大于10、出现各种特殊字符、无任何规律(不要出现名字，电话，生日等)<br>PS: 注意事项<br>1.普通用户只允许变更自己的密码，无法修改其他人密码，并且密码长度必须8位字符<br>2.管理员用户允许修改任何人的密码，无论密码长度多长或多短。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用passwd命令修改用户密码</span></span><br><span class="line"><span class="comment"># passwd        #给当前用户修改密码</span></span><br><span class="line"><span class="comment"># passwd root   #给root用户修改密码</span></span><br><span class="line"><span class="comment"># passwd oldboy #给oldboy用户修改密码，普通用户只能自己修改自己</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.验证如下几项指标</span></span><br><span class="line"><span class="comment"># passwd                #root管理员用户登陆，修改root用户密码</span></span><br><span class="line"><span class="comment"># passwd lqz     #root用户登陆，修改其他用户的密码</span></span><br><span class="line">$ passwd root           <span class="comment">#普通用户修改root管理员密码</span></span><br><span class="line"><span class="comment"># echo &quot;123&quot; | passwd --stdin lqz    #非交互式修改密码</span></span><br><span class="line"><span class="comment"># 批量创建100个用户，密码都为123456</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..100&#125;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> 	useradd <span class="built_in">test</span><span class="variable">$1</span></span><br><span class="line"> 	<span class="built_in">echo</span> <span class="string">&quot;123456&quot;</span> |passwd --stdin <span class="built_in">test</span><span class="variable">$1</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.系统内置变量生成随机字符串（对随机字符串进行md5加密）</span></span><br><span class="line">[root@bgx ~]<span class="comment"># echo $RANDOM|md5sum|cut -c 1-10</span></span><br><span class="line">d09fe9b1xs</span><br><span class="line">[root@bgx ~]<span class="comment"># echo $(echo $RANDOM|md5sum |cut -c 5-14) |tee pass.txt| passwd --stdin lqz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.mkpasswd生成随机字符串, -l设定密码长度,-d数子,-c小写字母,-C大写字母,-s特殊字符</span></span><br><span class="line">[root@bgx ~]<span class="comment"># yum install -y expect   //需要安装扩展包</span></span><br><span class="line">[root@bgx ~]<span class="comment"># mkpasswd -l 10 -d 2 -c 2 -C 2 -s 4</span></span><br><span class="line">|K&amp;13bR)i/</span><br></pre></td></tr></table></figure>
+
+<p>PS: 推荐密码保存套件工具，支持windows、MacOS、Iphone以及浏览器插件<a target="_blank" rel="noopener" href="https://www.lastpass.com/zh">Lastpass官方网站</a></p>
+<h2 id="4-用户组的管理"><a href="#4-用户组的管理" class="headerlink" title="4.用户组的管理"></a>4.用户组的管理</h2><h3 id="1-什么是用户组"><a href="#1-什么是用户组" class="headerlink" title="1.什么是用户组"></a>1.什么是用户组</h3><p>其实就是一种逻辑层面的定义，逻辑上将多个用户归纳至一个组，当我们对组操作，其实就相当于对组中的所有用户操作。</p>
+<h3 id="2-组有类别"><a href="#2-组有类别" class="headerlink" title="2.组有类别"></a>2.组有类别</h3><p>对于用户来说，组有几种类别？</p>
+<p>基本组，用户只能有一个基本组，创建时可通过-g指定，如未指定则创建一个默认的组(与用户同名)，简称私有组<br>附加组，基本组不能满足授权要求，创建附加组，将用户加入该组，用户可以属于多个附加组<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6wxg1rqj31dg0csjwp.jpg" alt="img"></p>
+<h3 id="3-组的信息位置"><a href="#3-组的信息位置" class="headerlink" title="3.组的信息位置"></a>3.组的信息位置</h3><p>组账户信息保存在&#x2F;etc&#x2F;group和&#x2F;etc&#x2F;gshadow两个文件中。重点关注group</p>
+<p>1.&#x2F;etc&#x2F;group 配置文件解释如下图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head -<span class="number">1</span> /etc/group</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6x17g22j30nq086jth.jpg" alt="img"><br>2.&#x2F;etc&#x2F;gshadow 配置文件解释如下图<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6x4hi4ej30oo09eq51.jpg" alt="img"></p>
+<h4 id="1-groupadd新增组"><a href="#1-groupadd新增组" class="headerlink" title="1 groupadd新增组"></a>1 groupadd新增组</h4><p>使用groupadd命令新增组，groupadd [-g GID] groupname</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建基本组, 不指定gid</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd no_gid</span></span><br><span class="line">[root@bgx ~]<span class="comment"># tail -n1 /etc/group</span></span><br><span class="line">no_gid:x:1000:</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建基本组, 指定gid为5555</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd -g 5555 yes_gid</span></span><br><span class="line">[root@bgx ~]<span class="comment"># tail -n1 /etc/group</span></span><br><span class="line">yes_gid:x:5555:</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建系统组，gid从201-999</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupadd -r sys_group</span></span><br><span class="line">[root@bgx ~]<span class="comment"># tail -n1 /etc/group</span></span><br><span class="line">sys_group:x:990:</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-groupmod修改组"><a href="#2-groupmod修改组" class="headerlink" title="2 groupmod修改组"></a>2 groupmod修改组</h4><p>使用groupmod命令修改组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-g 修改组gid</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupmod -g 1111 no_gid</span></span><br><span class="line">[root@bgx ~]<span class="comment"># tail -1 /etc/group</span></span><br><span class="line">no_gid:x:1111:</span><br><span class="line"></span><br><span class="line"><span class="comment">#-n 修改组名称（把yes_gid名字改为active_group）</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupmod yes_gid -n active_group </span></span><br><span class="line">[root@bgx ~]<span class="comment"># tail -1 /etc/group</span></span><br><span class="line">active_group:x:5555:</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-groupdel删除组，"><a href="#3-groupdel删除组，" class="headerlink" title="3.groupdel删除组，"></a>3.groupdel删除组，</h4><p>删除时需要注意，如果用户存在基本组则无法直接删除该组，如果删除用户则会移除默认的私有组，而不会移除基本组。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 私有组的情况，直接删除用户，组也就没了</span></span><br><span class="line">[root@bgx ~]<span class="comment"># userdel jack</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除组</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupdel active_group</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除用户附加组</span></span><br><span class="line">[root@bgx ~]<span class="comment"># id lqz</span></span><br><span class="line">uid=1069(lqz) gid=5005(lqz) <span class="built_in">groups</span>=5005(lqz),5004(devops)</span><br><span class="line">[root@bgx ~]<span class="comment"># groupdel devops</span></span><br><span class="line">[root@bgx ~]<span class="comment"># id lqz</span></span><br><span class="line">uid=1069(lqz) gid=5005(lqz) <span class="built_in">groups</span>=5005(lqz)</span><br><span class="line"></span><br><span class="line"><span class="comment">#无法删除用户基本组</span></span><br><span class="line">[root@bgx ~]<span class="comment"># groupdel network_sa</span></span><br><span class="line">groupdel: cannot remove the primary group of user <span class="string">&#x27;bgx_lqz&#x27;</span></span><br><span class="line"><span class="comment">#只有删除用户或者用户变更基本后,方可删除该组</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-gpasswd设置组密码"><a href="#4-gpasswd设置组密码" class="headerlink" title="4 gpasswd设置组密码"></a>4 gpasswd设置组密码</h4><p>使用gpasswd设置组密码[扩展，可以不会]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># groupadd devops</span></span><br><span class="line">[root@bgx ~]<span class="comment"># gpasswd devops</span></span><br><span class="line">Changing the password <span class="keyword">for</span> group devops</span><br><span class="line">New Password:</span><br><span class="line">Re-enter new password:</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-newgrp切换基本组身份"><a href="#5-newgrp切换基本组身份" class="headerlink" title="5 newgrp切换基本组身份"></a>5 newgrp切换基本组身份</h4><p>使用newgrp命令切换基本组身份[扩展，可以不会]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.检查账户信息</span></span><br><span class="line">[root@bgx ~]<span class="comment"># useradd lqz</span></span><br><span class="line">[root@bgx ~]<span class="comment"># id lqz</span></span><br><span class="line">uid=1069(lqz) gid=5005(lqz) <span class="built_in">groups</span>=5005(lqz)</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.切换普通用户</span></span><br><span class="line">[root@bgx ~]<span class="comment"># su - lqz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.创建新文件,查看文件的属主和属组</span></span><br><span class="line">[lqz@bgx ~]$ <span class="built_in">touch</span> file_roots</span><br><span class="line">[lqz@bgx ~]$ ll</span><br><span class="line">-rw-rw-r-- 1 lqz lqz 0 Jun 13 10:06 file_roots</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.使用newgrp切换到devops组</span></span><br><span class="line">[lqz@bgx ~]$ newgrp devops</span><br><span class="line">Password:</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.创建文件，检查属主和属组</span></span><br><span class="line">[lqz@bgx ~]$ <span class="built_in">touch</span> file_test</span><br><span class="line">[lqz@bgx ~]$ ll</span><br><span class="line">-rw-rw-r-- 1 lqz lqz 0 Jun 13 10:06 file_roots</span><br><span class="line">-rw-r--r-- 1 lqz devops     0 Jun 13 10:08 file_test</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-用户如何提权"><a href="#5-用户如何提权" class="headerlink" title="5.用户如何提权"></a>5.用户如何提权</h2><p>往往公司的服务器对外都是禁止root用户直接登录，所以我们通常使用的都是普通用户，那么问题来了？<br>当我们使用普通用户执行&#x2F;sbin目录下的命令时，会发现没有权限运行，这种情况下我们无法正常的管理服务器，那如何才能不使用root用户直接登录系统，同时又保证普通用户能完成日常工作？<br>PS: 我们可以使用如下两种方式: su、sudo<br>1.su切换用户，使用普通用户登录，然后使用su命令切换到root。优点:简单 缺点:需要知道root密码<br>2.sudo提权，当需要使用root权限时进行提权，而无需切换至root用户，优点:安全、方便 缺点:复杂</p>
+<h3 id="1-su身份切换"><a href="#1-su身份切换" class="headerlink" title="1.su身份切换"></a>1.su身份切换</h3><p>在使用su切换前，我们需要了解一些预备知识，比如shell分类、环境变量配置文件有哪些</p>
+<p>1.Linux Shell主要分为如下几类<br>交互式shell，等待用户输入执行的命令(终端操作,需要不断提示)<br>非交互式shell，执行shell脚本, 脚本执行结束后shell自动退出<br>登陆shell，需要输入用户名和密码才能进入Shell，日常接触的最多的一种<br>非登陆shell，不需要输入用户和密码就能进入Shell,比如运行bash会开启一个新的会话窗口</p>
+<p>2.bash shell配置文件介绍(文件主要保存用户的工作环境)<br>个人配置文件：~&#x2F;.bash_profile ~&#x2F;.bashrc 。</p>
+<p>全局配置文件：&#x2F;etc&#x2F;profile   &#x2F;etc&#x2F;profile.d&#x2F;*.sh   &#x2F;etc&#x2F;bashrc<br>profile类文件, 设定环境变量, 登陆前运行的脚本和命令。bashrc 类文件, 设定本地变量, 定义命令别名<br>PS: 如果全局配置和个人配置产生冲突，以个人配置为准。</p>
+<p>3.登陆系统后，环境变量配置文件的应用顺序是?<br>登录式shell配置文件执行顺序: &#x2F;etc&#x2F;profile-&gt;&#x2F;etc&#x2F;profile.d&#x2F;<em>.sh-&gt;<del>&#x2F;.bash_profile-&gt;</del>&#x2F;.bashrc-&gt;&#x2F;etc&#x2F;bashrc<br>非登陆式shell配置文件执行顺序: ~&#x2F;.bashrc-&gt;&#x2F;etc&#x2F;bashrc-&gt;&#x2F;etc&#x2F;profile.d&#x2F;</em>.sh<br>PS: 验证使用echo在每行添加一个输出即可</p>
+<p>4.说了这么多预备知识，那这些和su命令切换用户有什么关系?<br>su - username属于登陆式shell，su username属于非登陆式shell，区别在于加载的环境变量不一样。<br>su username 属于非登陆式shell</p>
+<p>普通用户<code>su -</code>可以直接切换至root用户，但需要输入root用户的密码。<br>超级管理员root用户使用<code>su - username</code>切换普通用户不需要输入任何密码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.普通用户使用su切换root</span></span><br><span class="line">[lqz@node1 ~]$ su </span><br><span class="line">密码：         <span class="comment">#输入root的密码</span></span><br><span class="line">[root@node1 lqz]<span class="comment"># pwd</span></span><br><span class="line">/home/lqz</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.普通用户使用su -切换到root，会加载root的环境变量</span></span><br><span class="line">[lqz@node1 ~]$ su -</span><br><span class="line">密码：</span><br><span class="line">[root@node1 ~]<span class="comment"># pwd</span></span><br><span class="line">/root</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.以某个用户的身份执行某个服务，使用命令su -c username</span></span><br><span class="line">[root@bgx ~]<span class="comment"># su - lqz -c &#x27;ifconfig&#x27;</span></span><br><span class="line">[root@bgx ~]<span class="comment"># su - lqz -c &#x27;ls ~&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4 其他</span></span><br><span class="line">yum provides pstree</span><br><span class="line">yum install psmisc</span><br><span class="line">pstree</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5 关闭root远程登陆，普通用户登进来，su - 切换到root用户</span></span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line">PermitRootLogin <span class="built_in">yes</span>  <span class="comment"># 设成no</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-sudo提权"><a href="#2-sudo提权" class="headerlink" title="2.sudo提权"></a>2.sudo提权</h3><p>su命令在切换用户身份时，如果每个普通用户都能拿到root用户的密码，当其中某个用户不小心泄漏了root的密码，那系统会变得非常不安全。为了改进这个问题，从而产生了sudo这个命令。</p>
+<p>其实sudo就相当于给某个普通用户埋下了浩克(hulk)的种子，当需要执行一些高级操作时，进行发怒，但正常情况下还是普通人，还是会受到限制。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6xayyl7j30n00j0771.jpg" alt="img"></p>
+<p>1.如何快速埋下hulk的种子呢？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.快速配置sudo方式[先睹为快]</span></span><br><span class="line">[root@node1 ~]<span class="comment"># usermod bgx -G wheel # 把用户加到wheel组中</span></span><br><span class="line">[root@node1 ~]$ sudo <span class="built_in">tail</span> -f /var/log/secure    <span class="comment">#sudo审计日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.一般正常配置sudo方式</span></span><br><span class="line">[root@www ~]<span class="comment"># #visudo =&gt; vim /etc/sudoers</span></span><br><span class="line"><span class="comment">#1.用户名  2.主机名=(角色名）       4.命令名</span></span><br><span class="line">bgx       ALL=(ALL)         /usr/bin/yum,/usr/sbin/useradd   <span class="comment">#允许使用sudo执行命令</span></span><br><span class="line">oldboy   ALL=(ALL)          NOPASSWD:/bin/cp, /bin/rm   <span class="comment">#NOPASSWD不需要使用密码</span></span><br><span class="line"></span><br><span class="line">visudo -c <span class="comment"># 检查刚刚编辑的是否有错误</span></span><br><span class="line">sudo -l  <span class="comment"># 对主机有哪些权限</span></span><br></pre></td></tr></table></figure>
+
+<p>2.埋下了hulk种子后又如何提权使用呢？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.切换普通用户</span></span><br><span class="line">[root@bgx ~]<span class="comment"># su - lqz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.检查普通用户能提权的命令</span></span><br><span class="line">[lqz@lqz ~]$ sudo -l</span><br><span class="line">User lqz may run the following commands on this host:</span><br><span class="line">    (ALL) ALL</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.普通用户正常情况下是无法删除opt目录的</span></span><br><span class="line">[lqz@lqz ~]$ <span class="built_in">rm</span> -rf /opt/</span><br><span class="line"><span class="built_in">rm</span>: cannot remove `/opt: Permission denied</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.使用sudo提权，需要输入普通用户的密码。</span></span><br><span class="line">[lqz@lqz ~]$ sudo <span class="built_in">rm</span> -rf /opt</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-开启某个命令的使用权限"><a href="#3-开启某个命令的使用权限" class="headerlink" title="3.开启某个命令的使用权限"></a>3.开启某个命令的使用权限</h3><p>提升的权限太大，能否有办法限制仅开启某个命令的使用权限？其他命令不允许？</p>
+<p>第一种方式:使用sudo中自带的别名操作,将多个用户定义成一个组,这个组只有sudo认可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># visudo  #也可以使用vi /etc/sudoers来配置</span></span><br><span class="line"><span class="comment"># 1.使用sudo定义分组,这个系统group没什么关系</span></span><br><span class="line">User_Alias OPS = oldboy,alex</span><br><span class="line">User_Alias DEV = bgx,py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.定义可执行的命令组,便于后续调用</span></span><br><span class="line">Cmnd_Alias NETWORKING = /sbin/ifconfig, /bin/ping</span><br><span class="line">Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/yum</span><br><span class="line">Cmnd_Alias SERVICES = /sbin/service, /usr/bin/systemctl start</span><br><span class="line">Cmnd_Alias STORAGE = /bin/mount, /bin/umount</span><br><span class="line">Cmnd_Alias DELEGATING = /bin/chown, /bin/chmod, /bin/chgrp</span><br><span class="line">Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.使用sudo开始分配权限</span></span><br><span class="line">OPS  ALL=(ALL) NETWORKING,SOFTWARE,SERVICES,STORAGE,DELEGATING,PROCESSES</span><br><span class="line">DEV  ALL=(ALL) SOFTWARE,PROCESSES</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.登陆对应的用户使用 sudo -l 验证权限</span></span><br></pre></td></tr></table></figure>
+
+<p>第二种方式:使用groupadd添加组,然后给组分配sudo的权限,如果有新用户加入,直接将用户添加到该组.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.添加两个真实的系统组,  group_dev group_op</span></span><br><span class="line">[root@www ~]<span class="comment"># groupadd group_dev</span></span><br><span class="line">[root@www ~]<span class="comment"># groupadd group_op</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.添加两个用户,      group_dev(user_a  user_b)   group_op(user_c  user_d)</span></span><br><span class="line">[root@www ~]<span class="comment"># useradd user_a -G group_dev</span></span><br><span class="line">[root@www ~]<span class="comment"># useradd user_b -G group_dev</span></span><br><span class="line">[root@www ~]<span class="comment"># useradd user_c -G group_op</span></span><br><span class="line">[root@www ~]<span class="comment"># useradd user_d -G group_op</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.记得添加密码</span></span><br><span class="line">[root@www ~]<span class="comment"># echo &quot;1&quot; | passwd --stdin user_a</span></span><br><span class="line">[root@www ~]<span class="comment"># echo &quot;1&quot; | passwd --stdin user_b</span></span><br><span class="line">[root@www ~]<span class="comment"># echo &quot;1&quot; | passwd --stdin user_c</span></span><br><span class="line">[root@www ~]<span class="comment"># echo &quot;1&quot; | passwd --stdin user_d</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.在sudo中配置规则</span></span><br><span class="line">[root@www ~]<span class="comment"># visudo</span></span><br><span class="line">    Cmnd_Alias NETWORKING = /sbin/ifconfig, /bin/ping</span><br><span class="line">    Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/yum</span><br><span class="line">    Cmnd_Alias SERVICES = /sbin/service, /usr/bin/systemctl start</span><br><span class="line">    Cmnd_Alias STORAGE = /bin/mount, /bin/umount</span><br><span class="line">    Cmnd_Alias DELEGATING = /bin/chown, /bin/chmod, /bin/chgrp</span><br><span class="line">    Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall</span><br><span class="line"></span><br><span class="line">    %group_dev ALL=(ALL) SOFTWARE</span><br><span class="line">    %group_op ALL=(ALL) SOFTWARE,PROCESSES</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.检查sudo是否配置有错</span></span><br><span class="line">[root@www ~]<span class="comment"># visudo -c</span></span><br><span class="line">/etc/sudoers: parsed OK</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#6.检查user_a,和user_d的sudo权限</span></span><br><span class="line">[user_a@www.oldboyedu.com ~]$ sudo -l</span><br><span class="line">User user_a may run the following commands on www:</span><br><span class="line">    (ALL) /bin/rpm, /usr/bin/yum</span><br><span class="line"></span><br><span class="line">[user_d@www.oldboyedu.com ~]$ sudo -l</span><br><span class="line">User user_d may run the following commands on www:</span><br><span class="line">    (ALL) /bin/rpm, /usr/bin/yum, /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-sudo命令的执行流程"><a href="#4-sudo命令的执行流程" class="headerlink" title="4.sudo命令的执行流程"></a>4.sudo命令的执行流程</h3><ol>
+<li>普通用户执行sudo命令时, 会检查&#x2F;var&#x2F;db&#x2F;sudo是否存在时间戳缓存</li>
+<li>如果存在则不需要输入密码, 否则需要输入用户与密码</li>
+<li>输入密码会检测是否该用户是否拥有该权限</li>
+<li>如果有则执行，否则报错退出</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6xgqe06j30bc0jpmz3.jpg" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d172a92475f1">sudo不支持系统内置命令</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/07-Linux%E5%9F%BA%E6%9C%AC%E6%9D%83%E9%99%90/">
+        <span class="nav-arrow">← </span>
+        
+          07-linux基本权限介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/05-Linux%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91/">
+        
+          05-linux文件编辑介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E7%94%A8%E6%88%B7%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">1.用户基本概述</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%A8%E6%88%B7"><span class="toc-nav-text">1.什么是用户?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-Linux%E4%B8%8B%E7%9A%84%E7%94%A8%E6%88%B7%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-nav-text">2.Linux下的用户有什么用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7"><span class="toc-nav-text">3.查看用户</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%99%BB%E5%BD%95%E7%9A%84%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">1.查看当前登录的用户信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-%E6%AF%8F%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E9%83%BD%E4%BC%9A%E7%94%B1%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%BF%90%E8%A1%8C"><span class="toc-nav-text">2.每一个进程都会由一个用户身份运行</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E7%94%A8%E6%88%B7%E5%AD%98%E5%AD%98%E6%94%BE%E4%BD%8D%E7%BD%AE"><span class="toc-nav-text">4.用户存存放位置</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-nav-text">2.用户相关命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E6%96%B0%E5%A2%9E%E7%94%A8%E6%88%B7"><span class="toc-nav-text">1.新增用户</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">2.修改用户信息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E5%88%A0%E9%99%A4%E8%B4%A6%E6%88%B7"><span class="toc-nav-text">3.删除账户</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E5%85%B6%E4%BB%96"><span class="toc-nav-text">4.其他</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-text"></span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-%E7%94%A8%E6%88%B7%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="toc-nav-text">3.用户扩展知识</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-nav-text">1.创建流程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E3%80%81%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="toc-nav-text">2.设置、修改密码</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-%E7%94%A8%E6%88%B7%E7%BB%84%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-nav-text">4.用户组的管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-nav-text">1.什么是用户组</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E7%BB%84%E6%9C%89%E7%B1%BB%E5%88%AB"><span class="toc-nav-text">2.组有类别</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E7%BB%84%E7%9A%84%E4%BF%A1%E6%81%AF%E4%BD%8D%E7%BD%AE"><span class="toc-nav-text">3.组的信息位置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-groupadd%E6%96%B0%E5%A2%9E%E7%BB%84"><span class="toc-nav-text">1 groupadd新增组</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-groupmod%E4%BF%AE%E6%94%B9%E7%BB%84"><span class="toc-nav-text">2 groupmod修改组</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-groupdel%E5%88%A0%E9%99%A4%E7%BB%84%EF%BC%8C"><span class="toc-nav-text">3.groupdel删除组，</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#4-gpasswd%E8%AE%BE%E7%BD%AE%E7%BB%84%E5%AF%86%E7%A0%81"><span class="toc-nav-text">4 gpasswd设置组密码</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#5-newgrp%E5%88%87%E6%8D%A2%E5%9F%BA%E6%9C%AC%E7%BB%84%E8%BA%AB%E4%BB%BD"><span class="toc-nav-text">5 newgrp切换基本组身份</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-%E7%94%A8%E6%88%B7%E5%A6%82%E4%BD%95%E6%8F%90%E6%9D%83"><span class="toc-nav-text">5.用户如何提权</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-su%E8%BA%AB%E4%BB%BD%E5%88%87%E6%8D%A2"><span class="toc-nav-text">1.su身份切换</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-sudo%E6%8F%90%E6%9D%83"><span class="toc-nav-text">2.sudo提权</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E5%BC%80%E5%90%AF%E6%9F%90%E4%B8%AA%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90"><span class="toc-nav-text">3.开启某个命令的使用权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-sudo%E5%91%BD%E4%BB%A4%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-nav-text">4.sudo命令的执行流程</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/06-Linux用户管理/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "06-linux用户管理介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

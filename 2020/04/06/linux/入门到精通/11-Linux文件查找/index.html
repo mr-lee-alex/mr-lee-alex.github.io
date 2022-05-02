@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      11-linux的文件查找介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>11-linux的文件查找介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-find查找概述"><a href="#1-find查找概述" class="headerlink" title="1.find查找概述"></a>1.find查找概述</h2><p><em>为什么要有文件查找，因为很多时候我们可能会忘了某个文件所在的位置，此时就需要通过find来查找。<br>find命令可以根据不同的条件来进行查找文件，例如：文件名称、文件大小、文件修改时间、属主属组、权限、等等方式。同时find命令是Linux下必须掌握的。</em></p>
+<p>*<strong>find 命令的基本语法如下*</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">路径</th>
+<th align="left">选项</th>
+<th align="left">表达式</th>
+<th align="left">动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">find</td>
+<td align="left">[path…]</td>
+<td align="left">[options]</td>
+<td align="left">[expression]</td>
+<td align="left">[action]</td>
+</tr>
+<tr>
+<td align="left">查找</td>
+<td align="left">地区</td>
+<td align="left">妹纸</td>
+<td align="left">18-25岁</td>
+<td align="left">约?</td>
+</tr>
+</tbody></table>
+<h2 id="2-find查找示例"><a href="#2-find查找示例" class="headerlink" title="2.find查找示例"></a>2.find查找示例</h2><p>*<strong>以下列出所有find常用的选项*</strong></p>
+<h3 id="1-find名称查找"><a href="#1-find名称查找" class="headerlink" title="1.find名称查找"></a><em>1.find名称查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.创建文件</span></span><br><span class="line"><span class="built_in">touch</span> /etc/sysconfig/network-scripts/&#123;ifcfg-eth1,IFCFG-ETH1&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.查找/etc目录下包含ifcfg-eth0名称的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg-eth1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.-i 忽略大小写</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -iname &quot;ifcfg-eth1&quot;</span></span><br><span class="line"><span class="comment">#查找/etc目录下包含ifcfg-eth名称所有文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc/ -name &quot;ifcfg-eth*&quot;</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -iname &quot;ifcfg-eth*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-find大小查找"><a href="#2-find大小查找" class="headerlink" title="2.find大小查找"></a><em>2.find大小查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.查找大于5M的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -size +5M</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.查找等于5M的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -size 5M</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.查找小于5M的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -size -5M </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-find类型查找"><a href="#3-find类型查找" class="headerlink" title="3.find类型查找"></a><em>3.find类型查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># f 文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type f</span></span><br><span class="line"><span class="comment"># d 目录</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type d</span></span><br><span class="line"><span class="comment"># l 链接</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type l</span></span><br><span class="line"><span class="comment"># b 块设备</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type b</span></span><br><span class="line"><span class="comment"># c 字符设备</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type c</span></span><br><span class="line"><span class="comment"># s 套接字</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type s</span></span><br><span class="line"><span class="comment"># p 管道文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /dev -type p</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-find时间查找"><a href="#4-find时间查找" class="headerlink" title="4.find时间查找"></a><em>4.find时间查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.创建测试文件(后期shell会讲)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># for i in &#123;01..28&#125;;do date -s  201904$i &amp;&amp; touch file-$i;done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.查找7天以前的文件(不会打印当天的文件)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find ./ -iname &quot;file-*&quot; -mtime +7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.查找最近7天的文件，不建议使用(会打印当天的文件)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find ./ -iname &quot;file-*&quot; -mtime -7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.查找第7天文件(不会打印当天的文件)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find ./ -iname &quot;file-*&quot; -mtime 7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.本地文件保留最近7天的备份文件, 备份服务器保留3个月的备份文件(实际使用方案)</span></span><br><span class="line">find /backup/ -iname <span class="string">&quot;*.bak&quot;</span> -mtime +7 -delete</span><br><span class="line">find /backup/ -iname <span class="string">&quot;*.bak&quot;</span> -mtime +90 -delete</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-find用户查找"><a href="#5-find用户查找" class="headerlink" title="5.find用户查找"></a><em>5.find用户查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查找属主是jack</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -user jack</span></span><br><span class="line"><span class="comment">#查找属组是admin</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -group admin</span></span><br><span class="line"><span class="comment">#查找属主是jack, 属组是admin</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -user jack -group admin</span></span><br><span class="line"><span class="comment">#查找属主是jack, 并且属组是admin</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -user jack -a -group admin</span></span><br><span class="line"><span class="comment">#查找属主是jack, 或者属组是admin</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -user jack -o -group admin</span></span><br><span class="line"><span class="comment">#查找没有属主</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -nouser</span></span><br><span class="line"><span class="comment">#查找没有属组</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -nogroup</span></span><br><span class="line"><span class="comment">#查找没有属主或属组</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /home -nouser -o -nogroup</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-find权限查找"><a href="#6-find权限查找" class="headerlink" title="6.find权限查找"></a><em>6.find权限查找</em></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#精切匹配644权限</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -perm 644 -ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#包含444权限即可</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -perm -444  -ls</span></span><br><span class="line"><span class="comment">#查找全局可写(每位权限必须包含w)</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -perm -222 -ls</span></span><br><span class="line"><span class="comment">#包含set uid</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find  /usr/sbin -perm -4000 -ls</span></span><br><span class="line"><span class="comment">#包含set gid</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find  /usr/sbin -perm -2000 -ls</span></span><br><span class="line"><span class="comment">#包含sticky</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find  /usr/sbin -perm -1000 -ls</span></span><br></pre></td></tr></table></figure>
+
+<p>*<strong>2.find动作处理，比如查找到一个文件后，需要对文件进行如何处理, find的默认动作是 -print*</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">动作</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-print</td>
+<td align="left">打印查找到的内容(默认)</td>
+</tr>
+<tr>
+<td align="left">-ls</td>
+<td align="left">以长格式显示的方式打印查找到的内容</td>
+</tr>
+<tr>
+<td align="left">-delete</td>
+<td align="left">删除查找到的文件(仅能删除空目录)</td>
+</tr>
+<tr>
+<td align="left">-ok</td>
+<td align="left">后面跟自定义 shell 命令(会提示是否操作)</td>
+</tr>
+<tr>
+<td align="left">-exec</td>
+<td align="left">后面跟自定义 shell 命令(标准写法 -exec ;)</td>
+</tr>
+</tbody></table>
+<p><em>1.find查找后的动作命令示例</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用-print打印查找到的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot;</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -print</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.使用-ls打印查找到的文件，以长格式显示</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.使用-delete删除文件，但仅能删除空目录</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -delete</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.使用-ok实现文件拷贝，但会提示是否拷贝</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -ok cp -rvf &#123;&#125; /tmp \;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.使用-exec实现文件拷贝和文件删除。</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -exec cp -rvf &#123;&#125; /tmp \;</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /etc -name &quot;ifcfg*&quot; -exec rm -f &#123;&#125; \;</span></span><br></pre></td></tr></table></figure>
+
+<p><em>2.使用find命令结合xargs</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#xargs将前者命令查找到的文件作为一个整体传递后者命令的输入</span></span><br><span class="line">[root@lqz ~]<span class="comment"># touch file.txt</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -name &quot;file.txt&quot; |xargs rm -f</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -name &quot;file.txt&quot; |xargs -I &#123;&#125; cp -rvf &#123;&#125; /var/tmp</span></span><br></pre></td></tr></table></figure>
+
+<p><em>3.find逻辑运算符</em></p>
+<table>
+<thead>
+<tr>
+<th align="left">符号</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-a</td>
+<td align="left">与</td>
+</tr>
+<tr>
+<td align="left">-o</td>
+<td align="left">或</td>
+</tr>
+<tr>
+<td align="left">-not|!</td>
+<td align="left">非</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.查找当前目录下，属主不是hdfs的所有文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -not -user hdfs </span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . ! -user hdfs</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#2.查找当前目录下，属主属于hdfs，且大小大于300字节的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -type f -a -user hdfs -a -size +300c</span></span><br><span class="line">            </span><br><span class="line"><span class="comment">#3.查找当前目录下的属主为hdfs或者以xml结尾的普通文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find . -type f -a \( -user hdfs -o -name &#x27;*.xml&#x27; \)</span></span><br></pre></td></tr></table></figure>
+
+<p><em>4.find相关练习题</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1.查找/tmp目录下，属主不是root，且文件名不以f开头的文件</span><br><span class="line">2.查找/var目录下属主为root，且属组为mail的所有文件</span><br><span class="line">3.查找/var目录下不属于root、lp、gdm的所有文件</span><br><span class="line">4.查找/var目录下最近一周内其内容修改过，同时属主不为root，也不是postfix的文件</span><br><span class="line">5.查找/etc目录下大于1M且类型为普通文件的所有文件</span><br><span class="line">6.将/etc/中的所有目录(仅目录)复制到/tmp下，目录结构不变</span><br><span class="line">7.将/etc目录复制到/var/tmp/,/var/tmp/etc的所有目录权限777/var/tmp/etc目录中所有文件权限666</span><br><span class="line">8.保留/var/log/下最近7天的日志文件,其他全部删除</span><br><span class="line">9.创建<span class="built_in">touch</span> file&#123;1..10&#125;10个文件, 保留file9,其他一次全部删除</span><br><span class="line">10.解释如下每条命令含义</span><br><span class="line"><span class="built_in">mkdir</span> /root/dir1</span><br><span class="line"><span class="built_in">touch</span> /root/dir1/file&#123;1..10&#125;</span><br><span class="line">find /root/dir1 -<span class="built_in">type</span> f -name <span class="string">&quot;file5&quot;</span></span><br><span class="line">find /root/dir1 ! -name <span class="string">&quot;file5&quot;</span></span><br><span class="line">find /root/dir1 -name <span class="string">&quot;file5&quot;</span> -o -name <span class="string">&quot;file9&quot;</span></span><br><span class="line">find /root/dir1 -name <span class="string">&quot;file5&quot;</span> -o -name <span class="string">&quot;file9&quot;</span> -<span class="built_in">ls</span></span><br><span class="line">find /root/dir1 \( -name <span class="string">&quot;file5&quot;</span> -o -name <span class="string">&quot;file9&quot;</span> \) -<span class="built_in">ls</span></span><br><span class="line">find /root/dir1 \( -name <span class="string">&quot;file5&quot;</span> -o -name <span class="string">&quot;file9&quot;</span> \) -<span class="built_in">exec</span> <span class="built_in">rm</span> -rvf &#123;&#125; \;</span><br><span class="line">find /root/dir1  ! \( -name <span class="string">&quot;file4&quot;</span> -o -name <span class="string">&quot;file8&quot;</span> \) -<span class="built_in">exec</span> <span class="built_in">rm</span> -vf &#123;&#125;  \; </span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/12-Linux%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85/">
+        <span class="nav-arrow">← </span>
+        
+          12-linux的压缩打包介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/10-Linux%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/">
+        
+          10-linux的输入与输出介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-find%E6%9F%A5%E6%89%BE%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">1.find查找概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-find%E6%9F%A5%E6%89%BE%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">2.find查找示例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-find%E5%90%8D%E7%A7%B0%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">1.find名称查找</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-find%E5%A4%A7%E5%B0%8F%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">2.find大小查找</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-find%E7%B1%BB%E5%9E%8B%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">3.find类型查找</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-find%E6%97%B6%E9%97%B4%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">4.find时间查找</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-find%E7%94%A8%E6%88%B7%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">5.find用户查找</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-find%E6%9D%83%E9%99%90%E6%9F%A5%E6%89%BE"><span class="toc-nav-text">6.find权限查找</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/11-Linux文件查找/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "11-linux的文件查找介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

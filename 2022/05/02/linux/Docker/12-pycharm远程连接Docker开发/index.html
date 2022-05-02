@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2></h2>
+
+
+
+  <p class="post-date">2022-05-02</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="docker-配置pycharm连接"><a href="#docker-配置pycharm连接" class="headerlink" title="docker 配置pycharm连接"></a>docker 配置pycharm连接</h2><h2 id="1-原理介绍"><a href="#1-原理介绍" class="headerlink" title="1 原理介绍"></a>1 原理介绍</h2><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb482a7x6j31hw0kwtg7.jpg" alt="image-20200430004434291" style="zoom: 33%;" />
+
+<h2 id="2-操作-docker宿主机"><a href="#2-操作-docker宿主机" class="headerlink" title="2 操作 docker宿主机"></a>2 操作 docker宿主机</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 配置运行远程客户端连接docker</span></span><br><span class="line">vim /lib/systemd/system/docker.service</span><br><span class="line"></span><br><span class="line"><span class="comment">#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span></span><br><span class="line">ExecStart=/usr/<span class="built_in">bin</span>/dockerd -H tcp://<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">2376</span> -H unix:///var/run/docker.sock</span><br><span class="line">      </span><br><span class="line">将管理地址写入 /etc/profile</span><br><span class="line">执行命令：echo <span class="string">&#x27;export DOCKER_HOST=tcp://0.0.0.0:2376&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line">执行命令：source /etc/profile</span><br><span class="line"></span><br><span class="line">重启服务</span><br><span class="line">执行命令： systemctl daemon-reload &amp;&amp; systemctl restart docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 vim /etc/docker/daemon.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;hosts&quot;</span>: [<span class="string">&quot;tcp://0.0.0.0:2376&quot;</span>,<span class="string">&quot;unix:///var/run/docker.sock&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">systemctl daemon-reload &amp;&amp; systemctl restart docker</span><br><span class="line"><span class="comment"># 启动会报错，因为/lib/systemd/system/docker.service和该文件的本地连接配置冲突，修改/lib/systemd/system/docker.service</span></span><br><span class="line">vim /lib/systemd/system/docker.service</span><br><span class="line">...</span><br><span class="line"><span class="comment">#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span></span><br><span class="line"><span class="comment">#改为</span></span><br><span class="line">ExecStart=/usr/<span class="built_in">bin</span>/dockerd --containerd=/run/containerd/containerd.sock</span><br><span class="line">...</span><br><span class="line">systemctl daemon-reload </span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line">curl <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">2376</span>/version</span><br><span class="line">  </span><br><span class="line">http://<span class="number">10.0</span><span class="number">.0</span><span class="number">.102</span>:<span class="number">2376</span>/version</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-修改本地pycharm配置"><a href="#3-修改本地pycharm配置" class="headerlink" title="3 修改本地pycharm配置"></a>3 修改本地pycharm配置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 打开设置，搜索docker</span><br><span class="line"><span class="number">2</span> 选择TCP socket</span><br><span class="line"><span class="number">3</span> 填入：tcp://<span class="number">101.133</span><span class="number">.225</span><span class="number">.166</span>:<span class="number">2376</span></span><br><span class="line"><span class="number">4</span> Certificates folder暂时不填，Path mappings：暂时删掉</span><br><span class="line"><span class="number">5</span> 点击ok，在下面就能看到图形界面的管理</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb5tgp7b5j31540u0q8r.jpg" alt="image-20200430013946341" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span> 选择新的解释器（使用docker的解释器）解释器---》add---》docker--》默认会选中，点击ok（稍等一会，需要连接）</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb5zl8ah6j31b80qg78g.jpg" alt="image-20200430014539434" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span> 修改运行文件（可以看到目录映射，现在我们需要把代码传到宿主机的：/Users/liuqingzheng/PycharmProjects/llqz_test 路径）</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb66bermtj31bq0u00z6.jpg" alt="image-20200430015206937" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span> 配置sftp，远程上传代码</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb68vpj5aj31360scu0x.jpg" alt="image-20200430015434627" style="zoom:33%;" />
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9</span> 点 + 新建，输入名字</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6bhmzj1j30zw0u00w7.jpg" alt="image-20200430015705488" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span> 选择Mappings，配置上传的目录</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6ckkgsdj30zt0u0gwr.jpg" alt="image-20200430015807878" style="zoom:33%;" />
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span> 上传代码，在项目上右键，Deplayment--》上传</span><br><span class="line">运行代码即可</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6dv2iv1j30wd0u0u0x.jpg" alt="image-20200430015921932" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span> 也可以选择tools--&gt;Deployment--&gt;Automatic Upload,每次改完代码会自动上传</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6exqki9j313o0swu0x.jpg" alt="image-20200430020023490" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span> 我们无法安装模块，所有通过Dockerfile方式构建镜像，再切换解释器为新构建的镜像</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6wuyj2oj31io0bi1kp.jpg" alt="image-20200430021738112" style="zoom: 33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">14</span> 写完直接在Dockerfile上右键运行</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6xt458mj30ik0ogti5.jpg" alt="image-20200430021833203" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">15</span> 这样运行构建的镜像没有名字，我们可以配置，指定构建成的镜像名字</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6z2f1i8j30cy05o3zu.jpg" alt="image-20200430021945524" style="zoom:33%;" />
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb6zepougj31b80u0dlm.jpg" alt="image-20200430022005303" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span> 构建完成，重新选择该镜像作为解释器即可</span><br></pre></td></tr></table></figure>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geb711r0ogj314z0u0wum.jpg" alt="image-20200430022139471" style="zoom:33%;" />
+
+
+
+
+
+<h2 id="最后：docker-pull-的时候报错"><a href="#最后：docker-pull-的时候报错" class="headerlink" title="最后：docker pull 的时候报错"></a>最后：docker pull 的时候报错</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">error pulling image configuration: Get https://production.cloudflare.docker.com/registry-v2/docker/registry/v2/blobs/sha256/b6/b63ef4ef530f7ff2d368fb0df9c28840a285e503c8710aa29e7e1da54cbb6f54/data?verify=<span class="number">1588096454</span>-x6AMkkUV0qUaOPWhqC%2FQpkcJ1RA%3D: x509: certificate has expired <span class="keyword">or</span> <span class="keyword">is</span> <span class="keyword">not</span> yet valid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提示x509:证书已过期或尚未生效。则是系统时间错误。只要同步一下网络时间即可。同步网络时间命令：</span></span><br><span class="line"></span><br><span class="line">data</span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate ntp1.aliyun.com  </span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/01/security/mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%AD%A5%E9%AA%A4/">
+        <span class="nav-arrow">← </span>
+        
+          [置顶]mysql手工注入步骤
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/02/linux/Docker/11-docker%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95/">
+        
+          (untitled)
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-%E9%85%8D%E7%BD%AEpycharm%E8%BF%9E%E6%8E%A5"><span class="toc-nav-text">docker 配置pycharm连接</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">1 原理介绍</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E6%93%8D%E4%BD%9C-docker%E5%AE%BF%E4%B8%BB%E6%9C%BA"><span class="toc-nav-text">2 操作 docker宿主机</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0pycharm%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">3 修改本地pycharm配置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9C%80%E5%90%8E%EF%BC%9Adocker-pull-%E7%9A%84%E6%97%B6%E5%80%99%E6%8A%A5%E9%94%99"><span class="toc-nav-text">最后：docker pull 的时候报错</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/02/linux/Docker/12-pycharm远程连接Docker开发/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

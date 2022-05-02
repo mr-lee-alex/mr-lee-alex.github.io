@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      08-linux特殊权限介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>08-linux特殊权限介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-特殊权限概述"><a href="#1-特殊权限概述" class="headerlink" title="1.特殊权限概述"></a>1.特殊权限概述</h2><p>前面我们已经学习过 r（读）、w（写）、 x（执行）这三种普通权限，但是我们在査询系统文件权限时会发现出现了一些其他权限字母，比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># ll /usr/bin/passwd</span></span><br><span class="line">-rwsr-xr-x. 1 root root 27832 Jun 10  2014 /usr/bin/passwd</span><br></pre></td></tr></table></figure>
+
+<p>在属主本来应该是 x（执行）权限的位置出现了一个小写s，这是什么权限？我们把这种权限称作 SetUID 权限，也叫作 SUID 的特殊权限。这种权限有什么作用呢？或者说能干啥？别急，先往下看…..</p>
+<h2 id="2-特殊权限SUID"><a href="#2-特殊权限SUID" class="headerlink" title="2.特殊权限SUID"></a>2.特殊权限SUID</h2><h3 id="1-问题抛出"><a href="#1-问题抛出" class="headerlink" title="1.问题抛出"></a>1.问题抛出</h3><p>在 Linux 系统中，每个普通用户都可以更改自己的密码，这是合理的设置。问题是，普通用户的信息保存在 &#x2F;etc&#x2F;passwd 文件中，用户的密码在 &#x2F;etc&#x2F;shadow 文件中，也就是说，普通用户在更改自己的密码时修改了 &#x2F;etc&#x2F;shadow 文件中的加密密码，但是文件权限显示，普通用户对这两个文件其实都是没有写权限的，那为什么普通用户可以修改自己的权限呢？……(难道学了个假的权限)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx ~]<span class="comment"># ll /etc/passwd</span></span><br><span class="line">-rw-r--r-- 1 root root 6209 Apr 13 03:26 /etc/passwd</span><br><span class="line">[root@bgx ~]<span class="comment"># ll /etc/shadow</span></span><br><span class="line">---------- 1 root root 11409 Apr 13 03:26 /etc/shadow</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2.解决方案"></a>2.解决方案</h3><p>其实，普通用户可以修改自己的密码在于 passwd 命令。该命令拥有特殊权限 SetUID，也就是在属主的权限位的执行权限上是 s。可以这样来理解它：当一个具有执行权限的文件设置 SetUID 权限后，用户在执行这个文件时将以文件所有者的身份来执行。</p>
+<p>PS: 当普通用户使用 passwd 命令更改自己的密码时，实际上是在用 passwd 命令所有者 root 的身份在执行 passwd 命令，root 当然可以将密码写入 &#x2F;etc&#x2F;shadow 文件，所以普通用户也可以修改 &#x2F;etc&#x2F;shadow 文件，命令执行完成后，该身份也随之消失。</p>
+<h3 id="3-示例演示"><a href="#3-示例演示" class="headerlink" title="3.示例演示"></a>3.示例演示</h3><p>举个例子，有一个用户 lamp，她可以修改自己的权限，因为 passwd 命令拥有 SetUID 权限；但是她不能査看 &#x2F;etc&#x2F;shadow 文件的内容，因为査看文件的命令（如 cat）没有 SetUID 权限。命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#自己可以修改自己的密码，从而改变/etc/shadow中的数据</span></span><br><span class="line">[lamp@bgx ~]$ passwd</span><br><span class="line"></span><br><span class="line"><span class="comment">#但无法使用cat命令查看/etc/shadow</span></span><br><span class="line">[lamp@bgx ~]$ <span class="built_in">cat</span> /etc/shadow</span><br><span class="line"><span class="built_in">cat</span>: /etc/shadow: Permission denied</span><br></pre></td></tr></table></figure>
+
+<p>我们画一张示意图来理解上述过程<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu6ydk5lvj30go06ljs0.jpg" alt="img"></p>
+<h3 id="4-例子解释"><a href="#4-例子解释" class="headerlink" title="4.例子解释"></a>4.例子解释</h3><p>passwd 是系统命令，可以执行，所以可以赋予 SetUID 权限。<br>lamp 用户对 passwd 命令拥有 x（执行）权限。<br>lamp 用户在执行 passwd 命令的过程中，会暂时切换为 root 身份，所以可以修改 &#x2F;etc&#x2F;shadow 文件。<br>命令结束，lamp 用户切换回自己的身份。<br>PS: cat命令没有 SetUID权限，所以使用 lamp 用户身份去访问 &#x2F;etc&#x2F;shadow 文件，当然没有相应权限了。<br>F: 但如果将passwd命令的suid去掉会发生什么？？？</p>
+<p>2.suid授权方法4000 权限字符s(S),用户位置上的x位上设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chmod 4755 passwd</span></span><br><span class="line"><span class="comment"># chmod  u+s  passwd</span></span><br></pre></td></tr></table></figure>
+
+<p>3.suid的作用<br>1.让普通用户对可执行的二进制文件，临时拥有二进制文件的所属主权限。<br>2.如果设置的二进制文件没有执行权限,那么suid的权限显示就是大S。<br>3.特殊权限suid仅对二进制可执行程序有效，其他文件或目录则无效。<br>注意: suid极度危险，不信可以尝试对vim或rm进行设定SetUID。</p>
+<h2 id="3-特殊权限SGID"><a href="#3-特殊权限SGID" class="headerlink" title="3.特殊权限SGID"></a>3.特殊权限SGID</h2><p>将目录设置为sgid后，如果在该目录下创建文件，都将与该目录的所属组保持一致，演示如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.建立测试目录</span></span><br><span class="line">[root@bgx ~]<span class="comment"># cd /tmp/ &amp;&amp; mkdir dtest</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.给测试目录赋予SetGID权限，检查SetGID是否生效</span></span><br><span class="line">[root@bgx tmp]<span class="comment"># chmod g+s dtest/ &amp;&amp; ll -d dtest/</span></span><br><span class="line">drwxr-sr-x 2 root root 6 Apr 13 05:21 dtest/</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.给测试目录赋予777权限，让普通用户可以写</span></span><br><span class="line">[root@bgx tmp]<span class="comment"># chmod 777 dtest/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.切换成普通用户lamp，并进入该目录</span></span><br><span class="line">[root@bgx tmp]<span class="comment"># su - lamp</span></span><br><span class="line">[lamp@bgx ~]$ <span class="built_in">cd</span> /tmp/dtest/</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.普通用户创建测试文件，检查文件的信息</span></span><br><span class="line">[lamp@bgx dtest]$ <span class="built_in">touch</span> lamp_test</span><br><span class="line">[lamp@bgx dtest]$ ll</span><br><span class="line">-rw-rw-r-- 1 lamp root 0 Apr 13 05:21 lamp_test</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-sgid授权方法-2000权限字符s-S-，取决于属组位置上的x"><a href="#2-sgid授权方法-2000权限字符s-S-，取决于属组位置上的x" class="headerlink" title="2.sgid授权方法: 2000权限字符s(S)，取决于属组位置上的x"></a>2.sgid授权方法: 2000权限字符s(S)，取决于属组位置上的x</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chmod 2755  directory </span></span><br><span class="line"><span class="comment"># chmod  g+s  directory</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-sgid作用"><a href="#3-sgid作用" class="headerlink" title="3.sgid作用"></a>3.sgid作用</h3><p>1.针对用户组权限位修改，用户创建的目录或文件所属组和该目录的所属组一致。<br>2.当某个目录设置了sgid后，在该目录中新建的文件不在是创建该文件的默认所属组<br>3.使用sgid可以使得多个用户之间共享一个目录的所有文件变得简单。</p>
+<h2 id="4-特殊权限SBIT"><a href="#4-特殊权限SBIT" class="headerlink" title="4.特殊权限SBIT"></a>4.特殊权限SBIT</h2><p>Sticky(SI TI KI)粘滞位目前只对目录有效，作用如下：<br>普通用户对该目录拥有 w 和 x 权限，即普通用户可以在此目录中拥有写入权限。如果没有粘滞位，那么普通用户拥有 w 权限，就可以删除此目录下的所有文件，包括其他用户建立的文件。但是一旦被赋予了粘滞位，除了 root 可以删除所有文件，普通用户就算拥有 w 权限，也只能删除自己建立的文件，而不能删除其他用户建立的文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@bgx tmp]<span class="comment"># ll -d /tmp/</span></span><br><span class="line">drwxrwxrwt. 12 root root 4096 Apr 13 05:32 /tmp/</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-sticky授权方法，1000-权限字符t-T-其他用户位的x位上设置。"><a href="#2-sticky授权方法，1000-权限字符t-T-其他用户位的x位上设置。" class="headerlink" title="2.sticky授权方法，1000 权限字符t(T),其他用户位的x位上设置。"></a>2.sticky授权方法，1000 权限字符t(T),其他用户位的x位上设置。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chmod 1755  /tmp</span></span><br><span class="line"><span class="comment"># chmod o+t /tmp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-sticky作用"><a href="#3-sticky作用" class="headerlink" title="3.sticky作用"></a>3.sticky作用</h3><p>1.让多个用户都具有写权限的目录，并让每个用户只能删自己的文件。<br>2.特殊sticky目录表现在others的x位，用小t表示，如果没有执行权限是T<br>3.一个目录即使它的权限为”777”如果是设置了粘滞位，除了目录的属主和”root”用户有权限删除，除此之外其他用户都不允许删除该目录。</p>
+<h2 id="5-权限属性chattr"><a href="#5-权限属性chattr" class="headerlink" title="5.权限属性chattr"></a>5.权限属性chattr</h2><p>chatrr 只有 root 用户可以使用，用来修改文件系统的权限属性，建立凌驾于 rwx 基础权限之上的授权。<br>chatrr 命令格式：[root@bgx ~]# chattr [+-&#x3D;] [选项] 文件或目录名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项: + 增加权限 -减少权限 =等于某个权限</span></span><br><span class="line"><span class="comment"># a：让文件或目录仅可追加内容</span></span><br><span class="line"><span class="comment"># i：不得任意更动文件或目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.创建文件并设置属性</span></span><br><span class="line">[root@lqz ~]<span class="comment"># touch file_a file_i</span></span><br><span class="line">[root@lqz ~]<span class="comment"># lsattr file_a file_i</span></span><br><span class="line">---------------- file_a</span><br><span class="line">---------------- file_i</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.使用chattr设置属性，lsattr查看权限限制</span></span><br><span class="line">[root@lqz ~]<span class="comment"># chattr +a file_a</span></span><br><span class="line">[root@lqz ~]<span class="comment"># chattr +i file_i</span></span><br><span class="line">[root@lqz ~]<span class="comment"># lsattr file_a file_i</span></span><br><span class="line">-----a---------- file_a</span><br><span class="line">----i----------- file_i</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.a权限，无法写入和删除文件，但可以追加数据，适合/etc/passwd这样的文件</span></span><br><span class="line">[root@lqz ~]<span class="comment"># echo &quot;aa&quot; &gt; file_a</span></span><br><span class="line">bash: file_a: Operation not permitted</span><br><span class="line">[root@lqz ~]<span class="comment"># rm -f file_a</span></span><br><span class="line"><span class="built_in">rm</span>: cannot remove ‘file_a’: Operation not permitted</span><br><span class="line">[root@lqz ~]<span class="comment"># echo &quot;aa&quot; &gt;&gt; file_a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5.i权限, 无法写入，无法删除，适合不需要更改的重要文件加锁</span></span><br><span class="line">[root@lqz ~]<span class="comment"># echo &quot;i&quot; &gt; file_i</span></span><br><span class="line">bash: file_i: Permission denied</span><br><span class="line">[root@lqz ~]<span class="comment"># echo &quot;i&quot; &gt;&gt; file_i</span></span><br><span class="line">bash: file_i: Permission denied</span><br><span class="line">[root@lqz ~]<span class="comment"># rm -f  file_i</span></span><br><span class="line"><span class="built_in">rm</span>: cannot remove ‘file_i’: Operation not permitted</span><br><span class="line"></span><br><span class="line"><span class="comment">#6.解除限制</span></span><br><span class="line">[root@tianyun ~]<span class="comment"># chattr -a file100 </span></span><br><span class="line">[root@tianyun ~]<span class="comment"># chattr -i file200</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-进程掩码umask"><a href="#6-进程掩码umask" class="headerlink" title="6.进程掩码umask"></a>6.进程掩码umask</h2><h3 id="1-umask是什么"><a href="#1-umask是什么" class="headerlink" title="1.umask是什么?"></a>1.umask是什么?</h3><p>当我们登录系统之后创建一个文件总是有一个默认权限的，比如: 目录755、文件644、那么这个权限是怎么来的呢？这就是umask干的事情。umask设置了用户创建文件的默认权限。</p>
+<h3 id="2-umask是如何改变创建新文件的权限"><a href="#2-umask是如何改变创建新文件的权限" class="headerlink" title="2.umask是如何改变创建新文件的权限"></a>2.umask是如何改变创建新文件的权限</h3><p>系统默认umask为022，那么当我们创建一个目录时，正常情况下目录的权限应该是777，但umask表示要减去的值，所以新目录文件的权限应该是777 - 022 &#x3D;755。至于文件的权限也依次类推666 - 022 &#x3D;644。</p>
+<h3 id="3-umask涉及哪些配置文件"><a href="#3-umask涉及哪些配置文件" class="headerlink" title="3.umask涉及哪些配置文件"></a>3.umask涉及哪些配置文件</h3><p>umask涉及到的相关文件&#x2F;etc&#x2F;bashrc &#x2F;etc&#x2F;profile ~&#x2F;.bashrc ~&#x2F;.bash_profile<br>shell (vim,touch) –umask–&gt; 会影响创建的新文件或目录权限<br>vsftpd服务如果修改–umask–&gt; 会影响ftp服务中新创建文件或创建目录权限<br>useradd如果修改umask–&gt; 会影响用户HOME家目录权限</p>
+<h3 id="4-umask演示示例"><a href="#4-umask演示示例" class="headerlink" title="4.umask演示示例"></a>4.umask演示示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.假设umask值为：022（所有位为偶数）</span></span><br><span class="line"><span class="comment">#文件的起始权限值</span></span><br><span class="line">6 6 6  -  0 2 2  = 6 4 4 </span><br><span class="line"></span><br><span class="line"><span class="comment">#2.假设umask值为：045（其他用户组位为奇数）</span></span><br><span class="line"><span class="comment">#计算出来的权限。由于umask的最后一位数字是5，所以，在其他用户组位再加1。</span></span><br><span class="line">6 6 6  -   0 4 5 = 6 2 1</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.默认目录权限计算方法</span></span><br><span class="line">7 7 7  -  0 2 2 = 7 5 5</span><br><span class="line"> </span><br><span class="line"><span class="comment">#umask所有位全为偶数时</span></span><br><span class="line"><span class="comment"># umask 044</span></span><br><span class="line"><span class="comment"># mkdir d044   目录权限为733</span></span><br><span class="line"><span class="comment"># touch f044   文件权限为622</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#umask部分位为奇数时</span></span><br><span class="line"><span class="comment"># umask 023</span></span><br><span class="line"><span class="comment"># mkdir d023   目录权限为754</span></span><br><span class="line"><span class="comment"># touch f023   文件权限为644</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#umask值的所有位为奇数时</span></span><br><span class="line"><span class="comment"># umask 035</span></span><br><span class="line"><span class="comment"># mkdir d035   目录权限为742</span></span><br><span class="line"><span class="comment"># touch f035   文件权限为642</span></span><br></pre></td></tr></table></figure>
+
+<p>示例1: 在 shell 进程中创建文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看当前用户的umask权限</span></span><br><span class="line">[root@lqz ~]<span class="comment"># umask</span></span><br><span class="line">0022</span><br><span class="line">[root@lqz ~]<span class="comment"># touch file0022</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkdir dir0022</span></span><br><span class="line">[root@lqz ~]<span class="comment"># ll -d file0022  dir0022/</span></span><br><span class="line">drwxr-xr-x 2 root root 6 Jan 24 09:02 dir0022/</span><br><span class="line">-rw-r--r-- 1 root root 0 Jan 24 09:02 file0022</span><br></pre></td></tr></table></figure>
+
+<p>示例2: 修改 shell umask 值(临时生效)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># umask 000</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkdir dir000</span></span><br><span class="line">[root@lqz ~]<span class="comment"># touch file000</span></span><br><span class="line">[root@lqz ~]<span class="comment"># ll -d dir000 file000</span></span><br><span class="line">drwxrwxrwx 2 root root 6 Jan 24 09:04 dir000</span><br><span class="line">-rw-rw-rw- 1 root root 0 Jan 24 09:04 file000</span><br></pre></td></tr></table></figure>
+
+<p>示例3: 通过 umask 决定新建用户 HOME 目录的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># vim /etc/login.defs</span></span><br><span class="line">UMASK 077</span><br><span class="line">[root@lqz ~]<span class="comment"># useradd dba</span></span><br><span class="line">[root@lqz ~]<span class="comment"># ll -d /home/dba/</span></span><br><span class="line">drwx------. 4 dba dba 4096 3 月 11 19:50 /home/dba/</span><br><span class="line"></span><br><span class="line">[root@tianyun ~]<span class="comment"># vim /etc/login.defs</span></span><br><span class="line">UMASK 000</span><br><span class="line">[root@lqz ~]<span class="comment"># useradd sa</span></span><br><span class="line">[root@lqz ~]<span class="comment"># ll -d /home/sa/</span></span><br><span class="line">drwxrwxrwx. 4 sa sa 4096 3 月 11 19:53 /home/sa/</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/01-Centos7%E5%AE%89%E8%A3%85jdk1.8/">
+        <span class="nav-arrow">← </span>
+        
+          Centos7 安装jdk1.8
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/17-Linux%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">
+        
+          17-linux的计划任务介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">1.特殊权限概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90SUID"><span class="toc-nav-text">2.特殊权限SUID</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E9%97%AE%E9%A2%98%E6%8A%9B%E5%87%BA"><span class="toc-nav-text">1.问题抛出</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-nav-text">2.解决方案</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E7%A4%BA%E4%BE%8B%E6%BC%94%E7%A4%BA"><span class="toc-nav-text">3.示例演示</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-%E4%BE%8B%E5%AD%90%E8%A7%A3%E9%87%8A"><span class="toc-nav-text">4.例子解释</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90SGID"><span class="toc-nav-text">3.特殊权限SGID</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-sgid%E6%8E%88%E6%9D%83%E6%96%B9%E6%B3%95-2000%E6%9D%83%E9%99%90%E5%AD%97%E7%AC%A6s-S-%EF%BC%8C%E5%8F%96%E5%86%B3%E4%BA%8E%E5%B1%9E%E7%BB%84%E4%BD%8D%E7%BD%AE%E4%B8%8A%E7%9A%84x"><span class="toc-nav-text">2.sgid授权方法: 2000权限字符s(S)，取决于属组位置上的x</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-sgid%E4%BD%9C%E7%94%A8"><span class="toc-nav-text">3.sgid作用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90SBIT"><span class="toc-nav-text">4.特殊权限SBIT</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-sticky%E6%8E%88%E6%9D%83%E6%96%B9%E6%B3%95%EF%BC%8C1000-%E6%9D%83%E9%99%90%E5%AD%97%E7%AC%A6t-T-%E5%85%B6%E4%BB%96%E7%94%A8%E6%88%B7%E4%BD%8D%E7%9A%84x%E4%BD%8D%E4%B8%8A%E8%AE%BE%E7%BD%AE%E3%80%82"><span class="toc-nav-text">2.sticky授权方法，1000 权限字符t(T),其他用户位的x位上设置。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-sticky%E4%BD%9C%E7%94%A8"><span class="toc-nav-text">3.sticky作用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-%E6%9D%83%E9%99%90%E5%B1%9E%E6%80%A7chattr"><span class="toc-nav-text">5.权限属性chattr</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-%E8%BF%9B%E7%A8%8B%E6%8E%A9%E7%A0%81umask"><span class="toc-nav-text">6.进程掩码umask</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-umask%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-nav-text">1.umask是什么?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-umask%E6%98%AF%E5%A6%82%E4%BD%95%E6%94%B9%E5%8F%98%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-nav-text">2.umask是如何改变创建新文件的权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-umask%E6%B6%89%E5%8F%8A%E5%93%AA%E4%BA%9B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-nav-text">3.umask涉及哪些配置文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-umask%E6%BC%94%E7%A4%BA%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">4.umask演示示例</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/08-Linux特殊权限/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "08-linux特殊权限介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

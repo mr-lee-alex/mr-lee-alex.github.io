@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      17-linux的计划任务介绍 | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>17-linux的计划任务介绍</h2>
+
+
+
+  <p class="post-date">2020-04-06</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-计划任务基本概述"><a href="#1-计划任务基本概述" class="headerlink" title="1.计划任务基本概述"></a>1.计划任务基本概述</h2><h3 id="1-什么是crond"><a href="#1-什么是crond" class="headerlink" title="1.什么是crond"></a>1.什么是crond</h3><p>crond就是计划任务，类似于我们平时生活中的闹钟。定点执行。</p>
+<p>2.为什么要使用crond<br>crond主要是做一些周期性的任务，比如: 凌晨3点定时备份数据。比如：11点开启网站抢购接口，12点关闭网站抢购接口。</p>
+<h3 id="3-计划任务主要分为以下两种使用情况"><a href="#3-计划任务主要分为以下两种使用情况" class="headerlink" title="3.计划任务主要分为以下两种使用情况:"></a>3.计划任务主要分为以下两种使用情况:</h3><p>1.系统级别的定时任务： 临时文件清理、系统信息采集、日志文件切割<br>2.用户级别的定时任务： 定时向互联网同步时间、定时备份系统配置文件、定时备份数据库的数据</p>
+<h2 id="2-计划任务时间管理"><a href="#2-计划任务时间管理" class="headerlink" title="2.计划任务时间管理"></a>2.计划任务时间管理</h2><h3 id="1-Crontab配置文件记录了时间周期的含义"><a href="#1-Crontab配置文件记录了时间周期的含义" class="headerlink" title="1.Crontab配置文件记录了时间周期的含义"></a>1.Crontab配置文件记录了时间周期的含义</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># vim /etc/crontab</span></span><br><span class="line">SHELL=/bin/bash                     <span class="comment">#执行命令的解释器</span></span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin  <span class="comment">#环境变量</span></span><br><span class="line">MAILTO=root                         <span class="comment">#邮件发给谁</span></span><br><span class="line"><span class="comment"># Example of job definition:</span></span><br><span class="line"><span class="comment"># .---------------- minute (0 - 59) #分钟</span></span><br><span class="line"><span class="comment"># |  .------------- hour (0 - 23)   #小时</span></span><br><span class="line"><span class="comment"># |  |  .---------- day of month (1 - 31)   #日期</span></span><br><span class="line"><span class="comment"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr #月份</span></span><br><span class="line"><span class="comment"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat  #星期</span></span><br><span class="line"><span class="comment"># |  |  |  |  |</span></span><br><span class="line"><span class="comment">#            command to be executed</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#   表示任意的(分、时、日、月、周)时间都执行</span></span><br><span class="line"><span class="comment"># -  表示一个时间范围段, 如5-7点</span></span><br><span class="line"><span class="comment"># ,  表示分隔时段, 如6,0,4表示周六、日、四</span></span><br><span class="line"><span class="comment"># /1 表示每隔n单位时间, 如/10 每10分钟</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-了解crontab的时间编写规范"><a href="#2-了解crontab的时间编写规范" class="headerlink" title="2.了解crontab的时间编写规范"></a>2.了解crontab的时间编写规范</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">00 02    <span class="built_in">ls</span>      <span class="comment">#每天的凌晨2点整执行</span></span><br><span class="line">00 02 1   <span class="built_in">ls</span>      <span class="comment">#每月的1日的凌晨2点整执行</span></span><br><span class="line">00 02 14 2  <span class="built_in">ls</span>     <span class="comment">#每年的2月14日凌晨2点执行</span></span><br><span class="line">00 02   7 <span class="built_in">ls</span>      <span class="comment">#每周天的凌晨2点整执行</span></span><br><span class="line">00 02  6 5 <span class="built_in">ls</span>      <span class="comment">#每年的6月周五凌晨2点执行</span></span><br><span class="line">00 02 14  7 <span class="built_in">ls</span>     <span class="comment">#每月14日或每周日的凌晨2点都执行</span></span><br><span class="line">00 02 14 2 7 <span class="built_in">ls</span>     <span class="comment">#每年的2月14日或每年2月的周天的凌晨2点执行   </span></span><br><span class="line">/10  02    <span class="built_in">ls</span>   <span class="comment">#每天凌晨2点，每隔10分钟执行一次</span></span><br><span class="line">      <span class="built_in">ls</span>       <span class="comment">#每分钟都执行</span></span><br><span class="line">00 00 14 2   <span class="built_in">ls</span>    <span class="comment">#每年2月14日的凌晨执行命令 </span></span><br><span class="line">/5      <span class="built_in">ls</span>     <span class="comment">#每隔5分钟执行一次</span></span><br><span class="line">00 02  1,5,8  <span class="built_in">ls</span>  <span class="comment">#每年的1月5月8月凌晨2点执行</span></span><br><span class="line">00 02 1-8    <span class="built_in">ls</span>    <span class="comment">#每月1号到8号凌晨2点执行</span></span><br><span class="line">0 21    <span class="built_in">ls</span>       <span class="comment">#每天晚上21:00执行</span></span><br><span class="line">45 4 1,10,22   <span class="built_in">ls</span> <span class="comment">#每月1、10、22日的4:45执行</span></span><br><span class="line">45 4 1-10   l     <span class="comment">#每月1到10日的4:45执行</span></span><br><span class="line">3,15 8-11 /2   <span class="built_in">ls</span> <span class="comment">#每隔两天的上午8点到11点的第3和第15分钟执行</span></span><br><span class="line">0 23-7/1    <span class="built_in">ls</span>   <span class="comment">#晚上11点到早上7点之间，每隔一小时执行</span></span><br><span class="line">15 21   1-5 <span class="built_in">ls</span>    <span class="comment">#周一到周五每天晚上21:15执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用crontab编写cron定时任务"><a href="#3-使用crontab编写cron定时任务" class="headerlink" title="3.使用crontab编写cron定时任务"></a>3.使用crontab编写cron定时任务</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-e</td>
+<td align="left">编辑定时任务</td>
+</tr>
+<tr>
+<td align="left">-l</td>
+<td align="left">查看定时任务</td>
+</tr>
+<tr>
+<td align="left">-r</td>
+<td align="left">删除定时任务</td>
+</tr>
+<tr>
+<td align="left">-u</td>
+<td align="left">指定其他用户</td>
+</tr>
+</tbody></table>
+<h2 id="3-计划任务编写实践"><a href="#3-计划任务编写实践" class="headerlink" title="3.计划任务编写实践"></a>3.计划任务编写实践</h2><h3 id="1-使用root用户每5分钟执行一次时间同步"><a href="#1-使用root用户每5分钟执行一次时间同步" class="headerlink" title="1.使用root用户每5分钟执行一次时间同步"></a>1.使用root用户每5分钟执行一次时间同步</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.如何同步时间</span></span><br><span class="line">[root@lqz ~]<span class="comment"># ntpdate time.windows.com &amp;&gt;/dev/null</span></span><br><span class="line"><span class="comment">#2.配置定时任务</span></span><br><span class="line">[root@lqz ~]<span class="comment"># crontab -e -u root</span></span><br><span class="line">[root@lqz ~]<span class="comment"># crontab -l -u root</span></span><br><span class="line">/5     ntpdate time.windows.com &amp;&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-每天的下午3-5点，每隔半小时执行一次sync命令"><a href="#2-每天的下午3-5点，每隔半小时执行一次sync命令" class="headerlink" title="2.每天的下午3,5点，每隔半小时执行一次sync命令"></a>2.每天的下午3,5点，每隔半小时执行一次sync命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lqz ~]<span class="comment"># crontab -l</span></span><br><span class="line">/30 15,17    <span class="built_in">sync</span> &amp;&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-案例：每天凌晨3点做一次备份？备份-x2F-etc-x2F-目录到-x2F-backup下面"><a href="#3-案例：每天凌晨3点做一次备份？备份-x2F-etc-x2F-目录到-x2F-backup下面" class="headerlink" title="3.案例：每天凌晨3点做一次备份？备份&#x2F;etc&#x2F;目录到&#x2F;backup下面"></a>3.案例：每天凌晨3点做一次备份？备份&#x2F;etc&#x2F;目录到&#x2F;backup下面</h3><ol>
+<li>将备份命令写入一个脚本中</li>
+<li>每天备份文件名要求格式: 2019-05-01_hostname_etc.tar.gz</li>
+<li>在执行计划任务时，不要输出任务信息</li>
+<li>存放备份内容的目录要求只保留三天的数据</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.实现如上备份需求</span></span><br><span class="line">[root@lqz ~]<span class="comment"># mkdir /backup</span></span><br><span class="line">[root@lqz ~]<span class="comment"># tar zcf $(date +%F)_$(hostname)_etc.tar.gz /etc</span></span><br><span class="line">[root@lqz ~]<span class="comment"># find /backup -name “.tar.gz” -mtime +3 -exec rm -f &#123;&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.将命令写入至一个文件中</span></span><br><span class="line">[root@lqz ~]<span class="comment"># vim /root/back.sh</span></span><br><span class="line"><span class="built_in">mkdir</span> /backup</span><br><span class="line">tar zcf $(<span class="built_in">date</span> +%F)_$(hostname)_etc.tar.gz /etc</span><br><span class="line">find /backup -name “.tar.gz” -mtime +3 -<span class="built_in">exec</span> <span class="built_in">rm</span> -f &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.配置定时任务</span></span><br><span class="line">[root@lqz ~]<span class="comment"># crontab -l</span></span><br><span class="line">00 03    bash /root/back.sh  &amp;&gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.备份脚本</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-crond注意的事项"><a href="#4-crond注意的事项" class="headerlink" title="4.crond注意的事项"></a>4.crond注意的事项</h3><ol>
+<li>给定时任务注释</li>
+<li>将需要定期执行的任务写入Shell脚本中，避免直接使用命令无法执行的情况tar date</li>
+<li>定时任务的结尾一定要有&amp;&gt;&#x2F;dev&#x2F;null或者将结果追加重定向&gt;&gt;&#x2F;tmp&#x2F;date.log文件</li>
+<li>注意有些命令是无法成功执行的 echo “123” &gt;&gt;&#x2F;tmp&#x2F;test.log &amp;&gt;&#x2F;dev&#x2F;null</li>
+</ol>
+<p>5.如果一定要是用命令，命令必须使用绝对路径</p>
+<p>5.crond如何备份</p>
+<ol>
+<li>通过查找&#x2F;var&#x2F;log&#x2F;cron中执行的记录，去推算任务执行的时间</li>
+<li>定时的备份&#x2F;var&#x2F;spool&#x2F;cron&#x2F;{usernmae}</li>
+</ol>
+<p>6.crond如何拒绝某个用户使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用root将需要拒绝的用户加入/etc/cron.deny</span></span><br><span class="line">[root@lqz ~]<span class="comment"># echo &quot;lqz&quot; &gt;&gt; /etc/cron.deny</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.登陆该普通用户，测试是否能编写定时任务</span></span><br><span class="line">[oldboy@lqz ~]$ crontab -e</span><br><span class="line">You (lqz) are not allowed to use this program (crontab)</span><br><span class="line">See crontab(1) <span class="keyword">for</span> more information</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-计划任务如何调试"><a href="#4-计划任务如何调试" class="headerlink" title="4.计划任务如何调试"></a>4.计划任务如何调试</h2><h3 id="1-crond调试"><a href="#1-crond调试" class="headerlink" title="1.crond调试"></a>1.crond调试</h3><ol>
+<li>调整任务每分钟执行的频率, 以便做后续的调试。</li>
+<li>如果使用cron运行脚本，请将脚本执行的结果写入指定日志文件, 观察日志内容是否正常。</li>
+<li>命令使用绝对路径, 防止无法找到命令导致定时任务执行产生故障。</li>
+<li>通过查看&#x2F;var&#x2F;log&#x2F;cron日志，以便检查我们执行的结果，方便进行调试。</li>
+</ol>
+<h3 id="2-crond编写思路"><a href="#2-crond编写思路" class="headerlink" title="2.crond编写思路"></a>2.crond编写思路</h3><ul>
+<li>1.手动执行命令，然后保留执行成功的结果。</li>
+<li>2.编写脚本<ul>
+<li>脚本需要统一路径&#x2F;scripts</li>
+<li>脚本内容复制执行成功的命令(减少每个环节出错几率)</li>
+<li>脚本内容尽可能的优化, 使用一些变量或使用简单的判断语句</li>
+<li>脚本执行的输出信息可以重定向至其他位置保留或写入&#x2F;dev&#x2F;null</li>
+</ul>
+</li>
+<li>3.执行脚本<ul>
+<li>使用bash命令执行, 防止脚本没有增加执行权限(&#x2F;usr&#x2F;bin&#x2F;bash)</li>
+<li>执行脚本成功后，复制该执行的命令，以便写入cron</li>
+</ul>
+</li>
+<li>4.编写计划任务<ul>
+<li>加上必要的注释信息, 人、时间、任务</li>
+<li>设定计划任务执行的周期</li>
+<li>粘贴执行脚本的命令(不要手敲)</li>
+</ul>
+</li>
+<li>5.调试计划任务<ul>
+<li>增加任务频率测试</li>
+<li>检查环境变量问题</li>
+<li>检查crond服务日志</li>
+</ul>
+</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/08-Linux%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90/">
+        <span class="nav-arrow">← </span>
+        
+          08-linux特殊权限介绍
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/16-Linux%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/">
+        
+          16-linux的系统服务介绍
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">1.计划任务基本概述</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFcrond"><span class="toc-nav-text">1.什么是crond</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%BB%A5%E4%B8%8B%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-nav-text">3.计划任务主要分为以下两种使用情况:</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-nav-text">2.计划任务时间管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-Crontab%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%B0%E5%BD%95%E4%BA%86%E6%97%B6%E9%97%B4%E5%91%A8%E6%9C%9F%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-nav-text">1.Crontab配置文件记录了时间周期的含义</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E4%BA%86%E8%A7%A3crontab%E7%9A%84%E6%97%B6%E9%97%B4%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83"><span class="toc-nav-text">2.了解crontab的时间编写规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E4%BD%BF%E7%94%A8crontab%E7%BC%96%E5%86%99cron%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-nav-text">3.使用crontab编写cron定时任务</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E7%BC%96%E5%86%99%E5%AE%9E%E8%B7%B5"><span class="toc-nav-text">3.计划任务编写实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-%E4%BD%BF%E7%94%A8root%E7%94%A8%E6%88%B7%E6%AF%8F5%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="toc-nav-text">1.使用root用户每5分钟执行一次时间同步</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-%E6%AF%8F%E5%A4%A9%E7%9A%84%E4%B8%8B%E5%8D%883-5%E7%82%B9%EF%BC%8C%E6%AF%8F%E9%9A%94%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1sync%E5%91%BD%E4%BB%A4"><span class="toc-nav-text">2.每天的下午3,5点，每隔半小时执行一次sync命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-%E6%A1%88%E4%BE%8B%EF%BC%9A%E6%AF%8F%E5%A4%A9%E5%87%8C%E6%99%A83%E7%82%B9%E5%81%9A%E4%B8%80%E6%AC%A1%E5%A4%87%E4%BB%BD%EF%BC%9F%E5%A4%87%E4%BB%BD-x2F-etc-x2F-%E7%9B%AE%E5%BD%95%E5%88%B0-x2F-backup%E4%B8%8B%E9%9D%A2"><span class="toc-nav-text">3.案例：每天凌晨3点做一次备份？备份&#x2F;etc&#x2F;目录到&#x2F;backup下面</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-crond%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-nav-text">4.crond注意的事项</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95"><span class="toc-nav-text">4.计划任务如何调试</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-crond%E8%B0%83%E8%AF%95"><span class="toc-nav-text">1.crond调试</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-crond%E7%BC%96%E5%86%99%E6%80%9D%E8%B7%AF"><span class="toc-nav-text">2.crond编写思路</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2020/04/06/linux/入门到精通/17-Linux计划任务/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "17-linux的计划任务介绍",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      9-Docker之Dockerfile | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>9-Docker之Dockerfile</h2>
+
+
+
+  <p class="post-date">2019-03-28</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="一-Dockerfile-简介"><a href="#一-Dockerfile-简介" class="headerlink" title="一 Dockerfile 简介"></a>一 Dockerfile 简介</h2><blockquote>
+<p>•Dockerfile其实就是根据特定的语法格式撰写出来的一个普通的文本文件</p>
+<p>•利用docker build命令依次执行在Dockerfile中定义的一系列命令，最终生成一个新的镜像（定制镜像）</p>
+</blockquote>
+<h2 id="二-Dockerfile-示例与使用"><a href="#二-Dockerfile-示例与使用" class="headerlink" title="二 Dockerfile 示例与使用"></a>二 Dockerfile 示例与使用</h2><h3 id="2-1-Dockerfile参考示例"><a href="#2-1-Dockerfile参考示例" class="headerlink" title="2.1 Dockerfile参考示例"></a>2.1 Dockerfile参考示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir dockerfile_test</span><br><span class="line">cd dockerfile_test</span><br><span class="line">vim Dockerfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># Test</span></span><br><span class="line"><span class="comment"># VERSION   0.01</span></span><br><span class="line">FROM ubuntu</span><br><span class="line">RUN echo <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">CMD [<span class="string">&quot;echo&quot;</span>,<span class="string">&quot;this is image create by lqz&quot;</span>]</span><br><span class="line"></span><br><span class="line">docker build  <span class="comment"># 构建</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-Dockerfile使用命令-–-docker-build"><a href="#2-2-Dockerfile使用命令-–-docker-build" class="headerlink" title="2.2 Dockerfile使用命令 – docker build"></a>2.2 Dockerfile使用命令 – docker build</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用：</span></span><br><span class="line">	根据dockerfile创建镜像</span><br><span class="line"><span class="comment"># 命令格式：</span></span><br><span class="line">	docker build [OPTIONS] PATH | URL | -</span><br><span class="line"><span class="comment"># 命令参数：</span></span><br><span class="line">	PATH		Dockerfile所在路径(文件夹路径)，文件名必须是Dockerfile</span><br><span class="line">	URL		Dockerfile所在URL地址</span><br><span class="line">	</span><br><span class="line">	OPTIONS:</span><br><span class="line">		-t, --tag <span class="built_in">list</span>		为镜像设置名称和tag</span><br><span class="line">		-f, --file string		指定Dockerfile的路径(这是可以使用其他名称命名Dockerfile)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="三-Dockerfile-特征"><a href="#三-Dockerfile-特征" class="headerlink" title="三 Dockerfile 特征"></a>三 Dockerfile 特征</h2><h3 id="3-2-Dockerfile-构建特征"><a href="#3-2-Dockerfile-构建特征" class="headerlink" title="3.2 Dockerfile 构建特征"></a>3.2 Dockerfile 构建特征</h3><p>查看官方的Dockerfile：<a target="_blank" rel="noopener" href="https://github.com/docker-library/docs">https://github.com/docker-library/docs</a></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gdcgaf4bguj30ni0eudlv.jpg" alt="image-20200331010717593" style="zoom:67%;" />
+
+<blockquote>
+<p>•Dockerfile必须具备一个FROM命令来进行构建</p>
+<p>•每一个Dockerfile命令都会构建一层镜像（本质上是每一层都会启动一个容器，执行完命令后，将容器进行提交后，产生新的镜像层）</p>
+<p>•通过查看下载下来的镜像，发现历史层信息的层ID是missing，其实是因为原本的层id只存在于构建镜像的宿主机上，一旦转移镜像后，历史层消息中将只保留最新一层的ID</p>
+</blockquote>
+<h2 id="四-Dockerfile-命令概述"><a href="#四-Dockerfile-命令概述" class="headerlink" title="四 Dockerfile 命令概述"></a>四 Dockerfile 命令概述</h2><h3 id="4-1-Dockerfile-命令概述（一）"><a href="#4-1-Dockerfile-命令概述（一）" class="headerlink" title="4.1 Dockerfile 命令概述（一）"></a>4.1 Dockerfile 命令概述（一）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FROM: 指定基础镜像</span><br><span class="line">RUN： 构建镜像过程中需要执行的命令。可以有多条。docker build</span><br><span class="line">CMD：添加启动容器时需要执行的命令。多条只有最后一条生效。可以在启动容器时被覆盖和修改。</span><br><span class="line">ENTRYPOINT：同CMD，但这个一定会被执行，不会被覆盖修改。</span><br><span class="line">：为镜像添加对应的数据。</span><br><span class="line">MLABELAINTAINER：表明镜像的作者。将被遗弃，被LABEL代替。</span><br><span class="line">EXPOSE：设置对外暴露的端口。</span><br><span class="line">ENV：设置执行命令时的环境变量，并且在构建完成后，仍然生效</span><br><span class="line">ARG：设置只在构建过程中使用的环境变量，构建完成后，将消失</span><br><span class="line">ADD：将本地文件或目录拷贝到镜像的文件系统中。能解压特定格式文件，能将URL作为要拷贝的文件</span><br><span class="line">COPY：将本地文件或目录拷贝到镜像的文件系统中。</span><br><span class="line">VOLUME：添加数据卷</span><br><span class="line">USER：指定以哪个用户的名义执行RUN, CMD 和ENTRYPOINT等命令</span><br><span class="line">WORKDIR：设置工作目录</span><br><span class="line">ONBUILD：如果制作的镜像被另一个Dockerfile使用，将在那里被执行Docekrfile命令</span><br><span class="line">STOPSIGNAL：设置容器退出时发出的关闭信号。</span><br><span class="line">HEALTHCHECK：设置容器状态检查。</span><br><span class="line">SHELL：更改执行shell命令的程序。Linux的默认shell是[“/<span class="built_in">bin</span>/sh”, “-c”]，Windows的是[“cmd”, “/S”, “/C”]。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gdcgftwmk2j30xk0j0kbt.jpg" alt="image-20200331011226698"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">
+        <span class="nav-arrow">← </span>
+        
+          [置顶]Elasticsearch系列教程
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2019/03/28/linux/Docker/8-Docker%E4%B9%8B%E4%BB%93%E5%BA%93/">
+        
+          8-Docker之仓库
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-Dockerfile-%E7%AE%80%E4%BB%8B"><span class="toc-nav-text">一 Dockerfile 简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-Dockerfile-%E7%A4%BA%E4%BE%8B%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">二 Dockerfile 示例与使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-1-Dockerfile%E5%8F%82%E8%80%83%E7%A4%BA%E4%BE%8B"><span class="toc-nav-text">2.1 Dockerfile参考示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-2-Dockerfile%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4-%E2%80%93-docker-build"><span class="toc-nav-text">2.2 Dockerfile使用命令 – docker build</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-Dockerfile-%E7%89%B9%E5%BE%81"><span class="toc-nav-text">三 Dockerfile 特征</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-2-Dockerfile-%E6%9E%84%E5%BB%BA%E7%89%B9%E5%BE%81"><span class="toc-nav-text">3.2 Dockerfile 构建特征</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-Dockerfile-%E5%91%BD%E4%BB%A4%E6%A6%82%E8%BF%B0"><span class="toc-nav-text">四 Dockerfile 命令概述</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-1-Dockerfile-%E5%91%BD%E4%BB%A4%E6%A6%82%E8%BF%B0%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-nav-text">4.1 Dockerfile 命令概述（一）</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2019/03/28/linux/Docker/9-Docker之Dockerfile/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "9-Docker之Dockerfile",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>
