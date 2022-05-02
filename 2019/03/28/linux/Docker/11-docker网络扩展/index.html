@@ -10,7 +10,7 @@
   
   <title>
     
-      Mr.Lee-李健博的博客
+      11-Docker之Docker-网络扩展 | Mr.Lee-李健博的博客
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,11 +117,11 @@
 </header>
 
     <div id="article-banner">
-  <h2></h2>
+  <h2>11-Docker之Docker-网络扩展</h2>
 
 
 
-  <p class="post-date">2022-05-02</p>
+  <p class="post-date">2019-03-28</p>
     <!-- 不蒜子统计 -->
     <span id="busuanzi_container_page_pv" style='display:none' class="">
         <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
@@ -133,7 +133,8 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h2 id="docker-run参数"><a href="#docker-run参数" class="headerlink" title="docker run参数"></a>docker run参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">常用选项说明</span><br><span class="line"></span><br><span class="line">    -d, --detach=false， 指定容器运行于前台还是后台，默认为false</span><br><span class="line">    -i, --interactive=false， 打开STDIN，用于控制台交互</span><br><span class="line">    -t, --tty=false， 分配tty设备，该可以支持终端登录，默认为false</span><br><span class="line">    -u, --user=<span class="string">&quot;&quot;</span>， 指定容器的用户</span><br><span class="line">    -a, --attach=[]， 登录容器（必须是以docker run -d启动的容器）</span><br><span class="line">    -w, --workdir=<span class="string">&quot;&quot;</span>， 指定容器的工作目录</span><br><span class="line">    -c, --cpu-shares=<span class="number">0</span>， 设置容器CPU权重，在CPU共享场景使用</span><br><span class="line">    -e, --env=[]， 指定环境变量，容器中可以使用该环境变量</span><br><span class="line">    -m, --memory=<span class="string">&quot;&quot;</span>， 指定容器的内存上限</span><br><span class="line">    -P, --publish-<span class="built_in">all</span>=false， 指定容器暴露的端口</span><br><span class="line">    -p, --publish=[]， 指定容器暴露的端口</span><br><span class="line">    -h, --hostname=<span class="string">&quot;&quot;</span>， 指定容器的主机名</span><br><span class="line">    -v, --volume=[]， 给容器挂载存储卷，挂载到容器的某个目录</span><br><span class="line">    --volumes-<span class="keyword">from</span>=[]， 给容器挂载其他容器上的卷，挂载到容器的某个目录</span><br><span class="line">    --cap-add=[]， 添加权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cap-drop=[]， 删除权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cidfile=<span class="string">&quot;&quot;</span>， 运行容器后，在指定文件中写入容器PID值，一种典型的监控系统用法</span><br><span class="line">    --cpuset=<span class="string">&quot;&quot;</span>， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU</span><br><span class="line">    --device=[]， 添加主机设备给容器，相当于设备直通</span><br><span class="line">    --dns=[]， 指定容器的dns服务器</span><br><span class="line">    --dns-search=[]， 指定容器的dns搜索域名，写入到容器的/etc/resolv.conf文件</span><br><span class="line">    --entrypoint=<span class="string">&quot;&quot;</span>， 覆盖image的入口点</span><br><span class="line">    --env-file=[]， 指定环境变量文件，文件格式为每行一个环境变量</span><br><span class="line">    --expose=[]， 指定容器暴露的端口，即修改镜像的暴露端口</span><br><span class="line">    --link=[]， 指定容器间的关联，使用其他容器的IP、env等信息</span><br><span class="line">    --lxc-conf=[]， 指定容器的配置文件，只有在指定--<span class="built_in">exec</span>-driver=lxc时使用</span><br><span class="line">    --name=<span class="string">&quot;&quot;</span>， 指定容器名字，后续可以通过名字进行容器管理，links特性需要使用名字</span><br><span class="line">    --net=<span class="string">&quot;bridge&quot;</span>， 容器网络设置:</span><br><span class="line">        bridge 使用docker daemon指定的网桥</span><br><span class="line">        host //容器使用主机的网络</span><br><span class="line">        container:NAME_or_ID &gt;//使用其他容器的网路，共享IP和PORT等网络资源</span><br><span class="line">        none 容器使用自己的网络（类似--net=bridge），但是不进行配置</span><br><span class="line">    --privileged=false， 指定容器是否为特权容器，特权容器拥有所有的capabilities</span><br><span class="line">    --restart=<span class="string">&quot;no&quot;</span>， 指定容器停止后的重启策略:</span><br><span class="line">        no：容器退出时不重启</span><br><span class="line">        on-failure：容器故障退出（返回值非零）时重启</span><br><span class="line">        always：容器退出时总是重启</span><br><span class="line">    --rm=false， 指定容器停止后自动删除容器(不支持以docker run -d启动的容器)</span><br><span class="line">    --sig-proxy=true， 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <section class="markdown-content"><p>docker的网络扩展</p>
+<h2 id="docker-run参数"><a href="#docker-run参数" class="headerlink" title="docker run参数"></a>docker run参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">常用选项说明</span><br><span class="line"></span><br><span class="line">    -d, --detach=false， 指定容器运行于前台还是后台，默认为false</span><br><span class="line">    -i, --interactive=false， 打开STDIN，用于控制台交互</span><br><span class="line">    -t, --tty=false， 分配tty设备，该可以支持终端登录，默认为false</span><br><span class="line">    -u, --user=<span class="string">&quot;&quot;</span>， 指定容器的用户</span><br><span class="line">    -a, --attach=[]， 登录容器（必须是以docker run -d启动的容器）</span><br><span class="line">    -w, --workdir=<span class="string">&quot;&quot;</span>， 指定容器的工作目录</span><br><span class="line">    -c, --cpu-shares=<span class="number">0</span>， 设置容器CPU权重，在CPU共享场景使用</span><br><span class="line">    -e, --env=[]， 指定环境变量，容器中可以使用该环境变量</span><br><span class="line">    -m, --memory=<span class="string">&quot;&quot;</span>， 指定容器的内存上限</span><br><span class="line">    -P, --publish-<span class="built_in">all</span>=false， 指定容器暴露的端口</span><br><span class="line">    -p, --publish=[]， 指定容器暴露的端口</span><br><span class="line">    -h, --hostname=<span class="string">&quot;&quot;</span>， 指定容器的主机名</span><br><span class="line">    -v, --volume=[]， 给容器挂载存储卷，挂载到容器的某个目录</span><br><span class="line">    --volumes-<span class="keyword">from</span>=[]， 给容器挂载其他容器上的卷，挂载到容器的某个目录</span><br><span class="line">    --cap-add=[]， 添加权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cap-drop=[]， 删除权限，权限清单详见：http://linux.die.net/man/<span class="number">7</span>/capabilities</span><br><span class="line">    --cidfile=<span class="string">&quot;&quot;</span>， 运行容器后，在指定文件中写入容器PID值，一种典型的监控系统用法</span><br><span class="line">    --cpuset=<span class="string">&quot;&quot;</span>， 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU</span><br><span class="line">    --device=[]， 添加主机设备给容器，相当于设备直通</span><br><span class="line">    --dns=[]， 指定容器的dns服务器</span><br><span class="line">    --dns-search=[]， 指定容器的dns搜索域名，写入到容器的/etc/resolv.conf文件</span><br><span class="line">    --entrypoint=<span class="string">&quot;&quot;</span>， 覆盖image的入口点</span><br><span class="line">    --env-file=[]， 指定环境变量文件，文件格式为每行一个环境变量</span><br><span class="line">    --expose=[]， 指定容器暴露的端口，即修改镜像的暴露端口</span><br><span class="line">    --link=[]， 指定容器间的关联，使用其他容器的IP、env等信息</span><br><span class="line">    --lxc-conf=[]， 指定容器的配置文件，只有在指定--<span class="built_in">exec</span>-driver=lxc时使用</span><br><span class="line">    --name=<span class="string">&quot;&quot;</span>， 指定容器名字，后续可以通过名字进行容器管理，links特性需要使用名字</span><br><span class="line">    --net=<span class="string">&quot;bridge&quot;</span>， 容器网络设置:</span><br><span class="line">        bridge 使用docker daemon指定的网桥</span><br><span class="line">        host //容器使用主机的网络</span><br><span class="line">        container:NAME_or_ID &gt;//使用其他容器的网路，共享IP和PORT等网络资源</span><br><span class="line">        none 容器使用自己的网络（类似--net=bridge），但是不进行配置</span><br><span class="line">    --privileged=false， 指定容器是否为特权容器，特权容器拥有所有的capabilities</span><br><span class="line">    --restart=<span class="string">&quot;no&quot;</span>， 指定容器停止后的重启策略:</span><br><span class="line">        no：容器退出时不重启</span><br><span class="line">        on-failure：容器故障退出（返回值非零）时重启</span><br><span class="line">        always：容器退出时总是重启</span><br><span class="line">    --rm=false， 指定容器停止后自动删除容器(不支持以docker run -d启动的容器)</span><br><span class="line">    --sig-proxy=true， 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
@@ -182,23 +183,32 @@
 </section>
     <!-- Tags START -->
     
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
     <!-- Tags END -->
     <!-- NAV START -->
     
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2022/05/02/linux/Docker/12-pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Docker%E5%BC%80%E5%8F%91/">
+      <a class="nav-left" href="/2019/03/28/linux/Docker/10-Docker%E4%B9%8BDocker-Compose/">
         <span class="nav-arrow">← </span>
         
-          (untitled)
+          10-Docker之Docker-Compose
         
       </a>
     
     
-      <a class="nav-right" href="/2022/05/02/linux/%E5%85%B6%E4%BB%96/03-DevOps%E5%AE%9E%E6%88%98/">
+      <a class="nav-right" href="/2019/03/28/linux/Docker/1-Docker%E4%B9%8B%E4%BB%8B%E7%BB%8D/">
         
-          (untitled)
+          1-Docker介绍与安装
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -258,7 +268,7 @@
 
 <script>
   (function () {
-    var url = 'https://mr-lee-alex.github.io/2022/05/02/linux/Docker/11-docker网络扩展/';
+    var url = 'https://mr-lee-alex.github.io/2019/03/28/linux/Docker/11-docker网络扩展/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -320,7 +330,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "",
+        id: "11-Docker之Docker-网络扩展",
         owner: "",
         repo: "",
         oauth: {
