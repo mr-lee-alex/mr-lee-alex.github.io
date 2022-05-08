@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [2-Gin程序热加载] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[2-Gin程序热加载]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="2-Gin程序热加载"><a href="#2-Gin程序热加载" class="headerlink" title="[2-Gin程序热加载]"></a>[2-Gin程序热加载]</h1><h1 id="一-项目热加载"><a href="#一-项目热加载" class="headerlink" title="一 项目热加载"></a>一 项目热加载</h1><p>如果你是一名python开发者，应该很熟悉这个。我们在Flask或者Django框架下开发都是支持实时加载的，当我们对代码进行修改时，程序能够自动重新加载并执行，这在我们开发中是非常便利的，可以快速进行代码测试，省去了每次手动重新编译。</p>
+<p>如果你是一名JAVA开发者，不仅会听过热加载，热部署会跟着一块出现。热部署一般是指容器（支持多应用）不重启，单独启动单个应用。热加载一般指重启应用（JVM），单独重新更新某个类或者配置文件</p>
+<p>所谓热加载就是当我们对代码进行修改时，程序能够自动重新加载并执行，这在我们开发中是非常便利的，可以快速进行代码测试，省去了每次手动重新编译</p>
+<p>beego 中我们可以使用官方给我们提供的 bee 工具来热加载项目，但是 gin 中并没有官方提 供的热加载工具，这个时候我们要实现热加载就可以借助第三方的工具</p>
+<h2 id="1-1-工具一：fresh"><a href="#1-1-工具一：fresh" class="headerlink" title="1.1 工具一：fresh"></a>1.1 工具一：fresh</h2><p>Fresh是一个命令行工具，每次保存Go或模版文件时，该工具都会生成或重新启动Web应用程序。Fresh将监视文件事件，并且每次创建&#x2F;修改&#x2F;删除文件时，Fresh都会生成并重新启动应用程序。如果go build返回错误，它会将记录在tmp文件夹中</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0 地址 ：https://github.com/gravityblast/fresh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 安装</span></span><br><span class="line"><span class="keyword">go</span> get github.com/pilu/fresh</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 切换到项目路径</span></span><br><span class="line">cd /path/to/myapp</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 执行fresh,不需要直接启动项目了，使用fresh启动gin项目即可</span></span><br><span class="line">fresh  </span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-工具二：codegangsta-x2F-gin"><a href="#1-2-工具二：codegangsta-x2F-gin" class="headerlink" title="1.2 工具二：codegangsta&#x2F;gin"></a>1.2 工具二：codegangsta&#x2F;gin</h2><p>gin是一个简单的命令行实用程序，用于实时重新加载Go web应用程序。只需在你的应用程序目录中运行gin，你的web应用程序就会以gin作为代理。当gin检测到更改时，它会自动重新编译代码。你的应用程序将在下次收到HTTP请求时重新启动</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0 地址 ：https://github.com/codegangsta/gin</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 安装</span></span><br><span class="line"><span class="keyword">go</span> get github.com/codegangsta/gin</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 查看帮助</span></span><br><span class="line">gin help</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 使用</span></span><br><span class="line">gin run main.<span class="keyword">go</span>  </span><br><span class="line"><span class="comment">// 4 访问一下http://127.0.0.1:3000,再访问http://127.0.0.1:8000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5 或者使用以下命令启动,访问3000会被代理到8000</span></span><br><span class="line"><span class="comment">// --bin value, -b value    name of generated binary file (default: &quot;gin-bin&quot;)</span></span><br><span class="line">gin -p <span class="number">3000</span> -a <span class="number">8000</span> -b gin-bin --all run</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-工具三：bee"><a href="#1-3-工具三：bee" class="headerlink" title="1.3 工具三：bee"></a>1.3 工具三：bee</h2><p>bee是beego框架的热编译工具，同样可以对GIN框架进行热编译，使用起来很方便，功能也有很多，这里就不展开了，喜欢的可以去看文档，解锁更多玩法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0 地址 ：https://github.com/beego/bee</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 安装</span></span><br><span class="line"><span class="keyword">go</span> get github.com/beego/bee</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 使用</span></span><br><span class="line">bee run</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 访问：http://127.0.0.1:8000/</span></span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B1-Gin%E6%A1%86%E6%9E%B6%E7%AE%80%E4%BB%8B%E5%92%8C%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8%20%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [1-Gin框架简介和快速使用 ]
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#2-Gin%E7%A8%8B%E5%BA%8F%E7%83%AD%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">[2-Gin程序热加载]</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%80-%E9%A1%B9%E7%9B%AE%E7%83%AD%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">一 项目热加载</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-1-%E5%B7%A5%E5%85%B7%E4%B8%80%EF%BC%9Afresh"><span class="toc-nav-text">1.1 工具一：fresh</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-2-%E5%B7%A5%E5%85%B7%E4%BA%8C%EF%BC%9Acodegangsta-x2F-gin"><span class="toc-nav-text">1.2 工具二：codegangsta&#x2F;gin</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-3-%E5%B7%A5%E5%85%B7%E4%B8%89%EF%BC%9Abee"><span class="toc-nav-text">1.3 工具三：bee</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[2-Gin程序热加载]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[2-Gin程序热加载]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

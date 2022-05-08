@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [21-Gorm关联关系] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[21-Gorm关联关系]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="21-Gorm关联关系"><a href="#21-Gorm关联关系" class="headerlink" title="[21-Gorm关联关系]"></a>[21-Gorm关联关系]</h1><h1 id="一-Belongs-To-一对一"><a href="#一-Belongs-To-一对一" class="headerlink" title="一 Belongs To(一对一)"></a>一 Belongs To(一对一)</h1><h2 id="1-1-Belongs-To"><a href="#1-1-Belongs-To" class="headerlink" title="1.1 Belongs To"></a>1.1 Belongs To</h2><p><code>belongs to</code> 会与另一个模型建立了一对一的连接。 这种模型的每一个实例都“属于”另一个模型的一个实例。</p>
+<p>例如，您的应用包含 user 和 company，并且每个 user 能且只能被分配给一个 company。下面的类型就表示这种关系。 注意，在 <code>User</code> 对象中，有一个和 <code>Company</code> 一样的 <code>CompanyID</code>。 默认情况下， <code>CompanyID</code> 被隐含地用来在 <code>User</code> 和 <code>Company</code> 之间创建一个外键关系， 因此必须包含在 <code>User</code> 结构体中才能填充 <code>Company</code> 内部结构体。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `User` 属于 `Company`，`CompanyID` 是外键</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  CompanyID <span class="type">int</span></span><br><span class="line">  Company   Company</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Company <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">db.AutoMigrate(&amp;User&#123;&#125;,&amp;Company&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>请参阅 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/belongs_to.html#%E9%A2%84%E5%8A%A0%E8%BD%BD">预加载</a> 以了解内部结构的详细信息。</p>
+<h2 id="1-2-重写外键"><a href="#1-2-重写外键" class="headerlink" title="1.2 重写外键"></a>1.2 重写外键</h2><p>要定义一个 belongs to 关系，数据库的表中必须存在外键。默认情况下，外键的名字，使用拥有者的类型名称加上表的主键的字段名字</p>
+<p>例如，定义一个User实体属于Company实体，那么外键的名字一般使用CompanyID。</p>
+<p>GORM同时提供自定义外键名字的方式，如下例所示。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name         <span class="type">string</span></span><br><span class="line">  CompanyRefer <span class="type">int</span> <span class="comment">// 外键改名字为CompanyRefer</span></span><br><span class="line">  Company      Company <span class="string">`gorm:&quot;foreignKey:CompanyRefer&quot;`</span></span><br><span class="line">  <span class="comment">// 使用 CompanyRefer 作为外键</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Company <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-重写引用-一般不用"><a href="#1-3-重写引用-一般不用" class="headerlink" title="1.3 重写引用(一般不用)"></a>1.3 重写引用(一般不用)</h2><p>对于 belongs to 关系，GORM 通常使用数据库表，主表（拥有者）的主键值作为外键参考。 正如上面的例子，我们使用主表Company中的主键字段ID作为外键的参考值。</p>
+<p>如果在Company实体中设置了User实体，那么GORM会自动把Company中的ID属性保存到User的CompanyID属性中。</p>
+<p>同样的，您也可以使用标签 <code>references</code> 来更改它，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  CompanyCode <span class="type">int</span></span><br><span class="line">  Company   Company <span class="string">`gorm:&quot;foreignKey:CompanyCode;references:Code&quot;`</span> <span class="comment">// 指定外键字段为CompanyCode，指定与公司表中Code字段关联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Company <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Code <span class="type">int</span> <span class="string">`gorm:&quot;primarykey&quot;`</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-Belongs-to-的-CRUD"><a href="#1-4-Belongs-to-的-CRUD" class="headerlink" title="1.4 Belongs to 的 CRUD"></a>1.4 Belongs to 的 CRUD</h2><p>点击 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#Association-Mode">关联模式</a> 链接获取 belongs to 相关的用法</p>
+<h2 id="1-5-预加载"><a href="#1-5-预加载" class="headerlink" title="1.5 预加载"></a>1.5 预加载</h2><p>GORM允许通过使用<code>Preload</code>或者<code>Joins</code>来主动加载实体的关联关系，具体内容请参考，<a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/preload.html">预加载（主动加载）</a></p>
+<h2 id="1-6-外键约束"><a href="#1-6-外键约束" class="headerlink" title="1.6 外键约束"></a>1.6 外键约束</h2><p>你可以通过<code>OnUpdate</code>, <code>OnDelete</code>配置标签来增加关联关系的级联操作，如下面的例子，通过GORM可以完成用户和公司的级联更新和级联删除操作：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Name      <span class="type">string</span></span><br><span class="line">	Age <span class="type">int</span></span><br><span class="line">	UserDetailID <span class="type">int</span></span><br><span class="line">	UserDetail   UserDetail <span class="string">`gorm:&quot;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;&quot;`</span> <span class="comment">// 级联更新，删除时置空</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> UserDetail <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID   <span class="type">int</span></span><br><span class="line">	Addr <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Navicat的设计表中可以查看</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="二-Has-One"><a href="#二-Has-One" class="headerlink" title="二 Has One"></a>二 Has One</h1><h2 id="2-1-Has-One"><a href="#2-1-Has-One" class="headerlink" title="2.1 Has One"></a>2.1 Has One</h2><p><code>has one</code> 与另一个模型建立一对一的关联，但它和一对一关系有些许不同。 这种关联表明一个模型的每个实例都包含或拥有另一个模型的一个实例。</p>
+<p>例如，您的应用包含 user 和 credit card 模型，且每个 user 只能有一张 credit card。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// User 有一张 CreditCard，UserID 是外键</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	CreditCard CreditCard <span class="comment">// 与CreditCard表有关联关系</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Number <span class="type">string</span></span><br><span class="line">	UserID <span class="type">uint</span>  <span class="comment">//关联字段在此表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-重写外键"><a href="#2-2-重写外键" class="headerlink" title="2.2 重写外键"></a>2.2 重写外键</h2><p>对于 <code>has one</code> 关系，同样必须存在外键字段。拥有者将把属于它的模型的主键保存到这个字段。</p>
+<p>这个字段的名称通常由 <code>has one</code> 模型的类型加上其 <code>主键</code> 生成，对于上面的例子，它是 <code>UserID</code>。</p>
+<p>为 user 添加 credit card 时，它会将 user 的 <code>ID</code> 保存到自己的 <code>UserID</code> 字段。</p>
+<p>如果你想要使用另一个字段来保存该关系，你同样可以使用标签 <code>foreignKey</code> 来更改它，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	CreditCard CreditCard <span class="string">`gorm:&quot;foreignKey:UserName&quot;`</span></span><br><span class="line">	<span class="comment">// 使用 UserName 作为外键</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Number   <span class="type">string</span></span><br><span class="line">	UserName <span class="type">string</span> <span class="comment">// 使用 UserName 作为外键</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-重写引用"><a href="#2-3-重写引用" class="headerlink" title="2.3 重写引用"></a>2.3 重写引用</h2><p>默认情况下，拥有者实体会将 <code>has one</code> 对应模型的主键保存为外键，您也可以修改它，用另一个字段来保存，例如下个这个使用 <code>Name</code> 来保存的例子。</p>
+<p>您可以使用标签 <code>references</code> 来更改它，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Name       <span class="type">int</span>     <span class="string">`gorm:&quot;index&quot;`</span>  <span class="comment">// name建是索引</span></span><br><span class="line">	CreditCard CreditCard <span class="string">`gorm:&quot;foreignkey:UserName;references:name&quot;`</span>  <span class="comment">// 信用卡表的UserName字段跟用户表Name字段关联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Number   <span class="type">string</span></span><br><span class="line">	UserName <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-多态关联"><a href="#2-4-多态关联" class="headerlink" title="2.4 多态关联"></a>2.4 多态关联</h2><p>GORM 为 <code>has one</code> 和 <code>has many</code> 提供了多态关联支持，它会将拥有者实体的表名、主键值都保存到多态类型的字段中。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Cat <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID    <span class="type">int</span></span><br><span class="line">  Name  <span class="type">string</span></span><br><span class="line">  Toy   Toy <span class="string">`gorm:&quot;polymorphic:Owner;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">  Toy  Toy <span class="string">`gorm:&quot;polymorphic:Owner;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Toy <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID        <span class="type">int</span></span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  OwnerID   <span class="type">int</span></span><br><span class="line">  OwnerType <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Create(&amp;Dog&#123;Name: <span class="string">&quot;dog1&quot;</span>, Toy: Toy&#123;Name: <span class="string">&quot;toy1&quot;</span>&#125;&#125;)</span><br><span class="line"><span class="comment">// INSERT INTO `dogs` (`name`) VALUES (&quot;dog1&quot;)</span></span><br><span class="line"><span class="comment">// INSERT INTO `toys` (`name`,`owner_id`,`owner_type`) VALUES (&quot;toy1&quot;,&quot;1&quot;,&quot;dogs&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>您可以使用标签 <code>polymorphicValue</code> 来更改多态类型的值，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">  Toy  Toy <span class="string">`gorm:&quot;polymorphic:Owner;polymorphicValue:master&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Toy <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID        <span class="type">int</span></span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  OwnerID   <span class="type">int</span></span><br><span class="line">  OwnerType <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Create(&amp;Dog&#123;Name: <span class="string">&quot;dog1&quot;</span>, Toy: Toy&#123;Name: <span class="string">&quot;toy1&quot;</span>&#125;&#125;)</span><br><span class="line"><span class="comment">// INSERT INTO `dogs` (`name`) VALUES (&quot;dog1&quot;)</span></span><br><span class="line"><span class="comment">// INSERT INTO `toys` (`name`,`owner_id`,`owner_type`) VALUES (&quot;toy1&quot;,&quot;1&quot;,&quot;master&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5-Has-One-的-CURD"><a href="#2-5-Has-One-的-CURD" class="headerlink" title="2.5 Has One 的 CURD"></a>2.5 Has One 的 CURD</h2><p>查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#Association-Mode">关联模式</a> 获取 <code>has one</code> 相关的用法</p>
+<h2 id="2-6-预加载"><a href="#2-6-预加载" class="headerlink" title="2.6 预加载"></a>2.6 预加载</h2><p>GORM 可以通过 <code>Preload</code>、<code>Joins</code> 预加载 <code>has one</code> 关联的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/preload.html">预加载</a> 获取详情</p>
+<h2 id="2-7-自引用-Has-One"><a href="#2-7-自引用-Has-One" class="headerlink" title="2.7 自引用 Has One"></a>2.7 自引用 Has One</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  ManagerID *<span class="type">uint</span></span><br><span class="line">  Manager   *User</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-8-外键约束"><a href="#2-8-外键约束" class="headerlink" title="2.8 外键约束"></a>2.8 外键约束</h2><p>你可以通过为标签 <code>constraint</code> 配置 <code>OnUpdate</code>、<code>OnDelete</code> 实现外键约束，在使用 GORM 进行迁移时它会被创建，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  CreditCard CreditCard <span class="string">`gorm:&quot;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Number <span class="type">string</span></span><br><span class="line">  UserID <span class="type">uint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你也可以在删除记录时通过 <code>Select</code> 来删除关联的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#delete_with_select">Delete with Select</a> 获取详情</p>
+<h1 id="三-Has-Many"><a href="#三-Has-Many" class="headerlink" title="三 Has Many"></a>三 Has Many</h1><h2 id="3-1-Has-Many"><a href="#3-1-Has-Many" class="headerlink" title="3.1 Has Many"></a>3.1 Has Many</h2><p><code>has many</code> 与另一个模型建立了一对多的连接。 不同于 <code>has one</code>，拥有者可以有零或多个关联模型。</p>
+<p>例如，您的应用包含 user 和 credit card 模型，且每个 user 可以有多张 credit card。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// User 有多张 CreditCard，UserID 是外键</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  CreditCards []CreditCard</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Number <span class="type">string</span></span><br><span class="line">  UserID <span class="type">uint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-重写外键"><a href="#3-2-重写外键" class="headerlink" title="3.2 重写外键"></a>3.2 重写外键</h2><p>要定义 <code>has many</code> 关系，同样必须存在外键。 默认的外键名是拥有者的类型名加上其主键字段名</p>
+<p>例如，要定义一个属于 <code>User</code> 的模型，则其外键应该是 <code>UserID</code>。</p>
+<p>此外，想要使用另一个字段作为外键，您可以使用 <code>foreignKey</code> 标签自定义它：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  CreditCards []CreditCard <span class="string">`gorm:&quot;foreignKey:UserRefer&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Number    <span class="type">string</span></span><br><span class="line">  UserRefer <span class="type">uint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-重写引用"><a href="#3-3-重写引用" class="headerlink" title="3.3 重写引用"></a>3.3 重写引用</h2><p>GORM 通常使用拥有者的主键作为外键的值。 对于上面的例子，它是 <code>User</code> 的 <code>ID</code> 字段。</p>
+<p>为 user 添加 credit card 时，GORM 会将 user 的 <code>ID</code> 字段保存到 credit card 的 <code>UserID</code> 字段。</p>
+<p>同样的，您也可以使用标签 <code>references</code> 来更改它，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  MemberNumber <span class="type">string</span></span><br><span class="line">  CreditCards  []CreditCard <span class="string">`gorm:&quot;foreignKey:UserNumber;references:MemberNumber&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Number     <span class="type">string</span></span><br><span class="line">  UserNumber <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-多态关联"><a href="#3-4-多态关联" class="headerlink" title="3.4 多态关联"></a>3.4 多态关联</h2><p>GORM 为 <code>has one</code> 和 <code>has many</code> 提供了多态关联支持，它会将拥有者实体的表名、主键都保存到多态类型的字段中。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">  Toys []Toy <span class="string">`gorm:&quot;polymorphic:Owner;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Toy <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID        <span class="type">int</span></span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  OwnerID   <span class="type">int</span></span><br><span class="line">  OwnerType <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Create(&amp;Dog&#123;Name: <span class="string">&quot;dog1&quot;</span>, Toys: []Toy&#123;&#123;Name: <span class="string">&quot;toy1&quot;</span>&#125;, &#123;Name: <span class="string">&quot;toy2&quot;</span>&#125;&#125;&#125;)</span><br><span class="line"><span class="comment">// INSERT INTO `dogs` (`name`) VALUES (&quot;dog1&quot;)</span></span><br><span class="line"><span class="comment">// INSERT INTO `toys` (`name`,`owner_id`,`owner_type`) VALUES (&quot;toy1&quot;,&quot;1&quot;,&quot;dogs&quot;), (&quot;toy2&quot;,&quot;1&quot;,&quot;dogs&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>您可以使用标签 <code>polymorphicValue</code> 来更改多态类型的值，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">int</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">  Toys []Toy <span class="string">`gorm:&quot;polymorphic:Owner;polymorphicValue:master&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Toy <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID        <span class="type">int</span></span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  OwnerID   <span class="type">int</span></span><br><span class="line">  OwnerType <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Create(&amp;Dog&#123;Name: <span class="string">&quot;dog1&quot;</span>, Toys: []Toy&#123;&#123;Name: <span class="string">&quot;toy1&quot;</span>&#125;, &#123;Name: <span class="string">&quot;toy2&quot;</span>&#125;&#125;&#125;)</span><br><span class="line"><span class="comment">// INSERT INTO `dogs` (`name`) VALUES (&quot;dog1&quot;)</span></span><br><span class="line"><span class="comment">// INSERT INTO `toys` (`name`,`owner_id`,`owner_type`) VALUES (&quot;toy1&quot;,&quot;1&quot;,&quot;master&quot;), (&quot;toy2&quot;,&quot;1&quot;,&quot;master&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-5-Has-Many-的-CURD"><a href="#3-5-Has-Many-的-CURD" class="headerlink" title="3.5 Has Many 的 CURD"></a>3.5 Has Many 的 CURD</h2><p>查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#Association-Mode">关联模式</a> 获取 has many 相关的用法</p>
+<h2 id="3-6-预加载"><a href="#3-6-预加载" class="headerlink" title="3.6 预加载"></a>3.6 预加载</h2><p>GORM 可以通过 <code>Preload</code> 预加载 has many 关联的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/preload.html">预加载</a> 获取详情</p>
+<h2 id="3-7自引用-Has-Many"><a href="#3-7自引用-Has-Many" class="headerlink" title="3.7自引用 Has Many"></a>3.7自引用 Has Many</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  ManagerID *<span class="type">uint</span></span><br><span class="line">  Team      []User <span class="string">`gorm:&quot;foreignkey:ManagerID&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-8-外键约束"><a href="#3-8-外键约束" class="headerlink" title="3.8 外键约束"></a>3.8 外键约束</h2><p>你可以通过为标签 <code>constraint</code> 配置 <code>OnUpdate</code>、<code>OnDelete</code> 实现外键约束，在使用 GORM 进行迁移时它会被创建，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  CreditCards []CreditCard <span class="string">`gorm:&quot;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CreditCard <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Number <span class="type">string</span></span><br><span class="line">  UserID <span class="type">uint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你也可以在删除记录时通过 <code>Select</code> 来删除 has many 关联的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#delete_with_select">Delete with Select</a> 获取详情</p>
+<h1 id="四-Many-To-Many"><a href="#四-Many-To-Many" class="headerlink" title="四 Many To Many"></a>四 Many To Many</h1><h2 id="4-1-Many-To-Many"><a href="#4-1-Many-To-Many" class="headerlink" title="4.1 Many To Many"></a>4.1 Many To Many</h2><p>Many to Many 会在两个 model 中添加一张连接表。</p>
+<p>例如，您的应用包含了 user 和 language，且一个 user 可以说多种 language，多个 user 也可以说一种 language。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// User 拥有并属于多种 language，`user_languages` 是连接表</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Languages []Language <span class="string">`gorm:&quot;many2many:user_languages;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Language <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用 GORM 的 <code>AutoMigrate</code> 为 <code>User</code> 创建表时，GORM 会自动创建连接表</p>
+<h2 id="4-2-反向引用"><a href="#4-2-反向引用" class="headerlink" title="4.2 反向引用"></a>4.2 反向引用</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// User 拥有并属于多种 language，`user_languages` 是连接表</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Languages []*Language <span class="string">`gorm:&quot;many2many:user_languages;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Language <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">  Users []*User <span class="string">`gorm:&quot;many2many:user_languages;&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-重写外键"><a href="#4-3-重写外键" class="headerlink" title="4.3 重写外键"></a>4.3 重写外键</h2><p>对于 <code>many2many</code> 关系，连接表会同时拥有两个模型的外键，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Languages []Language <span class="string">`gorm:&quot;many2many:user_languages;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Language <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接表：user_languages</span></span><br><span class="line"><span class="comment">//   foreign key: user_id, reference: users.id</span></span><br><span class="line"><span class="comment">//   foreign key: language_id, reference: languages.id</span></span><br></pre></td></tr></table></figure>
+
+<p>若要重写它们，可以使用标签 <code>foreignKey</code>、<code>references</code>、<code>joinforeignKey</code>、<code>joinReferences</code>。当然，您不需要使用全部的标签，你可以仅使用其中的一个重写部分的外键、引用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">    gorm.Model</span><br><span class="line">    Profiles []Profile <span class="string">`gorm:&quot;many2many:user_profiles;foreignKey:Refer;joinForeignKey:UserReferID;References:UserRefer;joinReferences:ProfileRefer&quot;`</span></span><br><span class="line">    Refer    <span class="type">uint</span>      <span class="string">`gorm:&quot;index:,unique&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Profile <span class="keyword">struct</span> &#123;</span><br><span class="line">    gorm.Model</span><br><span class="line">    Name      <span class="type">string</span></span><br><span class="line">    UserRefer <span class="type">uint</span> <span class="string">`gorm:&quot;index:,unique&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会创建连接表：user_profiles</span></span><br><span class="line"><span class="comment">//   foreign key: user_refer_id, reference: users.refer</span></span><br><span class="line"><span class="comment">//   foreign key: profile_refer, reference: profiles.user_refer</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> 某些数据库只允许在唯一索引字段上创建外键，如果您在迁移时会创建外键，则需要指定 <code>unique index</code> 标签。</p>
+</blockquote>
+<h2 id="4-4-自引用-Many2Many"><a href="#4-4-自引用-Many2Many" class="headerlink" title="4.4 自引用 Many2Many"></a>4.4 自引用 Many2Many</h2><p>自引用 many2many 关系</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">    Friends []*User <span class="string">`gorm:&quot;many2many:user_friends&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会创建连接表：user_friends</span></span><br><span class="line"><span class="comment">//   foreign key: user_id, reference: users.id</span></span><br><span class="line"><span class="comment">//   foreign key: friend_id, reference: users.id</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-5-预加载"><a href="#4-5-预加载" class="headerlink" title="4.5 预加载"></a>4.5 预加载</h2><p>GORM 可以通过 <code>Preload</code> 预加载 has many 关联的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/preload.html">预加载</a> 获取详情</p>
+<h2 id="4-6-Many2Many-的-CURD"><a href="#4-6-Many2Many-的-CURD" class="headerlink" title="4.6 Many2Many 的 CURD"></a>4.6 Many2Many 的 CURD</h2><p>查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#Association-Mode">关联模式</a> 获取 many2many 相关的用法</p>
+<h2 id="4-7-自定义连接表"><a href="#4-7-自定义连接表" class="headerlink" title="4.7 自定义连接表"></a>4.7 自定义连接表</h2><p><code>连接表</code> 可以是一个全功能的模型，支持 <code>Soft Delete</code>、<code>钩子</code>、更多的字段，就跟其它模型一样。您可以通过 <code>SetupJoinTable</code> 指定它，例如：</p>
+<blockquote>
+<p><strong>注意：</strong> 自定义连接表要求外键是复合主键或复合唯一索引</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID        <span class="type">int</span></span><br><span class="line">  Name      <span class="type">string</span></span><br><span class="line">  Addresses []Address <span class="string">`gorm:&quot;many2many:person_addresses;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Address <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID   <span class="type">uint</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> PersonAddress <span class="keyword">struct</span> &#123;</span><br><span class="line">  PersonID  <span class="type">int</span> <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  AddressID <span class="type">int</span> <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  CreatedAt time.Time</span><br><span class="line">  DeletedAt gorm.DeletedAt</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(PersonAddress)</span></span> BeforeCreate(db *gorm.DB) <span class="type">error</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改 Person 的 Addresses 字段的连接表为 PersonAddress</span></span><br><span class="line"><span class="comment">// PersonAddress 必须定义好所需的外键，否则会报错</span></span><br><span class="line">err := db.SetupJoinTable(&amp;Person&#123;&#125;, <span class="string">&quot;Addresses&quot;</span>, &amp;PersonAddress&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-8-外键约束"><a href="#4-8-外键约束" class="headerlink" title="4.8 外键约束"></a>4.8 外键约束</h2><p>你可以通过为标签 <code>constraint</code> 配置 <code>OnUpdate</code>、<code>OnDelete</code> 实现外键约束，在使用 GORM 进行迁移时它会被创建，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Languages []Language <span class="string">`gorm:&quot;many2many:user_speaks;&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Language <span class="keyword">struct</span> &#123;</span><br><span class="line">  Code <span class="type">string</span> <span class="string">`gorm:&quot;primarykey&quot;`</span></span><br><span class="line">  Name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CREATE TABLE `user_speaks` (`user_id` integer,`language_code` text,PRIMARY KEY (`user_id`,`language_code`),CONSTRAINT `fk_user_speaks_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,CONSTRAINT `fk_user_speaks_language` FOREIGN KEY (`language_code`) REFERENCES `languages`(`code`) ON DELETE SET NULL ON UPDATE CASCADE);</span></span><br></pre></td></tr></table></figure>
+
+<p>你也可以在删除记录时通过 <code>Select</code> 来删除 many2many 关系的记录，查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/associations.html#delete_with_select">Delete with Select</a> 获取详情</p>
+<h2 id="4-9-复合外键"><a href="#4-9-复合外键" class="headerlink" title="4.9 复合外键"></a>4.9 复合外键</h2><p>如果您的模型使用了 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/composite_primary_key.html">复合主键</a>，GORM 会默认启用复合外键。</p>
+<p>您也可以覆盖默认的外键、指定多个外键，只需用逗号分隔那些键名，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Tag <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID     <span class="type">uint</span>   <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  Locale <span class="type">string</span> <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  Value  <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Blog <span class="keyword">struct</span> &#123;</span><br><span class="line">  ID         <span class="type">uint</span>   <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  Locale     <span class="type">string</span> <span class="string">`gorm:&quot;primaryKey&quot;`</span></span><br><span class="line">  Subject    <span class="type">string</span></span><br><span class="line">  Body       <span class="type">string</span></span><br><span class="line">  Tags       []Tag <span class="string">`gorm:&quot;many2many:blog_tags;&quot;`</span></span><br><span class="line">  LocaleTags []Tag <span class="string">`gorm:&quot;many2many:locale_blog_tags;ForeignKey:id,locale;References:id&quot;`</span></span><br><span class="line">  SharedTags []Tag <span class="string">`gorm:&quot;many2many:shared_blog_tags;ForeignKey:id;References:id&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接表：blog_tags</span></span><br><span class="line"><span class="comment">//   foreign key: blog_id, reference: blogs.id</span></span><br><span class="line"><span class="comment">//   foreign key: blog_locale, reference: blogs.locale</span></span><br><span class="line"><span class="comment">//   foreign key: tag_id, reference: tags.id</span></span><br><span class="line"><span class="comment">//   foreign key: tag_locale, reference: tags.locale</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接表：locale_blog_tags</span></span><br><span class="line"><span class="comment">//   foreign key: blog_id, reference: blogs.id</span></span><br><span class="line"><span class="comment">//   foreign key: blog_locale, reference: blogs.locale</span></span><br><span class="line"><span class="comment">//   foreign key: tag_id, reference: tags.id</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接表：shared_blog_tags</span></span><br><span class="line"><span class="comment">//   foreign key: blog_id, reference: blogs.id</span></span><br><span class="line"><span class="comment">//   foreign key: tag_id, reference: tags.id</span></span><br></pre></td></tr></table></figure>
+
+<p>查看 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/composite_primary_key.html">复合主键</a> 获取详情</p>
+<h1 id="五-实体关联"><a href="#五-实体关联" class="headerlink" title="五 实体关联"></a>五 实体关联</h1><h2 id="5-1-自动创建、更新"><a href="#5-1-自动创建、更新" class="headerlink" title="5.1 自动创建、更新"></a>5.1 自动创建、更新</h2><p>在创建、更新记录时，GORM 会通过 <a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/create.html#upsert">Upsert</a> 自动保存关联及其引用记录。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">user := User&#123;</span><br><span class="line">  Name:            <span class="string">&quot;jinzhu&quot;</span>,</span><br><span class="line">  BillingAddress:  Address&#123;Address1: <span class="string">&quot;Billing Address - Address 1&quot;</span>&#125;,</span><br><span class="line">  ShippingAddress: Address&#123;Address1: <span class="string">&quot;Shipping Address - Address 1&quot;</span>&#125;,</span><br><span class="line">  Emails:          []Email&#123;</span><br><span class="line">    &#123;Email: <span class="string">&quot;jinzhu@example.com&quot;</span>&#125;,</span><br><span class="line">    &#123;Email: <span class="string">&quot;jinzhu-2@example.com&quot;</span>&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  Languages:       []Language&#123;</span><br><span class="line">    &#123;Name: <span class="string">&quot;ZH&quot;</span>&#125;,</span><br><span class="line">    &#123;Name: <span class="string">&quot;EN&quot;</span>&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Create(&amp;user)</span><br><span class="line"><span class="comment">// BEGIN TRANSACTION;</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;addresses&quot; (address1) VALUES (&quot;Billing Address - Address 1&quot;), (&quot;Shipping Address - Address 1&quot;) ON DUPLICATE KEY DO NOTHING;</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;users&quot; (name,billing_address_id,shipping_address_id) VALUES (&quot;jinzhu&quot;, 1, 2);</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;emails&quot; (user_id,email) VALUES (111, &quot;jinzhu@example.com&quot;), (111, &quot;jinzhu-2@example.com&quot;) ON DUPLICATE KEY DO NOTHING;</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;languages&quot; (&quot;name&quot;) VALUES (&#x27;ZH&#x27;), (&#x27;EN&#x27;) ON DUPLICATE KEY DO NOTHING;</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;user_languages&quot; (&quot;user_id&quot;,&quot;language_id&quot;) VALUES (111, 1), (111, 2) ON DUPLICATE KEY DO NOTHING;</span></span><br><span class="line"><span class="comment">// COMMIT;</span></span><br><span class="line"></span><br><span class="line">db.Save(&amp;user)</span><br></pre></td></tr></table></figure>
+
+<p>如果您想要更新关联的数据，您应该使用 <code>FullSaveAssociations</code> 模式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.Session(&amp;gorm.Session&#123;FullSaveAssociations: <span class="literal">true</span>&#125;).Updates(&amp;user)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;addresses&quot; (address1) VALUES (&quot;Billing Address - Address 1&quot;), (&quot;Shipping Address - Address 1&quot;) ON DUPLICATE KEY SET address1=VALUES(address1);</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;users&quot; (name,billing_address_id,shipping_address_id) VALUES (&quot;jinzhu&quot;, 1, 2);</span></span><br><span class="line"><span class="comment">// INSERT INTO &quot;emails&quot; (user_id,email) VALUES (111, &quot;jinzhu@example.com&quot;), (111, &quot;jinzhu-2@example.com&quot;) ON DUPLICATE KEY SET email=VALUES(email);</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-跳过自动创建、更新"><a href="#5-2-跳过自动创建、更新" class="headerlink" title="5.2 跳过自动创建、更新"></a>5.2 跳过自动创建、更新</h2><p>若要在创建、更新时跳过自动保存，您可以使用 <code>Select</code> 或 <code>Omit</code>，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">user := User&#123;</span><br><span class="line">  Name:            <span class="string">&quot;jinzhu&quot;</span>,</span><br><span class="line">  BillingAddress:  Address&#123;Address1: <span class="string">&quot;Billing Address - Address 1&quot;</span>&#125;,</span><br><span class="line">  ShippingAddress: Address&#123;Address1: <span class="string">&quot;Shipping Address - Address 1&quot;</span>&#125;,</span><br><span class="line">  Emails:          []Email&#123;</span><br><span class="line">    &#123;Email: <span class="string">&quot;jinzhu@example.com&quot;</span>&#125;,</span><br><span class="line">    &#123;Email: <span class="string">&quot;jinzhu-2@example.com&quot;</span>&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  Languages:       []Language&#123;</span><br><span class="line">    &#123;Name: <span class="string">&quot;ZH&quot;</span>&#125;,</span><br><span class="line">    &#123;Name: <span class="string">&quot;EN&quot;</span>&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Select(<span class="string">&quot;Name&quot;</span>).Create(&amp;user)</span><br><span class="line"><span class="comment">// INSERT INTO &quot;users&quot; (name) VALUES (&quot;jinzhu&quot;, 1, 2);</span></span><br><span class="line"></span><br><span class="line">db.Omit(<span class="string">&quot;BillingAddress&quot;</span>).Create(&amp;user)</span><br><span class="line"><span class="comment">// Skip create BillingAddress when creating a user</span></span><br><span class="line"></span><br><span class="line">db.Omit(clause.Associations).Create(&amp;user)</span><br><span class="line"><span class="comment">// Skip all associations when creating a user</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>NOTE:</strong> 对于 many2many 关联，GORM 在创建连接表引用之前，会先 upsert 关联。如果你想跳过关联的 upsert，你可以这样做：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.Omit(<span class="string">&quot;Languages.*&quot;</span>).Create(&amp;user)</span><br></pre></td></tr></table></figure>
+
+<p>下面的代码将跳过创建关联及其引用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.Omit(<span class="string">&quot;Languages&quot;</span>).Create(&amp;user)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="5-3-Select-x2F-Omit-关联字段"><a href="#5-3-Select-x2F-Omit-关联字段" class="headerlink" title="5.3 Select&#x2F;Omit 关联字段"></a>5.3 Select&#x2F;Omit 关联字段</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">user := User&#123;</span><br><span class="line">  Name:            <span class="string">&quot;jinzhu&quot;</span>,</span><br><span class="line">  BillingAddress:  Address&#123;Address1: <span class="string">&quot;Billing Address - Address 1&quot;</span>, Address2: <span class="string">&quot;addr2&quot;</span>&#125;,</span><br><span class="line">  ShippingAddress: Address&#123;Address1: <span class="string">&quot;Shipping Address - Address 1&quot;</span>, Address2: <span class="string">&quot;addr2&quot;</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 user 及其 BillingAddress、ShippingAddress</span></span><br><span class="line"><span class="comment">// 在创建 BillingAddress 时，仅使用其 address1、address2 字段，忽略其它字段</span></span><br><span class="line">db.Select(<span class="string">&quot;BillingAddress.Address1&quot;</span>, <span class="string">&quot;BillingAddress.Address2&quot;</span>).Create(&amp;user)</span><br><span class="line"></span><br><span class="line">db.Omit(<span class="string">&quot;BillingAddress.Address2&quot;</span>, <span class="string">&quot;BillingAddress.CreatedAt&quot;</span>).Create(&amp;user)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-关联模式"><a href="#5-4-关联模式" class="headerlink" title="5.4 关联模式"></a>5.4 关联模式</h2><p>关联模式包含一些在处理关系时有用的方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开始关联模式</span></span><br><span class="line"><span class="keyword">var</span> user User</span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>)</span><br><span class="line"><span class="comment">// `user` 是源模型，它的主键不能为空</span></span><br><span class="line"><span class="comment">// 关系的字段名是 `Languages`</span></span><br><span class="line"><span class="comment">// 如果匹配了上面两个要求，会开始关联模式，否则会返回错误</span></span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Error</span><br></pre></td></tr></table></figure>
+
+<h3 id="查找关联"><a href="#查找关联" class="headerlink" title="查找关联"></a>查找关联</h3><p>查找所有匹配的关联记录</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Find(&amp;languages)</span><br></pre></td></tr></table></figure>
+
+<p>查找带条件的关联</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">codes := []<span class="type">string</span>&#123;<span class="string">&quot;zh-CN&quot;</span>, <span class="string">&quot;en-US&quot;</span>, <span class="string">&quot;ja-JP&quot;</span>&#125;</span><br><span class="line">db.Model(&amp;user).Where(<span class="string">&quot;code IN ?&quot;</span>, codes).Association(<span class="string">&quot;Languages&quot;</span>).Find(&amp;languages)</span><br><span class="line"></span><br><span class="line">db.Model(&amp;user).Where(<span class="string">&quot;code IN ?&quot;</span>, codes).Order(<span class="string">&quot;code desc&quot;</span>).Association(<span class="string">&quot;Languages&quot;</span>).Find(&amp;languages)</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加关联"><a href="#添加关联" class="headerlink" title="添加关联"></a>添加关联</h3><p>为 <code>many to many</code>、<code>has many</code> 添加新的关联；为 <code>has one</code>, <code>belongs to</code> 替换当前的关联</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Append([]Language&#123;languageZH, languageEN&#125;)</span><br><span class="line"></span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Append(&amp;Language&#123;Name: <span class="string">&quot;DE&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;CreditCard&quot;</span>).Append(&amp;CreditCard&#123;Number: <span class="string">&quot;411111111111&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换关联"><a href="#替换关联" class="headerlink" title="替换关联"></a>替换关联</h3><p>用一个新的关联替换当前的关联</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Replace([]Language&#123;languageZH, languageEN&#125;)</span><br><span class="line"></span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Replace(Language&#123;Name: <span class="string">&quot;DE&quot;</span>&#125;, languageEN)</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除关联"><a href="#删除关联" class="headerlink" title="删除关联"></a>删除关联</h3><p>如果存在，则删除源模型与参数之间的关系，只会删除引用，不会从数据库中删除这些对象。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Delete([]Language&#123;languageZH, languageEN&#125;)</span><br><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Delete(languageZH, languageEN)</span><br></pre></td></tr></table></figure>
+
+<h3 id="清空关联"><a href="#清空关联" class="headerlink" title="清空关联"></a>清空关联</h3><p>删除源模型与关联之间的所有引用，但不会删除这些关联</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Clear()</span><br></pre></td></tr></table></figure>
+
+<h3 id="关联计数"><a href="#关联计数" class="headerlink" title="关联计数"></a>关联计数</h3><p>返回当前关联的计数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.Model(&amp;user).Association(<span class="string">&quot;Languages&quot;</span>).Count()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 条件计数</span></span><br><span class="line">codes := []<span class="type">string</span>&#123;<span class="string">&quot;zh-CN&quot;</span>, <span class="string">&quot;en-US&quot;</span>, <span class="string">&quot;ja-JP&quot;</span>&#125;</span><br><span class="line">db.Model(&amp;user).Where(<span class="string">&quot;code IN ?&quot;</span>, codes).Association(<span class="string">&quot;Languages&quot;</span>).Count()</span><br></pre></td></tr></table></figure>
+
+<h3 id="批量处理数据"><a href="#批量处理数据" class="headerlink" title="批量处理数据"></a>批量处理数据</h3><p>关联模式也支持批量处理，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询所有用户的所有角色</span></span><br><span class="line">db.Model(&amp;users).Association(<span class="string">&quot;Role&quot;</span>).Find(&amp;roles)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从所有 team 中删除 user A</span></span><br><span class="line">db.Model(&amp;users).Association(<span class="string">&quot;Team&quot;</span>).Delete(&amp;userA)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取去重的用户所属 team 数量</span></span><br><span class="line">db.Model(&amp;users).Association(<span class="string">&quot;Team&quot;</span>).Count()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于批量数据的 `Append`、`Replace`，参数的长度必须与数据的长度相同，否则会返回 error</span></span><br><span class="line"><span class="keyword">var</span> users = []User&#123;user1, user2, user3&#125;</span><br><span class="line"><span class="comment">// 例如：现在有三个 user，Append userA 到 user1 的 team，Append userB 到 user2 的 team，Append userA、userB 和 userC 到 user3 的 team</span></span><br><span class="line">db.Model(&amp;users).Association(<span class="string">&quot;Team&quot;</span>).Append(&amp;userA, &amp;userB, &amp;[]User&#123;userA, userB, userC&#125;)</span><br><span class="line"><span class="comment">// 重置 user1 team 为 userA，重置 user2 的 team 为 userB，重置 user3 的 team 为 userA、 userB 和 userC</span></span><br><span class="line">db.Model(&amp;users).Association(<span class="string">&quot;Team&quot;</span>).Replace(&amp;userA, &amp;userB, &amp;[]User&#123;userA, userB, userC&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-5-带-Select-的删除"><a href="#5-5-带-Select-的删除" class="headerlink" title="5.5 带 Select 的删除"></a>5.5 带 Select 的删除</h2><p>你可以在删除记录时通过 <code>Select</code> 来删除具有 has one、has many、many2many 关系的记录，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除 user 时，也删除 user 的 account</span></span><br><span class="line">db.Select(<span class="string">&quot;Account&quot;</span>).Delete(&amp;user)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除 user 时，也删除 user 的 Orders、CreditCards 记录</span></span><br><span class="line">db.Select(<span class="string">&quot;Orders&quot;</span>, <span class="string">&quot;CreditCards&quot;</span>).Delete(&amp;user)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除 user 时，也删除用户所有 has one/many、many2many 记录</span></span><br><span class="line">db.Select(clause.Associations).Delete(&amp;user)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除 users 时，也删除每一个 user 的 account</span></span><br><span class="line">db.Select(<span class="string">&quot;Account&quot;</span>).Delete(&amp;users)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> 只有当记录的主键不为空时，关联才会被删除，GORM 会使用这些主键作为条件来删除关联记录</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DOESN&#x27;T WORK</span></span><br><span class="line">db.Select(<span class="string">&quot;Account&quot;</span>).Where(<span class="string">&quot;name = ?&quot;</span>, <span class="string">&quot;jinzhu&quot;</span>).Delete(&amp;User&#123;&#125;)</span><br><span class="line"><span class="comment">// 会删除所有 name=`jinzhu` 的 user，但这些 user 的 account 不会被删除</span></span><br><span class="line"></span><br><span class="line">db.Select(<span class="string">&quot;Account&quot;</span>).Where(<span class="string">&quot;name = ?&quot;</span>, <span class="string">&quot;jinzhu&quot;</span>).Delete(&amp;User&#123;ID: <span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment">// 会删除 name = `jinzhu` 且 id = `1` 的 user，并且 user `1` 的 account 也会被删除</span></span><br><span class="line"></span><br><span class="line">db.Select(<span class="string">&quot;Account&quot;</span>).Delete(&amp;User&#123;ID: <span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment">// 会删除 id = `1` 的 user，并且 user `1` 的 account 也会被删除</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="5-6-关联标签"><a href="#5-6-关联标签" class="headerlink" title="5.6 关联标签"></a>5.6 关联标签</h2><table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">foreignKey</td>
+<td align="left">指定当前模型的列作为连接表的外键</td>
+</tr>
+<tr>
+<td align="left">references</td>
+<td align="left">指定引用表的列名，其将被映射为连接表外键</td>
+</tr>
+<tr>
+<td align="left">polymorphic</td>
+<td align="left">指定多态类型，比如模型名</td>
+</tr>
+<tr>
+<td align="left">polymorphicValue</td>
+<td align="left">指定多态值、默认表名</td>
+</tr>
+<tr>
+<td align="left">many2many</td>
+<td align="left">指定连接表表名</td>
+</tr>
+<tr>
+<td align="left">joinForeignKey</td>
+<td align="left">指定连接表的外键列名，其将被映射到当前表</td>
+</tr>
+<tr>
+<td align="left">joinReferences</td>
+<td align="left">指定连接表的外键列名，其将被映射到引用表</td>
+</tr>
+<tr>
+<td align="left">constraint</td>
+<td align="left">关系约束，例如：<code>OnUpdate</code>、<code>OnDelete</code></td>
+</tr>
+</tbody></table>
+<h1 id="六-预加载"><a href="#六-预加载" class="headerlink" title="六 预加载"></a>六 预加载</h1><h2 id="6-1-预加载"><a href="#6-1-预加载" class="headerlink" title="6.1 预加载"></a>6.1 预加载</h2><p>GORM 允许在 <code>Preload</code> 的其它 SQL 中直接加载关系，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Username <span class="type">string</span></span><br><span class="line">  Orders   []Order</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Order <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  UserID <span class="type">uint</span></span><br><span class="line">  Price  <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找 user 时预加载相关 Order</span></span><br><span class="line">db.Preload(<span class="string">&quot;Orders&quot;</span>).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT * FROM users;</span></span><br><span class="line"><span class="comment">// SELECT * FROM orders WHERE user_id IN (1,2,3,4);</span></span><br><span class="line"></span><br><span class="line">db.Preload(<span class="string">&quot;Orders&quot;</span>).Preload(<span class="string">&quot;Profile&quot;</span>).Preload(<span class="string">&quot;Role&quot;</span>).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT * FROM users;</span></span><br><span class="line"><span class="comment">// SELECT * FROM orders WHERE user_id IN (1,2,3,4); // has many</span></span><br><span class="line"><span class="comment">// SELECT * FROM profiles WHERE user_id IN (1,2,3,4); // has one</span></span><br><span class="line"><span class="comment">// SELECT * FROM roles WHERE id IN (4,5,6); // belongs to</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-Joins-预加载"><a href="#6-2-Joins-预加载" class="headerlink" title="6.2 Joins 预加载"></a>6.2 Joins 预加载</h2><p><code>Preload</code> 在一个单独查询中加载关联数据。而 <code>Join Preload</code> 会使用 inner join 加载关联数据，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.Joins(<span class="string">&quot;Company&quot;</span>).Joins(<span class="string">&quot;Manager&quot;</span>).Joins(<span class="string">&quot;Account&quot;</span>).First(&amp;user, <span class="number">1</span>)</span><br><span class="line">db.Joins(<span class="string">&quot;Company&quot;</span>).Joins(<span class="string">&quot;Manager&quot;</span>).Joins(<span class="string">&quot;Account&quot;</span>).First(&amp;user, <span class="string">&quot;users.name = ?&quot;</span>, <span class="string">&quot;jinzhu&quot;</span>)</span><br><span class="line">db.Joins(<span class="string">&quot;Company&quot;</span>).Joins(<span class="string">&quot;Manager&quot;</span>).Joins(<span class="string">&quot;Account&quot;</span>).Find(&amp;users, <span class="string">&quot;users.id IN ?&quot;</span>, []<span class="type">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>带条件的 Join</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.Joins(<span class="string">&quot;Company&quot;</span>, DB.Where(&amp;Company&#123;Alive: <span class="literal">true</span>&#125;)).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT `users`.`id`,`users`.`name`,`users`.`age`,`Company`.`id` AS `Company__id`,`Company`.`name` AS `Company__name` FROM `users` LEFT JOIN `companies` AS `Company` ON `users`.`company_id` = `Company`.`id` AND `Company`.`alive` = true;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong> <code>Join Preload</code> 适用于一对一的关系，例如： <code>has one</code>, <code>belongs to</code></p>
+</blockquote>
+<h2 id="6-3-预加载全部"><a href="#6-3-预加载全部" class="headerlink" title="6.3 预加载全部"></a>6.3 预加载全部</h2><p>与创建、更新时使用 <code>Select</code> 类似，<code>clause.Associations</code> 也可以和 <code>Preload</code> 一起使用，它可以用来 <code>预加载</code> 全部关联，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">  gorm.Model</span><br><span class="line">  Name       <span class="type">string</span></span><br><span class="line">  CompanyID  <span class="type">uint</span></span><br><span class="line">  Company    Company</span><br><span class="line">  Role       Role</span><br><span class="line">  Orders     []Order</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.Preload(clause.Associations).Find(&amp;users)</span><br></pre></td></tr></table></figure>
+
+<p><code>clause.Associations</code> 不会预加载嵌套的关联，但你可以使用<a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/preload.html#nested_preloading">嵌套预加载</a> 例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.Preload(<span class="string">&quot;Orders.OrderItems.Product&quot;</span>).Preload(clause.Associations).Find(&amp;users)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-带条件的预加载"><a href="#6-4-带条件的预加载" class="headerlink" title="6.4 带条件的预加载"></a>6.4 带条件的预加载</h2><p>GORM 允许带条件的 Preload 关联，类似于<a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/query.html#inline_conditions">内联条件</a></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 带条件的预加载 Order</span></span><br><span class="line">db.Preload(<span class="string">&quot;Orders&quot;</span>, <span class="string">&quot;state NOT IN (?)&quot;</span>, <span class="string">&quot;cancelled&quot;</span>).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT * FROM users;</span></span><br><span class="line"><span class="comment">// SELECT * FROM orders WHERE user_id IN (1,2,3,4) AND state NOT IN (&#x27;cancelled&#x27;);</span></span><br><span class="line"></span><br><span class="line">db.Where(<span class="string">&quot;state = ?&quot;</span>, <span class="string">&quot;active&quot;</span>).Preload(<span class="string">&quot;Orders&quot;</span>, <span class="string">&quot;state NOT IN (?)&quot;</span>, <span class="string">&quot;cancelled&quot;</span>).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT * FROM users WHERE state = &#x27;active&#x27;;</span></span><br><span class="line"><span class="comment">// SELECT * FROM orders WHERE user_id IN (1,2) AND state NOT IN (&#x27;cancelled&#x27;);</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-5-自定义预加载-SQL"><a href="#6-5-自定义预加载-SQL" class="headerlink" title="6.5 自定义预加载 SQL"></a>6.5 自定义预加载 SQL</h2><p>您可以通过 <code>func(db *gorm.DB) *gorm.DB</code> 实现自定义预加载 SQL，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.Preload(<span class="string">&quot;Orders&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(db *gorm.DB)</span></span> *gorm.DB &#123;</span><br><span class="line">  <span class="keyword">return</span> db.Order(<span class="string">&quot;orders.amount DESC&quot;</span>)</span><br><span class="line">&#125;).Find(&amp;users)</span><br><span class="line"><span class="comment">// SELECT * FROM users;</span></span><br><span class="line"><span class="comment">// SELECT * FROM orders WHERE user_id IN (1,2,3,4) order by orders.amount DESC;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-6-嵌套预加载"><a href="#6-6-嵌套预加载" class="headerlink" title="6.6 嵌套预加载"></a>6.6 嵌套预加载</h2><p>GORM 支持嵌套预加载，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.Preload(<span class="string">&quot;Orders.OrderItems.Product&quot;</span>).Preload(<span class="string">&quot;CreditCard&quot;</span>).Find(&amp;users)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义预加载 `Orders` 的条件</span></span><br><span class="line"><span class="comment">// 这样，GORM 就不会加载不匹配的 order 记录</span></span><br><span class="line">db.Preload(<span class="string">&quot;Orders&quot;</span>, <span class="string">&quot;state = ?&quot;</span>, <span class="string">&quot;paid&quot;</span>).Preload(<span class="string">&quot;Orders.OrderItems&quot;</span>).Find(&amp;users)</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B3-Gin%E7%9A%84%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [3-Gin的请求与响应]
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B20-Gorm%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%5D/">
+        
+          [20-Gorm增删查改]
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#21-Gorm%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="toc-nav-text">[21-Gorm关联关系]</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%80-Belongs-To-%E4%B8%80%E5%AF%B9%E4%B8%80"><span class="toc-nav-text">一 Belongs To(一对一)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-1-Belongs-To"><span class="toc-nav-text">1.1 Belongs To</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-2-%E9%87%8D%E5%86%99%E5%A4%96%E9%94%AE"><span class="toc-nav-text">1.2 重写外键</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-3-%E9%87%8D%E5%86%99%E5%BC%95%E7%94%A8-%E4%B8%80%E8%88%AC%E4%B8%8D%E7%94%A8"><span class="toc-nav-text">1.3 重写引用(一般不用)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-4-Belongs-to-%E7%9A%84-CRUD"><span class="toc-nav-text">1.4 Belongs to 的 CRUD</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-5-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">1.5 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-6-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-nav-text">1.6 外键约束</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%BA%8C-Has-One"><span class="toc-nav-text">二 Has One</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-1-Has-One"><span class="toc-nav-text">2.1 Has One</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-2-%E9%87%8D%E5%86%99%E5%A4%96%E9%94%AE"><span class="toc-nav-text">2.2 重写外键</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-3-%E9%87%8D%E5%86%99%E5%BC%95%E7%94%A8"><span class="toc-nav-text">2.3 重写引用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-4-%E5%A4%9A%E6%80%81%E5%85%B3%E8%81%94"><span class="toc-nav-text">2.4 多态关联</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-5-Has-One-%E7%9A%84-CURD"><span class="toc-nav-text">2.5 Has One 的 CURD</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-6-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">2.6 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-7-%E8%87%AA%E5%BC%95%E7%94%A8-Has-One"><span class="toc-nav-text">2.7 自引用 Has One</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-8-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-nav-text">2.8 外键约束</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%89-Has-Many"><span class="toc-nav-text">三 Has Many</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-1-Has-Many"><span class="toc-nav-text">3.1 Has Many</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-2-%E9%87%8D%E5%86%99%E5%A4%96%E9%94%AE"><span class="toc-nav-text">3.2 重写外键</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-3-%E9%87%8D%E5%86%99%E5%BC%95%E7%94%A8"><span class="toc-nav-text">3.3 重写引用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-4-%E5%A4%9A%E6%80%81%E5%85%B3%E8%81%94"><span class="toc-nav-text">3.4 多态关联</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-5-Has-Many-%E7%9A%84-CURD"><span class="toc-nav-text">3.5 Has Many 的 CURD</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-6-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">3.6 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-7%E8%87%AA%E5%BC%95%E7%94%A8-Has-Many"><span class="toc-nav-text">3.7自引用 Has Many</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-8-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-nav-text">3.8 外键约束</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%9B%9B-Many-To-Many"><span class="toc-nav-text">四 Many To Many</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-1-Many-To-Many"><span class="toc-nav-text">4.1 Many To Many</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-2-%E5%8F%8D%E5%90%91%E5%BC%95%E7%94%A8"><span class="toc-nav-text">4.2 反向引用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-3-%E9%87%8D%E5%86%99%E5%A4%96%E9%94%AE"><span class="toc-nav-text">4.3 重写外键</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-4-%E8%87%AA%E5%BC%95%E7%94%A8-Many2Many"><span class="toc-nav-text">4.4 自引用 Many2Many</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-5-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">4.5 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-6-Many2Many-%E7%9A%84-CURD"><span class="toc-nav-text">4.6 Many2Many 的 CURD</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-7-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%9E%E6%8E%A5%E8%A1%A8"><span class="toc-nav-text">4.7 自定义连接表</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-8-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-nav-text">4.8 外键约束</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-9-%E5%A4%8D%E5%90%88%E5%A4%96%E9%94%AE"><span class="toc-nav-text">4.9 复合外键</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%BA%94-%E5%AE%9E%E4%BD%93%E5%85%B3%E8%81%94"><span class="toc-nav-text">五 实体关联</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-1-%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%E3%80%81%E6%9B%B4%E6%96%B0"><span class="toc-nav-text">5.1 自动创建、更新</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-2-%E8%B7%B3%E8%BF%87%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%E3%80%81%E6%9B%B4%E6%96%B0"><span class="toc-nav-text">5.2 跳过自动创建、更新</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-3-Select-x2F-Omit-%E5%85%B3%E8%81%94%E5%AD%97%E6%AE%B5"><span class="toc-nav-text">5.3 Select&#x2F;Omit 关联字段</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-4-%E5%85%B3%E8%81%94%E6%A8%A1%E5%BC%8F"><span class="toc-nav-text">5.4 关联模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9F%A5%E6%89%BE%E5%85%B3%E8%81%94"><span class="toc-nav-text">查找关联</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%85%B3%E8%81%94"><span class="toc-nav-text">添加关联</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9B%BF%E6%8D%A2%E5%85%B3%E8%81%94"><span class="toc-nav-text">替换关联</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%88%A0%E9%99%A4%E5%85%B3%E8%81%94"><span class="toc-nav-text">删除关联</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B8%85%E7%A9%BA%E5%85%B3%E8%81%94"><span class="toc-nav-text">清空关联</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%85%B3%E8%81%94%E8%AE%A1%E6%95%B0"><span class="toc-nav-text">关联计数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE"><span class="toc-nav-text">批量处理数据</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-5-%E5%B8%A6-Select-%E7%9A%84%E5%88%A0%E9%99%A4"><span class="toc-nav-text">5.5 带 Select 的删除</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-6-%E5%85%B3%E8%81%94%E6%A0%87%E7%AD%BE"><span class="toc-nav-text">5.6 关联标签</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%85%AD-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">六 预加载</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-1-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">6.1 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-2-Joins-%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">6.2 Joins 预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-3-%E9%A2%84%E5%8A%A0%E8%BD%BD%E5%85%A8%E9%83%A8"><span class="toc-nav-text">6.3 预加载全部</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-4-%E5%B8%A6%E6%9D%A1%E4%BB%B6%E7%9A%84%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">6.4 带条件的预加载</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-5-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%84%E5%8A%A0%E8%BD%BD-SQL"><span class="toc-nav-text">6.5 自定义预加载 SQL</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-6-%E5%B5%8C%E5%A5%97%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-nav-text">6.6 嵌套预加载</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[21-Gorm关联关系]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[21-Gorm关联关系]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

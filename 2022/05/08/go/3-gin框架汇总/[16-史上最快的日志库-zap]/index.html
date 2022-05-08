@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [16-史上最快的日志库-zap] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[16-史上最快的日志库-zap]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="16-史上最快的日志库-zap"><a href="#16-史上最快的日志库-zap" class="headerlink" title="[16-史上最快的日志库-zap]"></a>[16-史上最快的日志库-zap]</h1><h2 id="一-Zap介绍"><a href="#一-Zap介绍" class="headerlink" title="一 Zap介绍"></a>一 Zap介绍</h2><p>Zap 是Uber推出，非常快的、结构化的，分日志级别的 Go 日志库</p>
+<p>无反射，零分配的JSON编码器，基本记录器尽可能避免序列化开销和分配</p>
+<p>项目地址:<a target="_blank" rel="noopener" href="https://github.com/uber-go/zap">https://github.com/uber-go/zap</a></p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap">https://pkg.go.dev/go.uber.org/zap</a></p>
+<p>Stars数量：20.3k</p>
+<h3 id="速度比较"><a href="#速度比较" class="headerlink" title="速度比较"></a>速度比较</h3><p><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h1hxv90x3bj20zo0u078t.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h1hxv90x3bj20zo0u078t.jpg" alt="image-20220422031115531"></a></p>
+<h2 id="二-快速使用"><a href="#二-快速使用" class="headerlink" title="二 快速使用"></a>二 快速使用</h2><p>zap提供了两种日志记录器</p>
+<blockquote>
+<p>go get -u go.uber.org&#x2F;zap</p>
+</blockquote>
+<h3 id="2-1-SugaredLogger"><a href="#2-1-SugaredLogger" class="headerlink" title="2.1 SugaredLogger"></a>2.1 SugaredLogger</h3><p>加了糖的 Logger</p>
+<p>在性能很好但不是很关键的环境中，使用SugaredLogger。它比其他结构化日志包快4-10倍，并且包含结构化和printf风格的api。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//1  创建一个Production(生产环境)的 logger</span></span><br><span class="line">	logger, _ := zap.NewProduction()</span><br><span class="line">	<span class="comment">//2  flushes buffer, if any， 刷新缓冲区，存盘</span></span><br><span class="line">	<span class="keyword">defer</span> logger.Sync()</span><br><span class="line">	<span class="comment">// 3 创建Sugar的logger</span></span><br><span class="line">	sugar := logger.Sugar()</span><br><span class="line">	<span class="comment">//4 输出日志</span></span><br><span class="line">	sugar.Info(<span class="string">&quot;info--普通格式日志&quot;</span>)</span><br><span class="line">	sugar.Infof(<span class="string">&quot;info--格式化字符串格式日志: %s&quot;</span>, <span class="string">&quot;lqz&quot;</span>)</span><br><span class="line">	sugar.Infow(<span class="string">&quot;info---松散类型的键值对格式日志&quot;</span>,</span><br><span class="line">		<span class="comment">// 结构化上下文为松散类型的键值对，随便写键值对</span></span><br><span class="line">		<span class="string">&quot;name&quot;</span>, <span class="string">&quot;lqz&quot;</span>,</span><br><span class="line">		<span class="string">&quot;attempt&quot;</span>, <span class="number">3</span>,</span><br><span class="line">		<span class="string">&quot;backoff&quot;</span>, time.Second,</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-Logger"><a href="#2-2-Logger" class="headerlink" title="2.2 Logger"></a>2.2 Logger</h3><p>当性能和类型安全至关重要时，使用Logger。它甚至比SugaredLogger还要快，并且分配的数量要少得多，但是它只支持结构化日志 。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 看源码，默认基本是InfoLevel，所有Debug不会打印</span></span><br><span class="line">	logger, _ := zap.NewProduction()</span><br><span class="line">	<span class="keyword">defer</span> logger.Sync()</span><br><span class="line">	logger.Info(<span class="string">&quot;info--松散类型的键值对格式日志&quot;</span>,</span><br><span class="line">		<span class="comment">// 作为强类型字段值的结构化上下文.</span></span><br><span class="line">		zap.String(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;lqz&quot;</span>),</span><br><span class="line">		zap.Int(<span class="string">&quot;age&quot;</span>, <span class="number">19</span>),</span><br><span class="line">		zap.Duration(<span class="string">&quot;backoff&quot;</span>, time.Second),</span><br><span class="line">	)</span><br><span class="line">	logger.Error(<span class="string">&quot;error--松散类型的键值对格式日志&quot;</span>,</span><br><span class="line">		zap.String(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;lqz&quot;</span>),</span><br><span class="line">		zap.Int(<span class="string">&quot;age&quot;</span>, <span class="number">19</span>),</span><br><span class="line">		zap.Duration(<span class="string">&quot;backoff&quot;</span>, time.Second),)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-如何选择logger"><a href="#2-3-如何选择logger" class="headerlink" title="2.3 如何选择logger"></a>2.3 如何选择logger</h3><p>在Logger和SugaredLogger之间进行选择不需要在应用程序范围内进行决定:在两者之间进行转换既简单又便宜。从上面就可以看出来，二者创建使用区别很小。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	logger := zap.NewExample()</span><br><span class="line">	<span class="keyword">defer</span> logger.Sync()</span><br><span class="line">	sugar := logger.Sugar() <span class="comment">// 通过logger得到Sugar</span></span><br><span class="line">	plain := sugar.Desugar()<span class="comment">// 通过Sugar得到logger</span></span><br><span class="line">	sugar.Info(<span class="string">&quot;info--&gt;sugar&quot;</span>)</span><br><span class="line">	plain.Info(<span class="string">&quot;info--&gt;logger&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-日志级别"><a href="#2-4-日志级别" class="headerlink" title="2.4 日志级别"></a>2.4 日志级别</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//const 文档下面有介绍日志级别的定义,7个日志级别</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	<span class="comment">// DebugLevel logs are typically voluminous, and are usually disabled in</span></span><br><span class="line">	<span class="comment">// production.</span></span><br><span class="line">	DebugLevel = zapcore.DebugLevel</span><br><span class="line">	<span class="comment">// InfoLevel is the default logging priority.</span></span><br><span class="line">	InfoLevel = zapcore.InfoLevel</span><br><span class="line">	<span class="comment">// WarnLevel logs are more important than Info, but don&#x27;t need individual</span></span><br><span class="line">	<span class="comment">// human review.</span></span><br><span class="line">	WarnLevel = zapcore.WarnLevel</span><br><span class="line">	<span class="comment">// ErrorLevel logs are high-priority. If an application is running smoothly,</span></span><br><span class="line">	<span class="comment">// it shouldn&#x27;t generate any error-level logs.</span></span><br><span class="line">	ErrorLevel = zapcore.ErrorLevel</span><br><span class="line">	<span class="comment">// DPanicLevel logs are particularly important errors. In development the</span></span><br><span class="line">	<span class="comment">// logger panics after writing the message.</span></span><br><span class="line">	DPanicLevel = zapcore.DPanicLevel</span><br><span class="line">	<span class="comment">// PanicLevel logs a message, then panics.</span></span><br><span class="line">	PanicLevel = zapcore.PanicLevel</span><br><span class="line">	<span class="comment">// FatalLevel logs a message, then calls os.Exit(1).</span></span><br><span class="line">	FatalLevel = zapcore.FatalLevel</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-高级使用"><a href="#三-高级使用" class="headerlink" title="三 高级使用"></a>三 高级使用</h2><h3 id="3-1-初始化-looger"><a href="#3-1-初始化-looger" class="headerlink" title="3.1 初始化 looger"></a>3.1 初始化 looger</h3><p>在文档的 <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap#hdr-Configuring_Zap">Configuring Zap</a>中：<br>构建Logger最简单的方法是使用zap固有的预设:</p>
+<p><strong>NewExample</strong>，<strong>NewProduction</strong>和<strong>NewDevelopment</strong></p>
+<p>三者创建的 logger 是有区别的， 我们可以在官方文档的 <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap#Logger">type logger</a>下面找到三个函数的介绍, 对应不同的场景。</p>
+<h4 id="NewExample"><a href="#NewExample" class="headerlink" title="NewExample"></a>NewExample</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewExample</span><span class="params">(options ...Option)</span></span> *Logger</span><br><span class="line">NewExample构建了一个专门为zap的可测试示例设计的Logger。它将DebugLevel及以上的日志作为JSON写入标准输出，但省略了时间戳和调用函数，以保持示例输出的简短和确定性</span><br></pre></td></tr></table></figure>
+
+<h4 id="NewProduction"><a href="#NewProduction" class="headerlink" title="NewProduction"></a>NewProduction</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProduction</span><span class="params">(options ...Option)</span></span> (*Logger, <span class="type">error</span>)</span><br><span class="line"></span><br><span class="line">NewProduction构建了一个合理的生产日志记录器，它将infollevel及以上的日志以JSON的形式写入标准错误。</span><br><span class="line">它是NewProductionConfig(). build(…Option)的快捷方式。</span><br></pre></td></tr></table></figure>
+
+<h4 id="NewDevelopment"><a href="#NewDevelopment" class="headerlink" title="NewDevelopment"></a>NewDevelopment</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewDevelopment</span><span class="params">(options ...Option)</span></span> (*Logger, <span class="type">error</span>)</span><br><span class="line"></span><br><span class="line">NewDevelopment构建一个开发日志记录器，它以人类友好的格式将DebugLevel及以上级别的日志写入标准错误。</span><br><span class="line">这是NewDevelopmentConfig().Build(…选项)的快捷方式</span><br><span class="line">就好比去商店卖商品，初上自带了几个配置好的模式。 通过配置生成对应的 logger。 我们也可以自定义 配置，生成自己自定义的 logger</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-方法使用"><a href="#3-2-方法使用" class="headerlink" title="3.2 方法使用"></a>3.2 方法使用</h3><p>在文档的 <strong>types&#x2F;logger</strong> 和 <strong>types&#x2F;SaguredLogger</strong> 里面记录了相关的looger记录消息的使用方法</p>
+<p>以 logger为例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 都接受一个 msg String， 后面是可选的一些字段。Field 类型，可以查看文档有很多的类型。</span></span><br><span class="line"><span class="comment">//2 写一个Get请求访问相应的网址，记录日志信息</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h20c9b5a9hj21660taaep.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h20c9b5a9hj21660taaep.jpg" alt="image-20220502154810858"></a></p>
+<h4 id="NewProduction-1"><a href="#NewProduction-1" class="headerlink" title="NewProduction"></a>NewProduction</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 创建一个 logger, 可以选择其他预置创建，会有不同的输出效果</span></span><br><span class="line">	logger, _ := zap.NewProduction()</span><br><span class="line">	<span class="keyword">defer</span> logger.Sync() <span class="comment">// flushes buffer, if any， 刷新缓冲区，存盘</span></span><br><span class="line">	url:=<span class="string">&quot;https://www.cnblogs.com/liuqingzheng&quot;</span></span><br><span class="line">	res,err:=http.Get(url)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		logger.Error(<span class="string">&quot;访问博客失败&quot;</span>,</span><br><span class="line">			zap.String(<span class="string">&quot;url&quot;</span>,url), <span class="comment">// 字符串形式field</span></span><br><span class="line">			zap.Error(err)) <span class="comment">// 错误形式field</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		logger.Info(<span class="string">&quot;访问博客成功&quot;</span>,</span><br><span class="line">			zap.String(<span class="string">&quot;url&quot;</span>,url), <span class="comment">// 字符串形式field</span></span><br><span class="line">			zap.Int(<span class="string">&quot;status&quot;</span>,res.StatusCode),<span class="comment">// int类型字段</span></span><br><span class="line">			zap.Duration(<span class="string">&quot;backoff&quot;</span>,time.Second*<span class="number">3</span>)) <span class="comment">// Duration类型字段，只是用来做测试，无特殊含义</span></span><br><span class="line">		res.Body.Close()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 成功</span></span><br><span class="line">&#123;<span class="string">&quot;level&quot;</span>:<span class="string">&quot;info&quot;</span>,<span class="string">&quot;ts&quot;</span>:<span class="number">1651478232.032387</span>,<span class="string">&quot;caller&quot;</span>:<span class="string">&quot;go_test_learn/s20.go:20&quot;</span>,<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;访问博客成功&quot;</span>,<span class="string">&quot;url&quot;</span>:<span class="string">&quot;https://www.cnblogs.com/liuqingzheng&quot;</span>us<span class="string">&quot;:200,&quot;</span>backoff<span class="string">&quot;:3&#125;</span></span><br><span class="line"><span class="string">// 失败</span></span><br><span class="line"><span class="string"> &#123;&quot;</span>level<span class="string">&quot;:&quot;</span><span class="type">error</span><span class="string">&quot;,&quot;</span>ts<span class="string">&quot;:1651478317.474609,&quot;</span>caller<span class="string">&quot;:&quot;</span>go_test_learn/s20.<span class="keyword">go</span>:<span class="number">16</span><span class="string">&quot;,&quot;</span>msg<span class="string">&quot;:&quot;</span>访问博客失败<span class="string">&quot;,&quot;</span>url<span class="string">&quot;:&quot;</span>https:<span class="comment">//www.cnblogs.cm/liuqingzheng&quot;r&quot;:&quot;Get \&quot;https://www.cnblogs.cm/liuqingzheng\&quot;: dial tcp: lookup www.cnblogs.cm: no such host&quot;,&quot;stacktrace&quot;:&quot;main.main\n\t/Users/liuqingzheng/go/src/go_test_learn/s20.go:16\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:255&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>可以看到执行程序后终端提示相关的信心。 <strong>msg 就是自己设置的，时间， url等。 还有一个 caller 调用者信息，指明问题出现的行数</strong></p>
+<h4 id="NewDevelopment-1"><a href="#NewDevelopment-1" class="headerlink" title="NewDevelopment()"></a>NewDevelopment()</h4><p>创建的生成日志是这样的： 空格隔开, 缺少调用者</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2022</span><span class="number">-05</span><span class="number">-02</span>T16:<span class="number">01</span>:<span class="number">00.202</span>+<span class="number">0800</span>    INFO    go_test_learn/s20.<span class="keyword">go</span>:<span class="number">21</span> 访问博客成功    &#123;<span class="string">&quot;url&quot;</span>: <span class="string">&quot;https://www.cnblogs.com/liuqingzheng&quot;</span>, <span class="string">&quot;status&quot;</span>: <span class="number">200</span>, <span class="string">&quot;backoff&quot;</span>: <span class="string">&quot;3s&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="NewExample-1"><a href="#NewExample-1" class="headerlink" title="NewExample()"></a>NewExample()</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;level&quot;</span>:<span class="string">&quot;info&quot;</span>,<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;访问博客成功&quot;</span>,<span class="string">&quot;url&quot;</span>:<span class="string">&quot;https://www.cnblogs.com/liuqingzheng&quot;</span>,<span class="string">&quot;status&quot;</span>:<span class="number">200</span>,<span class="string">&quot;backoff&quot;</span>:<span class="string">&quot;3s&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-定制-logger"><a href="#3-3-定制-logger" class="headerlink" title="3.3 定制 logger"></a>3.3 定制 logger</h3><p>查看NewProduction 的源码，实际底层就是： NewProductionConfig().Build(options…)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProduction</span><span class="params">(options ...Option)</span></span> (*Logger, <span class="type">error</span>) &#123;</span><br><span class="line">  <span class="comment">//调用了 NewProductionConfig()方法，内部初始化创建，返回了一个 Config 对象</span></span><br><span class="line">  <span class="comment">//Build， 内部通过 Config对象的配置， 利用New方法生成相应的 logger对象，并返回</span></span><br><span class="line">	<span class="keyword">return</span> NewProductionConfig().Build(options...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是 zap库给我们预置的 NewProduction()等方法，内部是按照指定的配置，生成相应的 logger 日志对象。 我们也可以自己调用内部的相关方法， 模仿 NewProductionConfig().Build(options…) 相关过程，自己创建，定制化 logger对象。</span></span><br></pre></td></tr></table></figure>
+
+<p>观察New方法 生成logger 所需要的东西。在Build 函数中：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回一个 Core对象， 需要的是三个参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCore</span><span class="params">(enc Encoder, ws WriteSyncer, enab LevelEnabler)</span></span> Core</span><br><span class="line"><span class="comment">// 返回一个Logger指针</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(core zapcore.Core, options ...Option)</span></span> *Logger</span><br><span class="line">log := New(</span><br><span class="line">		zapcore.NewCore(enc, sink, cfg.Level),</span><br><span class="line">		cfg.buildOptions(errSink)...,</span><br><span class="line">	)</span><br><span class="line"><span class="comment">//Core是一个最小的、快速的记录器接口。它是为库作者设计的，用来封装更友好的API</span></span><br></pre></td></tr></table></figure>
+
+<p>关于 NewProductionConfig()函数， 返回对应的Config 对象，Build 函数根据这个配置，进行生成 logger对象。</p>
+<p>我们可以自定义这个， 来实现生成自己的logger下面看下它的源码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NewProductionConfig是一个合理的生产日志配置。</span></span><br><span class="line"><span class="comment">//在infollevel及以上级别启用日志记录。</span></span><br><span class="line"><span class="comment">//它使用JSON编码器，写入标准错误，并启用采样。</span></span><br><span class="line"><span class="comment">// stacktrace会自动包含在ErrorLevel及以上的日志中。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProductionConfig</span><span class="params">()</span></span> Config &#123;</span><br><span class="line">	<span class="keyword">return</span> Config&#123;</span><br><span class="line">		<span class="comment">// 日志级别</span></span><br><span class="line">		Level:       NewAtomicLevelAt(InfoLevel),</span><br><span class="line">		Development: <span class="literal">false</span>,</span><br><span class="line">		Sampling: &amp;SamplingConfig&#123;</span><br><span class="line">			Initial:    <span class="number">100</span>,</span><br><span class="line">			Thereafter: <span class="number">100</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">// 编码方式</span></span><br><span class="line">		Encoding:         <span class="string">&quot;json&quot;</span>,</span><br><span class="line">		<span class="comment">// EncoderCofig， 配置 encoder 编辑器的默认配置。</span></span><br><span class="line">		EncoderConfig:    NewProductionEncoderConfig(),</span><br><span class="line">		<span class="comment">// 打开的文件， 写入日志信息到这里。</span></span><br><span class="line">		OutputPaths:      []<span class="type">string</span>&#123;<span class="string">&quot;stderr&quot;</span>&#125;,</span><br><span class="line">		ErrorOutputPaths: []<span class="type">string</span>&#123;<span class="string">&quot;stderr&quot;</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h4><p><strong>方式一</strong></p>
+<ul>
+<li><p>按照上面的自定义 logger， 创建核心Core需要三个参数，其中就有控制 写入文件的</p>
+</li>
+<li><p><strong>Encoder</strong>： 编辑器。提供了两种信息的编辑方式</p>
+<ul>
+<li>需要传递的参数，可以使用 默认的EncoderConfig: NewProductionEncoderConfig() 传递进去。</li>
+<li>一种 文本样式的， 一种 json 样式的信息输入。</li>
+<li><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h1u5127kduj21z009eaca.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h1u5127kduj21z009eaca.jpg" alt="image-20220502162553648"></a></li>
+</ul>
+</li>
+<li><p><strong>WriteSyncer</strong>： <code>指定日志写到哪里</code>。可以定义自己指定的文件路径</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h1u5388mw3j218g0u0wjm.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h1u5388mw3j218g0u0wjm.jpg" alt="image-20220502162755449"></a></p>
+</li>
+<li><p>通过func AddSync(w io.Writer) WriteSyncer 方法，返回一个。<br>AddSync用于转换io。Writer到WriteSyncer。它是智能的:Writer实现了WriteSyncer，我们将使用现有的Sync方法。如果没有，我们将添加一个无操作同步。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建文件对象</span></span><br><span class="line">file, _ := os.Create(<span class="string">&quot;./getLog.log&quot;</span>)  <span class="comment">// 或者是用 OpenFile函数，在原来基础上追加。</span></span><br><span class="line"><span class="comment">// file, _ := os.OpenFile(&quot;./getLog.log&quot;, os.O_APPEND | os.O_RDWR, 0744)</span></span><br><span class="line"><span class="comment">// 生成 WriteSyncer</span></span><br><span class="line">wSy := zapcore.AddSync(file)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>LevelEnabler</strong>： <code>设置哪种级别的日志将被写入</code></p>
+<ul>
+<li>对应的就是前面介绍的日志级别；如：<br><strong>zapcore.DebugLevel</strong></li>
+</ul>
+</li>
+<li><p>创建自定义logger：</p>
+<ul>
+<li><p>根据上面三点参数的理解，就可以指定文件建立了</p>
+</li>
+<li><p>&#96;&#96;&#96;go<br>&#x2F;&#x2F; 还剩一个后面的配置信息没有传入，但是已经可以了<br>&#x2F;&#x2F; 默认我们调用 NewProduction（）方法也是没有传递啥配置进去的。<br>log :&#x3D; New(<br>    zapcore.NewCore(传递编辑器（两种）, 自定义文件输出, cfg.Level（级别）),<br>    )</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 按照这样的建立完成之后就可以使用了，往指定文件里打印日志。</span><br><span class="line"></span><br><span class="line">```go</span><br><span class="line">func initLogger2() *zap.Logger &#123;</span><br><span class="line">	//1  日志输出路径</span><br><span class="line">	//file, _ := os.Create(&quot;./test2.log&quot;)</span><br><span class="line">	file, _ := os.OpenFile(&quot;./test2.log&quot;, os.O_APPEND | os.O_RDWR, 0744)</span><br><span class="line">	// 把文件对象做成WriteSyncer类型</span><br><span class="line">	writeSyncer := zapcore.AddSync(file)</span><br><span class="line">	// 2 encoder编码，就两种</span><br><span class="line">	//encoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span><br><span class="line">	encoder := zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())</span><br><span class="line"></span><br><span class="line">	// 3 创建core对象，指定encoder编码，WriteSyncer对象和日志级别</span><br><span class="line">	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)</span><br><span class="line">	// 4 创建logger对象</span><br><span class="line">	logger := zap.New(core)</span><br><span class="line">	return logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>方式二</strong></p>
+<p>还有 zap 预置的生成 logger的方式，都是通过 NewProductionConfig() 来生成相关配置的， 自定义一个 NewProductionConfig() 然后，按着相应的步骤就可以了。 Build方法 就是通过 配置的 Config 对象，来生成的 logger。</p>
+<p>重写方法，只需要加个文件名就可以了</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">// 1 得到config对象</span></span><br><span class="line">	conf := zap.NewProductionConfig()</span><br><span class="line">	<span class="comment">// 2 修改config对象的属性，如编码，输出路径等</span></span><br><span class="line">	<span class="comment">//conf.Encoding=&quot;console&quot;</span></span><br><span class="line">	conf.Encoding = <span class="string">&quot;json&quot;</span></span><br><span class="line">	<span class="comment">//conf.OutputPaths = append(conf.OutputPaths, &quot;./test.log&quot;)</span></span><br><span class="line">	conf.OutputPaths = []<span class="type">string</span>&#123;<span class="string">&quot;./test.log&quot;</span>&#125;</span><br><span class="line">	<span class="comment">//3 通过config对象得到logger对象指针</span></span><br><span class="line">	logger, _ := conf.Build()</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="更改时间编码"><a href="#更改时间编码" class="headerlink" title="更改时间编码"></a>更改时间编码</h4><p><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h1ugl91v9bj21mq0ms47n.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h1ugl91v9bj21mq0ms47n.jpg" alt="image-20220502230547910"></a></p>
+<p><strong>方式一</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">// 1 得到config对象</span></span><br><span class="line">	conf := zap.NewProductionConfig()</span><br><span class="line">	<span class="comment">// 2 修改config对象的属性，如编码，输出路径等</span></span><br><span class="line">	<span class="comment">//conf.Encoding=&quot;console&quot;</span></span><br><span class="line">	conf.Encoding = <span class="string">&quot;json&quot;</span></span><br><span class="line">	<span class="comment">//conf.OutputPaths = append(conf.OutputPaths, &quot;./test.log&quot;)</span></span><br><span class="line">	conf.OutputPaths = []<span class="type">string</span>&#123;<span class="string">&quot;./test.log&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3 更改时间 人类可读</span></span><br><span class="line">	conf.EncoderConfig.EncodeTime=zapcore.ISO8601TimeEncoder</span><br><span class="line">	<span class="comment">//3 通过config对象得到logger对象指针</span></span><br><span class="line">	logger, _ := conf.Build()</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger2</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">//1  日志输出路径</span></span><br><span class="line">	<span class="comment">//file, _ := os.Create(&quot;./test2.log&quot;)</span></span><br><span class="line">	file, _ := os.OpenFile(<span class="string">&quot;./test2.log&quot;</span>, os.O_APPEND | os.O_RDWR, <span class="number">0744</span>)</span><br><span class="line">	<span class="comment">// 把文件对象做成WriteSyncer类型</span></span><br><span class="line">	writeSyncer := zapcore.AddSync(file)</span><br><span class="line">	<span class="comment">// 2 encoder编码，就两种</span></span><br><span class="line">	encoderConfig := zap.NewProductionEncoderConfig()</span><br><span class="line">	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder</span><br><span class="line">	<span class="comment">//encoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	<span class="comment">//encoder := zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	encoder := zapcore.NewConsoleEncoder(encoderConfig)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3 创建core对象，指定encoder编码，WriteSyncer对象和日志级别</span></span><br><span class="line">	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)</span><br><span class="line">	<span class="comment">// 4 创建logger对象</span></span><br><span class="line">	logger := zap.New(core)</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="增加调用者信息"><a href="#增加调用者信息" class="headerlink" title="增加调用者信息"></a>增加调用者信息</h4><p>根据时间的理解， 这里很容易想到： 配置项当中的 EncodeCaller， 也可以指定相关的函数，用来打印 调用者的信息。</p>
+<p><strong>方式一(该方式本身就有，不需要再加)</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">// 1 得到config对象</span></span><br><span class="line">	conf := zap.NewProductionConfig()</span><br><span class="line">	<span class="comment">// 2 修改config对象的属性，如编码，输出路径等</span></span><br><span class="line">	<span class="comment">//conf.Encoding=&quot;console&quot;</span></span><br><span class="line">	conf.Encoding = <span class="string">&quot;json&quot;</span></span><br><span class="line">	<span class="comment">//conf.OutputPaths = append(conf.OutputPaths, &quot;./test.log&quot;)</span></span><br><span class="line">	conf.OutputPaths = []<span class="type">string</span>&#123;<span class="string">&quot;./test.log&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3 更改时间 人类可读</span></span><br><span class="line">	conf.EncoderConfig.EncodeTime=zapcore.ISO8601TimeEncoder</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4 增加调用者信息(该方式本身就有)</span></span><br><span class="line">	<span class="comment">//3 通过config对象得到logger对象指针</span></span><br><span class="line">	logger, _ := conf.Build()</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一种方式是： 我们创建Core, zap.New()创建 logger, 分析第二个参数的 Options 类型， 文档中可以找到相关的方法，就有添加调试 显示调用人信息的方法。</p>
+<p><strong>方式二</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger2</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">//1  日志输出路径</span></span><br><span class="line">	<span class="comment">//file, _ := os.Create(&quot;./test2.log&quot;)</span></span><br><span class="line">	file, _ := os.OpenFile(<span class="string">&quot;./test2.log&quot;</span>, os.O_APPEND | os.O_RDWR, <span class="number">0744</span>)</span><br><span class="line">	<span class="comment">// 把文件对象做成WriteSyncer类型</span></span><br><span class="line">	writeSyncer := zapcore.AddSync(file)</span><br><span class="line">	<span class="comment">// 2 encoder编码，就两种</span></span><br><span class="line">	encoderConfig := zap.NewProductionEncoderConfig()</span><br><span class="line">	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder</span><br><span class="line">	<span class="comment">//encoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	<span class="comment">//encoder := zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	encoder := zapcore.NewConsoleEncoder(encoderConfig)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3 创建core对象，指定encoder编码，WriteSyncer对象和日志级别</span></span><br><span class="line">	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)</span><br><span class="line">	<span class="comment">// 4 创建logger对象</span></span><br><span class="line">	<span class="comment">//logger := zap.New(core)</span></span><br><span class="line">	logger := zap.New(core, zap.AddCaller())</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-使用-Lumberjack-进行日志切割归档"><a href="#四-使用-Lumberjack-进行日志切割归档" class="headerlink" title="四 使用 Lumberjack 进行日志切割归档"></a>四 使用 Lumberjack 进行日志切割归档</h2><p><em>Zap 本身不支持切割归档日志文件，</em>为了添加日志切割归档功能，我们将使用第三方库 <a target="_blank" rel="noopener" href="https://github.com/natefinch/lumberjack">Lumberjack</a> 来实现。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> get -u github.com/natefinch/lumberjack</span><br></pre></td></tr></table></figure>
+
+<p>lumberjack.Logger 实现了 io.writer 接口，可以作为参数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLogWriter</span><span class="params">()</span></span> zapcore.WriteSyncer &#123;</span><br><span class="line">	lumberJackLogger := &amp;lumberjack.Logger&#123;</span><br><span class="line">		Filename: <span class="string">&quot;./test.log&quot;</span>,  <span class="comment">// Filename: 日志文件的位置</span></span><br><span class="line">		MaxSize: <span class="number">10</span>, <span class="comment">// 在进行切割之前，日志文件的最大大小（以 MB 为单位）</span></span><br><span class="line">		MaxBackups: <span class="number">5</span>,  <span class="comment">// 保留旧文件的最大个数</span></span><br><span class="line">		MaxAge: <span class="number">30</span>,		<span class="comment">// 保留旧文件的最大天数</span></span><br><span class="line">		Compress: <span class="literal">false</span>,  <span class="comment">// 是否压缩 / 归档旧文件</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> zapcore.AddSync(lumberJackLogger)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Lumberjack Logger 采用以下属性作为输入:</span></span><br><span class="line"><span class="comment">● Filename: 日志文件的位置</span></span><br><span class="line"><span class="comment">● MaxSize：在进行切割之前，日志文件的最大大小（以 MB 为单位）</span></span><br><span class="line"><span class="comment">● MaxBackups：保留旧文件的最大个数</span></span><br><span class="line"><span class="comment">● MaxAges：保留旧文件的最大天数</span></span><br><span class="line"><span class="comment">● Compress：是否压缩 / 归档旧文件</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-代码案例"><a href="#4-1-代码案例" class="headerlink" title="4.1 代码案例"></a>4.1 代码案例</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/natefinch/lumberjack&quot;</span></span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;go.uber.org/zap/zapcore&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initLogger2</span><span class="params">()</span></span> *zap.Logger &#123;</span><br><span class="line">	<span class="comment">//1  日志输出路径</span></span><br><span class="line">	<span class="comment">//file, _ := os.Create(&quot;./test2.log&quot;)</span></span><br><span class="line">	<span class="comment">//file, _ := os.OpenFile(&quot;./test2.log&quot;, os.O_APPEND | os.O_RDWR, 0744)</span></span><br><span class="line">	<span class="comment">// 把文件对象做成WriteSyncer类型</span></span><br><span class="line">	writeSyncer := zapcore.AddSync(getLogWriter())</span><br><span class="line">	<span class="comment">// 2 encoder编码，就两种</span></span><br><span class="line">	encoderConfig := zap.NewProductionEncoderConfig()</span><br><span class="line">	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder</span><br><span class="line">	<span class="comment">//encoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	<span class="comment">//encoder := zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())</span></span><br><span class="line">	encoder := zapcore.NewConsoleEncoder(encoderConfig)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3 创建core对象，指定encoder编码，WriteSyncer对象和日志级别</span></span><br><span class="line">	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)</span><br><span class="line">	<span class="comment">// 4 创建logger对象</span></span><br><span class="line">	<span class="comment">//logger := zap.New(core)</span></span><br><span class="line">	logger := zap.New(core, zap.AddCaller())</span><br><span class="line">	<span class="keyword">return</span> logger</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLogWriter</span><span class="params">()</span></span> zapcore.WriteSyncer &#123;</span><br><span class="line">	lumberJackLogger := &amp;lumberjack.Logger&#123;</span><br><span class="line">		Filename: <span class="string">&quot;./test3.log&quot;</span>,  <span class="comment">// 导入文件名</span></span><br><span class="line">		MaxSize: <span class="number">1</span>, <span class="comment">// 大小M兆</span></span><br><span class="line">		MaxBackups: <span class="number">5</span>,  <span class="comment">// 最大备份数量</span></span><br><span class="line">		MaxAge: <span class="number">30</span>,		<span class="comment">// 最大备份天数</span></span><br><span class="line">		Compress: <span class="literal">false</span>,  <span class="comment">// 是否压缩</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> zapcore.AddSync(lumberJackLogger)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	logger := initLogger2()</span><br><span class="line">	<span class="keyword">defer</span> logger.Sync() <span class="comment">// flushes buffer, if any， 刷新缓冲区，存盘</span></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++&#123;</span><br><span class="line">		logger.Info(<span class="string">&quot;测试日志分隔&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://tva1.sinaimg.cn/large/e6c9d24egy1h1uhwvk29dj20k2088dgx.jpg"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h1uhwvk29dj20k2088dgx.jpg" alt="image-20220502235135414"></a></p>
+<h2 id="五-Gin中使用zap日志库"><a href="#五-Gin中使用zap日志库" class="headerlink" title="五 Gin中使用zap日志库"></a>五 Gin中使用zap日志库</h2><h3 id="5-1-使用第三方库"><a href="#5-1-使用第三方库" class="headerlink" title="5.1 使用第三方库"></a>5.1 使用第三方库</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 地址：https://github.com/gin-contrib/zap</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 下载</span></span><br><span class="line"><span class="keyword">go</span> get github.com/gin-contrib/zap</span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	ginzap <span class="string">&quot;github.com/gin-contrib/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//func main() &#123;</span></span><br><span class="line"><span class="comment">//	// 初始化logger</span></span><br><span class="line"><span class="comment">//	logger.InitLogger()</span></span><br><span class="line"><span class="comment">//	r:=gin.New()</span></span><br><span class="line"><span class="comment">//	// 两个中间件加入gin中</span></span><br><span class="line"><span class="comment">//	r.Use(logger.GinLogger,logger.GinRecovery(true))</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	r.GET(&quot;/&quot;, func(c *gin.Context) &#123;</span></span><br><span class="line"><span class="comment">//		// 以后直接使用zap.L()即可，并且有锁，不存在并发安全的问题</span></span><br><span class="line"><span class="comment">//		// 1 正常访问</span></span><br><span class="line"><span class="comment">//		//zap.L().Info(&quot;info-日志记录了&quot;)</span></span><br><span class="line"><span class="comment">//		//c.String(200,&quot;hello logger insert&quot;)</span></span><br><span class="line"><span class="comment">//		// 2 抛异常</span></span><br><span class="line"><span class="comment">//		panic(&quot;出错了宝贝&quot;)</span></span><br><span class="line"><span class="comment">//		c.String(200,&quot;hello logger insert&quot;)</span></span><br><span class="line"><span class="comment">//	&#125;)</span></span><br><span class="line"><span class="comment">//	r.Run(&quot;:8080&quot;)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.New()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//logger, _ := zap.NewProduction()</span></span><br><span class="line">	<span class="comment">// 自定义写到文件中</span></span><br><span class="line">	<span class="comment">// 1 得到config对象</span></span><br><span class="line">	conf := zap.NewProductionConfig()</span><br><span class="line">	<span class="comment">// 2 修改config对象的属性，如编码，输出路径等</span></span><br><span class="line">	<span class="comment">//conf.Encoding=&quot;console&quot;</span></span><br><span class="line">	conf.Encoding = <span class="string">&quot;json&quot;</span></span><br><span class="line">	<span class="comment">//conf.OutputPaths = append(conf.OutputPaths, &quot;./test.log&quot;)</span></span><br><span class="line">	conf.OutputPaths = []<span class="type">string</span>&#123;<span class="string">&quot;./web.log&quot;</span>&#125;</span><br><span class="line">	<span class="comment">//3 通过config对象得到logger对象指针</span></span><br><span class="line">	logger, _ := conf.Build()</span><br><span class="line">	<span class="comment">//4 替换掉全局的logger，以后都使用zap.L()</span></span><br><span class="line">	zap.ReplaceGlobals(logger)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Add a ginzap middleware, which:</span></span><br><span class="line">	<span class="comment">//   - Logs all requests, like a combined access and error log.</span></span><br><span class="line">	<span class="comment">//   - Logs to stdout.</span></span><br><span class="line">	<span class="comment">//   - RFC3339 with UTC time format.</span></span><br><span class="line">	r.Use(ginzap.Ginzap(logger, time.RFC3339, <span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Logs all panic to error log</span></span><br><span class="line">	<span class="comment">//   - stack means whether output the stack info.</span></span><br><span class="line">	r.Use(ginzap.RecoveryWithZap(logger, <span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">	r.GET(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		zap.L().Info(<span class="string">&quot;info-test&quot;</span>)</span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;pong &quot;</span>+fmt.Sprint(time.Now().Unix()))</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Example when panic happen.</span></span><br><span class="line">	r.GET(<span class="string">&quot;/panic&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;An unexpected error happen!&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-自己定制"><a href="#5-2-自己定制" class="headerlink" title="5.2 自己定制"></a>5.2 自己定制</h3><p>讲解了 gin.Default 创建引擎， 默认的添加了两个中间件。 一个是 logger 日志，一个是 recover 恢复。 gin 自带的 logger 就是在这里实现起作用的<br>那么我们也需要将 zap封装为中间件–&gt;GinLogger和GinRecovery</p>
+<h4 id="logger-x2F-logger-go"><a href="#logger-x2F-logger-go" class="headerlink" title="logger&#x2F;logger.go"></a>logger&#x2F;logger.go</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> logger</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/natefinch/lumberjack&quot;</span></span><br><span class="line">	<span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">	<span class="string">&quot;go.uber.org/zap/zapcore&quot;</span></span><br><span class="line">	<span class="string">&quot;net&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http/httputil&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;runtime/debug&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 定义一下logger使用的常量</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	mode     = <span class="string">&quot;dev&quot;</span>         <span class="comment">//开发模式</span></span><br><span class="line">	filename = <span class="string">&quot;web_app.log&quot;</span> <span class="comment">// 日志存放路径</span></span><br><span class="line">	<span class="comment">//level       = &quot;debug&quot;       // 日志级别</span></span><br><span class="line">	level       = zapcore.DebugLevel <span class="comment">// 日志级别</span></span><br><span class="line">	max_size    = <span class="number">200</span>                <span class="comment">//最大存储大小</span></span><br><span class="line">	max_age     = <span class="number">30</span>                 <span class="comment">//最大存储时间</span></span><br><span class="line">	max_backups = <span class="number">7</span>                  <span class="comment">//#备份数量</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 初始化Logger对象</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitLogger</span><span class="params">()</span></span> (err <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="comment">// 创建Core三大件，进行初始化</span></span><br><span class="line">	writeSyncer := getLogWriter(filename, max_size, max_backups, max_age)</span><br><span class="line">	encoder := getEncoder()</span><br><span class="line">	<span class="comment">// 创建核心--&gt;如果是dev模式，就在控制台和文件都打印，否则就只写到文件中</span></span><br><span class="line">	<span class="keyword">var</span> core zapcore.Core</span><br><span class="line">	<span class="keyword">if</span> mode == <span class="string">&quot;dev&quot;</span> &#123;</span><br><span class="line">		<span class="comment">// 开发模式，日志输出到终端</span></span><br><span class="line">		consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())</span><br><span class="line">		<span class="comment">// NewTee创建一个核心，将日志条目复制到两个或多个底层核心中。</span></span><br><span class="line">		core = zapcore.NewTee(</span><br><span class="line">			zapcore.NewCore(encoder, writeSyncer, level),</span><br><span class="line">			zapcore.NewCore(consoleEncoder, zapcore.Lock(os.Stdout), level),</span><br><span class="line">		)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		core = zapcore.NewCore(encoder, writeSyncer, level)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//core := zapcore.NewCore(encoder, writeSyncer, level)</span></span><br><span class="line">	<span class="comment">// 创建 logger 对象</span></span><br><span class="line">	log := zap.New(core, zap.AddCaller())</span><br><span class="line">	<span class="comment">// 替换全局的 logger, 后续在其他包中只需使用zap.L()调用即可</span></span><br><span class="line">	zap.ReplaceGlobals(log)</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取Encoder，给初始化logger使用的</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getEncoder</span><span class="params">()</span></span> zapcore.Encoder &#123;</span><br><span class="line">	<span class="comment">// 使用zap提供的 NewProductionEncoderConfig</span></span><br><span class="line">	encoderConfig := zap.NewProductionEncoderConfig()</span><br><span class="line">	<span class="comment">// 设置时间格式</span></span><br><span class="line">	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder</span><br><span class="line">	<span class="comment">// 时间的key</span></span><br><span class="line">	encoderConfig.TimeKey = <span class="string">&quot;time&quot;</span></span><br><span class="line">	<span class="comment">// 级别</span></span><br><span class="line">	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder</span><br><span class="line">	<span class="comment">// 显示调用者信息</span></span><br><span class="line">	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder</span><br><span class="line">	<span class="comment">// 返回json 格式的 日志编辑器</span></span><br><span class="line">	<span class="keyword">return</span> zapcore.NewJSONEncoder(encoderConfig)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取切割的问题，给初始化logger使用的</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLogWriter</span><span class="params">(filename <span class="type">string</span>, maxSize, maxBackup, maxAge <span class="type">int</span>)</span></span> zapcore.WriteSyncer &#123;</span><br><span class="line">	<span class="comment">// 使用 lumberjack 归档切片日志</span></span><br><span class="line">	lumberJackLogger := &amp;lumberjack.Logger&#123;</span><br><span class="line">		Filename:   filename,</span><br><span class="line">		MaxSize:    maxSize,</span><br><span class="line">		MaxBackups: maxBackup,</span><br><span class="line">		MaxAge:     maxAge,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> zapcore.AddSync(lumberJackLogger)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GinLogger 用于替换gin框架的Logger中间件，不传参数，直接这样写</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GinLogger</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	logger := zap.L()</span><br><span class="line">	start := time.Now()</span><br><span class="line">	path := c.Request.URL.Path</span><br><span class="line">	query := c.Request.URL.RawQuery</span><br><span class="line">	c.Next() <span class="comment">// 执行视图函数</span></span><br><span class="line">	<span class="comment">// 视图函数执行完成，统计时间，记录日志</span></span><br><span class="line">	cost := time.Since(start)</span><br><span class="line">	logger.Info(path,</span><br><span class="line">		zap.Int(<span class="string">&quot;status&quot;</span>, c.Writer.Status()),</span><br><span class="line">		zap.String(<span class="string">&quot;method&quot;</span>, c.Request.Method),</span><br><span class="line">		zap.String(<span class="string">&quot;path&quot;</span>, path),</span><br><span class="line">		zap.String(<span class="string">&quot;query&quot;</span>, query),</span><br><span class="line">		zap.String(<span class="string">&quot;ip&quot;</span>, c.ClientIP()),</span><br><span class="line">		zap.String(<span class="string">&quot;user-agent&quot;</span>, c.Request.UserAgent()),</span><br><span class="line">		zap.String(<span class="string">&quot;errors&quot;</span>, c.Errors.ByType(gin.ErrorTypePrivate).String()),</span><br><span class="line">		zap.Duration(<span class="string">&quot;cost&quot;</span>, cost),</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GinRecovery 用于替换gin框架的Recovery中间件，因为传入参数，再包一层</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GinRecovery</span><span class="params">(stack <span class="type">bool</span>)</span></span> gin.HandlerFunc &#123;</span><br><span class="line">	logger := zap.L()</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="comment">// defer 延迟调用，出了异常，处理并恢复异常，记录日志</span></span><br><span class="line">			<span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">				<span class="comment">//  这个不必须，检查是否存在断开的连接(broken pipe或者connection reset by peer)---------开始--------</span></span><br><span class="line">				<span class="keyword">var</span> brokenPipe <span class="type">bool</span></span><br><span class="line">				<span class="keyword">if</span> ne, ok := err.(*net.OpError); ok &#123;</span><br><span class="line">					<span class="keyword">if</span> se, ok := ne.Err.(*os.SyscallError); ok &#123;</span><br><span class="line">						<span class="keyword">if</span> strings.Contains(strings.ToLower(se.Error()), <span class="string">&quot;broken pipe&quot;</span>) || strings.Contains(strings.ToLower(se.Error()), <span class="string">&quot;connection reset by peer&quot;</span>) &#123;</span><br><span class="line">							brokenPipe = <span class="literal">true</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//httputil包预先准备好的DumpRequest方法</span></span><br><span class="line">				httpRequest, _ := httputil.DumpRequest(c.Request, <span class="literal">false</span>)</span><br><span class="line">				<span class="keyword">if</span> brokenPipe &#123;</span><br><span class="line">					logger.Error(c.Request.URL.Path,</span><br><span class="line">						zap.Any(<span class="string">&quot;error&quot;</span>, err),</span><br><span class="line">						zap.String(<span class="string">&quot;request&quot;</span>, <span class="type">string</span>(httpRequest)),</span><br><span class="line">					)</span><br><span class="line">					<span class="comment">// 如果连接已断开，我们无法向其写入状态</span></span><br><span class="line">					c.Error(err.(<span class="type">error</span>))</span><br><span class="line">					c.Abort()</span><br><span class="line">					<span class="keyword">return</span></span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//  这个不必须，检查是否存在断开的连接(broken pipe或者connection reset by peer)---------结束--------</span></span><br><span class="line"></span><br><span class="line">				<span class="comment">// 是否打印堆栈信息，使用的是debug.Stack()，传入false，在日志中就没有堆栈信息</span></span><br><span class="line">				<span class="keyword">if</span> stack &#123;</span><br><span class="line">					logger.Error(<span class="string">&quot;[Recovery from panic]&quot;</span>,</span><br><span class="line">						zap.Any(<span class="string">&quot;error&quot;</span>, err),</span><br><span class="line">						zap.String(<span class="string">&quot;request&quot;</span>, <span class="type">string</span>(httpRequest)),</span><br><span class="line">						zap.String(<span class="string">&quot;stack&quot;</span>, <span class="type">string</span>(debug.Stack())),</span><br><span class="line">					)</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					logger.Error(<span class="string">&quot;[Recovery from panic]&quot;</span>,</span><br><span class="line">						zap.Any(<span class="string">&quot;error&quot;</span>, err),</span><br><span class="line">						zap.String(<span class="string">&quot;request&quot;</span>, <span class="type">string</span>(httpRequest)),</span><br><span class="line">					)</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">// 有错误，直接返回给前端错误，前端直接报错</span></span><br><span class="line">				<span class="comment">//c.AbortWithStatus(http.StatusInternalServerError)</span></span><br><span class="line">				<span class="comment">// 该方式前端不报错</span></span><br><span class="line">				c.String(<span class="number">200</span>,<span class="string">&quot;访问出错了&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;()</span><br><span class="line">		c.Next()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="main-go"><a href="#main-go" class="headerlink" title="main.go"></a>main.go</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;go_test_learn/logger&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 初始化logger</span></span><br><span class="line">	logger.InitLogger()</span><br><span class="line">	r:=gin.New()</span><br><span class="line">	<span class="comment">// 两个中间件加入gin中</span></span><br><span class="line">	r.Use(logger.GinLogger,logger.GinRecovery(<span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">	r.GET(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">// 以后直接使用zap.L()即可，并且有锁，不存在并发安全的问题</span></span><br><span class="line">		<span class="comment">// 1 正常访问</span></span><br><span class="line">		<span class="comment">//zap.L().Info(&quot;info-日志记录了&quot;)</span></span><br><span class="line">		<span class="comment">//c.String(200,&quot;hello logger insert&quot;)</span></span><br><span class="line">		<span class="comment">// 2 抛异常</span></span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;出错了宝贝&quot;</span>)</span><br><span class="line">		c.String(<span class="number">200</span>,<span class="string">&quot;hello logger insert&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B15-%E6%9C%80%E5%85%BC%E5%AE%B9%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E6%97%A5%E5%BF%97%E5%BA%93-logrus%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [15-最兼容标准库的日志库-logrus]
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B14-Gin%E6%97%A5%E5%BF%97%5D/">
+        
+          [14-Gin日志]
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#16-%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%BF%AB%E7%9A%84%E6%97%A5%E5%BF%97%E5%BA%93-zap"><span class="toc-nav-text">[16-史上最快的日志库-zap]</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-Zap%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">一 Zap介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%80%9F%E5%BA%A6%E6%AF%94%E8%BE%83"><span class="toc-nav-text">速度比较</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">二 快速使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-1-SugaredLogger"><span class="toc-nav-text">2.1 SugaredLogger</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-2-Logger"><span class="toc-nav-text">2.2 Logger</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-3-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9logger"><span class="toc-nav-text">2.3 如何选择logger</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-4-%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-nav-text">2.4 日志级别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-%E9%AB%98%E7%BA%A7%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">三 高级使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-1-%E5%88%9D%E5%A7%8B%E5%8C%96-looger"><span class="toc-nav-text">3.1 初始化 looger</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewExample"><span class="toc-nav-text">NewExample</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewProduction"><span class="toc-nav-text">NewProduction</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewDevelopment"><span class="toc-nav-text">NewDevelopment</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-2-%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">3.2 方法使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewProduction-1"><span class="toc-nav-text">NewProduction</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewDevelopment-1"><span class="toc-nav-text">NewDevelopment()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#NewExample-1"><span class="toc-nav-text">NewExample()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-3-%E5%AE%9A%E5%88%B6-logger"><span class="toc-nav-text">3.3 定制 logger</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6"><span class="toc-nav-text">写入文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%9B%B4%E6%94%B9%E6%97%B6%E9%97%B4%E7%BC%96%E7%A0%81"><span class="toc-nav-text">更改时间编码</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%B0%83%E7%94%A8%E8%80%85%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">增加调用者信息</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-%E4%BD%BF%E7%94%A8-Lumberjack-%E8%BF%9B%E8%A1%8C%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E5%BD%92%E6%A1%A3"><span class="toc-nav-text">四 使用 Lumberjack 进行日志切割归档</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-1-%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="toc-nav-text">4.1 代码案例</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%94-Gin%E4%B8%AD%E4%BD%BF%E7%94%A8zap%E6%97%A5%E5%BF%97%E5%BA%93"><span class="toc-nav-text">五 Gin中使用zap日志库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-1-%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-nav-text">5.1 使用第三方库</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-2-%E8%87%AA%E5%B7%B1%E5%AE%9A%E5%88%B6"><span class="toc-nav-text">5.2 自己定制</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#logger-x2F-logger-go"><span class="toc-nav-text">logger&#x2F;logger.go</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#main-go"><span class="toc-nav-text">main.go</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[16-史上最快的日志库-zap]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[16-史上最快的日志库-zap]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

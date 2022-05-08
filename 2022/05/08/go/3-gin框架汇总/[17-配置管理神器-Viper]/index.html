@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [17-配置管理神器-Viper] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[17-配置管理神器-Viper]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="17-配置管理神器-Viper"><a href="#17-配置管理神器-Viper" class="headerlink" title="[17-配置管理神器-Viper]"></a>[17-配置管理神器-Viper]</h1><h2 id="一-Viper介绍"><a href="#一-Viper介绍" class="headerlink" title="一 Viper介绍"></a>一 Viper介绍</h2><p>Viper 是一个完整的 Go 应用程序配置解决方案，它旨在在应用程序中工作，并且可以处理所有类型的配置需求和格式。它支持：</p>
+<ul>
+<li>设置默认值</li>
+<li>从 JSON、TOML、YAML、HCL、envfile 和 Java 属性配置文件读取</li>
+<li>实时监控和重新读取配置文件（可选）</li>
+<li>从环境变量中读取</li>
+<li>从远程配置系统（etcd 或 Consul）读取，并观察变化</li>
+<li>从命令行参数读取</li>
+<li>从缓冲区读取</li>
+<li>显式配置值</li>
+</ul>
+<p>Viper 可以被认为是满足您所有应用程序配置需求的注册表</p>
+<p>项目地址:<a target="_blank" rel="noopener" href="https://github.com/spf13/viper">https://github.com/spf13/viper</a></p>
+<p>文档地址：<a target="_blank" rel="noopener" href="https://github.com/spf13/viper/blob/master/README.md">https://github.com/spf13/viper/blob/master/README.md</a></p>
+<p>Stars数量：19.1k</p>
+<p>本文翻译自官方</p>
+<h2 id="二-为什么选择Viper"><a href="#二-为什么选择Viper" class="headerlink" title="二 为什么选择Viper"></a>二 为什么选择Viper</h2><p>在构建现代应用程序时，你无需担心配置文件格式；你想要专注于构建出色的软件。Viper的出现就是为了在这方面帮助你的。</p>
+<p>Viper能够为你执行下列操作：</p>
+<ol>
+<li>查找、加载和反序列化<code>JSON</code>、<code>TOML</code>、<code>YAML</code>、<code>HCL</code>、<code>INI</code>、<code>envfile</code>和<code>Java properties</code>格式的配置文件。</li>
+<li>提供一种机制为你的不同配置选项设置默认值。</li>
+<li>提供一种机制来通过命令行参数覆盖指定选项的值。</li>
+<li>提供别名系统，以便在不破坏现有代码的情况下轻松重命名参数。</li>
+<li>当用户提供了与默认值相同的命令行或配置文件时，可以很容易地分辨出它们之间的区别。</li>
+</ol>
+<p>Viper会按照下面的优先级。每个项目的优先级都高于它下面的项目:</p>
+<ul>
+<li>显示调用<code>Set</code>设置值</li>
+<li>命令行参数（flag）</li>
+<li>环境变量</li>
+<li>配置文件</li>
+<li>key&#x2F;value存储</li>
+<li>默认值</li>
+</ul>
+<p><strong>重要：</strong> 目前Viper配置的键（Key）是大小写不敏感的。目前正在讨论是否将这一选项设为可选</p>
+<h2 id="三-把值存入Viper"><a href="#三-把值存入Viper" class="headerlink" title="三 把值存入Viper"></a>三 把值存入Viper</h2><h3 id="3-1-建立默认值"><a href="#3-1-建立默认值" class="headerlink" title="3.1 建立默认值"></a>3.1 建立默认值</h3><p>一个好的配置系统应该支持默认值。键不需要默认值，但如果没有通过配置文件、环境变量、远程配置或命令行标志（flag）设置键，则默认值非常有用。</p>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">viper.SetDefault(<span class="string">&quot;ContentDir&quot;</span>, <span class="string">&quot;content&quot;</span>)</span><br><span class="line">viper.SetDefault(<span class="string">&quot;LayoutDir&quot;</span>, <span class="string">&quot;layouts&quot;</span>)</span><br><span class="line">viper.SetDefault(<span class="string">&quot;Taxonomies&quot;</span>, <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>&#123;<span class="string">&quot;tag&quot;</span>: <span class="string">&quot;tags&quot;</span>, <span class="string">&quot;category&quot;</span>: <span class="string">&quot;categories&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-读取配置文件"><a href="#3-2-读取配置文件" class="headerlink" title="3.2 读取配置文件"></a>3.2 读取配置文件</h3><p>Viper需要最少知道在哪里查找配置文件的配置。Viper支持<code>JSON</code>、<code>TOML</code>、<code>YAML</code>、<code>HCL</code>、<code>envfile</code>和<code>Java properties</code>格式的配置文件。Viper可以搜索多个路径，但目前单个Viper实例只支持单个配置文件。Viper不默认任何配置搜索路径，将默认决策留给应用程序。</p>
+<p>下面是一个如何使用Viper搜索和读取配置文件的示例。不需要任何特定的路径，但是至少应该提供一个配置文件预期出现的路径。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">viper.SetConfigFile(<span class="string">&quot;./config.yaml&quot;</span>) <span class="comment">// 指定配置文件路径</span></span><br><span class="line">viper.SetConfigName(<span class="string">&quot;config&quot;</span>) <span class="comment">// 配置文件名称(无扩展名)</span></span><br><span class="line">viper.SetConfigType(<span class="string">&quot;yaml&quot;</span>) <span class="comment">// 如果配置文件的名称中没有扩展名，则需要配置此项</span></span><br><span class="line">viper.AddConfigPath(<span class="string">&quot;/etc/appname/&quot;</span>)   <span class="comment">// 查找配置文件所在的路径</span></span><br><span class="line">viper.AddConfigPath(<span class="string">&quot;$HOME/.appname&quot;</span>)  <span class="comment">// 多次调用以添加多个搜索路径</span></span><br><span class="line">viper.AddConfigPath(<span class="string">&quot;.&quot;</span>)               <span class="comment">// 还可以在工作目录中查找配置</span></span><br><span class="line">err := viper.ReadInConfig() <span class="comment">// 查找并读取配置文件</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123; <span class="comment">// 处理读取配置文件的错误</span></span><br><span class="line">	<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;Fatal error config file: %s \n&quot;</span>, err))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在加载配置文件出错时，你可以像下面这样处理找不到配置文件的特定情况：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> err := viper.ReadInConfig(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> _, ok := err.(viper.ConfigFileNotFoundError); ok &#123;</span><br><span class="line">        <span class="comment">// 配置文件未找到错误；如果需要可以忽略</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 配置文件被找到，但产生了另外的错误</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置文件找到并成功解析</span></span><br></pre></td></tr></table></figure>
+
+<p><em>注意[自1.6起]：</em> 你也可以有不带扩展名的文件，并以编程方式指定其格式。对于位于用户<code>$HOME</code>目录中的配置文件没有任何扩展名，如<code>.bashrc</code>。</p>
+<p><strong>这里补充两个问题供读者解答并自行验证</strong></p>
+<p>当你使用如下方式读取配置时，viper会从<code>./conf</code>目录下查找任何以<code>config</code>为文件名的配置文件，如果同时存在<code>./conf/config.json</code>和<code>./conf/config.yaml</code>两个配置文件的话，<code>viper</code>会从哪个配置文件加载配置呢？</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">viper.SetConfigName(<span class="string">&quot;config&quot;</span>)</span><br><span class="line">viper.AddConfigPath(<span class="string">&quot;./conf&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在上面两个语句下搭配使用<code>viper.SetConfigType(&quot;yaml&quot;)</code>指定配置文件类型可以实现预期的效果吗？</p>
+<h3 id="3-3-写入配置文件-了解"><a href="#3-3-写入配置文件-了解" class="headerlink" title="3.3 写入配置文件(了解)"></a>3.3 写入配置文件(了解)</h3><p>从配置文件中读取配置文件是有用的，但是有时你想要存储在运行时所做的所有修改。为此，可以使用下面一组命令，每个命令都有自己的用途:</p>
+<ul>
+<li>WriteConfig - 将当前的<code>viper</code>配置写入预定义的路径并覆盖（如果存在的话）。如果没有预定义的路径，则报错。</li>
+<li>SafeWriteConfig - 将当前的<code>viper</code>配置写入预定义的路径。如果没有预定义的路径，则报错。如果存在，将不会覆盖当前的配置文件。</li>
+<li>WriteConfigAs - 将当前的<code>viper</code>配置写入给定的文件路径。将覆盖给定的文件(如果它存在的话)。</li>
+<li>SafeWriteConfigAs - 将当前的<code>viper</code>配置写入给定的文件路径。不会覆盖给定的文件(如果它存在的话)。</li>
+</ul>
+<p>根据经验，标记为<code>safe</code>的所有方法都不会覆盖任何文件，而是直接创建（如果不存在），而默认行为是创建或截断。</p>
+<p>一个小示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">viper.WriteConfig() <span class="comment">// 将当前配置写入“viper.AddConfigPath()”和“viper.SetConfigName”设置的预定义路径</span></span><br><span class="line">viper.SafeWriteConfig()</span><br><span class="line">viper.WriteConfigAs(<span class="string">&quot;/path/to/my/.config&quot;</span>)</span><br><span class="line">viper.SafeWriteConfigAs(<span class="string">&quot;/path/to/my/.config&quot;</span>) <span class="comment">// 因为该配置文件写入过，所以会报错</span></span><br><span class="line">viper.SafeWriteConfigAs(<span class="string">&quot;/path/to/my/.other_config&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-监控并重新读取配置文件"><a href="#3-4-监控并重新读取配置文件" class="headerlink" title="3.4 监控并重新读取配置文件"></a>3.4 监控并重新读取配置文件</h3><p>Viper支持在运行时实时读取配置文件的功能。</p>
+<p>需要重新启动服务器以使配置生效的日子已经一去不复返了，viper驱动的应用程序可以在运行时读取配置文件的更新，而不会错过任何消息。</p>
+<p>只需告诉viper实例watchConfig。可选地，你可以为Viper提供一个回调函数，以便在每次发生更改时运行。</p>
+<p><strong>确保在调用<code>WatchConfig()</code>之前添加了所有的配置路径。</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">viper.WatchConfig()</span><br><span class="line">viper.OnConfigChange(<span class="function"><span class="keyword">func</span><span class="params">(e fsnotify.Event)</span></span> &#123;</span><br><span class="line">  <span class="comment">// 配置文件发生变更之后会调用的回调函数</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;Config file changed:&quot;</span>, e.Name)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-从io-Reader读取配置-了解"><a href="#3-5-从io-Reader读取配置-了解" class="headerlink" title="3.5 从io.Reader读取配置(了解)"></a>3.5 从io.Reader读取配置(了解)</h3><p>Viper预先定义了许多配置源，如文件、环境变量、标志和远程K&#x2F;V存储，但你不受其约束。你还可以实现自己所需的配置源并将其提供给viper。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">viper.SetConfigType(<span class="string">&quot;yaml&quot;</span>) <span class="comment">// 或者 viper.SetConfigType(&quot;YAML&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 任何需要将此配置添加到程序中的方法。</span></span><br><span class="line"><span class="keyword">var</span> yamlExample = []<span class="type">byte</span>(<span class="string">`</span></span><br><span class="line"><span class="string">Hacker: true</span></span><br><span class="line"><span class="string">name: steve</span></span><br><span class="line"><span class="string">hobbies:</span></span><br><span class="line"><span class="string">- skateboarding</span></span><br><span class="line"><span class="string">- snowboarding</span></span><br><span class="line"><span class="string">- go</span></span><br><span class="line"><span class="string">clothing:</span></span><br><span class="line"><span class="string">  jacket: leather</span></span><br><span class="line"><span class="string">  trousers: denim</span></span><br><span class="line"><span class="string">age: 35</span></span><br><span class="line"><span class="string">eyes : brown</span></span><br><span class="line"><span class="string">beard: true</span></span><br><span class="line"><span class="string">`</span>)</span><br><span class="line"></span><br><span class="line">viper.ReadConfig(bytes.NewBuffer(yamlExample))</span><br><span class="line"></span><br><span class="line">viper.Get(<span class="string">&quot;name&quot;</span>) <span class="comment">// 这里会得到 &quot;steve&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-覆盖设置"><a href="#3-6-覆盖设置" class="headerlink" title="3.6 覆盖设置"></a>3.6 覆盖设置</h3><p>这些可能来自命令行标志，也可能来自你自己的应用程序逻辑。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">viper.Set(<span class="string">&quot;Verbose&quot;</span>, <span class="literal">true</span>)</span><br><span class="line">viper.Set(<span class="string">&quot;LogFile&quot;</span>, LogFile)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-注册和使用别名-了解"><a href="#3-7-注册和使用别名-了解" class="headerlink" title="3.7 注册和使用别名(了解)"></a>3.7 注册和使用别名(了解)</h3><p>别名允许多个键引用单个值</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">viper.RegisterAlias(<span class="string">&quot;loud&quot;</span>, <span class="string">&quot;Verbose&quot;</span>)  <span class="comment">// 注册别名（此处loud和Verbose建立了别名）</span></span><br><span class="line"></span><br><span class="line">viper.Set(<span class="string">&quot;verbose&quot;</span>, <span class="literal">true</span>) <span class="comment">// 结果与下一行相同</span></span><br><span class="line">viper.Set(<span class="string">&quot;loud&quot;</span>, <span class="literal">true</span>)   <span class="comment">// 结果与前一行相同</span></span><br><span class="line"></span><br><span class="line">viper.GetBool(<span class="string">&quot;loud&quot;</span>) <span class="comment">// true</span></span><br><span class="line">viper.GetBool(<span class="string">&quot;verbose&quot;</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-使用环境变量-了解"><a href="#3-8-使用环境变量-了解" class="headerlink" title="3.8 使用环境变量(了解)"></a>3.8 使用环境变量(了解)</h3><p>Viper完全支持环境变量。这使<code>Twelve-Factor App</code>开箱即用。有五种方法可以帮助与ENV协作:</p>
+<ul>
+<li><code>AutomaticEnv()</code></li>
+<li><code>BindEnv(string...) : error</code></li>
+<li><code>SetEnvPrefix(string)</code></li>
+<li><code>SetEnvKeyReplacer(string...) *strings.Replacer</code></li>
+<li><code>AllowEmptyEnv(bool)</code></li>
+</ul>
+<p><em>使用ENV变量时，务必要意识到Viper将ENV变量视为区分大小写。</em></p>
+<p>Viper提供了一种机制来确保ENV变量是惟一的。通过使用<code>SetEnvPrefix</code>，你可以告诉Viper在读取环境变量时使用前缀。<code>BindEnv</code>和<code>AutomaticEnv</code>都将使用这个前缀。</p>
+<p><code>BindEnv</code>使用一个或两个参数。第一个参数是键名称，第二个是环境变量的名称。环境变量的名称区分大小写。如果没有提供ENV变量名，那么Viper将自动假设ENV变量与以下格式匹配：前缀+ “_” +键名全部大写。当你显式提供ENV变量名（第二个参数）时，它 <strong>不会</strong> 自动添加前缀。例如，如果第二个参数是“id”，Viper将查找环境变量“ID”。</p>
+<p>在使用ENV变量时，需要注意的一件重要事情是，每次访问该值时都将读取它。Viper在调用<code>BindEnv</code>时不固定该值。</p>
+<p><code>AutomaticEnv</code>是一个强大的助手，尤其是与<code>SetEnvPrefix</code>结合使用时。调用时，Viper会在发出<code>viper.Get</code>请求时随时检查环境变量。它将应用以下规则。它将检查环境变量的名称是否与键匹配（如果设置了<code>EnvPrefix</code>）。</p>
+<p><code>SetEnvKeyReplacer</code>允许你使用<code>strings.Replacer</code>对象在一定程度上重写 Env 键。如果你希望在<code>Get()</code>调用中使用<code>-</code>或者其他什么符号，但是环境变量里使用<code>_</code>分隔符，那么这个功能是非常有用的。可以在<code>viper_test.go</code>中找到它的使用示例。</p>
+<p>或者，你可以使用带有<code>NewWithOptions</code>工厂函数的<code>EnvKeyReplacer</code>。与<code>SetEnvKeyReplacer</code>不同，它接受<code>StringReplacer</code>接口，允许你编写自定义字符串替换逻辑。</p>
+<p>默认情况下，空环境变量被认为是未设置的，并将返回到下一个配置源。若要将空环境变量视为已设置，请使用<code>AllowEmptyEnv</code>方法。</p>
+<h4 id="Env-示例："><a href="#Env-示例：" class="headerlink" title="Env 示例："></a>Env 示例：</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SetEnvPrefix(<span class="string">&quot;spf&quot;</span>) <span class="comment">// 将自动转为大写</span></span><br><span class="line">BindEnv(<span class="string">&quot;id&quot;</span>)</span><br><span class="line"></span><br><span class="line">os.Setenv(<span class="string">&quot;SPF_ID&quot;</span>, <span class="string">&quot;13&quot;</span>) <span class="comment">// 通常是在应用程序之外完成的</span></span><br><span class="line"></span><br><span class="line">id := Get(<span class="string">&quot;id&quot;</span>) <span class="comment">// 13</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-9-使用Flags-了解"><a href="#3-9-使用Flags-了解" class="headerlink" title="3.9 使用Flags(了解)"></a>3.9 使用Flags(了解)</h3><p>Viper 具有绑定到标志的能力。具体来说，Viper支持<a target="_blank" rel="noopener" href="https://github.com/spf13/cobra">Cobra</a>库中使用的<code>Pflag</code>。</p>
+<p>与<code>BindEnv</code>类似，该值不是在调用绑定方法时设置的，而是在访问该方法时设置的。这意味着你可以根据需要尽早进行绑定，即使在<code>init()</code>函数中也是如此。</p>
+<p>对于单个标志，<code>BindPFlag()</code>方法提供此功能。</p>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serverCmd.Flags().Int(<span class="string">&quot;port&quot;</span>, <span class="number">1138</span>, <span class="string">&quot;Port to run Application server on&quot;</span>)</span><br><span class="line">viper.BindPFlag(<span class="string">&quot;port&quot;</span>, serverCmd.Flags().Lookup(<span class="string">&quot;port&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>你还可以绑定一组现有的pflags （pflag.FlagSet）：</p>
+<p>举个例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pflag.Int(<span class="string">&quot;flagname&quot;</span>, <span class="number">1234</span>, <span class="string">&quot;help message for flagname&quot;</span>)</span><br><span class="line"></span><br><span class="line">pflag.Parse()</span><br><span class="line">viper.BindPFlags(pflag.CommandLine)</span><br><span class="line"></span><br><span class="line">i := viper.GetInt(<span class="string">&quot;flagname&quot;</span>) <span class="comment">// 从viper而不是从pflag检索值</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Viper 中使用 pflag 并不阻碍其他包中使用标准库中的 flag 包。pflag 包可以通过导入这些 flags 来处理flag包定义的flags。这是通过调用pflag包提供的便利函数<code>AddGoFlagSet()</code>来实现的。</p>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;flag&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/spf13/pflag&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 使用标准库 &quot;flag&quot; 包</span></span><br><span class="line">	flag.Int(<span class="string">&quot;flagname&quot;</span>, <span class="number">1234</span>, <span class="string">&quot;help message for flagname&quot;</span>)</span><br><span class="line"></span><br><span class="line">	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)</span><br><span class="line">	pflag.Parse()</span><br><span class="line">	viper.BindPFlags(pflag.CommandLine)</span><br><span class="line"></span><br><span class="line">	i := viper.GetInt(<span class="string">&quot;flagname&quot;</span>) <span class="comment">// 从 viper 检索值</span></span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="flag接口"><a href="#flag接口" class="headerlink" title="flag接口"></a>flag接口</h4><p>如果你不使用<code>Pflag</code>，Viper 提供了两个Go接口来绑定其他 flag 系统。</p>
+<p><code>FlagValue</code>表示单个flag。这是一个关于如何实现这个接口的非常简单的例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> myFlag <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFlag)</span></span> HasChanged() <span class="type">bool</span> &#123; <span class="keyword">return</span> <span class="literal">false</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFlag)</span></span> Name() <span class="type">string</span> &#123; <span class="keyword">return</span> <span class="string">&quot;my-flag-name&quot;</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFlag)</span></span> ValueString() <span class="type">string</span> &#123; <span class="keyword">return</span> <span class="string">&quot;my-flag-value&quot;</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFlag)</span></span> ValueType() <span class="type">string</span> &#123; <span class="keyword">return</span> <span class="string">&quot;string&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦你的 flag 实现了这个接口，你可以很方便地告诉Viper绑定它：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viper.BindFlagValue(<span class="string">&quot;my-flag-name&quot;</span>, myFlag&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>FlagValueSet</code>代表一组 flags 。这是一个关于如何实现这个接口的非常简单的例子:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> myFlagSet <span class="keyword">struct</span> &#123;</span><br><span class="line">	flags []myFlag</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFlagSet)</span></span> VisitAll(fn <span class="function"><span class="keyword">func</span><span class="params">(FlagValue)</span></span>) &#123;</span><br><span class="line">	<span class="keyword">for</span> _, flag := <span class="keyword">range</span> flags &#123;</span><br><span class="line">		fn(flag)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦你的flag set实现了这个接口，你就可以很方便地告诉Viper绑定它：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fSet := myFlagSet&#123;</span><br><span class="line">	flags: []myFlag&#123;myFlag&#123;&#125;, myFlag&#123;&#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">viper.BindFlagValues(<span class="string">&quot;my-flags&quot;</span>, fSet)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-9-远程Key-x2F-Value存储支持"><a href="#3-9-远程Key-x2F-Value存储支持" class="headerlink" title="3.9 远程Key&#x2F;Value存储支持"></a>3.9 远程Key&#x2F;Value存储支持</h3><p>在Viper中启用远程支持，需要在代码中匿名导入<code>viper/remote</code>这个包。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _ <span class="string">&quot;github.com/spf13/viper/remote&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Viper将读取从Key&#x2F;Value存储（例如etcd或Consul）中的路径检索到的配置字符串（如<code>JSON</code>、<code>TOML</code>、<code>YAML</code>、<code>HCL</code>、<code>envfile</code>和<code>Java properties</code>格式）。这些值的优先级高于默认值，但是会被从磁盘、flag或环境变量检索到的配置值覆盖。（译注：也就是说Viper加载配置值的优先级为：磁盘上的配置文件&gt;命令行标志位&gt;环境变量&gt;远程Key&#x2F;Value存储&gt;默认值。）</p>
+<p>Viper使用<a target="_blank" rel="noopener" href="https://github.com/bketelsen/crypt">crypt</a>从K&#x2F;V存储中检索配置，这意味着如果你有正确的gpg密匙，你可以将配置值加密存储并自动解密。加密是可选的。</p>
+<p>你可以将远程配置与本地配置结合使用，也可以独立使用。</p>
+<p><code>crypt</code>有一个命令行助手，你可以使用它将配置放入K&#x2F;V存储中。<code>crypt</code>默认使用在<a target="_blank" rel="noopener" href="http://127.0.0.1:4001/">http://127.0.0.1:4001</a>的etcd。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/bketelsen/crypt/bin/crypt</span><br><span class="line">$ crypt <span class="built_in">set</span> -plaintext /config/hugo.json /Users/hugo/settings/config.json</span><br></pre></td></tr></table></figure>
+
+<p>确认值已经设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ crypt get -plaintext /config/hugo.json</span><br></pre></td></tr></table></figure>
+
+<p>有关如何设置加密值或如何使用Consul的示例，请参见<code>crypt</code>文档。</p>
+<h3 id="3-10-远程Key-x2F-Value存储示例-未加密"><a href="#3-10-远程Key-x2F-Value存储示例-未加密" class="headerlink" title="3.10 远程Key&#x2F;Value存储示例-未加密"></a>3.10 远程Key&#x2F;Value存储示例-未加密</h3><h4 id="3-10-1-etcd"><a href="#3-10-1-etcd" class="headerlink" title="3.10.1 etcd"></a>3.10.1 etcd</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">viper.AddRemoteProvider(<span class="string">&quot;etcd&quot;</span>, <span class="string">&quot;http://127.0.0.1:4001&quot;</span>,<span class="string">&quot;/config/hugo.json&quot;</span>)</span><br><span class="line">viper.SetConfigType(<span class="string">&quot;json&quot;</span>) <span class="comment">// 因为在字节流中没有文件扩展名，所以这里需要设置下类型。支持的扩展名有 &quot;json&quot;, &quot;toml&quot;, &quot;yaml&quot;, &quot;yml&quot;, &quot;properties&quot;, &quot;props&quot;, &quot;prop&quot;, &quot;env&quot;, &quot;dotenv&quot;</span></span><br><span class="line">err := viper.ReadRemoteConfig()</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-10-2-Consul"><a href="#3-10-2-Consul" class="headerlink" title="3.10.2 Consul"></a>3.10.2 Consul</h4><p>你需要 Consul Key&#x2F;Value存储中设置一个Key保存包含所需配置的JSON值。例如，创建一个key<code>MY_CONSUL_KEY</code>将下面的值存入Consul key&#x2F;value 存储：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">8080</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hostname&quot;</span><span class="punctuation">:</span> <span class="string">&quot;myhostname.com&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">viper.AddRemoteProvider(<span class="string">&quot;consul&quot;</span><span class="punctuation">,</span> <span class="string">&quot;localhost:8500&quot;</span><span class="punctuation">,</span> <span class="string">&quot;MY_CONSUL_KEY&quot;</span>)</span><br><span class="line">viper.SetConfigType(<span class="string">&quot;json&quot;</span>) <span class="comment">// 需要显示设置成json</span></span><br><span class="line">err <span class="punctuation">:</span>= viper.ReadRemoteConfig()</span><br><span class="line"></span><br><span class="line">fmt.Println(viper.Get(<span class="string">&quot;port&quot;</span>)) <span class="comment">// 8080</span></span><br><span class="line">fmt.Println(viper.Get(<span class="string">&quot;hostname&quot;</span>)) <span class="comment">// myhostname.com</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-10-3-Firestore"><a href="#3-10-3-Firestore" class="headerlink" title="3.10.3 Firestore"></a>3.10.3 Firestore</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">viper.AddRemoteProvider(<span class="string">&quot;firestore&quot;</span>, <span class="string">&quot;google-cloud-project-id&quot;</span>, <span class="string">&quot;collection/document&quot;</span>)</span><br><span class="line">viper.SetConfigType(<span class="string">&quot;json&quot;</span>) <span class="comment">// 配置的格式: &quot;json&quot;, &quot;toml&quot;, &quot;yaml&quot;, &quot;yml&quot;</span></span><br><span class="line">err := viper.ReadRemoteConfig()</span><br></pre></td></tr></table></figure>
+
+<p>当然，你也可以使用<code>SecureRemoteProvider</code>。</p>
+<h3 id="3-11-远程Key-x2F-Value存储示例-加密"><a href="#3-11-远程Key-x2F-Value存储示例-加密" class="headerlink" title="3.11 远程Key&#x2F;Value存储示例-加密"></a>3.11 远程Key&#x2F;Value存储示例-加密</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">viper.AddSecureRemoteProvider(<span class="string">&quot;etcd&quot;</span>,<span class="string">&quot;http://127.0.0.1:4001&quot;</span>,<span class="string">&quot;/config/hugo.json&quot;</span>,<span class="string">&quot;/etc/secrets/mykeyring.gpg&quot;</span>)</span><br><span class="line">viper.SetConfigType(<span class="string">&quot;json&quot;</span>) <span class="comment">// 因为在字节流中没有文件扩展名，所以这里需要设置下类型。支持的扩展名有 &quot;json&quot;, &quot;toml&quot;, &quot;yaml&quot;, &quot;yml&quot;, &quot;properties&quot;, &quot;props&quot;, &quot;prop&quot;, &quot;env&quot;, &quot;dotenv&quot;</span></span><br><span class="line">err := viper.ReadRemoteConfig()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-12-监控etcd中的更改-未加密"><a href="#3-12-监控etcd中的更改-未加密" class="headerlink" title="3.12 监控etcd中的更改-未加密"></a>3.12 监控etcd中的更改-未加密</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 或者你可以创建一个新的viper实例</span></span><br><span class="line"><span class="keyword">var</span> runtime_viper = viper.New()</span><br><span class="line"></span><br><span class="line">runtime_viper.AddRemoteProvider(<span class="string">&quot;etcd&quot;</span>, <span class="string">&quot;http://127.0.0.1:4001&quot;</span>, <span class="string">&quot;/config/hugo.yml&quot;</span>)</span><br><span class="line">runtime_viper.SetConfigType(<span class="string">&quot;yaml&quot;</span>) <span class="comment">// 因为在字节流中没有文件扩展名，所以这里需要设置下类型。支持的扩展名有 &quot;json&quot;, &quot;toml&quot;, &quot;yaml&quot;, &quot;yml&quot;, &quot;properties&quot;, &quot;props&quot;, &quot;prop&quot;, &quot;env&quot;, &quot;dotenv&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一次从远程读取配置</span></span><br><span class="line">err := runtime_viper.ReadRemoteConfig()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 反序列化</span></span><br><span class="line">runtime_viper.Unmarshal(&amp;runtime_conf)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开启一个单独的goroutine一直监控远端的变更</span></span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">	    time.Sleep(time.Second * <span class="number">5</span>) <span class="comment">// 每次请求后延迟一下</span></span><br><span class="line"></span><br><span class="line">	    <span class="comment">// 目前只测试了etcd支持</span></span><br><span class="line">	    err := runtime_viper.WatchRemoteConfig()</span><br><span class="line">	    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	        log.Errorf(<span class="string">&quot;unable to read remote config: %v&quot;</span>, err)</span><br><span class="line">	        <span class="keyword">continue</span></span><br><span class="line">	    &#125;</span><br><span class="line"></span><br><span class="line">	    <span class="comment">// 将新配置反序列化到我们运行时的配置结构体中。你还可以借助channel实现一个通知系统更改的信号</span></span><br><span class="line">	    runtime_viper.Unmarshal(&amp;runtime_conf)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-从Viper获取值"><a href="#四-从Viper获取值" class="headerlink" title="四 从Viper获取值"></a>四 从Viper获取值</h2><p>在Viper中，有几种方法可以根据值的类型获取值。存在以下功能和方法:</p>
+<ul>
+<li><code>Get(key string) : interface&#123;&#125;</code></li>
+<li><code>GetBool(key string) : bool</code></li>
+<li><code>GetFloat64(key string) : float64</code></li>
+<li><code>GetInt(key string) : int</code></li>
+<li><code>GetIntSlice(key string) : []int</code></li>
+<li><code>GetString(key string) : string</code></li>
+<li><code>GetStringMap(key string) : map[string]interface&#123;&#125;</code></li>
+<li><code>GetStringMapString(key string) : map[string]string</code></li>
+<li><code>GetStringSlice(key string) : []string</code></li>
+<li><code>GetTime(key string) : time.Time</code></li>
+<li><code>GetDuration(key string) : time.Duration</code></li>
+<li><code>IsSet(key string) : bool</code></li>
+<li><code>AllSettings() : map[string]interface&#123;&#125;</code></li>
+</ul>
+<p>需要认识到的一件重要事情是，每一个Get方法在找不到值的时候都会返回零值。为了检查给定的键是否存在，提供了<code>IsSet()</code>方法。</p>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">viper.GetString(<span class="string">&quot;logfile&quot;</span>) <span class="comment">// 不区分大小写的设置和获取</span></span><br><span class="line"><span class="keyword">if</span> viper.GetBool(<span class="string">&quot;verbose&quot;</span>) &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;verbose enabled&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-访问嵌套的键"><a href="#4-1-访问嵌套的键" class="headerlink" title="4.1 访问嵌套的键"></a>4.1 访问嵌套的键</h3><p>访问器方法也接受深度嵌套键的格式化路径。例如，如果加载下面的JSON文件：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;address&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">5799</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;datastore&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;metric&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">3099</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;warehouse&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;198.0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">2112</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Viper可以通过传入<code>.</code>分隔的路径来访问嵌套字段：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetString(<span class="string">&quot;datastore.metric.host&quot;</span>) <span class="comment">// (返回 &quot;127.0.0.1&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>这遵守上面建立的优先规则；搜索路径将遍历其余配置注册表，直到找到为止。(译注：因为Viper支持从多种配置来源，例如磁盘上的配置文件&gt;命令行标志位&gt;环境变量&gt;远程Key&#x2F;Value存储&gt;默认值，我们在查找一个配置的时候如果在当前配置源中没找到，就会继续从后续的配置源查找，直到找到为止。)</p>
+<p>例如，在给定此配置文件的情况下，<code>datastore.metric.host</code>和<code>datastore.metric.port</code>均已定义（并且可以被覆盖）。如果另外在默认值中定义了<code>datastore.metric.protocol</code>，Viper也会找到它。</p>
+<p>然而，如果<code>datastore.metric</code>被直接赋值覆盖（被flag，环境变量，<code>set()</code>方法等等…），那么<code>datastore.metric</code>的所有子键都将变为未定义状态，它们被高优先级配置级别“遮蔽”（shadowed）了。</p>
+<p>最后，如果存在与分隔的键路径匹配的键，则返回其值。例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;datastore.metric.host&quot;</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;host&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;address&quot;</span>: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">        <span class="string">&quot;port&quot;</span>: <span class="number">5799</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;datastore&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;metric&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;host&quot;</span>: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">            <span class="string">&quot;port&quot;</span>: <span class="number">3099</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;warehouse&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;host&quot;</span>: <span class="string">&quot;198.0.0.1&quot;</span>,</span><br><span class="line">            <span class="string">&quot;port&quot;</span>: <span class="number">2112</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">GetString(<span class="string">&quot;datastore.metric.host&quot;</span>) <span class="comment">// 返回 &quot;0.0.0.0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-提取子树"><a href="#4-2-提取子树" class="headerlink" title="4.2 提取子树"></a>4.2 提取子树</h3><p>从Viper中提取子树。</p>
+<p>例如，<code>viper</code>实例现在代表了以下配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app:</span></span><br><span class="line">  <span class="attr">cache1:</span></span><br><span class="line">    <span class="attr">max-items:</span> <span class="number">100</span></span><br><span class="line">    <span class="attr">item-size:</span> <span class="number">64</span></span><br><span class="line">  <span class="attr">cache2:</span></span><br><span class="line">    <span class="attr">max-items:</span> <span class="number">200</span></span><br><span class="line">    <span class="attr">item-size:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subv := viper.Sub(<span class="string">&quot;app.cache1&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>subv</code>现在就代表：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">max-items:</span> <span class="number">100</span></span><br><span class="line"><span class="attr">item-size:</span> <span class="number">64</span></span><br></pre></td></tr></table></figure>
+
+<p>假设我们现在有这么一个函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCache</span><span class="params">(cfg *Viper)</span></span> *Cache &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它基于<code>subv</code>格式的配置信息创建缓存。现在，可以轻松地分别创建这两个缓存，如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cfg1 := viper.Sub(<span class="string">&quot;app.cache1&quot;</span>)</span><br><span class="line">cache1 := NewCache(cfg1)</span><br><span class="line"></span><br><span class="line">cfg2 := viper.Sub(<span class="string">&quot;app.cache2&quot;</span>)</span><br><span class="line">cache2 := NewCache(cfg2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-反序列化"><a href="#4-3-反序列化" class="headerlink" title="4.3 反序列化"></a>4.3 反序列化</h3><p>你还可以选择将所有或特定的值解析到结构体、map等。</p>
+<p>有两种方法可以做到这一点：</p>
+<ul>
+<li><code>Unmarshal(rawVal interface&#123;&#125;) : error</code></li>
+<li><code>UnmarshalKey(key string, rawVal interface&#123;&#125;) : error</code></li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> config <span class="keyword">struct</span> &#123;</span><br><span class="line">	Port <span class="type">int</span></span><br><span class="line">	Name <span class="type">string</span></span><br><span class="line">	PathMap <span class="type">string</span> <span class="string">`mapstructure:&quot;path_map&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> C config</span><br><span class="line"></span><br><span class="line">err := viper.Unmarshal(&amp;C)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	t.Fatalf(<span class="string">&quot;unable to decode into struct, %v&quot;</span>, err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你想要解析那些键本身就包含<code>.</code>(默认的键分隔符）的配置，你需要修改分隔符：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">v := viper.NewWithOptions(viper.KeyDelimiter(<span class="string">&quot;::&quot;</span>))</span><br><span class="line"></span><br><span class="line">v.SetDefault(<span class="string">&quot;chart::values&quot;</span>, <span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">    <span class="string">&quot;ingress&quot;</span>: <span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">        <span class="string">&quot;annotations&quot;</span>: <span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">            <span class="string">&quot;traefik.frontend.rule.type&quot;</span>:                 <span class="string">&quot;PathPrefix&quot;</span>,</span><br><span class="line">            <span class="string">&quot;traefik.ingress.kubernetes.io/ssl-redirect&quot;</span>: <span class="string">&quot;true&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> config <span class="keyword">struct</span> &#123;</span><br><span class="line">	Chart <span class="keyword">struct</span>&#123;</span><br><span class="line">        Values <span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> C config</span><br><span class="line"></span><br><span class="line">v.Unmarshal(&amp;C)</span><br></pre></td></tr></table></figure>
+
+<p>Viper还支持解析到嵌入的结构体：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Example config:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">module:</span></span><br><span class="line"><span class="comment">    enabled: true</span></span><br><span class="line"><span class="comment">    token: 89h3f98hbwf987h3f98wenf89ehf</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">type</span> config <span class="keyword">struct</span> &#123;</span><br><span class="line">	Module <span class="keyword">struct</span> &#123;</span><br><span class="line">		Enabled <span class="type">bool</span></span><br><span class="line"></span><br><span class="line">		moduleConfig <span class="string">`mapstructure:&quot;,squash&quot;`</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// moduleConfig could be in a module specific package</span></span><br><span class="line"><span class="keyword">type</span> moduleConfig <span class="keyword">struct</span> &#123;</span><br><span class="line">	Token <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> C config</span><br><span class="line"></span><br><span class="line">err := viper.Unmarshal(&amp;C)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	t.Fatalf(<span class="string">&quot;unable to decode into struct, %v&quot;</span>, err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Viper在后台使用<a target="_blank" rel="noopener" href="https://github.com/mitchellh/mapstructure">github.com&#x2F;mitchellh&#x2F;mapstructure</a>来解析值，其默认情况下使用<code>mapstructure</code>tag。</p>
+<p><strong>注意</strong> 当我们需要将viper读取的配置反序列到我们定义的结构体变量中时，一定要使用<code>mapstructure</code>tag哦！</p>
+<h3 id="4-4-序列化成字符串"><a href="#4-4-序列化成字符串" class="headerlink" title="4.4 序列化成字符串"></a>4.4 序列化成字符串</h3><p>你可能需要将viper中保存的所有设置序列化到一个字符串中，而不是将它们写入到一个文件中。你可以将自己喜欢的格式的序列化器与<code>AllSettings()</code>返回的配置一起使用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    yaml <span class="string">&quot;gopkg.in/yaml.v2&quot;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">yamlStringSettings</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    c := viper.AllSettings()</span><br><span class="line">    bs, err := yaml.Marshal(c)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">&quot;unable to marshal config to YAML: %v&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">string</span>(bs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五-使用单个还是多个Viper实例-了解"><a href="#五-使用单个还是多个Viper实例-了解" class="headerlink" title="五 使用单个还是多个Viper实例(了解)"></a>五 使用单个还是多个Viper实例(了解)</h2><p>Viper是开箱即用的。你不需要配置或初始化即可开始使用Viper。由于大多数应用程序都希望使用单个中央存储库管理它们的配置信息，所以viper包提供了这个功能。它类似于单例模式。</p>
+<p>在上面的所有示例中，它们都以其单例风格的方法演示了如何使用viper。</p>
+<h3 id="5-1-使用多个viper实例"><a href="#5-1-使用多个viper实例" class="headerlink" title="5.1 使用多个viper实例"></a>5.1 使用多个viper实例</h3><p>你还可以在应用程序中创建许多不同的viper实例。每个都有自己独特的一组配置和值。每个人都可以从不同的配置文件，key value存储区等读取数据。每个都可以从不同的配置文件、键值存储等中读取。viper包支持的所有功能都被镜像为viper实例的方法。</p>
+<p>例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x := viper.New()</span><br><span class="line">y := viper.New()</span><br><span class="line"></span><br><span class="line">x.SetDefault(<span class="string">&quot;ContentDir&quot;</span>, <span class="string">&quot;content&quot;</span>)</span><br><span class="line">y.SetDefault(<span class="string">&quot;ContentDir&quot;</span>, <span class="string">&quot;foobar&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<p>当使用多个viper实例时，由用户来管理不同的viper实例。</p>
+<h2 id="六-Gin中使用Viper"><a href="#六-Gin中使用Viper" class="headerlink" title="六 Gin中使用Viper"></a>六 Gin中使用Viper</h2><p>假设我们的项目现在有一个<code>./conf/config.yaml</code>配置文件，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&quot;v1.1.10&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来通过示例代码演示两种在项目中使用<code>viper</code>管理项目配置信息的方式。</p>
+<h3 id="6-1-直接使用viper管理配置"><a href="#6-1-直接使用viper管理配置" class="headerlink" title="6.1 直接使用viper管理配置"></a>6.1 直接使用viper管理配置</h3><p>在gin框架搭建的web项目中使用<code>viper</code>，使用viper加载配置文件中的信息，并在代码中直接使用<code>viper.GetXXX()</code>方法获取对应的配置值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/spf13/viper&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	viper.SetConfigFile(<span class="string">&quot;./conf/config.yaml&quot;</span>) <span class="comment">// 指定配置文件路径</span></span><br><span class="line">	err := viper.ReadInConfig()        <span class="comment">// 读取配置信息</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;                    <span class="comment">// 读取配置信息失败</span></span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;Fatal error config file: %s \n&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 监控配置文件变化</span></span><br><span class="line">	viper.WatchConfig()</span><br><span class="line"></span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 访问/version的返回值会随配置文件的变化而变化</span></span><br><span class="line">	r.GET(<span class="string">&quot;/version&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.String(http.StatusOK, viper.GetString(<span class="string">&quot;version&quot;</span>))</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">r.Run(fmt.Sprintf(<span class="string">&quot;:%d&quot;</span>, viper.GetInt(<span class="string">&quot;port&quot;</span>)))&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-使用结构体变量保存配置信息"><a href="#6-2-使用结构体变量保存配置信息" class="headerlink" title="6.2 使用结构体变量保存配置信息"></a>6.2 使用结构体变量保存配置信息</h3><p>除了上面的用法外，我们还可以在项目中定义与配置文件对应的结构体，<code>viper</code>加载完配置信息后使用结构体变量保存配置信息。</p>
+<p><strong>conf&#x2F;conf2.yaml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&quot;v1.1.11&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line"><span class="string">package</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="string">import</span> <span class="string">(</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/fsnotify/fsnotify&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/spf13/viper&quot;</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"></span><br><span class="line"><span class="string">type</span> <span class="string">Config</span> <span class="string">struct</span> &#123;</span><br><span class="line">	<span class="string">Port</span>    <span class="string">int</span>    <span class="string">`mapstructure:&quot;port&quot;`</span></span><br><span class="line">	<span class="string">Version</span> <span class="string">string</span> <span class="string">`mapstructure:&quot;version&quot;`</span></span><br><span class="line">	<span class="string">Redis</span>   <span class="string">Redis</span>  <span class="string">`mapstructure:&quot;redis&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">type</span> <span class="string">Redis</span> <span class="string">struct</span> &#123;</span><br><span class="line">	<span class="string">Host</span> <span class="string">string</span> <span class="string">`mapstructure:&quot;host&quot;`</span></span><br><span class="line">	<span class="string">Port</span> <span class="string">int</span>    <span class="string">`mapstructure:&quot;port&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">var</span> <span class="string">Conf</span> <span class="string">=</span> <span class="string">new(Config)</span></span><br><span class="line"></span><br><span class="line"><span class="string">func</span> <span class="string">main()</span> &#123;</span><br><span class="line">	<span class="string">viper.SetConfigFile(&quot;./conf/conf2.yaml&quot;)</span> <span class="string">//</span> <span class="string">指定配置文件路径</span></span><br><span class="line">	<span class="string">err</span> <span class="string">:=</span> <span class="string">viper.ReadInConfig()</span>               <span class="string">//</span> <span class="string">读取配置信息</span></span><br><span class="line">	<span class="string">if</span> <span class="string">err</span> <span class="type">!=</span> <span class="string">nil</span> &#123;                           <span class="string">//</span> <span class="string">读取配置信息失败</span></span><br><span class="line">		<span class="string">panic(fmt.Errorf(&quot;Fatal</span> <span class="attr">error config file:</span> <span class="string">%s</span> <span class="string">\n&quot;</span>, <span class="string">err))</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="string">//</span> <span class="string">将读取的配置信息保存至全局变量Conf</span></span><br><span class="line">	<span class="string">if</span> <span class="string">err</span> <span class="string">:=</span> <span class="string">viper.Unmarshal(Conf);</span> <span class="string">err</span> <span class="type">!=</span> <span class="string">nil</span> &#123;</span><br><span class="line">		<span class="string">panic(fmt.Errorf(&quot;unmarshal</span> <span class="string">conf</span> <span class="string">failed</span>, <span class="string">err:%s</span> <span class="string">\n&quot;</span>, <span class="string">err))</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="string">//</span> <span class="string">监控配置文件变化</span></span><br><span class="line">	<span class="string">viper.WatchConfig()</span></span><br><span class="line">	<span class="string">//</span> <span class="string">注意！！！配置文件发生变化后要同步到全局变量Conf</span></span><br><span class="line">	<span class="string">viper.OnConfigChange(func(in</span> <span class="string">fsnotify.Event)</span> &#123;</span><br><span class="line">		<span class="string">fmt.Println(&quot;配置文件被修改&quot;)</span></span><br><span class="line">		<span class="string">if</span> <span class="string">err</span> <span class="string">:=</span> <span class="string">viper.Unmarshal(Conf);</span> <span class="string">err</span> <span class="type">!=</span> <span class="string">nil</span> &#123;</span><br><span class="line">			<span class="string">panic(fmt.Errorf(&quot;unmarshal</span> <span class="string">conf</span> <span class="string">failed</span>, <span class="string">err:%s</span> <span class="string">\n&quot;</span>, <span class="string">err))</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="string">)</span></span><br><span class="line"></span><br><span class="line">	<span class="string">r</span> <span class="string">:=</span> <span class="string">gin.Default()</span></span><br><span class="line">	<span class="string">//</span> <span class="string">访问/version的返回值会随配置文件的变化而变化</span></span><br><span class="line">	<span class="string">r.GET(&quot;/version&quot;</span>, <span class="string">func(c</span> <span class="string">*gin.Context)</span> &#123;</span><br><span class="line">		<span class="string">fmt.Println(Conf.Redis.Port)</span></span><br><span class="line">		<span class="string">fmt.Println(Conf.Redis.Host)</span></span><br><span class="line">		<span class="string">c.String(http.StatusOK</span>, <span class="string">Conf.Version)</span></span><br><span class="line">	&#125;<span class="string">)</span></span><br><span class="line"></span><br><span class="line">	<span class="string">r.Run(fmt.Sprintf(&quot;:%d&quot;</span>, <span class="string">Conf.Port))</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B18-%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%85%B3%E9%97%AD%E4%B8%8E%E9%87%8D%E5%90%AF%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [18-项目的关闭与重启]
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B15-%E6%9C%80%E5%85%BC%E5%AE%B9%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E6%97%A5%E5%BF%97%E5%BA%93-logrus%5D/">
+        
+          [15-最兼容标准库的日志库-logrus]
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#17-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E7%A5%9E%E5%99%A8-Viper"><span class="toc-nav-text">[17-配置管理神器-Viper]</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-Viper%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">一 Viper介绍</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9Viper"><span class="toc-nav-text">二 为什么选择Viper</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%89-%E6%8A%8A%E5%80%BC%E5%AD%98%E5%85%A5Viper"><span class="toc-nav-text">三 把值存入Viper</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-1-%E5%BB%BA%E7%AB%8B%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-nav-text">3.1 建立默认值</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-2-%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-nav-text">3.2 读取配置文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-3-%E5%86%99%E5%85%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">3.3 写入配置文件(了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-4-%E7%9B%91%E6%8E%A7%E5%B9%B6%E9%87%8D%E6%96%B0%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-nav-text">3.4 监控并重新读取配置文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-5-%E4%BB%8Eio-Reader%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">3.5 从io.Reader读取配置(了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-6-%E8%A6%86%E7%9B%96%E8%AE%BE%E7%BD%AE"><span class="toc-nav-text">3.6 覆盖设置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-7-%E6%B3%A8%E5%86%8C%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%AB%E5%90%8D-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">3.7 注册和使用别名(了解)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-8-%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">3.8 使用环境变量(了解)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Env-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-nav-text">Env 示例：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-9-%E4%BD%BF%E7%94%A8Flags-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">3.9 使用Flags(了解)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#flag%E6%8E%A5%E5%8F%A3"><span class="toc-nav-text">flag接口</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-9-%E8%BF%9C%E7%A8%8BKey-x2F-Value%E5%AD%98%E5%82%A8%E6%94%AF%E6%8C%81"><span class="toc-nav-text">3.9 远程Key&#x2F;Value存储支持</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-10-%E8%BF%9C%E7%A8%8BKey-x2F-Value%E5%AD%98%E5%82%A8%E7%A4%BA%E4%BE%8B-%E6%9C%AA%E5%8A%A0%E5%AF%86"><span class="toc-nav-text">3.10 远程Key&#x2F;Value存储示例-未加密</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-10-1-etcd"><span class="toc-nav-text">3.10.1 etcd</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-10-2-Consul"><span class="toc-nav-text">3.10.2 Consul</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-10-3-Firestore"><span class="toc-nav-text">3.10.3 Firestore</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-11-%E8%BF%9C%E7%A8%8BKey-x2F-Value%E5%AD%98%E5%82%A8%E7%A4%BA%E4%BE%8B-%E5%8A%A0%E5%AF%86"><span class="toc-nav-text">3.11 远程Key&#x2F;Value存储示例-加密</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-12-%E7%9B%91%E6%8E%A7etcd%E4%B8%AD%E7%9A%84%E6%9B%B4%E6%94%B9-%E6%9C%AA%E5%8A%A0%E5%AF%86"><span class="toc-nav-text">3.12 监控etcd中的更改-未加密</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9B%9B-%E4%BB%8EViper%E8%8E%B7%E5%8F%96%E5%80%BC"><span class="toc-nav-text">四 从Viper获取值</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-1-%E8%AE%BF%E9%97%AE%E5%B5%8C%E5%A5%97%E7%9A%84%E9%94%AE"><span class="toc-nav-text">4.1 访问嵌套的键</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-2-%E6%8F%90%E5%8F%96%E5%AD%90%E6%A0%91"><span class="toc-nav-text">4.2 提取子树</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-3-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-nav-text">4.3 反序列化</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-4-%E5%BA%8F%E5%88%97%E5%8C%96%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-nav-text">4.4 序列化成字符串</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%94-%E4%BD%BF%E7%94%A8%E5%8D%95%E4%B8%AA%E8%BF%98%E6%98%AF%E5%A4%9A%E4%B8%AAViper%E5%AE%9E%E4%BE%8B-%E4%BA%86%E8%A7%A3"><span class="toc-nav-text">五 使用单个还是多个Viper实例(了解)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-1-%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AAviper%E5%AE%9E%E4%BE%8B"><span class="toc-nav-text">5.1 使用多个viper实例</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%AD-Gin%E4%B8%AD%E4%BD%BF%E7%94%A8Viper"><span class="toc-nav-text">六 Gin中使用Viper</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-1-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8viper%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE"><span class="toc-nav-text">6.1 直接使用viper管理配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-2-%E4%BD%BF%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%98%E9%87%8F%E4%BF%9D%E5%AD%98%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-nav-text">6.2 使用结构体变量保存配置信息</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[17-配置管理神器-Viper]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[17-配置管理神器-Viper]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

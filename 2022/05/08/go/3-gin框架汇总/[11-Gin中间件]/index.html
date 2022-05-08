@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [11-Gin中间件] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[11-Gin中间件]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="11-Gin中间件"><a href="#11-Gin中间件" class="headerlink" title="[11-Gin中间件]"></a>[11-Gin中间件]</h1><h1 id="一-中间件介绍"><a href="#一-中间件介绍" class="headerlink" title="一 中间件介绍"></a>一 中间件介绍</h1><p>Gin 框架允许开发者在处理请求的过程中，加入用户自己的钩子(Hook)函数。这个钩子函 数就叫中间件，中间件适合处理一些公共的业务逻辑，比如登录认证、权限校验、数据分页、 记录日志、耗时统计等。</p>
+<p>通俗的讲:中间件就是匹配路由前和匹配路由完成后执行的一系列操作</p>
+<h1 id="二-局部中间件"><a href="#二-局部中间件" class="headerlink" title="二 局部中间件"></a>二 局部中间件</h1><h2 id="2-1-初识中间件"><a href="#2-1-初识中间件" class="headerlink" title="2.1 初识中间件"></a>2.1 初识中间件</h2><p>Gin 中的中间件必须是一个 gin.HandlerFunc 类型，配置路由的时候可以传递多个 func 回调函 数，最后一个 func 回调函数前面触发的方法都可以称为中间件。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initMiddleware</span><span class="params">(c *gin.Context)</span></span>  &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是一个中间件&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 把中间件函数加在视图函数之前</span></span><br><span class="line">	r.GET(<span class="string">&quot;/index&quot;</span>,initMiddleware, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.String(<span class="number">200</span>,<span class="string">&quot;首页&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.GET(<span class="string">&quot;/home&quot;</span>,initMiddleware, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.String(<span class="number">200</span>,<span class="string">&quot;home&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-c-Next"><a href="#2-2-c-Next" class="headerlink" title="2.2 c.Next()"></a>2.2 c.Next()</h2><p>中间件里面加上 ctx.Next()可以让我们在路由匹配完成后执行一些操作。 比如我们统计一个请求的执行时间。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 写一个中间件，统计视图函数运行时间</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">totalTime</span><span class="params">(c *gin.Context)</span></span>  &#123;</span><br><span class="line">	start:=time.Now()</span><br><span class="line"></span><br><span class="line">	c.Next()<span class="comment">//继续往后执行</span></span><br><span class="line"></span><br><span class="line">	end:=time.Now()</span><br><span class="line">	fmt.Println(<span class="string">&quot;视图函数运行时间为：&quot;</span>,end.Sub(start))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 把中间件函数加在视图函数之前</span></span><br><span class="line">	r.GET(<span class="string">&quot;/index&quot;</span>,totalTime, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		time.Sleep(time.Second*<span class="number">2</span>)</span><br><span class="line">		c.String(<span class="number">200</span>,<span class="string">&quot;首页&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-多个中间件执行顺序"><a href="#2-3-多个中间件执行顺序" class="headerlink" title="2.3 多个中间件执行顺序"></a>2.3 多个中间件执行顺序</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initMiddleware</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第一个中间件开始&quot;</span>)</span><br><span class="line">	c.Next() <span class="comment">//继续往后执行</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第一个中间件结束&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写一个中间件，统计视图函数运行时间</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">totalTime</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第二个中间件开始&quot;</span>)</span><br><span class="line">	start := time.Now()</span><br><span class="line">	c.Next() <span class="comment">//继续往后执行</span></span><br><span class="line">	end := time.Now()</span><br><span class="line">	fmt.Println(<span class="string">&quot;视图函数运行时间为：&quot;</span>, end.Sub(start))</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第二个中间件结束&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 把中间件函数加在视图函数之前</span></span><br><span class="line">	r.GET(<span class="string">&quot;/index&quot;</span>, initMiddleware, totalTime, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;我是视图函数&quot;</span>)</span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;首页&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br><span class="line">我是第一个中间件开始</span><br><span class="line">我是第二个中间件开始</span><br><span class="line">我是视图函数</span><br><span class="line">视图函数运行时间为： <span class="number">79.142</span>µs</span><br><span class="line">我是第二个中间件结束</span><br><span class="line">我是第一个中间件结束</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-c-Abort"><a href="#2-4-c-Abort" class="headerlink" title="2.4 c.Abort()"></a>2.4 c.Abort()</h2><p>Abort 是终止的意思， c.Abort() 表示终止调用该请求的剩余处理程序</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initMiddleware1</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第一个中间件开始&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第一个中间件结束&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initMiddleware2</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第二个中间件开始&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> c.FullPath() == <span class="string">&quot;/index&quot;</span> &#123;</span><br><span class="line">		c.Abort() <span class="comment">// 如果是 index请求，直接结束</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;我是第二个中间件结束&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 把中间件函数加在视图函数之前</span></span><br><span class="line">	r.GET(<span class="string">&quot;/index&quot;</span>, initMiddleware1, initMiddleware2, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;我是视图函数-index&quot;</span>)</span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;首页&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.GET(<span class="string">&quot;/home&quot;</span>, initMiddleware1, initMiddleware2, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;我是视图函数-home&quot;</span>)</span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;home&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1 访问 /home</span></span><br><span class="line">我是第一个中间件开始</span><br><span class="line">我是第一个中间件结束</span><br><span class="line">我是第二个中间件开始</span><br><span class="line">我是第二个中间件结束</span><br><span class="line">我是视图函数-home</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 访问 /index</span></span><br><span class="line">我是第一个中间件开始</span><br><span class="line">我是第一个中间件结束</span><br><span class="line">我是第二个中间件开始</span><br><span class="line">我是第二个中间件结束</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-全局中间件"><a href="#三-全局中间件" class="headerlink" title="三 全局中间件"></a>三 全局中间件</h1><p>所有请求都经过此中间件</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initMiddleware</span><span class="params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;全局中间件 通过 r.Use 配置&quot;</span>) <span class="comment">// 调用该请求的剩余处理程序</span></span><br><span class="line">	ctx.Set(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;lqz&quot;</span>) <span class="comment">//设置值</span></span><br><span class="line">	ctx.Next()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.Use(initMiddleware)</span><br><span class="line">	<span class="comment">// 把中间件函数加在视图函数之前</span></span><br><span class="line">	r.GET(<span class="string">&quot;/index&quot;</span>,<span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;我是视图函数-index&quot;</span>)</span><br><span class="line">		fmt.Println(c.Get(<span class="string">&quot;name&quot;</span>))<span class="comment">//取</span></span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;首页&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="四-在路由分组中配置中间件"><a href="#四-在路由分组中配置中间件" class="headerlink" title="四 在路由分组中配置中间件"></a>四 在路由分组中配置中间件</h1><h2 id="4-1-方式一"><a href="#4-1-方式一" class="headerlink" title="4.1 方式一"></a>4.1 方式一</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shopGroup := r.Group(<span class="string">&quot;/shop&quot;</span>,initMiddleware) </span><br><span class="line">&#123;</span><br><span class="line">	shopGroup.GET(<span class="string">&quot;/index&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;)</span><br><span class="line">... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-方式二"><a href="#4-2-方式二" class="headerlink" title="4.2 方式二"></a>4.2 方式二</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shopGroup := r.Group(<span class="string">&quot;/shop&quot;</span>) </span><br><span class="line">shopGroup.Use(initMiddleware)</span><br><span class="line">&#123;</span><br><span class="line">  shopGroup.GET(<span class="string">&quot;/index&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;)</span><br><span class="line">	... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五-中间件和视图函数之间共享数据"><a href="#五-中间件和视图函数之间共享数据" class="headerlink" title="五 中间件和视图函数之间共享数据"></a>五 中间件和视图函数之间共享数据</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置值</span></span><br><span class="line">ctx.Set(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;刘清政&quot;</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">//获取值</span></span><br><span class="line">username, _ := ctx.Get(<span class="string">&quot;name&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-中间件解决跨域"><a href="#六-中间件解决跨域" class="headerlink" title="六 中间件解决跨域"></a>六 中间件解决跨域</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Cors</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.Header(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;*&quot;</span>)</span><br><span class="line">    c.Header(<span class="string">&quot;Access-Control-Allow-Headers&quot;</span>, <span class="string">&quot;Content-Type,AccessToken,X-CSRF-Token, Authorization, Token&quot;</span>)</span><br><span class="line">    c.Header(<span class="string">&quot;Access-Control-Allow-Methods&quot;</span>, <span class="string">&quot;POST, GET, OPTIONS, PUT, PATCH, DELETE&quot;</span>)</span><br><span class="line">    c.Header(<span class="string">&quot;Access-Control-Expose-Headers&quot;</span>, <span class="string">&quot;Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type&quot;</span>)</span><br><span class="line">    c.Header(<span class="string">&quot;Access-Control-Allow-Credentials&quot;</span>, <span class="string">&quot;true&quot;</span>)</span><br><span class="line">    <span class="comment">//这里是解决vue那个坑</span></span><br><span class="line">    method := c.Request.Method</span><br><span class="line">    <span class="comment">// 放行所有OPTIONS方法，因为有的模板是要请求两次的</span></span><br><span class="line">    <span class="keyword">if</span> method == <span class="string">&quot;OPTIONS&quot;</span> &#123;</span><br><span class="line">        c.AbortWithStatus(http.StatusNoContent)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理请求</span></span><br><span class="line">    c.Next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="七-中间件注意事项"><a href="#七-中间件注意事项" class="headerlink" title="七 中间件注意事项"></a>七 中间件注意事项</h1><h2 id="6-1-gin-默认中间件"><a href="#6-1-gin-默认中间件" class="headerlink" title="6.1 gin 默认中间件"></a>6.1 gin 默认中间件</h2><p>gin.Default()默认使用了 Logger 和 Recovery 中间件，其中:</p>
+<ul>
+<li><p>Logger 中间件将日志写入 gin.DefaultWriter，即使配置了 GIN_MODE&#x3D;release。</p>
+</li>
+<li><p>Recovery 中间件会 recover 任何 panic。如果有 panic 的话，会写入 500 响应码。</p>
+<p>如果不想使用上面两个默认的中间件，可以使用 gin.New()新建一个没有任何默认中间件的 路由。</p>
+</li>
+</ul>
+<h2 id="6-2-gin中间件中使用-goroutine"><a href="#6-2-gin中间件中使用-goroutine" class="headerlink" title="6.2 gin中间件中使用 goroutine"></a>6.2 gin中间件中使用 <strong>goroutine</strong></h2><p>当在中间件或 handler 中启动新的 goroutine 时，不能使用原始的上下文(c *gin.Context)， 必须使用其只读副本(c.Copy())</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		cCp := c.Copy()</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="comment">// simulate a long task with time.Sleep(). 5 seconds time.Sleep(5 * time.Second)</span></span><br><span class="line">			<span class="comment">// 这里使用你创建的副本</span></span><br><span class="line">			fmt.Println(<span class="string">&quot;Done! in path &quot;</span> + cCp.Request.URL.Path)</span><br><span class="line">		&#125;()</span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;首页&quot;</span>)</span><br><span class="line"></span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B12-Gin%E7%9A%84Cookie,Session%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [12-Gin的Cookie,Session]
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B10-Gin%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8%5D/">
+        
+          [10-Gin定义控制器]
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#11-Gin%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">[11-Gin中间件]</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%80-%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">一 中间件介绍</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%BA%8C-%E5%B1%80%E9%83%A8%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">二 局部中间件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-1-%E5%88%9D%E8%AF%86%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">2.1 初识中间件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-2-c-Next"><span class="toc-nav-text">2.2 c.Next()</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-3-%E5%A4%9A%E4%B8%AA%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-nav-text">2.3 多个中间件执行顺序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-4-c-Abort"><span class="toc-nav-text">2.4 c.Abort()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%89-%E5%85%A8%E5%B1%80%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">三 全局中间件</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-text"></span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%9B%9B-%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%88%86%E7%BB%84%E4%B8%AD%E9%85%8D%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">四 在路由分组中配置中间件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-1-%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-nav-text">4.1 方式一</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-nav-text">4.2 方式二</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%BA%94-%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%92%8C%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-nav-text">五 中间件和视图函数之间共享数据</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%85%AD-%E4%B8%AD%E9%97%B4%E4%BB%B6%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F"><span class="toc-nav-text">六 中间件解决跨域</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%83-%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-nav-text">七 中间件注意事项</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-1-gin-%E9%BB%98%E8%AE%A4%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-nav-text">6.1 gin 默认中间件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-2-gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8-goroutine"><span class="toc-nav-text">6.2 gin中间件中使用 goroutine</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[11-Gin中间件]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[11-Gin中间件]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

@@ -120,236 +120,228 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/02-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">02-命名规范</a>
+        <a href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/02-%E6%9F%A5%E7%9C%8BLinux%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%E5%92%8C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC/">查看linux内核版本和系统版本</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年2月10日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          一 变量定义规范Go语言中的函数名、变量名、常量名、类型名、语句标号和包名等所有的命名，都遵循一个简单的命名规则：
-1 一个名字必须以一个字母（Unicode字母）或下划线开头，后面可以跟任意数量的字母、数字或下划线
-2 大写字母和小写字母是不同的：Name和name是两个不同的变量
-3 关 ...
+          查看Linux内核版本和系统版本一、查看Linux内核版本命令（两种方法）1、cat &#x2F;proc&#x2F;version12[root@lqz ~]# cat /proc/versionLinux version 3.10.0-957.21.3.el7.x86_64 (mockb ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/02-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">详情...</a>
+      <a class="more" href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/02-%E6%9F%A5%E7%9C%8BLinux%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%E5%92%8C%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/05-%E5%B8%B8%E9%87%8F/">05-常量</a>
+        <a href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/03-DevOps%E5%AE%9E%E6%88%98/">Devops实战</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年2月10日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          定义在 Go 语言中，术语”常量”用于表示固定的值。比如 5 、-89、 I love Go、67.89 等等。
-看看下面的代码:
-12var a int = 50  var b string = &quot;I love Go&quot;
-
-在上面的代码中，变量 a 和 b 分别被赋值为常 ...
+          一 Docker搭建gitlab1234567891011# 拉取镜像docker pull gitlab/gitlab-ce# 启动容器docker run -d --hostname www.liuqingzheng.top -p 443:443 -p 8080:80 -p 222:22 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/05-%E5%B8%B8%E9%87%8F/">详情...</a>
+      <a class="more" href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/03-DevOps%E5%AE%9E%E6%88%98/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/04-%E7%B1%BB%E5%9E%8B/">4-类型</a>
+        <a href="/2019/03/28/linux/Docker/1-Docker%E4%B9%8B%E4%BB%8B%E7%BB%8D/">1-Docker介绍与安装</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          下面是 Go 支持的基本类型：
+          1 Docker 简介1.1 简介Docker是开发，运行和部署应用程序的开放管理平台。
 
-bool
-数字类型
-int8, int16, int32, int64, int
-uint8, uint16, uint32, uint64, uint
-float32, float64
-complex64, complex128
-byte
-rune
+开发人员能利用docker 开发和运行应用程序运维人员能利用docker 部署和管理应用程序
 
 
-s ...
+1.2 Docker平台介绍
+Docker提供了在一个完全隔离的环境中打包和运行应用程序的能力，这个隔 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/04-%E7%B1%BB%E5%9E%8B/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/1-Docker%E4%B9%8B%E4%BB%8B%E7%BB%8D/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/03-%E5%8F%98%E9%87%8F/">3-变量</a>
+        <a href="/2019/03/28/linux/Docker/11-docker%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95/">11-Docker之Docker-网络扩展</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          变量是什么变量指定了某存储单元（Memory Location）的名称，该存储单元会存储特定类型的值。在 Go 中，有多种语法用于声明变量。
-声明单个变量var name type 是声明单个变量的语法。
-12345678package mainimport &quot;fmt&quot;f ...
+          docker的网络扩展
+docker run参数123456789101112131415161718192021222324252627282930313233343536373839404142常用选项说明    -d, --detach=false， 指定容器运行于前台还是后台，默认为 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/03-%E5%8F%98%E9%87%8F/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/11-docker%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/06-%E5%87%BD%E6%95%B0%EF%BC%88Function%EF%BC%89/">6-函数（Function</a>
+        <a href="/2019/03/28/linux/Docker/10-Docker%E4%B9%8BDocker-Compose/">10-Docker之Docker-Compose</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          函数是什么？函数是一块执行特定任务的代码。一个函数是在输入源基础上，通过执行一系列的算法，生成预期的输出。
-函数的声明在 Go 语言中，函数声明通用语法如下：
-123func functionname(parametername type) returntype &#123;      // ...
+          一 Docker Compose 简介1.1 Docker Compose介绍
+•Docker Compose是一个能一次性定义和管理多个Docker容器的工具。
+•详细地说：
+​	 Compose中定义和启动的每一个容器都相当于一个服务(service)
+​	 Compose中能定义和启动 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/06-%E5%87%BD%E6%95%B0%EF%BC%88Function%EF%BC%89/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/10-Docker%E4%B9%8BDocker-Compose/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/07-%E5%8C%85/">7-包 </a>
+        <a href="/2019/03/28/linux/Docker/12-pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Docker%E5%BC%80%E5%8F%91/">12-Docker之Docker-pycharm远程连接docker进行开发</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          什么是包，为什么使用包？到目前为止，我们看到的 Go 程序都只有一个文件，文件里包含一个 main 函数和几个其他的函数。在实际中，这种把所有源代码编写在一个文件的方法并不好用。以这种方式编写，代码的重用和维护都会很困难。而包（Package）解决了这样的问题。
-包用于组织 Go 源代码，提 ...
+          docker 配置pycharm连接1 原理介绍
+
+2 操作 docker宿主机1234567891011121314151617181920212223242526272829303132# 1 配置运行远程客户端连接dockervim /lib/systemd/system/docker ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/07-%E5%8C%85/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/12-pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Docker%E5%BC%80%E5%8F%91/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/08-if-else%E8%AF%AD%E5%8F%A5/">8-if-else 语句</a>
+        <a href="/2019/03/28/linux/Docker/2-Docker%E4%B9%8B%E5%AE%89%E8%A3%85/">2-Docker之安装</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          if 是条件语句。if 语句的语法是
-12if condition &#123;  &#125;
-
-如果 condition 为真，则执行 &#123; 和 &#125; 之间的代码。
-不同于其他语言，例如 C 语言，Go 语言里的 &#123;  &#125; 是必要的，即使在 &#123 ...
+          一 Docker-CE 和 Docker-EE介绍版本介绍
+•Docker-CE指Docker社区版，由社区维护和提供技术支持，为免费版本，适合个人开发人员和小团队使用。
+•Docker-EE指Docker企业版，为收费版本，由售后团队和技术团队提供技术支持，专为企业开发和IT团队而设计。
+ ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/08-if-else%E8%AF%AD%E5%8F%A5/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/2-Docker%E4%B9%8B%E5%AE%89%E8%A3%85/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/09-%E5%BE%AA%E7%8E%AF/">9-循环 </a>
+        <a href="/2019/03/28/linux/Docker/4-Docker%E4%B9%8B%E5%AE%B9%E5%99%A8/">4-Docker之容器</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          循环语句是用来重复执行某一段代码。
-for 是 Go 语言唯一的循环语句。Go 语言中并没有其他语言比如 C 语言中的 while 和 do while 循环。
-for 循环语法12for initialisation; condition; post &#123;  &#125;
-
-初始化 ...
+          一 容器简介
+容器（Container）：容器是一种轻量级、可移植、并将应用程序进行的打包的技术，使应用程序可以在几乎任何地方以相同的方式运行
+•Docker将镜像文件运行起来后，产生的对象就是容器。容器相当于是镜像运行起来的一个实例。
+•容器具备一定的生命周期。
+•另外，可以借助docke ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/09-%E5%BE%AA%E7%8E%AF/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/4-Docker%E4%B9%8B%E5%AE%B9%E5%99%A8/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/10-switch%E8%AF%AD%E5%8F%A5/">10-switch 语句</a>
+        <a href="/2019/03/28/linux/Docker/3-Docker%E4%B9%8B%E9%95%9C%E5%83%8F/">3-Docker之镜像</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          switch 是一个条件语句，用于将表达式的值与可能匹配的选项列表进行比较，并根据匹配情况执行相应的代码块。它可以被认为是替代多个 if else 子句的常用方式。
-看代码比文字更容易理解。让我们从一个简单的例子开始，它将把一个手指的编号作为输入，然后输出该手指对应的名字。比如 0 是拇指， ...
+          一 镜像简介
+镜像是一个Docker的可执行文件，其中包括运行应用程序所需的所有代码内容、依赖库、环境变量和配置文件等。
+通过镜像可以创建一个或多个容器。
+
+二 镜像管理2.1 镜像搜索-docker search1234567891011121314# 作用：	搜索Docker Hub(镜 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/10-switch%E8%AF%AD%E5%8F%A5/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/3-Docker%E4%B9%8B%E9%95%9C%E5%83%8F/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/11-%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">11-数组和切片</a>
+        <a href="/2019/03/28/linux/Docker/5-Docker%E4%B9%8B%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F/">5-Docker之容器与镜像</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2019年3月28日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          数组数组是同一类型元素的集合。例如，整数集合 5,8,9,79,76 形成一个数组。Go 语言中不允许混合不同类型的元素，例如包含字符串和整数的数组。（当然，如果是 interface{} 类型数组，可以包含任意类型）
-数组的声明一个数组的表示形式为 [n]T。n 表示数组中元素的数量，T  ...
+          一 Docker的容器与镜像1.1 容器与镜像的关系
+
+1.2 容器提交 – docker commit12345678910111213141516# 作用：	根据容器生成一个新的镜像# 命令格式：	docker commit [OPTIONS] CONTAINER [REPOSITORY ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/11-%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">详情...</a>
+      <a class="more" href="/2019/03/28/linux/Docker/5-Docker%E4%B9%8B%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F/">详情...</a>
     </article>
   
 

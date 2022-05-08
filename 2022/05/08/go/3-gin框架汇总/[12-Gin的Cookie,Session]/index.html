@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="李健博">
+  <meta name="keyword" content="hexo-theme">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      [12-Gin的Cookie,Session] | Mr.Lee-李健博的博客
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Mr.Lee-李健博的博客</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">主页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于我</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">主页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于我</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>[12-Gin的Cookie,Session]</h2>
+
+
+
+  <p class="post-date">2022-05-08</p>
+    <!-- 不蒜子统计 -->
+    <span id="busuanzi_container_page_pv" style='display:none' class="">
+        <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="12-Gin的Cookie-Session"><a href="#12-Gin的Cookie-Session" class="headerlink" title="[12-Gin的Cookie,Session]"></a>[12-Gin的Cookie,Session]</h1><h1 id="一-Cookie介绍和使用"><a href="#一-Cookie介绍和使用" class="headerlink" title="一 Cookie介绍和使用"></a>一 Cookie介绍和使用</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuqingzheng/p/16154439.html">扩展阅读：cookie,session,token</a></p>
+<h2 id="1-1-介绍"><a href="#1-1-介绍" class="headerlink" title="1.1 介绍"></a>1.1 介绍</h2><p>HTTP 是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页 面，服务器无法认识到这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何 关系的。如果我们要实现多个页面之间共享数据的话我们就可以使用 Cookie，Session或Token实 现</p>
+<p>cookie 是存储浏览器中的键值对，可以让我们用同一个浏览器访问同一个域名 的时候共享数据</p>
+<h2 id="1-2-Gin中Cookie的设置"><a href="#1-2-Gin中Cookie的设置" class="headerlink" title="1.2 Gin中Cookie的设置"></a>1.2 Gin中Cookie的设置</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">c.SetCookie(name, value <span class="type">string</span>, maxAge <span class="type">int</span>, path, domain <span class="type">string</span>, secure,httpOnly <span class="type">bool</span>)</span><br><span class="line"><span class="comment">// name：cookie的key值</span></span><br><span class="line"><span class="comment">// value：cookie的value值</span></span><br><span class="line"><span class="comment">// maxAge：过期时间，如果只想设置Cookie的保存路径而不想设置存活时间，可以设置为 nil</span></span><br><span class="line"><span class="comment">// path：cookie 的路径</span></span><br><span class="line"><span class="comment">// domain：cookie 的路径 Domain 作用域 本地调试配置成 localhost , 正式上线配置成域名</span></span><br><span class="line"><span class="comment">// secure：当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中 才有效</span></span><br><span class="line"><span class="comment">// httpOnly：是微软对 COOKIE 做的扩展。如果在 COOKIE 中设置了&quot;httpOnly&quot;属性，则通过程序(JS 脚本、applet 等)将无法读取到 COOKIE 信息，防止 XSS 攻击产生</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-Gin中Cookie的获取"><a href="#1-3-Gin中Cookie的获取" class="headerlink" title="1.3 Gin中Cookie的获取"></a>1.3 Gin中Cookie的获取</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookie, err := c.Cookie(<span class="string">&quot;key值&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-设置获取案例"><a href="#1-4-设置获取案例" class="headerlink" title="1.4 设置获取案例"></a>1.4 设置获取案例</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   r := gin.Default()</span><br><span class="line">   r.GET(<span class="string">&quot;set_cookie&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">      c.SetCookie(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;lqz&quot;</span>, <span class="number">60</span>, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">      c.SetCookie(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;19&quot;</span>, <span class="number">600</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">      c.String(<span class="number">200</span>, <span class="string">&quot;cookie设置成功&quot;</span>)</span><br><span class="line">   &#125;)</span><br><span class="line">   r.GET(<span class="string">&quot;get_cookie&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">      name, err := c.Cookie(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">      <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">         c.String(<span class="number">200</span>, <span class="string">&quot;cookie获取打印失败,错误是:%s&quot;</span>,err)</span><br><span class="line">         <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">      fmt.Println(<span class="string">&quot;name的cookie值为：&quot;</span>,name)</span><br><span class="line">      c.String(<span class="number">200</span>, <span class="string">&quot;cookie获取打印成功&quot;</span>)</span><br><span class="line"></span><br><span class="line">   &#125;)</span><br><span class="line">   r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-Cookie登陆认证练习"><a href="#1-5-Cookie登陆认证练习" class="headerlink" title="1.5 Cookie登陆认证练习"></a>1.5 Cookie登陆认证练习</h2><ul>
+<li>模拟实现权限验证中间件<ul>
+<li>有2个路由，login和home</li>
+<li>login用于设置cookie</li>
+<li>home是访问查看信息的请求</li>
+<li>在请求home之前，先跑中间件代码，检验是否存在cookie</li>
+</ul>
+</li>
+<li>访问home，会显示错误，因为权限校验未通过</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AuthMiddleWare</span><span class="params">()</span></span> gin.HandlerFunc &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">// 获取客户端cookie并校验</span></span><br><span class="line">		<span class="keyword">if</span> cookie, err := c.Cookie(<span class="string">&quot;login&quot;</span>); err == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> cookie == <span class="string">&quot;yes&quot;</span> &#123;</span><br><span class="line">				c.Next()</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// 返回错误</span></span><br><span class="line">			c.JSON(http.StatusUnauthorized, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;没有登录&quot;</span>&#125;)</span><br><span class="line">			<span class="comment">// 若验证不通过，不再调用后续的函数处理</span></span><br><span class="line">			c.Abort()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">&quot;/login&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.SetCookie(<span class="string">&quot;login&quot;</span>, <span class="string">&quot;yes&quot;</span>, <span class="number">60</span>, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">		<span class="comment">// 返回信息</span></span><br><span class="line">		c.String(<span class="number">200</span>, <span class="string">&quot;Login success!&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.GET(<span class="string">&quot;/home&quot;</span>, AuthMiddleWare(), <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;登陆成功，能访问home&quot;</span>&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-Session的介绍和使用"><a href="#二-Session的介绍和使用" class="headerlink" title="二 Session的介绍和使用"></a>二 Session的介绍和使用</h1><h2 id="2-1-Session介绍"><a href="#2-1-Session介绍" class="headerlink" title="2.1 Session介绍"></a>2.1 Session介绍</h2><p>session 是另一种记录客户状态的机制，不同的是 Cookie 保存在客户端浏览器中，而 session 保存在服务器上。</p>
+<h2 id="2-2-Session工作流程"><a href="#2-2-Session工作流程" class="headerlink" title="2.2 Session工作流程"></a>2.2 Session工作流程</h2><p>当客户端浏览器第一次访问服务器并发送请求时，服务器端会创建一个 session 对象，生成 一个类似于 key,value 的键值对，然后将 value 保存到服务器 将 key(cookie)返回到浏览器(客 户)端。浏览器下次访问时会携带 key(cookie)，找到对应的 session(value)。</p>
+<h2 id="2-3-Gin中使用-Session"><a href="#2-3-Gin中使用-Session" class="headerlink" title="2.3 Gin中使用 Session"></a>2.3 Gin中使用 Session</h2><p>Gin 官方没有给我们提供 Session 相关的文档，这个时候我们可以使用第三方的 Session 中间 件来实现</p>
+<blockquote>
+<p>推荐一：gin-contrib&#x2F;sessions后起之秀</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gin-contrib/sessions">https://github.com/gin-contrib/sessions</a></p>
+<p>推荐二：gorilla&#x2F;sessions年久失修</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gorilla/sessions">https://github.com/gorilla/sessions</a></p>
+</blockquote>
+<h2 id="2-5-gin-contrib-x2F-sessions使用"><a href="#2-5-gin-contrib-x2F-sessions使用" class="headerlink" title="2.5 gin-contrib&#x2F;sessions使用"></a>2.5 gin-contrib&#x2F;sessions使用</h2><blockquote>
+<p>下载：go get github.com&#x2F;gin-contrib&#x2F;sessions</p>
+</blockquote>
+<h3 id="2-5-1-session放在内存中"><a href="#2-5-1-session放在内存中" class="headerlink" title="2.5.1 session放在内存中"></a>2.5.1 session放在内存中</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-contrib/sessions&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-contrib/sessions/cookie&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 创建基于 cookie 的存储引擎，lqzisnb 参数是用于加密的密钥</span></span><br><span class="line">	store := cookie.NewStore([]<span class="type">byte</span>(<span class="string">&quot;lqzisnb&quot;</span>))</span><br><span class="line">	<span class="comment">// 设置 session 中间件，参数 sessionid，指的是 session 的名字，也是 cookie 的名字</span></span><br><span class="line">	<span class="comment">//store是前面创建的存储引擎，我们可以替换成其他存储引擎</span></span><br><span class="line">	r.Use(sessions.Sessions(<span class="string">&quot;sessionid&quot;</span>, store))</span><br><span class="line">	r.GET(<span class="string">&quot;/set_session&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">//初始化 session 对象</span></span><br><span class="line">		session := sessions.Default(c) <span class="comment">//设置过期时间</span></span><br><span class="line">		<span class="comment">// 过期时间6h</span></span><br><span class="line">		session.Options(sessions.Options&#123;MaxAge: <span class="number">3600</span> * <span class="number">6</span>&#125;)</span><br><span class="line">		<span class="comment">//设置 Session</span></span><br><span class="line">		session.Set(<span class="string">&quot;username&quot;</span>, <span class="string">&quot;lqz&quot;</span>)</span><br><span class="line">		session.Save()</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;设置session成功----userrname:lqz&quot;</span>&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.GET(<span class="string">&quot;/get_session&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		session := sessions.Default(c)</span><br><span class="line">		<span class="comment">// 通过 session.Get 读取 session 值</span></span><br><span class="line">		username := session.Get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">		fmt.Println(username)</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;获取session成功&quot;</span>&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-2-session放在redis中"><a href="#2-5-2-session放在redis中" class="headerlink" title="2.5.2 session放在redis中"></a>2.5.2 session放在redis中</h3><p>如果我们想将 session 数据保存到 redis 中，只要将 session 的存储引擎改成 redis 即可。 使用 redis 作为存储引擎的例子,首先安装 redis 存储引擎的包</p>
+<blockquote>
+<p>go get github.com&#x2F;gin-contrib&#x2F;sessions&#x2F;redis</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-contrib/sessions&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-contrib/sessions/redis&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 初始化基于 redis 的存储引擎</span></span><br><span class="line">	<span class="comment">// size:redis 最大的空闲连接数</span></span><br><span class="line">	<span class="comment">//network: 数通信协议tcp或者udp</span></span><br><span class="line">	<span class="comment">//address:redis 地址, 格式，host:port</span></span><br><span class="line">	<span class="comment">//password:redis密码</span></span><br><span class="line">	<span class="comment">//最后一个参数：session 加密密钥</span></span><br><span class="line">	store, _ := redis.NewStore(<span class="number">10</span>, <span class="string">&quot;tcp&quot;</span>, <span class="string">&quot;localhost:6379&quot;</span>, <span class="string">&quot;&quot;</span>, []<span class="type">byte</span>(<span class="string">&quot;secret&quot;</span>))</span><br><span class="line">	r.Use(sessions.Sessions(<span class="string">&quot;sessionid&quot;</span>, store))</span><br><span class="line">	r.GET(<span class="string">&quot;/set_session&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		session := sessions.Default(c)</span><br><span class="line">		session.Options(sessions.Options&#123;MaxAge: <span class="number">3600</span> * <span class="number">6</span>&#125;)</span><br><span class="line">		<span class="comment">//设置 Session</span></span><br><span class="line">		session.Set(<span class="string">&quot;username&quot;</span>, <span class="string">&quot;pyy&quot;</span>)</span><br><span class="line">		session.Save()</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;设置session到reids成功----userrname:pyy&quot;</span>&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.GET(<span class="string">&quot;/get_session&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		session := sessions.Default(c)</span><br><span class="line">		<span class="comment">// 通过 session.Get 读取 session 值</span></span><br><span class="line">		username := session.Get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">		fmt.Println(username)</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;获取session成功&quot;</span>&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-6-gorilla-x2F-sessions使用"><a href="#2-6-gorilla-x2F-sessions使用" class="headerlink" title="2.6 gorilla&#x2F;sessions使用"></a>2.6 gorilla&#x2F;sessions使用</h2><blockquote>
+<p>go get github.com&#x2F;gorilla&#x2F;sessions</p>
+</blockquote>
+<h3 id="2-6-1-gin框架使用"><a href="#2-6-1-gin框架使用" class="headerlink" title="2.6.1 gin框架使用"></a>2.6.1 gin框架使用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">   <span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">   <span class="string">&quot;github.com/gorilla/sessions&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化一个cookie存储对象</span></span><br><span class="line"><span class="comment">// something-very-secret应该是一个你自己的密匙，只要不被别人知道就行</span></span><br><span class="line"><span class="keyword">var</span> store = sessions.NewCookieStore([]<span class="type">byte</span>(<span class="string">&quot;asdfasdf&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   r:=gin.New()</span><br><span class="line">   r.GET(<span class="string">&quot;/savesession&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(context *gin.Context)</span></span> &#123;</span><br><span class="line">      <span class="comment">// Get a session. We&#x27;re ignoring the error resulted from decoding an</span></span><br><span class="line">      <span class="comment">// existing session: Get() always returns a session, even if empty.</span></span><br><span class="line">      session, err := store.Get(context.Request, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">      <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">         context.String(http.StatusInternalServerError,<span class="string">&quot;出错了&quot;</span>)</span><br><span class="line">         <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 在session中存储值</span></span><br><span class="line">      session.Values[<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;lqz&quot;</span></span><br><span class="line">      session.Values[<span class="string">&quot;age&quot;</span>] = <span class="number">18</span></span><br><span class="line">      session.Values[<span class="number">42</span>] = <span class="number">43</span></span><br><span class="line">      <span class="comment">// 保存更改</span></span><br><span class="line">      session.Save(context.Request, context.Writer)</span><br><span class="line">      context.String(<span class="number">200</span>,<span class="string">&quot;保存session成功&quot;</span>)</span><br><span class="line">   &#125;)</span><br><span class="line">   r.GET(<span class="string">&quot;getsession&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(context *gin.Context)</span></span> &#123;</span><br><span class="line">      session, err := store.Get(context.Request, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">      <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">         context.String(http.StatusInternalServerError,<span class="string">&quot;出错了&quot;</span>)</span><br><span class="line">         <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">      name := session.Values[<span class="string">&quot;name&quot;</span>]</span><br><span class="line">      age := session.Values[<span class="string">&quot;age&quot;</span>]</span><br><span class="line">      count:=session.Values[<span class="number">42</span>]</span><br><span class="line">      fmt.Println(name)</span><br><span class="line">      fmt.Println(age)</span><br><span class="line">      fmt.Println(count)</span><br><span class="line">      context.String(<span class="number">200</span>,<span class="string">&quot;查询成功&quot;</span>)</span><br><span class="line">   &#125;)</span><br><span class="line">   r.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-2-net-x2F-http使用"><a href="#2-6-2-net-x2F-http使用" class="headerlink" title="2.6.2 net&#x2F;http使用"></a>2.6.2 net&#x2F;http使用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gorilla/sessions&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化一个cookie存储对象</span></span><br><span class="line"><span class="comment">// something-very-secret应该是一个你自己的密匙，只要不被别人知道就行</span></span><br><span class="line"><span class="keyword">var</span> store = sessions.NewCookieStore([]<span class="type">byte</span>(<span class="string">&quot;something-very-secret&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/save&quot;</span>, SaveSession)</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/get&quot;</span>, GetSession)</span><br><span class="line">    err := http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;HTTP server failed,err:&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SaveSession</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Get a session. We&#x27;re ignoring the error resulted from decoding an</span></span><br><span class="line">    <span class="comment">// existing session: Get() always returns a session, even if empty.</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//　获取一个session对象，session-name是session的名字</span></span><br><span class="line">    session, err := store.Get(r, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在session中存储值</span></span><br><span class="line">    session.Values[<span class="string">&quot;foo&quot;</span>] = <span class="string">&quot;bar&quot;</span></span><br><span class="line">    session.Values[<span class="number">42</span>] = <span class="number">43</span></span><br><span class="line">    <span class="comment">// 保存更改</span></span><br><span class="line">    session.Save(r, w)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetSession</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    session, err := store.Get(r, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    foo := session.Values[<span class="string">&quot;foo&quot;</span>]</span><br><span class="line">    fmt.Println(foo)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-3-删除session的值"><a href="#2-6-3-删除session的值" class="headerlink" title="2.6.3 删除session的值"></a>2.6.3 删除session的值</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除</span></span><br><span class="line"><span class="comment">// 将session的最大存储时间设置为小于零的数即为删除</span></span><br><span class="line">session.Options.MaxAge = <span class="number">-1</span></span><br><span class="line">session.Save(r, w)</span><br><span class="line">GO 复制 全屏</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Go" >
+    <span class="tag-code">Go</span>
+  </a>
+
+  <a href="/tags#Gin框架" >
+    <span class="tag-code">Gin框架</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B13-Gin%E4%B8%AD%E4%BD%BF%E7%94%A8jwt%5D/">
+        <span class="nav-arrow">← </span>
+        
+          [13-Gin中使用jwt]
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/05/08/go/3-gin%E6%A1%86%E6%9E%B6%E6%B1%87%E6%80%BB/%5B11-Gin%E4%B8%AD%E9%97%B4%E4%BB%B6%5D/">
+        
+          [11-Gin中间件]
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">点击上方按钮,请我喝杯咖啡！</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+  <!-- 不蒜子统计 -->
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#12-Gin%E7%9A%84Cookie-Session"><span class="toc-nav-text">[12-Gin的Cookie,Session]</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%B8%80-Cookie%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">一 Cookie介绍和使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-1-%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">1.1 介绍</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-2-Gin%E4%B8%ADCookie%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-nav-text">1.2 Gin中Cookie的设置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-3-Gin%E4%B8%ADCookie%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="toc-nav-text">1.3 Gin中Cookie的获取</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-4-%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E6%A1%88%E4%BE%8B"><span class="toc-nav-text">1.4 设置获取案例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-5-Cookie%E7%99%BB%E9%99%86%E8%AE%A4%E8%AF%81%E7%BB%83%E4%B9%A0"><span class="toc-nav-text">1.5 Cookie登陆认证练习</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E4%BA%8C-Session%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">二 Session的介绍和使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-1-Session%E4%BB%8B%E7%BB%8D"><span class="toc-nav-text">2.1 Session介绍</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-2-Session%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-nav-text">2.2 Session工作流程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-3-Gin%E4%B8%AD%E4%BD%BF%E7%94%A8-Session"><span class="toc-nav-text">2.3 Gin中使用 Session</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-5-gin-contrib-x2F-sessions%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">2.5 gin-contrib&#x2F;sessions使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-5-1-session%E6%94%BE%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD"><span class="toc-nav-text">2.5.1 session放在内存中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-5-2-session%E6%94%BE%E5%9C%A8redis%E4%B8%AD"><span class="toc-nav-text">2.5.2 session放在redis中</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-6-gorilla-x2F-sessions%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">2.6 gorilla&#x2F;sessions使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-6-1-gin%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">2.6.1 gin框架使用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-6-2-net-x2F-http%E4%BD%BF%E7%94%A8"><span class="toc-nav-text">2.6.2 net&#x2F;http使用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-6-3-%E5%88%A0%E9%99%A4session%E7%9A%84%E5%80%BC"><span class="toc-nav-text">2.6.3 删除session的值</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://mr-lee-alex.github.io/2022/05/08/go/3-gin框架汇总/[12-Gin的Cookie,Session]/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "[12-Gin的Cookie,Session]",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+     本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+     本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://www.cnblogs.com/m-r-lee" target="_blank">李健博的博客园</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://www.cnblogs.com/m-r-lee">李健博的博客园</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/load.js"></script>
+
+
+
+  <span class="local-search local-search-google local-search-plugin" style="right: 50px;top: 70px;;position:absolute;z-index:2;">
+      <input type="search" placeholder="站内搜索" id="local-search-input" class="local-search-input-cls" style="">
+      <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+
+
+  </body>
+</html>

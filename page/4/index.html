@@ -120,9 +120,9 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/28/linux/Docker/6-Docker%E4%B9%8B%E7%BD%91%E7%BB%9C/">6-Docker之网络</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/10-Linux%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/">10-linux的输入与输出介绍</a>
       </h2>
-      <p class="article-date">2019年3月28日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
   <a href="/tags#Linux" >
@@ -132,20 +132,18 @@
       
       <div class="article-summary">
         
-          一 Docker 网络管理简介1.1 为什么要Docker网络管理
-容器的网络默认与宿主机、与其他容器都是相互隔离。
-​	•容器中可以运行一些网络应用(如nginx、web应用、数据库等)，如果要让外部也可以访问这些容器内运行的网络应用，那么就需要配置网络来实现。
-​	•有可能有的需求下，容 ...
+          1.重定向概述1.什么是重定向将原本要输出到屏幕的数据信息，重新定向到某个指定的文件中。比如：每天凌晨定时备份数据，希望将备份数据的结果保存到某个文件中。这样第二天通过查看文件的内容就知道昨天备份的数据是成功还是失败。
+2.为何要使用重定向1.当屏幕输出的信息很重要，而且希望保存重要的信息时 ...
         
       </div>
-      <a class="more" href="/2019/03/28/linux/Docker/6-Docker%E4%B9%8B%E7%BD%91%E7%BB%9C/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/10-Linux%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/28/linux/Docker/7-Docker%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8D%B7/">7-Docker之数据卷</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/11-Linux%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE/">11-linux的文件查找介绍</a>
       </h2>
-      <p class="article-date">2019年3月28日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
   <a href="/tags#Linux" >
@@ -155,22 +153,18 @@
       
       <div class="article-summary">
         
-          一 Docker 数据卷简介1.1 为什么用数据卷
-•宿主机无法直接访问容器中的文件
-•容器中的文件没有持久化，导致容器删除后，文件数据也随之消失
-•容器之间也无法直接访问互相的文件
-为解决这些问题，docker加入了数据卷(volumes)机制，能很好解决上面问题，以实现：
-•容器与主机之 ...
+          1.find查找概述为什么要有文件查找，因为很多时候我们可能会忘了某个文件所在的位置，此时就需要通过find来查找。find命令可以根据不同的条件来进行查找文件，例如：文件名称、文件大小、文件修改时间、属主属组、权限、等等方式。同时find命令是Linux下必须掌握的。
+*find 命令的基 ...
         
       </div>
-      <a class="more" href="/2019/03/28/linux/Docker/7-Docker%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8D%B7/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/11-Linux%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/28/linux/Docker/8-Docker%E4%B9%8B%E4%BB%93%E5%BA%93/">8-Docker之仓库</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/12-Linux%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85/">12-linux的压缩打包介绍</a>
       </h2>
-      <p class="article-date">2019年3月28日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
   <a href="/tags#Linux" >
@@ -180,22 +174,18 @@
       
       <div class="article-summary">
         
-          一 Docker 仓库简介1.1 什么是Docker仓库
-•Docker仓库就是存放docker镜像并有docker pull方法下载的云环境
-•Docker仓库分为公有仓库和私有仓库。
-公有仓库指Docker Hub(官方)等开放给用户使用、允许用户管理镜像。
-
-​	 私有仓库指由用户自行 ...
+          1.文件打包与压缩1.什么是文件压缩?将多个文件或目录合并成为一个特殊的文件。比如: 搬家…脑补画面 img.
+2.为什么要对文件进行压缩？当我们在传输大量的文件时，通常都会选择将该文件进行压缩，然后在进行传输。首先：压缩后的文件会比压缩前的文件小。一个28G的文件夹压缩后能达到6G其次：多 ...
         
       </div>
-      <a class="more" href="/2019/03/28/linux/Docker/8-Docker%E4%B9%8B%E4%BB%93%E5%BA%93/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/12-Linux%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/28/linux/Docker/9-Docker%E4%B9%8BDockerfile/">9-Docker之Dockerfile</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/13-Linux%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">13-linux的软件管理介绍</a>
       </h2>
-      <p class="article-date">2019年3月28日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
   <a href="/tags#Linux" >
@@ -205,162 +195,155 @@
       
       <div class="article-summary">
         
-          一 Dockerfile 简介
-•Dockerfile其实就是根据特定的语法格式撰写出来的一个普通的文本文件
-•利用docker build命令依次执行在Dockerfile中定义的一系列命令，最终生成一个新的镜像（定制镜像）
-
-二 Dockerfile 示例与使用2.1 Dockerfil ...
+          1.RPM基本概述1.什么是rpm?RPM全称 RedHat Package Manager 缩写，由红帽开发用于软件包的安装升级卸载与查询
+2.rpm包名组成部分?RPM包命名以-将软件分成了若干部分bash-4.2.46-28.el7.x86_64.rpm
+123bash:软件名4.2. ...
         
       </div>
-      <a class="more" href="/2019/03/28/linux/Docker/9-Docker%E4%B9%8BDockerfile/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/13-Linux%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">[置顶]Elasticsearch系列教程</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/14-Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">14-linux的磁盘管理介绍</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
-  <a href="/tags#汇总" >
-    <span class="tag-code">汇总</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          Elasticsearch系列教程开启愉快的Elasticsearch学习之旅吧！！
+          1.磁盘的基本概念1.什么是磁盘绝大多数人对硬盘都不陌生，一块小小的硬盘里，就可以存储海量的照片音乐和电影，尤其是我们喜爱的各类动作片。但如此小的空间，是如何储存那么多信息的呢？
 
+每个硬盘中心都是一摞高速运转的圆盘，在圆盘上附着的一圈金属颗粒，每个金属颗粒都有自己的磁化程度，用于储存0和1 ...
         
       </div>
-      <a class="more" href="/2019/03/10/Elasticsearch/Elasticsearch%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/14-Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/02-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">02-开发环境搭建</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/15-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">15-linux的进程管理介绍</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          一 下载地址安装包下载地址为：https://golang.org/dl/。
-如果打不开可以使用这个地址：https://golang.google.cn/dl/。
-各个系统对应的包名：
-
-
-
-操作系统
-包名
-
-
-
-Windows
-go1.13.3.windows-amd64.msi
-
-
-L ...
+          1.介绍1.什么是进程比如: 开发写的代码我们称为程序，那么将开发的代码运行起来。我们称为进程。总结一句话就是: 当我们运行一个程序，那么我们将运行的程序叫进程。PS1: 当程序运行为进程后，系统会为该进程分配内存，以及进程运行的身份和权限。PS2: 在进程运行的过程中，系统会有各种指标来表 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/02-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/15-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/03-GoLand%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">03-GoLand环境搭建</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/16-Linux%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/">16-linux的系统服务介绍</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          一 GoLand集成开发环境下载IDE 下载地址：https://www.jetbrains.com/go/download/#section=mac
-IDE安装就是平常的傻瓜式安装，这里就不多说了。
-二 使用GoLand1、 双击运行安装完的GoLand，选择创建项目，并关联GOROOT（ ...
+          1.Linux启动流程CentOS6启动级别CentOS6 VS Centos7开机启动流程图解
+2.Linux运行级别1.什么是运行级别，运行级别就是操作系统当前正在运行的功能级别
+
+
+System V init运行级别
+systemd目标名称
+作用
+
+
+
+0
+runlevel0.targ ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/03-GoLand%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/16-Linux%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/01-Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/">01-Go语言介绍</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/17-Linux%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">17-linux的计划任务介绍</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          一 Go语言介绍Go 即Golang，是Google公司2009年11月正式对外公开的一门编程语言。
-Go是静态强类型语言，是区别于解析型语言的编译型语言(静态：类型固定 强类型：不同类型不允许直接运算)。
-解析型语言——源代码是先翻译为中间代码，然后由解析器对代码进行解释执行。
-编译型语言 ...
+          1.计划任务基本概述1.什么是crondcrond就是计划任务，类似于我们平时生活中的闹钟。定点执行。
+2.为什么要使用crondcrond主要是做一些周期性的任务，比如: 凌晨3点定时备份数据。比如：11点开启网站抢购接口，12点关闭网站抢购接口。
+3.计划任务主要分为以下两种使用情况:1 ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/01-Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/17-Linux%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/04-VSCode%E9%85%8D%E7%BD%AE/">04-VSCode配置</a>
+        <a href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/08-Linux%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90/">08-linux特殊权限介绍</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年4月6日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          VS Code是微软开源的一款编辑器，插件系统十分的丰富。下面介绍如何用VS Code搭建go语言开发环境
-##一 下载与安装
-
-VS Code官方下载地址：https://code.visualstudio.com/Download
-
-三大主流平台都支持，请根据自己的电脑平台选择对应的安装 ...
+          1.特殊权限概述前面我们已经学习过 r（读）、w（写）、 x（执行）这三种普通权限，但是我们在査询系统文件权限时会发现出现了一些其他权限字母，比如：
+12[root@bgx ~]# ll /usr/bin/passwd-rwsr-xr-x. 1 root root 27832 Jun 10  ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/04-VSCode%E9%85%8D%E7%BD%AE/">详情...</a>
+      <a class="more" href="/2020/04/06/linux/%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/08-Linux%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90/">详情...</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/01-HelloWorld/">2-Hello World</a>
+        <a href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/01-Centos7%E5%AE%89%E8%A3%85jdk1.8/">Centos7 安装jdk1.8</a>
       </h2>
-      <p class="article-date">2019年3月10日</p>
+      <p class="article-date">2020年2月10日</p>
       
         
-  <a href="/tags#Go" >
-    <span class="tag-code">Go</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       
       <div class="article-summary">
         
-          一 建立 Go 工作区在编写代码之前，我们首先应该建立 Go 的工作区（Workspace）,环境搭建一节，我们已经讲过了。
-在 Mac 或 Linux 操作系统下，Go 工作区应该设置在 $HOME&#x2F;go。所以我们要在 $HOME 目录下创建 go 目录。
-而在 Windows  ...
+          一 下载linux版jdk我们安装jdk1.8
+地址：https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html
+
+
+找到对应版本
+
+
+下载：需要账号（从网上找个别人的账号或者注册一个即可：账号&#x ...
         
       </div>
-      <a class="more" href="/2019/03/10/go/2-Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/01-HelloWorld/">详情...</a>
+      <a class="more" href="/2020/02/10/linux/%E5%85%B6%E4%BB%96/01-Centos7%E5%AE%89%E8%A3%85jdk1.8/">详情...</a>
     </article>
   
 
